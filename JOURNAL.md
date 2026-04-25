@@ -23,3 +23,11 @@
 [2026-04-25 20:45] Phase 3 → html2pdf + 2 boutons PDF (unitaire+all) + DOCUMENTATION_PROF.md (10 sections) — commit 8f6e0c7
 [2026-04-25 20:50] merge final dev→main + tags v1.1.0 + v1.2.0 poussés
 [2026-04-25 20:50] RAPPORT_FINAL.md mis à jour — toutes phases complétées
+[2026-04-25 21:30] Audit TP côté élève → 10 points faibles identifiés (densité texte, jargon, absence boucle remédiation, etc.)
+[2026-04-25 21:30] Solution livrée → eleve/ + data/eleve_guidance_ep3.json (49 Ko)
+[2026-04-25 21:30] 2 versions par TP : V1 ultra-guidée (45 étapes total) + V2 consolidée (25 étapes total)
+[2026-04-25 21:30] 7 ateliers de secours (S1, S2, E1, MES, CALC, DOC, FGAZ) — boucle complète
+[2026-04-25 21:30] TP-056 PRÉSERVÉ ✓ (consigne explicite Franck)
+[2026-04-25 21:30] CSS anti-DYS strict (Calibri 14pt min, max 3 lignes par bloc, picto+texte)
+[2026-04-25 21:30] Lien "Espace élève" ajouté depuis l'app prof
+[2026-04-25 21:30] AUDIT_TP_REPORT.md rédigé : points forts/faibles + 6 recommandations + 6 évolutions V2

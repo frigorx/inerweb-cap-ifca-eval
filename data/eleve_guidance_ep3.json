@@ -1,0 +1,1172 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Guidance élève ultra-simplifiée — 2 versions par TP (V1 = pas-à-pas pour élève fragile, V2 = consolidé pour élève qui maîtrise)",
+    "lastUpdate": "2026-04-25",
+    "auteur": "F. Henninot",
+    "cible": "CAP IFCA — élèves DYS/TDAH/lecture limitée",
+    "regles": [
+      "Calibri 14pt minimum",
+      "Maximum 3 lignes alignées par bloc",
+      "1 action = 1 carte",
+      "Pictogramme + texte (jamais texte seul)",
+      "Aide à chaque étape disponible",
+      "Vocabulaire simple, pas de jargon non expliqué",
+      "Aucune ambiguïté"
+    ],
+    "tp_intouchable": ["TP-056"]
+  },
+  "tps": {
+
+    "TP-050": {
+      "titre": "Pose manifold + tirage au vide",
+      "mission": "Tu dois préparer une installation. Ton job : poser le manifold, vérifier le vide, chercher s'il y a une fuite.",
+      "duree_min": 240,
+      "competences_visees": ["C2.2", "C4.1", "C4.2", "C4.3", "C4.5", "C4.7"],
+
+      "V1": {
+        "label": "V1 — guidé pas-à-pas",
+        "public": "Élève qui découvre ou qui a besoin d'être tenu par la main",
+        "etapes": [
+          {
+            "num": 1,
+            "titre": "Je m'équipe",
+            "picto": "🥽",
+            "action": "Je mets mes EPI complets AVANT de toucher quoi que ce soit.",
+            "checklist": [
+              "Lunettes de sécurité sur le nez",
+              "Gants 00 électriques",
+              "Chaussures S3 fermées",
+              "Visière baissée",
+              "Gants fluide à portée"
+            ],
+            "aide": "EPI = Équipement de Protection. Si tu en oublies un → demande au prof.",
+            "stop_prof": false,
+            "duree": 5
+          },
+          {
+            "num": 2,
+            "titre": "Je consigne le courant",
+            "picto": "⚡",
+            "action": "Je coupe le disjoncteur, je teste avec le multimètre, je vérifie qu'il n'y a plus de tension.",
+            "checklist": [
+              "Disjoncteur en position OFF",
+              "Test du multimètre : il marche",
+              "Mesure : 0 volt entre les phases",
+              "Mesure : 0 volt phase / neutre"
+            ],
+            "aide": "VAT = Vérification d'Absence de Tension. On le fait 3 fois pour être sûr. Tester d'abord ton multimètre sur du courant connu.",
+            "stop_prof": false,
+            "duree": 10
+          },
+          {
+            "num": 3,
+            "titre": "Je relève les pressions de départ",
+            "picto": "📋",
+            "action": "Je note ce que disent les manomètres FIXES de l'installation, AVANT de poser mon manifold.",
+            "checklist": [
+              "PO (basse pression) noté avec son unité (bar)",
+              "PK (haute pression) noté avec son unité (bar)",
+              "TO (température basse) notée en °C",
+              "TK (température haute) notée en °C"
+            ],
+            "aide": "Sans valeur de départ, je ne peux pas comparer après. Si je vois 0 bar partout → l'installation est vide ou la vanne est fermée, j'appelle le prof.",
+            "stop_prof": false,
+            "duree": 10
+          },
+          {
+            "num": 4,
+            "titre": "Je devine le gaz",
+            "picto": "🔍",
+            "action": "Avec PO et TO, je cherche dans la table P/T : quel fluide correspond ?",
+            "checklist": [
+              "Je trouve la ligne où PO et TO collent",
+              "Je note le nom du fluide (R32 / R134a / R410A...)",
+              "Je vérifie que ça colle aussi pour PK et TK"
+            ],
+            "aide": "La table P/T est un tableau avec les couples Pression / Température. Si rien ne colle parfaitement → choisir le plus proche, et noter pourquoi. Demander au prof si tu hésites.",
+            "stop_prof": false,
+            "duree": 10
+          },
+          {
+            "num": 5,
+            "titre": "Je tire au vide MON manifold",
+            "picto": "💨",
+            "action": "AVANT d'ouvrir vers l'installation, je tire au vide DANS le manifold tout seul. Comme ça il n'y a plus d'air dedans.",
+            "checklist": [
+              "Manifold raccordé sur la pompe à vide",
+              "Vannes du manifold ouvertes",
+              "Vannes vers l'installation : FERMÉES",
+              "Pompe lancée pendant 30 secondes minimum"
+            ],
+            "aide": "Si tu sautes cette étape, tu vas pousser de l'AIR dans l'installation. C'est la pire bêtise. RAPPEL : le manifold doit être propre AVANT de toucher au circuit.",
+            "stop_prof": false,
+            "duree": 10
+          },
+          {
+            "num": 6,
+            "titre": "Je pose le manifold sur l'installation",
+            "picto": "🔧",
+            "action": "Je raccorde les flexibles bleu et rouge sur les vannes de service. Sans forcer.",
+            "checklist": [
+              "Flexible bleu sur la vanne BP (basse pression)",
+              "Flexible rouge sur la vanne HP (haute pression)",
+              "Joints en place et propres",
+              "Serrage à la main puis quart de tour à la clé"
+            ],
+            "aide": "Si tu forces, tu casses le filet. Si ça fuit, vérifie le joint. Couleurs : Bleu = froid = BP / Rouge = chaud = HP.",
+            "stop_prof": false,
+            "duree": 10
+          },
+          {
+            "num": 7,
+            "titre": "Je dégaze doucement",
+            "picto": "🌬️",
+            "action": "J'ouvre le bypass du manifold, je laisse descendre la pression jusqu'à 0 bar. PROGRESSIVEMENT.",
+            "checklist": [
+              "Bypass ouvert lentement",
+              "Manomètres descendent vers 0",
+              "Aiguille stabilisée à 0 bar",
+              "Aucun bruit anormal"
+            ],
+            "aide": "Si tu ouvres d'un coup → tu projettes de l'huile partout. Doucement = sécurité.",
+            "stop_prof": true,
+            "stop_label": "Le prof vérifie que les pressions sont à 0 avant la suite",
+            "duree": 5
+          },
+          {
+            "num": 8,
+            "titre": "Je tire au vide PROFOND",
+            "picto": "🕳️",
+            "action": "Je lance la pompe à vide, j'attends que ça descende SOUS −0,9 bar, je laisse tenir 1 minute.",
+            "checklist": [
+              "Pompe lancée",
+              "Aiguille descend sous −0,9 bar",
+              "Aiguille stable 1 minute pleine",
+              "Vanne fermée AVANT d'arrêter la pompe"
+            ],
+            "aide": "Si l'aiguille ne descend pas → grosse fuite, j'arrête tout, j'appelle le prof. La règle d'or : vanne fermée AVANT d'arrêter la pompe (sinon l'huile remonte).",
+            "stop_prof": true,
+            "stop_label": "Le prof vérifie : −0,9 bar tenu 1 minute",
+            "duree": 30
+          },
+          {
+            "num": 9,
+            "titre": "Je mets l'azote 3 bar",
+            "picto": "🧪",
+            "action": "Je raccorde la bouteille d'azote, j'ouvre doucement, je monte à 3 bar, je tiens 30 secondes.",
+            "checklist": [
+              "Bouteille N₂ + détendeur en place",
+              "Détendeur réglé à 3 bar",
+              "Pression montée stable à 3 bar",
+              "30 secondes sans bouger"
+            ],
+            "aide": "Azote = gaz de test, neutre. PAS de fluide frigo dans l'installation tant que je n'ai pas validé l'étanchéité.",
+            "stop_prof": false,
+            "duree": 10
+          },
+          {
+            "num": 10,
+            "titre": "Je cherche les fuites",
+            "picto": "🔎",
+            "action": "Je passe le détecteur électronique sur TOUS les raccords. Puis je passe la mousse savonneuse en plus.",
+            "checklist": [
+              "Détecteur électronique sur chaque raccord touché",
+              "Mousse savonneuse passée sur chaque raccord",
+              "Aucune bulle ne se forme",
+              "Détecteur reste muet (pas de bip)",
+              "Zone bien nettoyée après le test"
+            ],
+            "aide": "Règle F-Gaz : DEUX procédés OBLIGATOIRES. Si bulle ou bip → fuite. Je note où, je reprends le serrage et je recommence le test.",
+            "stop_prof": true,
+            "stop_label": "Le prof valide : aucune fuite, étanchéité OK",
+            "duree": 20
+          }
+        ],
+        "defi": "Tu finis avant l'heure ? Refais le calcul d'identification du gaz avec un AUTRE couple P/T (PK/TK). Tu trouves le même fluide ?",
+        "secours_lien": "ATELIER-S1 (lecture table P/T) ou ATELIER-S2 (étanchéité)"
+      },
+
+      "V2": {
+        "label": "V2 — consolidé pour élèves prêts EP3",
+        "public": "Élève qui maîtrise déjà la base — version proche de l'examen",
+        "etapes": [
+          {
+            "num": 1,
+            "titre": "EPI + VAT 3 points",
+            "picto": "⚡",
+            "action": "Je m'équipe et je consigne le circuit électrique. VAT 3 points obligatoire.",
+            "checklist": [
+              "EPI complets vérifiés",
+              "VAT : test mire / mesure / re-test mire"
+            ],
+            "stop_prof": false,
+            "duree": 10
+          },
+          {
+            "num": 2,
+            "titre": "Identification fluide par P/T",
+            "picto": "🔍",
+            "action": "Je relève PO/PK/TO/TK et j'identifie le fluide par couple P/T sur table.",
+            "checklist": [
+              "4 valeurs notées avec unités",
+              "Fluide identifié + justification écrite (1 phrase)"
+            ],
+            "stop_prof": false,
+            "duree": 15
+          },
+          {
+            "num": 3,
+            "titre": "Pose manifold avec tirage au vide manifold",
+            "picto": "🔧",
+            "action": "Je tire au vide MON manifold avant ouverture vers l'installation, puis je pose proprement.",
+            "checklist": [
+              "Manifold sous vide avant raccordement",
+              "Joints neufs, serrage quart de tour"
+            ],
+            "stop_prof": false,
+            "duree": 15
+          },
+          {
+            "num": 4,
+            "titre": "Dégazage + Tirage au vide profond",
+            "picto": "💨",
+            "action": "Dégazage progressif jusqu'à 0 bar, puis tirage au vide ≤ −0,9 bar tenu 1 minute.",
+            "checklist": [
+              "Dégazage progressif sans à-coup",
+              "Vide profond ≤ −0,9 bar tenu 1 min stable",
+              "Vanne fermée AVANT arrêt pompe"
+            ],
+            "stop_prof": true,
+            "stop_label": "Vide profond validé",
+            "duree": 35
+          },
+          {
+            "num": 5,
+            "titre": "Mise sous azote + Recherche de fuite 2 procédés",
+            "picto": "🧪",
+            "action": "Azote 3 bar, recherche de fuite RÉGLEMENTAIRE : détecteur ÉLECTRONIQUE + mousse, sur chaque raccord.",
+            "checklist": [
+              "Azote stable 3 bar",
+              "Détecteur électronique : aucun bip",
+              "Mousse : aucune bulle",
+              "Zone nettoyée"
+            ],
+            "stop_prof": true,
+            "stop_label": "Étanchéité 2 procédés validée",
+            "duree": 25
+          }
+        ],
+        "defi": "Justifie POURQUOI le tirage au vide manifold AVANT l'ouverture vers le circuit est obligatoire (3 lignes max).",
+        "secours_lien": "ATELIER-S2 si étanchéité non validée"
+      }
+    },
+
+    "TP-051": {
+      "titre": "Remplacement pressostat BP",
+      "mission": "Le pressostat BP est mort. Tu le changes, tu le règles, tu vérifies que ça cycle bien.",
+      "duree_min": 240,
+      "competences_visees": ["C2.2", "C3.7", "C4.3", "C4.6"],
+
+      "V1": {
+        "label": "V1 — guidé pas-à-pas",
+        "public": "Élève fragile en électricité",
+        "etapes": [
+          {
+            "num": 1,
+            "titre": "Je sécurise tout",
+            "picto": "🛡️",
+            "action": "EPI + VAT + circuit hors pression AVANT de toucher au pressostat.",
+            "checklist": [
+              "EPI complets",
+              "Disjoncteur OFF + VAT 3 points",
+              "Pression du circuit purgée à 1 bar (pas 0 — sécurité)"
+            ],
+            "aide": "Pourquoi 1 bar et pas 0 ? Pour ne pas aspirer d'air si on ouvre. Si tu hésites → demande.",
+            "stop_prof": false,
+            "duree": 10
+          },
+          {
+            "num": 2,
+            "titre": "Je prends une PHOTO du câblage",
+            "picto": "📸",
+            "action": "AVANT de débrancher quoi que ce soit, je photographie le pressostat ET ses fils.",
+            "checklist": [
+              "Photo nette du capot ouvert",
+              "Photo de chaque borne avec son fil",
+              "Tableau papier : fil / borne / fonction (3 colonnes)"
+            ],
+            "aide": "Si tu rebranches dans le mauvais sens → ça part en court-circuit. La photo c'est ton filet de sécurité. Pas de honte à en prendre 5.",
+            "stop_prof": true,
+            "stop_label": "Le prof valide la photo et le tableau",
+            "duree": 15
+          },
+          {
+            "num": 3,
+            "titre": "Je dépose l'ancien",
+            "picto": "🔩",
+            "action": "Je dévisse le pressostat, je récupère le joint, j'inspecte le filet.",
+            "checklist": [
+              "Vis débranchées dans l'ordre inverse de montage",
+              "Joint récupéré (à jeter)",
+              "Filet inspecté : pas abîmé"
+            ],
+            "aide": "Si filet abîmé → je ne monte pas le neuf, j'appelle le prof.",
+            "stop_prof": false,
+            "duree": 15
+          },
+          {
+            "num": 4,
+            "titre": "Je monte le neuf",
+            "picto": "✨",
+            "action": "Joint NEUF + pressostat neuf. Serrage doux puis quart de tour à la clé.",
+            "checklist": [
+              "Joint neuf en place (pas l'ancien !)",
+              "Vissage à la main jusqu'au contact",
+              "Quart de tour à la clé (pas plus !)"
+            ],
+            "aide": "Si je force au-delà du quart de tour → je foire le filet du pressostat neuf. Doucement.",
+            "stop_prof": false,
+            "duree": 15
+          },
+          {
+            "num": 5,
+            "titre": "Je rebranche les fils selon la photo",
+            "picto": "🔌",
+            "action": "Je suis MA photo. Je teste chaque borne avec une petite traction (ça ne bouge pas).",
+            "checklist": [
+              "Fils branchés selon photo",
+              "Traction sur chaque cosse : OK",
+              "Capot remis et serré"
+            ],
+            "stop_prof": true,
+            "stop_label": "Le prof valide le câblage",
+            "duree": 15
+          },
+          {
+            "num": 6,
+            "titre": "Je remets sous azote 3 bar",
+            "picto": "🧪",
+            "action": "Azote 3 bar + recherche de fuite 2 procédés (obligatoire après changement de pièce).",
+            "checklist": [
+              "Azote stable 3 bar",
+              "Détecteur : aucun bip",
+              "Mousse : aucune bulle"
+            ],
+            "stop_prof": true,
+            "stop_label": "Le prof valide étanchéité",
+            "duree": 20
+          },
+          {
+            "num": 7,
+            "titre": "Je règle le pressostat",
+            "picto": "🎚️",
+            "action": "Cut-in 2,5 bar / Cut-out 0,5 bar / Différentiel 2 bar. Je vérifie sur 2 cycles.",
+            "checklist": [
+              "Cut-in réglé à 2,5 bar",
+              "Cut-out réglé à 0,5 bar",
+              "Différentiel à 2 bar",
+              "1er cycle : démarrage à 2,5 / arrêt à 0,5",
+              "2e cycle : mêmes valeurs ± 0,1 bar"
+            ],
+            "aide": "RANGE = bouton du Cut-out (point bas). DIFF = bouton du différentiel (Cut-in − Cut-out). Si tu confonds → demande au prof, c'est le piège classique.",
+            "stop_prof": true,
+            "stop_label": "Le prof valide les 2 cycles",
+            "duree": 30
+          }
+        ],
+        "defi": "Tu finis avant l'heure ? Tu dérègles volontairement de 0,5 bar et tu vois ce que ça change sur le cyclage. Note ce que tu observes.",
+        "secours_lien": "ATELIER-E1 (lecture schéma électrique) si câblage difficile"
+      },
+
+      "V2": {
+        "label": "V2 — consolidé EP3",
+        "public": "Élève qui maîtrise — version examen",
+        "etapes": [
+          {
+            "num": 1,
+            "titre": "Sécurité + Photo câblage",
+            "picto": "📸",
+            "action": "VAT + circuit hors pression. Photo câblage + tableau fil/borne avant dépose.",
+            "checklist": ["EPI/VAT/HP purgée 1 bar", "Photo + tableau câblage"],
+            "stop_prof": true,
+            "stop_label": "Photo + tableau validés",
+            "duree": 20
+          },
+          {
+            "num": 2,
+            "titre": "Dépose + Montage avec joint neuf",
+            "picto": "🔧",
+            "action": "Dépose ancien, joint NEUF, montage quart de tour.",
+            "checklist": ["Filet contrôlé", "Joint neuf", "Serrage quart de tour"],
+            "stop_prof": false,
+            "duree": 25
+          },
+          {
+            "num": 3,
+            "titre": "Câblage selon photo + Étanchéité",
+            "picto": "⚡",
+            "action": "Recâblage conforme photo. Test traction. Capot. Azote 3 bar + 2 procédés étanchéité.",
+            "checklist": ["Câblage conforme + test traction", "Étanchéité 2 procédés validée"],
+            "stop_prof": true,
+            "stop_label": "Câblage + étanchéité OK",
+            "duree": 40
+          },
+          {
+            "num": 4,
+            "titre": "Réglage Cut-in / Cut-out / Diff + 2 cycles",
+            "picto": "🎚️",
+            "action": "Cut-in 2,5 / Cut-out 0,5 / Diff 2 bar. Vérification 2 cycles répétables (± 0,1 bar).",
+            "checklist": ["Réglages valeurs cibles", "2 cycles répétables"],
+            "stop_prof": true,
+            "stop_label": "2 cycles validés",
+            "duree": 35
+          }
+        ],
+        "defi": "Explique en 3 phrases la différence entre RANGE et DIFF.",
+        "secours_lien": "ATELIER-E1 si câblage à reprendre"
+      }
+    },
+
+    "TP-052": {
+      "titre": "Dépose manifold + Bon d'intervention",
+      "mission": "Le travail est fini. Tu démontes proprement (sans perdre de gaz) et tu rédiges le bon d'intervention.",
+      "duree_min": 240,
+      "competences_visees": ["C1.3", "C3.7", "C4.3", "C4.7"],
+
+      "V1": {
+        "label": "V1 — guidé pas-à-pas",
+        "public": "Élève fragile en rédaction",
+        "etapes": [
+          {
+            "num": 1,
+            "titre": "Je fais le pump-down",
+            "picto": "⬇️",
+            "action": "Je ferme les vannes de service, j'ouvre le bypass, je laisse les flexibles se vider dans le manifold. AUCUN gaz dehors.",
+            "checklist": [
+              "Vanne BP fermée d'abord",
+              "Vanne HP fermée ensuite",
+              "Bypass ouvert",
+              "Pression dans flexibles = 0 bar",
+              "Aucune fuite de fluide entendue"
+            ],
+            "aide": "Pump-down = aspirer le gaz des flexibles vers le compresseur. Réglementation F-Gaz : interdiction de relâcher du fluide dans l'air. Si tu entends un sifflement → STOP.",
+            "stop_prof": true,
+            "stop_label": "Le prof confirme : pump-down propre, zéro perte",
+            "duree": 20
+          },
+          {
+            "num": 2,
+            "titre": "Je remets les bouchons",
+            "picto": "🔘",
+            "action": "Je revisse les bouchons sur les vannes BP et HP avec des joints en bon état.",
+            "checklist": [
+              "Bouchon BP avec joint OK",
+              "Bouchon HP avec joint OK",
+              "Serrage franc à la clé"
+            ],
+            "aide": "Sans bouchon = source de fuite. Joints abîmés = à remplacer. Pas d'improvisation.",
+            "stop_prof": false,
+            "duree": 10
+          },
+          {
+            "num": 3,
+            "titre": "Je fais l'étanchéité finale",
+            "picto": "🔍",
+            "action": "Je passe le détecteur électronique + la mousse sur les vannes de service, juste pour être sûr.",
+            "checklist": [
+              "Détecteur sur vanne BP : OK",
+              "Détecteur sur vanne HP : OK",
+              "Mousse sur les 2 vannes : aucune bulle",
+              "Zone nettoyée"
+            ],
+            "stop_prof": true,
+            "stop_label": "Le prof valide l'étanchéité",
+            "duree": 15
+          },
+          {
+            "num": 4,
+            "titre": "Je redémarre l'installation",
+            "picto": "▶️",
+            "action": "Je remets le disjoncteur. J'écoute. Je vérifie que ça cycle.",
+            "checklist": [
+              "Disjoncteur ON",
+              "Démarrage compresseur entendu",
+              "Pas de bruit anormal",
+              "Cyclage observé : démarre puis s'arrête à la bonne pression"
+            ],
+            "aide": "Bruit anormal = STOP. Cyclage = la machine démarre puis s'arrête puis redémarre, c'est normal.",
+            "stop_prof": false,
+            "duree": 20
+          },
+          {
+            "num": 5,
+            "titre": "Je range mon poste",
+            "picto": "🧹",
+            "action": "Je remets chaque outil à sa place. Je nettoie le sol. Je mets ma valise propre.",
+            "checklist": [
+              "Manifold + flexibles dans la valise",
+              "Outils rangés",
+              "Sol nettoyé",
+              "Aucun déchet abandonné"
+            ],
+            "stop_prof": false,
+            "duree": 10
+          },
+          {
+            "num": 6,
+            "titre": "Je remplis le BON D'INTERVENTION",
+            "picto": "📝",
+            "action": "Je remplis le document EP3 (modèle C-3). Style télégraphique : phrases courtes.",
+            "checklist": [
+              "Client + adresse + date + heure début/fin",
+              "Type d'intervention coché",
+              "7 actions principales listées (style 'fait : ...')",
+              "Valeurs de réglages notées (Cut-in / Cut-out / Diff)",
+              "Signature en bas"
+            ],
+            "aide": "Style télégraphique = pas de longues phrases. Exemples : « Pose manifold OK. Vide profond OK. Étanchéité 2 procédés OK. Réglage pressostat 2,5/0,5/2. Remise en service OK. ». Le prof a un modèle papier à te donner.",
+            "stop_prof": true,
+            "stop_label": "Le prof valide le bon d'intervention",
+            "duree": 45
+          }
+        ],
+        "defi": "Tu as fini ? Imagine 1 anomalie possible et écris une phrase courte expliquant comment la diagnostiquer.",
+        "secours_lien": "ATELIER-DOC (gabarit bon d'intervention)"
+      },
+
+      "V2": {
+        "label": "V2 — consolidé EP3",
+        "public": "Mode chrono examen",
+        "etapes": [
+          {
+            "num": 1,
+            "titre": "Pump-down propre",
+            "picto": "⬇️",
+            "action": "BP fermée → HP fermée → bypass ouvert → flexibles à 0 bar.",
+            "checklist": ["Pression flexibles = 0", "Zéro perte audible"],
+            "stop_prof": true,
+            "stop_label": "Pump-down validé",
+            "duree": 20
+          },
+          {
+            "num": 2,
+            "titre": "Bouchons + Étanchéité finale 2 procédés",
+            "picto": "🔘",
+            "action": "Bouchons joints OK, serrage franc, détecteur + mousse sur les vannes service.",
+            "checklist": ["Bouchons OK", "2 procédés OK"],
+            "stop_prof": true,
+            "stop_label": "Étanchéité validée",
+            "duree": 25
+          },
+          {
+            "num": 3,
+            "titre": "Remise en service + Cyclage",
+            "picto": "▶️",
+            "action": "Disjoncteur ON, écoute, vérification cyclage.",
+            "checklist": ["Démarrage normal", "Cyclage observé"],
+            "stop_prof": false,
+            "duree": 20
+          },
+          {
+            "num": 4,
+            "titre": "Bon d'intervention EP3 (C-3)",
+            "picto": "📝",
+            "action": "Document complet style télégraphique avec valeurs de réglage.",
+            "checklist": ["Identification client / date", "7+ actions listées", "Valeurs réglage", "Signature"],
+            "stop_prof": true,
+            "stop_label": "Bon validé",
+            "duree": 40
+          }
+        ],
+        "defi": "Rédige en 3 phrases la justification du choix « pump-down » plutôt que « purge atmosphérique ».",
+        "secours_lien": "ATELIER-DOC si rédaction laborieuse"
+      }
+    },
+
+    "TP-053": {
+      "titre": "Mesures de températures pures",
+      "mission": "Tu vas mesurer 6 températures sur l'installation. PAS de calculs aujourd'hui — focus sur la gestuelle propre.",
+      "duree_min": 240,
+      "competences_visees": ["C2.2", "C4.2", "C4.5", "C5.1"],
+
+      "V1": {
+        "label": "V1 — guidé pas-à-pas",
+        "public": "Premier TP de mesures",
+        "etapes": [
+          {
+            "num": 1,
+            "titre": "Je m'équipe + je lis la plaque",
+            "picto": "🏷️",
+            "action": "EPI puis je note ce qu'il y a sur la plaque signalétique de l'installation.",
+            "checklist": [
+              "EPI complets",
+              "Fluide noté (R...)",
+              "Charge en kg notée",
+              "GWP noté",
+              "Numéro de série noté"
+            ],
+            "aide": "Plaque signalétique = la fiche d'identité de la machine. Si elle est illisible → tu écris « illisible » et tu appelles le prof.",
+            "stop_prof": false,
+            "duree": 15
+          },
+          {
+            "num": 2,
+            "titre": "Je laisse tourner 5 minutes",
+            "picto": "⏱️",
+            "action": "L'installation doit tourner depuis au moins 5 minutes pour avoir des valeurs stables.",
+            "checklist": [
+              "Chronomètre lancé",
+              "Installation en marche stable",
+              "Pas d'arrêt au milieu"
+            ],
+            "aide": "Si tu mesures à froid (juste démarrée) → tes valeurs ne valent rien. Patience.",
+            "stop_prof": false,
+            "duree": 5
+          },
+          {
+            "num": 3,
+            "titre": "Je mesure côté HAUTE PRESSION",
+            "picto": "🔥",
+            "action": "Je pose la sonde sur le tube. J'attends 10 secondes que ça stabilise. Je note avec l'unité.",
+            "checklist": [
+              "TSC = température sortie compresseur (°C)",
+              "TEC = température entrée condenseur (°C)",
+              "TScd = température sortie condenseur (°C)"
+            ],
+            "aide": "ATTENTION TUYAUX CHAUDS sortie compresseur. Toujours sonde bien plaquée + 10 secondes d'attente. Sans unité → la note tombe.",
+            "stop_prof": false,
+            "duree": 15
+          },
+          {
+            "num": 4,
+            "titre": "Je mesure côté BASSE PRESSION",
+            "picto": "❄️",
+            "action": "Côté froid : 3 températures dans l'ordre du circuit.",
+            "checklist": [
+              "Tdet = température entrée détendeur (°C)",
+              "TSe = température sortie évaporateur AU BULBE (°C)",
+              "Tasp = température aspiration compresseur (°C)"
+            ],
+            "aide": "TSe et Tasp ne sont PAS au même endroit. TSe c'est tout de suite après l'évaporateur, au bulbe du détendeur. Tasp c'est juste avant le compresseur.",
+            "stop_prof": false,
+            "duree": 15
+          },
+          {
+            "num": 5,
+            "titre": "Je mesure l'air du condenseur",
+            "picto": "🌬️",
+            "action": "Sonde dédiée air. Une mesure à l'entrée d'air, une à la sortie. Je calcule la différence.",
+            "checklist": [
+              "T air entrée condenseur (°C)",
+              "T air sortie condenseur (°C)",
+              "ΔT calculé : T sortie − T entrée (en K)"
+            ],
+            "aide": "ΔT entre 4 et 8 K = installation OK. Plus = problème. Moins = problème aussi. Si tu trouves un nombre négatif → tu as inversé entrée et sortie.",
+            "stop_prof": true,
+            "stop_label": "Le prof valide le ΔT",
+            "duree": 15
+          },
+          {
+            "num": 6,
+            "titre": "Je remplis mon tableau de relevé",
+            "picto": "📊",
+            "action": "Je recopie TOUT dans le tableau avec les unités. Une ligne par mesure.",
+            "checklist": [
+              "Tableau bien rempli",
+              "Toutes les unités présentes (°C, K, bar...)",
+              "ΔT condenseur calculé",
+              "1 ligne d'interprétation : « valeurs OK / pas OK et pourquoi »"
+            ],
+            "stop_prof": true,
+            "stop_label": "Le prof valide le tableau complet",
+            "duree": 15
+          }
+        ],
+        "defi": "Tu as fini ? Reprends 1 mesure UNE seconde fois et compare. Pourquoi ce n'est pas pareil ?",
+        "secours_lien": "ATELIER-MES (gestuelle sonde) si valeurs incohérentes"
+      },
+
+      "V2": {
+        "label": "V2 — consolidé EP3",
+        "public": "Élève qui veut viser EP3 officiel",
+        "etapes": [
+          {
+            "num": 1,
+            "titre": "Plaque + Stabilisation",
+            "picto": "🏷️",
+            "action": "Plaque relevée complète. Stabilisation 5 min minimum.",
+            "checklist": ["Plaque OK", "5 min écoulées"],
+            "stop_prof": false,
+            "duree": 20
+          },
+          {
+            "num": 2,
+            "titre": "6 points T° + Air condenseur",
+            "picto": "🌡️",
+            "action": "TSC, TEC, TScd, Tdet, TSe, Tasp + T air in/out.",
+            "checklist": [
+              "6 T° avec unités",
+              "T air in/out",
+              "Sondes bien plaquées 10 s"
+            ],
+            "stop_prof": false,
+            "duree": 30
+          },
+          {
+            "num": 3,
+            "titre": "ΔT + Interprétation",
+            "picto": "📊",
+            "action": "ΔT condenseur calculé, plage 4-8 K vérifiée, interprétation écrite.",
+            "checklist": ["ΔT calculé", "Interprétation cohérente écrite"],
+            "stop_prof": true,
+            "stop_label": "Tableau + interprétation validés",
+            "duree": 25
+          }
+        ],
+        "defi": "Si ΔT = 12 K, donne 2 causes possibles.",
+        "secours_lien": "ATELIER-MES si imprécisions"
+      }
+    },
+
+    "TP-054": {
+      "titre": "P/T + SC + SR + Fiche MES",
+      "mission": "Aujourd'hui on calcule. Tu mesures, tu lis la table, tu calcules surchauffe et sous-refroidissement, et tu remplis la fiche.",
+      "duree_min": 240,
+      "competences_visees": ["C1.3", "C2.2", "C4.2", "C4.5", "C5.1"],
+
+      "V1": {
+        "label": "V1 — guidé pas-à-pas",
+        "public": "Élève fragile en calcul",
+        "etapes": [
+          {
+            "num": 1,
+            "titre": "Je rappelle TP-053",
+            "picto": "🔁",
+            "action": "Je refais les 6 mesures de température comme la dernière fois.",
+            "checklist": ["Plaque OK", "Stabilisation 5 min", "6 T° relevées avec unités"],
+            "stop_prof": false,
+            "duree": 25
+          },
+          {
+            "num": 2,
+            "titre": "Je relève PO et PK",
+            "picto": "📏",
+            "action": "Aux manomètres FIXES de l'installation, je note la pression basse PO et la pression haute PK.",
+            "checklist": ["PO en bar", "PK en bar"],
+            "aide": "Manomètre fixe = celui qui est SUR l'installation, pas mon manifold.",
+            "stop_prof": false,
+            "duree": 5
+          },
+          {
+            "num": 3,
+            "titre": "Je lis la table P/T",
+            "picto": "📖",
+            "action": "Avec PO je trouve T0 (température basse côté évap). Avec PK je trouve TK (température haute côté cond).",
+            "checklist": ["T0 trouvé via PO", "TK trouvé via PK"],
+            "aide": "T0 = température de saturation côté basse. TK = température de saturation côté haute. Tu cherches dans le tableau du fluide identifié au TP-050.",
+            "stop_prof": true,
+            "stop_label": "Le prof vérifie T0 et TK",
+            "duree": 10
+          },
+          {
+            "num": 4,
+            "titre": "Je calcule la SURCHAUFFE",
+            "picto": "🔥",
+            "action": "2 formules : SC locale = Tasp − T0  /  SC totale = TSe − T0",
+            "checklist": [
+              "SC locale calculée (en K)",
+              "SC totale calculée (en K)",
+              "Plage normale 5 à 8 K vérifiée"
+            ],
+            "aide": "SC = Surchauffe. C'est une DIFFÉRENCE de température, donc en KELVIN (K), pas en °C. Si tu trouves un nombre négatif → tu as inversé.",
+            "stop_prof": true,
+            "stop_label": "Le prof vérifie SC locale + totale",
+            "duree": 20
+          },
+          {
+            "num": 5,
+            "titre": "Je calcule le SOUS-REFROIDISSEMENT",
+            "picto": "❄️",
+            "action": "2 formules : SR local = TK − TScd  /  SR total = TK − Tdet",
+            "checklist": [
+              "SR local calculé (en K)",
+              "SR total calculé (en K)",
+              "Plage normale 3 à 8 K vérifiée"
+            ],
+            "aide": "SR = Sous-Refroidissement. Encore une différence de T°, donc en K. Le SR vient en SOUSTRAYANT TScd ou Tdet de TK.",
+            "stop_prof": true,
+            "stop_label": "Le prof vérifie SR local + total",
+            "duree": 20
+          },
+          {
+            "num": 6,
+            "titre": "Je mesure I et U",
+            "picto": "⚡",
+            "action": "Avec EPI ÉLECTRIQUES (gants 00 + visière), je mesure l'intensité du compresseur et la tension du réseau.",
+            "checklist": [
+              "EPI électriques portés en continu",
+              "I compresseur (en A) — UN SEUL fil dans la pince",
+              "U réseau (en V) — entre phase et neutre"
+            ],
+            "aide": "Pince ampèremétrique : si tu mets 2 fils ensemble dans la pince → elle lit 0. UN SEUL fil. EPI 00 = jamais retirés pendant la mesure.",
+            "stop_prof": true,
+            "stop_label": "Le prof valide la mesure I/U",
+            "duree": 15
+          },
+          {
+            "num": 7,
+            "titre": "Je fais le diagnostic",
+            "picto": "🩺",
+            "action": "Je regarde SC, SR, I et je dis si tout est cohérent.",
+            "checklist": [
+              "SC dans la plage : OUI/NON",
+              "SR dans la plage : OUI/NON",
+              "I cohérente avec puissance plaque : OUI/NON",
+              "Diagnostic en 2 phrases (saine ou anomalie + raison probable)"
+            ],
+            "aide": "Si tout est dans les plages → installation saine. Si SC trop grande → manque de fluide. Si SR trop petit → trop de fluide. Demande au prof si tu es coincé.",
+            "stop_prof": false,
+            "duree": 15
+          },
+          {
+            "num": 8,
+            "titre": "Je remplis la FICHE DE MISE EN SERVICE (C-2)",
+            "picto": "📋",
+            "action": "Document officiel EP3. Tout ce que j'ai trouvé va dedans.",
+            "checklist": [
+              "Identification installation",
+              "P/T relevés",
+              "6 températures",
+              "I et U",
+              "SC locale + totale",
+              "SR local + total",
+              "Toutes unités présentes",
+              "Signature"
+            ],
+            "stop_prof": true,
+            "stop_label": "Le prof valide la fiche complète",
+            "duree": 30
+          }
+        ],
+        "defi": "Tu as fini ? Calcule 1 ratio : SC totale / SR total. Si proche de 1, l'installation est-elle équilibrée ?",
+        "secours_lien": "ATELIER-CALC (rappel formules SC/SR) si calculs faux"
+      },
+
+      "V2": {
+        "label": "V2 — consolidé EP3",
+        "public": "Mode chrono EP3 officiel",
+        "etapes": [
+          {
+            "num": 1,
+            "titre": "6 T° + PO/PK",
+            "picto": "🌡️",
+            "action": "Mesures 6 températures + PO/PK aux manomètres fixes.",
+            "checklist": ["6 T° + 2 P avec unités"],
+            "stop_prof": false,
+            "duree": 30
+          },
+          {
+            "num": 2,
+            "titre": "Table P/T → T0/TK",
+            "picto": "📖",
+            "action": "Lecture table P/T : T0 (PO) et TK (PK).",
+            "checklist": ["T0 + TK validés"],
+            "stop_prof": false,
+            "duree": 10
+          },
+          {
+            "num": 3,
+            "titre": "SC + SR (4 formules)",
+            "picto": "🧮",
+            "action": "SC locale (Tasp − T0) + SC totale (TSe − T0) + SR local (TK − TScd) + SR total (TK − Tdet).",
+            "checklist": ["4 calculs avec unité K", "Cohérence avec plages"],
+            "stop_prof": true,
+            "stop_label": "4 calculs validés",
+            "duree": 30
+          },
+          {
+            "num": 4,
+            "titre": "I + U + Diagnostic",
+            "picto": "⚡",
+            "action": "Mesure I/U avec EPI électriques + diagnostic croisé SC/SR/I écrit.",
+            "checklist": ["I/U + diagnostic 4 questions"],
+            "stop_prof": true,
+            "stop_label": "Diagnostic validé",
+            "duree": 30
+          },
+          {
+            "num": 5,
+            "titre": "Fiche MES (C-2)",
+            "picto": "📋",
+            "action": "Document officiel complet avec toutes unités + signature.",
+            "checklist": ["Fiche MES complète"],
+            "stop_prof": true,
+            "stop_label": "Fiche validée",
+            "duree": 40
+          }
+        ],
+        "defi": "Une SC = 12 K et un SR = 1 K. Tu diagnostiques quoi en 2 phrases ?",
+        "secours_lien": "ATELIER-CALC si formules confondues"
+      }
+    },
+
+    "TP-055": {
+      "titre": "Incondensables + TeqCO₂ + Plaque F-Gaz",
+      "mission": "Tu vérifies s'il y a de l'air dans l'installation, tu calcules l'impact écolo (TeqCO₂) et tu remplis la plaque F-Gaz.",
+      "duree_min": 240,
+      "competences_visees": ["C1.3", "C4.2", "C5.1"],
+
+      "V1": {
+        "label": "V1 — guidé pas-à-pas",
+        "public": "Élève qui découvre F-Gaz",
+        "etapes": [
+          {
+            "num": 1,
+            "titre": "Je relève la plaque",
+            "picto": "🏷️",
+            "action": "Plaque signalétique. Je note fluide, charge, GWP.",
+            "checklist": ["Fluide", "Charge en kg", "GWP"],
+            "stop_prof": false,
+            "duree": 10
+          },
+          {
+            "num": 2,
+            "titre": "Je teste les INCONDENSABLES",
+            "picto": "💨",
+            "action": "Installation à L'ARRÊT depuis 15 minutes. Je compare la HP réelle avec la HP théorique de la table.",
+            "checklist": [
+              "Installation arrêtée 15 min minimum",
+              "T ambiante mesurée",
+              "HP mesurée à l'arrêt",
+              "HP théorique cherchée dans la table P/T pour la T ambiante",
+              "Écart calculé : HP mesurée − HP théorique"
+            ],
+            "aide": "Incondensables = de l'AIR dans le circuit. Ça fait monter la HP anormalement. Si écart > 1 bar → il y a de l'air. Patience : il FAUT 15 min d'équilibrage.",
+            "stop_prof": true,
+            "stop_label": "Le prof valide le test incondensables",
+            "duree": 30
+          },
+          {
+            "num": 3,
+            "titre": "Je redémarre + relevés rapides",
+            "picto": "▶️",
+            "action": "Démarrage + 5 températures essentielles + PO/PK pour le calcul.",
+            "checklist": [
+              "Démarrage + 5 min stabilisation",
+              "5 T° clés (TSC, TScd, Tdet, TSe, Tasp)",
+              "PO + PK"
+            ],
+            "stop_prof": false,
+            "duree": 25
+          },
+          {
+            "num": 4,
+            "titre": "Je révise SC et SR (sans regarder)",
+            "picto": "💪",
+            "action": "Tu fais les 4 calculs SC/SR DE TÊTE — sans regarder le TP-054. C'est la révision active.",
+            "checklist": [
+              "SC locale (Tasp − T0)",
+              "SC totale (TSe − T0)",
+              "SR local (TK − TScd)",
+              "SR total (TK − Tdet)"
+            ],
+            "aide": "Si tu es bloqué → écris les formules sur un papier que tu CACHES. Puis tu refais. Puis tu vérifies. Pas grave, c'est l'apprentissage.",
+            "stop_prof": false,
+            "duree": 20
+          },
+          {
+            "num": 5,
+            "titre": "Je calcule le TeqCO₂",
+            "picto": "🌍",
+            "action": "Formule simple :  TeqCO₂ = Charge × GWP / 1000",
+            "checklist": [
+              "Charge récupérée sur plaque (kg)",
+              "GWP récupéré sur plaque",
+              "Calcul Charge × GWP / 1000",
+              "Résultat avec unité : tonne équivalent CO₂"
+            ],
+            "aide": "Exemple : 1,2 kg × 2088 / 1000 = 2,5 t eq CO₂. Calculatrice OK. La fréquence de contrôle dépend du résultat (voir étape suivante).",
+            "stop_prof": false,
+            "duree": 15
+          },
+          {
+            "num": 6,
+            "titre": "Je trouve la fréquence de contrôle",
+            "picto": "📅",
+            "action": "Selon le TeqCO₂, je note la fréquence légale.",
+            "checklist": [
+              "TeqCO₂ < 5 : pas de contrôle obligatoire",
+              "5 à 50 : tous les 12 mois",
+              "50 à 500 : tous les 6 mois",
+              "> 500 : tous les 3 mois",
+              "Fréquence retenue notée sur la fiche"
+            ],
+            "stop_prof": true,
+            "stop_label": "Le prof valide le calcul + la fréquence",
+            "duree": 10
+          },
+          {
+            "num": 7,
+            "titre": "Je remplis la PLAQUE F-GAZ",
+            "picto": "📝",
+            "action": "Document officiel. Aucune case vide.",
+            "checklist": [
+              "Société + opérateur + date",
+              "Fluide + GWP",
+              "Charge totale",
+              "Type d'opération coché",
+              "TeqCO₂",
+              "Huile noté",
+              "Signature"
+            ],
+            "stop_prof": true,
+            "stop_label": "Le prof valide la plaque F-Gaz complète",
+            "duree": 25
+          },
+          {
+            "num": 8,
+            "titre": "Synthèse en 3 lignes",
+            "picto": "✍️",
+            "action": "Sur la fiche, j'écris en 3 lignes max : installation saine ? Anomalie ? Que faire ?",
+            "checklist": [
+              "Ligne 1 : état général (saine / anomalie)",
+              "Ligne 2 : raison principale (chiffres à l'appui)",
+              "Ligne 3 : action recommandée (rien à faire / contrôle / réparation)"
+            ],
+            "stop_prof": false,
+            "duree": 15
+          }
+        ],
+        "defi": "Tu as fini ? Imagine que GWP = 6000 et charge = 1 kg. Recalcule TeqCO₂ et donne la fréquence.",
+        "secours_lien": "ATELIER-FGAZ (gabarit plaque) si difficulté"
+      },
+
+      "V2": {
+        "label": "V2 — consolidé EP3",
+        "public": "Mode chrono EP3 officiel",
+        "etapes": [
+          {
+            "num": 1,
+            "titre": "Plaque + Test incondensables",
+            "picto": "💨",
+            "action": "Plaque + test 15 min équilibrage + comparaison HP mesurée vs théorique.",
+            "checklist": ["Plaque OK", "Écart HP relevé"],
+            "stop_prof": true,
+            "stop_label": "Test incondensables validé",
+            "duree": 35
+          },
+          {
+            "num": 2,
+            "titre": "Démarrage + Révision SC/SR",
+            "picto": "🧮",
+            "action": "Relevés rapides + 4 calculs SC/SR en autonomie.",
+            "checklist": ["Relevés OK", "4 calculs en autonomie"],
+            "stop_prof": false,
+            "duree": 35
+          },
+          {
+            "num": 3,
+            "titre": "TeqCO₂ + Fréquence",
+            "picto": "🌍",
+            "action": "Charge × GWP / 1000 + détermination fréquence légale.",
+            "checklist": ["TeqCO₂ correct", "Fréquence justifiée"],
+            "stop_prof": true,
+            "stop_label": "Calcul réglementaire validé",
+            "duree": 20
+          },
+          {
+            "num": 4,
+            "titre": "Plaque F-Gaz + Synthèse",
+            "picto": "📝",
+            "action": "Plaque officielle + synthèse 3 lignes (état, cause, action).",
+            "checklist": ["Plaque complète", "Synthèse cohérente"],
+            "stop_prof": true,
+            "stop_label": "Plaque + synthèse validées",
+            "duree": 30
+          }
+        ],
+        "defi": "Donne 2 conséquences possibles d'incondensables non détectés sur la durée de vie du compresseur.",
+        "secours_lien": "ATELIER-FGAZ si plaque incomplète"
+      }
+    }
+  },
+
+  "secours": {
+    "ATELIER-S1": {
+      "titre": "Atelier secours : lecture table P/T",
+      "duree": 30,
+      "objectif": "Savoir trouver T0 ou TK depuis une pression dans une table P/T",
+      "etapes": [
+        "Le prof donne 3 fluides différents et 3 valeurs de pression",
+        "L'élève trouve T0 ou TK pour chacun",
+        "L'élève rejoue le TP en cours dès qu'il trouve juste 3 fois de suite"
+      ]
+    },
+    "ATELIER-S2": {
+      "titre": "Atelier secours : recherche d'étanchéité",
+      "duree": 30,
+      "objectif": "Réaliser les 2 procédés de recherche de fuite",
+      "etapes": [
+        "Mini-circuit avec 3 raccords dont 1 fuit volontairement",
+        "L'élève passe le détecteur électronique → trouve le bon",
+        "L'élève passe la mousse → confirme",
+        "Réparation + nouveau test"
+      ]
+    },
+    "ATELIER-E1": {
+      "titre": "Atelier secours : lecture schéma électrique pressostat",
+      "duree": 30,
+      "objectif": "Comprendre le câblage commune-NO-NF d'un pressostat",
+      "etapes": [
+        "Pressostat à plat sur la table",
+        "Le prof explique commun / NO / NF avec les couleurs",
+        "L'élève câble sur planche d'essai (sans circuit chaud)",
+        "Test continuité au multimètre"
+      ]
+    },
+    "ATELIER-MES": {
+      "titre": "Atelier secours : gestuelle des sondes T°",
+      "duree": 30,
+      "objectif": "Mesurer juste — sonde plaquée, attente 10 s, unité",
+      "etapes": [
+        "L'élève mesure 3 T° connues (eau chaude, glace fondante, ambiante)",
+        "Le prof contrôle la gestuelle",
+        "Mesure refaite jusqu'à précision ± 1 °C"
+      ]
+    },
+    "ATELIER-CALC": {
+      "titre": "Atelier secours : formules SC / SR",
+      "duree": 30,
+      "objectif": "Mémoriser et appliquer les 4 formules sans hésitation",
+      "etapes": [
+        "Affiche A4 avec les 4 formules collée au mur",
+        "5 exercices papier avec valeurs données",
+        "Auto-correction avec corrigé fourni",
+        "L'élève reprend le TP en cours"
+      ]
+    },
+    "ATELIER-DOC": {
+      "titre": "Atelier secours : rédaction style télégraphique",
+      "duree": 20,
+      "objectif": "Savoir rédiger un bon d'intervention concis",
+      "etapes": [
+        "Modèle pré-rempli partiellement",
+        "L'élève complète les actions manquantes",
+        "Vérification avec gabarit",
+        "L'élève recopie sur le bon vierge du TP"
+      ]
+    },
+    "ATELIER-FGAZ": {
+      "titre": "Atelier secours : remplissage plaque F-Gaz",
+      "duree": 25,
+      "objectif": "Plaque F-Gaz règlementaire complète sans aucun oubli",
+      "etapes": [
+        "Plaque F-Gaz vierge sous les yeux",
+        "Liste des 8 cases obligatoires affichée à côté",
+        "L'élève remplit avec données fictives",
+        "Le prof valide avant retour au TP"
+      ]
+    }
+  }
+}
