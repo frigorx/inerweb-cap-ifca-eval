@@ -9,6 +9,7 @@
   <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>%E2%9D%84</text></svg>" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
   <script src="https://unpkg.com/ical.js@1.5.0/build/ical.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 </head>
 <body>
 
@@ -197,10 +198,12 @@
             <select id="bulletin-eleve"></select>
           </div>
           <div>
-            <button class="btn orange" id="btn-print-bulletin">🖨 Imprimer / PDF</button>
+            <button class="btn orange" id="btn-print-bulletin">🖨 Imprimer</button>
+            <button class="btn" id="btn-pdf-bulletin" style="margin-left:6px;">📄 PDF</button>
           </div>
           <div>
             <button class="btn small secondary" id="btn-refresh-bulletin">↻ Actualiser</button>
+            <button class="btn small ghost" id="btn-pdf-tous" style="margin-left:6px;">📦 PDF tous (ZIP)</button>
           </div>
         </div>
       </div>
