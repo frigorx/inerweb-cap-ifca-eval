@@ -1,44 +1,63 @@
-/* eval-engine.js — moteur d'évaluation EP3 (TP × élève × compétence × niveau) */
+/* eval-engine.js — moteur d'évaluation EP1/EP2/EP3 (TP × élève × compétence × niveau) */
 
 (function() {
   'use strict';
 
+  let _epreuve = 'EP3';
   let _tps = null;
   let _mappings = null;
   let _eleves = null;
   let _comps = null;
   let _selectedTP = null;
-  let _draft = {}; // brouillon : { pseudo: { code: niveau } }
+  let _draft = {};
+
+  const FILES = {
+    EP1: { tp: 'tp_ep1.json',  map: 'mappings_ep1.json',  comp: 'competences_ep1.json'  },
+    EP2: { tp: 'tp_ep2.json',  map: 'mappings_ep2.json',  comp: 'competences_ep2.json'  },
+    EP3: { tp: 'tp_ep3.json',  map: 'mappings_ep3.json',  comp: 'competences_ep3.json'  }
+  };
 
   async function init() {
-    const cat = await Catalog.load('tp_ep3.json');
-    const map = await Catalog.load('mappings_ep3.json');
-    const el  = await Catalog.load('eleves_pseudo.json');
-    const co  = await Catalog.load('competences_ep3.json');
-    if (!cat || !map || !el || !co) return;
-    _tps = cat.tps;
-    _mappings = map.mappings;
-    _eleves = el;
-    _comps = co.competences;
-    renderTPList();
+    _eleves = await Catalog.load('eleves_pseudo.json');
+    if (!_eleves) return;
+    await loadEpreuve('EP3');
     setDateNow();
     document.getElementById('eval-classe').onchange = renderTPList;
+    document.getElementById('eval-epreuve').onchange = (e) => loadEpreuve(e.target.value);
     document.getElementById('btn-save-eval').onclick = saveEval;
     document.getElementById('btn-clear-eval').onclick = clearDraft;
   }
 
+  async function loadEpreuve(ep) {
+    _epreuve = ep;
+    const f = FILES[ep];
+    if (!f) return;
+    const cat = await Catalog.load(f.tp);
+    const map = await Catalog.load(f.map);
+    const co  = await Catalog.load(f.comp);
+    if (!cat || !map || !co) return;
+    _tps = cat.tps;
+    _mappings = map.mappings;
+    _comps = co.competences;
+    _selectedTP = null;
+    document.getElementById('eval-grid-card').hidden = true;
+    document.getElementById('eval-heading').textContent =
+      ep === 'EP1' ? '✍ Évaluation EP1 — Préparation d\'intervention'
+      : ep === 'EP2' ? '✍ Évaluation EP2 — Réalisation d\'intervention'
+      : '✍ Évaluation EP3 — Mise en service / maintenance';
+    renderTPList();
+  }
+
   function setDateNow() {
     const d = new Date();
-    const s = d.toISOString().slice(0, 16).replace('T', ' ');
-    document.getElementById('eval-date').value = s;
+    document.getElementById('eval-date').value = d.toISOString().slice(0, 16).replace('T', ' ');
   }
 
   function renderTPList() {
     const wrap = document.getElementById('tp-list');
     wrap.innerHTML = '';
     _tps.forEach(tp => {
-      // tournant TP-056 a son onglet dédié
-      if (tp.id === 'TP-056') return;
+      if (tp.id === 'TP-056') return; // tournant a son propre onglet
       const card = document.createElement('div');
       card.className = 'tp-card';
       card.dataset.tpId = tp.id;
@@ -62,10 +81,9 @@
     const card = document.getElementById('eval-grid-card');
     card.hidden = false;
     document.getElementById('eval-tp-title').textContent = `${_selectedTP.id} — ${_selectedTP.titre}`;
-    document.getElementById('eval-tp-meta').textContent = `Compétences : ${_selectedTP.competences.join(' · ')} — niveau attendu fin CAP : Maîtrisé (M)`;
+    document.getElementById('eval-tp-meta').textContent = `Épreuve ${_epreuve} · Compétences : ${_selectedTP.competences.join(' · ')} — niveau attendu fin CAP : Maîtrisé (M)`;
 
-    // Charger le brouillon en cours
-    _draft = Store.get(`draft.eval.${_selectedTP.id}`, {}) || {};
+    _draft = Store.get(`draft.eval.${_epreuve}.${_selectedTP.id}`, {}) || {};
 
     const classe = document.getElementById('eval-classe').value;
     const eleves = _eleves.eleves.filter(e => e.classe === classe);
@@ -101,7 +119,6 @@
       wrap.appendChild(block);
     });
 
-    // Délégation : click sur niveau
     wrap.onclick = (ev) => {
       const t = ev.target;
       if (!t.classList.contains('eval-niveau')) return;
@@ -109,17 +126,15 @@
       const code = t.dataset.code;
       const niveau = t.dataset.niveau;
       _draft[ps] ||= {};
-      // toggle : si déjà sélectionné, désélectionne
       if (_draft[ps][code] === niveau) {
         delete _draft[ps][code];
         t.classList.remove('selected');
       } else {
         _draft[ps][code] = niveau;
-        // visual
         t.parentElement.querySelectorAll(`.eval-niveau[data-pseudo="${ps}"][data-code="${code}"]`).forEach(x => x.classList.remove('selected'));
         t.classList.add('selected');
       }
-      Store.set(`draft.eval.${_selectedTP.id}`, _draft);
+      Store.set(`draft.eval.${_epreuve}.${_selectedTP.id}`, _draft);
     };
   }
 
@@ -141,7 +156,7 @@
           Pseudo: pseudo,
           Classe: classe,
           Prof: profCode,
-          Epreuve: 'EP3',
+          Epreuve: _epreuve,
           TP: _selectedTP.id,
           Code: code,
           Niveau: niveaux[code]
@@ -157,22 +172,21 @@
       if (res.ok) ok++; else if (res.buffered) buffered++;
     }
     if (buffered > 0) {
-      status.innerHTML = `✓ ${ok} envoyé(s), ⏳ <strong>${buffered}</strong> en buffer offline (renvoi auto).`;
+      status.innerHTML = `✓ ${ok} envoyé(s), ⏳ <strong>${buffered}</strong> en buffer offline.`;
       toast(`${buffered} éval(s) en buffer offline`, 'info');
     } else {
       status.textContent = `✓ ${ok} évaluation(s) envoyée(s).`;
       toast(`${ok} évaluation(s) sauvegardée(s)`, 'success');
     }
-    // Vider brouillon
-    Store.remove(`draft.eval.${_selectedTP.id}`);
+    Store.remove(`draft.eval.${_epreuve}.${_selectedTP.id}`);
     _draft = {};
     renderEvalGrid();
   }
 
   function clearDraft() {
     if (!_selectedTP) return;
-    if (!confirm(`Effacer le brouillon de ${_selectedTP.id} ?`)) return;
-    Store.remove(`draft.eval.${_selectedTP.id}`);
+    if (!confirm(`Effacer le brouillon de ${_selectedTP.id} (${_epreuve}) ?`)) return;
+    Store.remove(`draft.eval.${_epreuve}.${_selectedTP.id}`);
     _draft = {};
     renderEvalGrid();
   }
@@ -181,6 +195,6 @@
     return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
-  window.Eval = { init, selectTP };
+  window.Eval = { init, selectTP, loadEpreuve };
 
 })();

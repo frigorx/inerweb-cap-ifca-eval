@@ -1,0 +1,107 @@
+{
+  "_meta": {
+    "version": "1.0-placeholder",
+    "description": "TP EP2 placeholders — à enrichir par les enseignants",
+    "lastUpdate": "2026-04-25",
+    "epreuve": "EP2",
+    "note": "Placeholders pour structure UI. Les profs renseigneront les opérations + critères réels."
+  },
+  "tps": [
+    {
+      "id": "EP2-A",
+      "titre": "Implantation + Pose composants",
+      "sousTitre": "Repérage, fixation, protection",
+      "theme": "pose",
+      "duree": 240,
+      "difficulte": 3,
+      "type": "atelier",
+      "competences": ["C2.1", "C2.2", "C3.1"],
+      "operations": [
+        "Lecture plan implantation",
+        "Repérage + traçage",
+        "Fixation supports",
+        "Pose compresseur + condenseur + évaporateur"
+      ]
+    },
+    {
+      "id": "EP2-B",
+      "titre": "Façonnage tubes + Assemblage mécanique",
+      "sousTitre": "Cintrage, dressage, raccords",
+      "theme": "tube",
+      "duree": 240,
+      "difficulte": 3,
+      "type": "atelier",
+      "competences": ["C2.2", "C3.2", "C3.3"],
+      "operations": [
+        "Mesure + traçage tube",
+        "Cintrage à la cintreuse manuelle",
+        "Dressage / coupe nette",
+        "Raccord à compression / flare"
+      ]
+    },
+    {
+      "id": "EP2-C",
+      "titre": "Brasure tendre + forte",
+      "sousTitre": "Préparation, oxy-azote, contrôle visuel",
+      "theme": "brasure",
+      "duree": 180,
+      "difficulte": 3,
+      "type": "atelier",
+      "competences": ["C2.2", "C3.4"],
+      "operations": [
+        "EPI complets + écran",
+        "Préparation tube (décapage, flux)",
+        "Brasure tendre étain",
+        "Brasure forte argent"
+      ]
+    },
+    {
+      "id": "EP2-D",
+      "titre": "Câblage électrique BT",
+      "sousTitre": "Schéma, sertissage, test",
+      "theme": "electrique",
+      "duree": 180,
+      "difficulte": 3,
+      "type": "atelier",
+      "competences": ["C2.2", "C3.5"],
+      "operations": [
+        "Lecture schéma électrique",
+        "Choix section conducteur",
+        "Sertissage cosses + test traction",
+        "Câblage commande + puissance"
+      ]
+    },
+    {
+      "id": "EP2-E",
+      "titre": "Mise en route + Réglages",
+      "sousTitre": "Démarrage, contrôle, ajustements",
+      "theme": "mise-en-service",
+      "duree": 120,
+      "difficulte": 3,
+      "type": "atelier",
+      "competences": ["C3.6"],
+      "operations": [
+        "Procédure démarrage",
+        "Vérification rotations / pressions",
+        "Réglage organes de régulation",
+        "Vérification cyclage"
+      ]
+    },
+    {
+      "id": "EP2-F",
+      "titre": "Remplacement composant défaillant",
+      "sousTitre": "Diagnostic + dépose + repose + test",
+      "theme": "maintenance",
+      "duree": 240,
+      "difficulte": 3,
+      "type": "atelier",
+      "competences": ["C2.2", "C3.7"],
+      "operations": [
+        "Diagnostic préalable",
+        "VAT + dépose ancien composant",
+        "Pose nouveau composant",
+        "Test fonctionnement"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Référentiel compétences EP1 CAP IFCA — Préparation d'intervention",
+    "lastUpdate": "2026-04-25",
+    "epreuve": "EP1"
+  },
+  "competences": [
+    {"code": "C1.1", "libelle": "Recueillir / décoder informations techniques", "famille": "C1", "principale": true},
+    {"code": "C1.2", "libelle": "Analyser les contraintes (technique, réglementaire, sécurité)", "famille": "C1", "principale": true},
+    {"code": "C1.3", "libelle": "Préparer / organiser l'intervention (matériel, doc)", "famille": "C1", "principale": true},
+    {"code": "C1.4", "libelle": "Communiquer avec la hiérarchie / le client", "famille": "C1", "principale": true},
+    {"code": "C1.5", "libelle": "Rendre compte oralement et par écrit", "famille": "C1", "principale": true}
+  ],
+  "axes_radar_ep1": ["C1.1", "C1.2", "C1.3", "C1.4", "C1.5"]
+}

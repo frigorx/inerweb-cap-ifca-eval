@@ -1,0 +1,34 @@
+{
+  "_meta": {
+    "version": "1.0-placeholder",
+    "description": "Mappings TP EP1 → compétences avec critères placeholders",
+    "lastUpdate": "2026-04-25",
+    "note": "À enrichir par les enseignants avec les critères propres à chaque TP."
+  },
+  "mappings": [
+    {
+      "tpId": "EP1-A",
+      "epreuve": "EP1",
+      "competences": [
+        {"code": "C1.1", "niveauAttendu": 5, "criteres": ["Plans correctement lus", "Schéma fluidique compris", "Fiches techniques exploitées"]},
+        {"code": "C1.2", "niveauAttendu": 5, "criteres": ["Contraintes réglementaires identifiées", "Risques sécurité listés", "Limites techniques cernées"]},
+        {"code": "C1.3", "niveauAttendu": 5, "criteres": ["Liste matériel complète", "Estimation durée réaliste", "Documents préparés"]}
+      ]
+    },
+    {
+      "tpId": "EP1-B",
+      "epreuve": "EP1",
+      "competences": [
+        {"code": "C1.4", "niveauAttendu": 5, "criteres": ["Vocabulaire technique adapté au public", "Posture professionnelle", "Réponses pertinentes"]},
+        {"code": "C1.5", "niveauAttendu": 5, "criteres": ["Compte-rendu structuré", "Vocabulaire précis", "Orthographe correcte"]}
+      ]
+    },
+    {
+      "tpId": "EP1-C",
+      "epreuve": "EP1",
+      "competences": [
+        {"code": "C1.3", "niveauAttendu": 5, "criteres": ["Inventaire complet", "Vérifications effectuées", "Chargement organisé"]}
+      ]
+    }
+  ]
+}
