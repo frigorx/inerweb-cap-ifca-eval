@@ -1,10 +1,10 @@
-# RAPPORT FINAL — inerWeb Eval CAP IFCA V1
+# RAPPORT FINAL — inerWeb Eval CAP IFCA
 
 **Date** : 2026-04-25
 **Auteur** : Claude (autonomie complète) pour F. Henninot
 **Repo** : [frigorx/inerweb-cap-ifca-eval](https://github.com/frigorx/inerweb-cap-ifca-eval)
 **URL prod** : https://frigorx.github.io/inerweb-cap-ifca-eval/
-**Tag livrable** : `v1.0.0`
+**Tags** : `v1.0.0` (livraison 27/04 EP3) · `v1.1.0` (EP1+EP2 placeholders) · `v1.2.0` (PDF + doc prof)
 
 ---
 
@@ -65,22 +65,28 @@
 
 ---
 
-## ⏳ Phases pending (non bloquantes pour la livraison 27/04)
+## ✅ Phases bonus complétées (V1.1 + V1.2)
 
-### Phase 2 — V1.1 EP1 + EP2 (semaine du 28/04)
-À faire après livraison :
-- Mappings `data/mappings_ep1.json` (C1.1, C1.2, C1.3, C1.4, C1.5)
-- Mappings `data/mappings_ep2.json` (C2.1, C2.2, C3.1 → C3.7)
-- TP placeholders `tp_ep1.json` / `tp_ep2.json` à enrichir par les profs
-- Sélecteur d'épreuve EP1/EP2/EP3 dans `eval-engine.js`
-- Radar consolidé 3 épreuves
-- Vue redoublants EP
+### Phase 2 — V1.1 EP1 + EP2 (commit `071e578`, tag `v1.1.0`)
+- `data/competences_ep1.json` : 5 compétences C1.1 → C1.5
+- `data/competences_ep2.json` : 9 compétences C2.1, C2.2, C3.1 → C3.7
+- `data/tp_ep1.json` : 3 TP placeholders (étude, communication, préparation)
+- `data/tp_ep2.json` : 6 TP placeholders (implantation, façonnage, brasure, câblage, MES, remplacement)
+- `data/mappings_ep1.json` + `data/mappings_ep2.json` : critères placeholders **à enrichir par les profs**
+- `index.html` + `js/eval-engine.js` : sélecteur d'épreuve EP1/EP2/EP3 + chargement dynamique + draft scoped par épreuve
 
-### Phase 3 — V1.2 dossier inspection
-À faire avant l'inspection :
-- Export PDF dossier complet par élève (html2pdf)
-- Tableau de bord classe (heatmap compétences × élèves)
-- Documentation prof (`DOCUMENTATION_PROF.md`)
+### Phase 3 — V1.2 export PDF + doc prof (commit `8f6e0c7`, tag `v1.2.0`)
+- `index.html` : ajout html2pdf CDN + 2 boutons (📄 PDF unitaire + 📦 PDF tous)
+- `js/bulletin.js` : `exportPDF()` unitaire + `exportAllPDF()` boucle 24 élèves
+- `DOCUMENTATION_PROF.md` : tutoriel pas-à-pas 10 sections (connexion, éval, TP-056, radar, bulletin, agenda, config, RGPD, dépannage, enrichissement)
+
+## ⏳ Phases pending (à faire plus tard)
+
+### V2 — améliorations UX
+- Radar consolidé 3 épreuves (mini-radar EP1 + EP2 + EP3 côte à côte sur le bulletin)
+- Vue dashboard classe (heatmap compétences × élèves + alertes ≥3 NA)
+- Vue « élèves redoublants EP » (filtre rapide)
+- Critères réels EP1/EP2 (placeholders à remplacer par les vrais critères pédagogiques)
 
 ---
 
@@ -127,10 +133,11 @@
 
 ## 📊 Stats
 
-- **Commits** : 7 commits sur `main` (375ea38, 658bb53, fca3e1d, 3deab22, 83c9436, e128ff2 + le tag)
-- **Code** : ~3 660 lignes (HTML 251, CSS 489, JS 1 398, JSON 369, MD ~600)
-- **9 modules JS** vanilla (zéro framework, deux CDN : Chart.js 4.4.0 + ical.js 1.5.0)
-- **Apps Script** : 263 lignes, déployé v3.0
+- **Commits sur main** : 9 commits (Phase 0 → Phase 3) + 3 tags (v1.0.0, v1.1.0, v1.2.0)
+- **Code total** : ~4 200 lignes (HTML 270, CSS 489, JS 1 470, JSON 480 incluant EP1/EP2, MD 900+)
+- **9 modules JS** vanilla (zéro framework, trois CDN : Chart.js 4.4.0 + ical.js 1.5.0 + html2pdf 0.10.1)
+- **Apps Script** : 263 lignes, déployé v3.0 sur l'URL existante (compatibilité legacy préservée)
+- **JSON métier** : 4 EP3 + 3 EP1 + 3 EP2 + élèves pseudo = 10 fichiers data
 - **Durée run autonomie** : ~2 h (lecture CDC/PLAN inclus)
 
 ---
@@ -157,7 +164,12 @@
 | Apps Script | https://script.google.com/.../exec (URL inchangée) | ✅ déployé v3.0 @7 |
 | Sheet | 16T1T3yL6M49OhJUQS1SmFHwW7Bywp7m2kSXDiXdmItk | ✅ feuille `eval-cap-ifca` créée auto |
 | Smoke test multi-prof | test/smoke.html | ⏳ à exécuter manuellement par Franck |
+| Tag v1.0.0 | EP3 livraison 27/04 | ✅ poussé |
+| Tag v1.1.0 | EP1+EP2 placeholders + sélecteur | ✅ poussé |
+| Tag v1.2.0 | export PDF + DOCUMENTATION_PROF.md | ✅ poussé |
+| Documentation prof | DOCUMENTATION_PROF.md | ✅ rédigée (10 sections) |
 
 ---
 
 ✅ **Livraison V1.0 EP3 prête pour la séance S1 du lundi 27/04/2026 — révisions 7 TP CAP IFCA 2.**
+✅ **Bonus V1.1 EP1+EP2 + V1.2 PDF + doc prof livrés en avance.**

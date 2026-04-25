@@ -17,3 +17,9 @@
 [2026-04-25 20:05] Phase 1.9 → node --check : 9 fichiers JS sans erreur de syntaxe
 [2026-04-25 20:05] Phase 1.9 → JSON valide : tp_ep3 + mappings_ep3 + eleves_pseudo + competences_ep3
 [2026-04-25 20:05] DECISION: smoke test 2-iframes documenté dans test/smoke.html — test final UI à valider par Franck (Claude ne peut pas piloter un navigateur en autonomie)
+[2026-04-25 20:30] Phase 1.10 → merge dev→main + tag v1.0.0 + push — Pages built en ~30s, HTTP 200, titre OK
+[2026-04-25 20:35] Phase 4 → RAPPORT_FINAL.md initial pushé sur main
+[2026-04-25 20:40] Phase 2 → EP1 (5 comp) + EP2 (9 comp) + 9 TP placeholders + sélecteur épreuve dans UI — commit 071e578
+[2026-04-25 20:45] Phase 3 → html2pdf + 2 boutons PDF (unitaire+all) + DOCUMENTATION_PROF.md (10 sections) — commit 8f6e0c7
+[2026-04-25 20:50] merge final dev→main + tags v1.1.0 + v1.2.0 poussés
+[2026-04-25 20:50] RAPPORT_FINAL.md mis à jour — toutes phases complétées
