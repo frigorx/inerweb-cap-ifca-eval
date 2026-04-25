@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>inerWeb Eval CAP IFCA — EP3 (V1)</title>
+  <meta name="description" content="Évaluation et suivi de positionnement CAP IFCA EP1/EP2/EP3 — outil partagé 4 enseignants LP Jacques Raynaud" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>%E2%9D%84</text></svg>" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+  <script src="https://unpkg.com/ical.js@1.5.0/build/ical.min.js" defer></script>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <header class="app-header">
+    <div class="logo">
+      <span class="flake">❄</span>
+      <span>inerWeb</span>
+      <span class="badge-edu">Édu</span>
+      <span class="signature">par F. Henninot</span>
+    </div>
+    <div class="title-app">Eval CAP IFCA · EP3</div>
+    <div id="prof-badge" class="prof-badge" hidden>
+      <span class="dot" id="prof-dot"></span>
+      <span id="prof-label">—</span>
+      <button id="btn-logout" title="Changer de prof">↻</button>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs" hidden>
+    <button data-view="agenda">📅 Agenda</button>
+    <button data-view="eval" class="active">✍ Évaluation</button>
+    <button data-view="tournant">🔁 TP-056 tournant</button>
+    <button data-view="radar">🎯 Radar</button>
+    <button data-view="bulletin">🖨 Bulletin</button>
+    <button data-view="config">⚙ Config</button>
+  </nav>
+
+  <main class="app-main">
+
+    <!-- ÉCRAN LOGIN -->
+    <section id="view-login" class="view visible">
+      <div class="card">
+        <h1>Bienvenue sur inerWeb Eval CAP IFCA</h1>
+        <p>Outil partagé d'évaluation EP1/EP2/EP3 — sélectionnez votre profil enseignant pour commencer.</p>
+
+        <h3>1. Choisissez votre identifiant</h3>
+        <div class="profs-grid" id="profs-grid">
+          <!-- généré dynamiquement -->
+        </div>
+
+        <h3>2. URL iCal EcoleDirecte (optionnel)</h3>
+        <p style="margin-top:0;color:var(--text-soft);font-size:12pt;">Coller l'URL d'export iCal de votre agenda EcoleDirecte (Mon agenda &gt; Exporter). Stockée localement uniquement.</p>
+        <input type="url" id="ical-url" placeholder="https://api.ecoledirecte.com/v3/Eleves/.../agenda.ics" />
+
+        <div style="margin-top:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <button class="btn orange" id="btn-login">Continuer →</button>
+          <span id="login-error" style="color:var(--rouge);"></span>
+        </div>
+
+        <div class="rgpd" style="margin-top:24px;padding:12px;background:var(--bg-alt);border-radius:6px;font-size:11pt;color:var(--text-soft);">
+          <strong>RGPD :</strong> Établissement privé — LP Jacques Raynaud · ÉQUATIO · Outil pédagogique interne. Données pseudonymisées (E01→E24). Aucun nom élève en cloud. Table de correspondance stockée localement (USB côté prof maître).
+        </div>
+      </div>
+    </section>
+
+    <!-- ÉCRAN AGENDA -->
+    <section id="view-agenda" class="view">
+      <div class="card">
+        <h2>📅 Agenda partagé — 4 enseignants</h2>
+        <p>Fusion des iCal EcoleDirecte. Filtre automatique : <strong>CAP, IFCA, FROID, CVC, MFER</strong>.</p>
+        <div style="margin-bottom:12px;">
+          <button class="btn small secondary" id="btn-refresh-agenda">↻ Actualiser</button>
+          <span id="agenda-status" style="margin-left:12px;color:var(--text-soft);"></span>
+        </div>
+        <div id="agenda-content"></div>
+      </div>
+    </section>
+
+    <!-- ÉCRAN ÉVAL -->
+    <section id="view-eval" class="view">
+      <div class="card">
+        <h2>✍ Évaluation EP3 — Révisions CAP IFCA 2</h2>
+        <div class="grid-cols-2" style="align-items:center;">
+          <div>
+            <label>Classe</label>
+            <select id="eval-classe">
+              <option value="CAP IFCA 2">CAP IFCA 2 (E13→E24)</option>
+              <option value="CAP IFCA 1">CAP IFCA 1 (E01→E12)</option>
+            </select>
+          </div>
+          <div>
+            <label>Date</label>
+            <input type="text" id="eval-date" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>1. Sélection du TP</h3>
+        <div class="grid-cols-3" id="tp-list"></div>
+      </div>
+
+      <div class="card" id="eval-grid-card" hidden>
+        <h3 id="eval-tp-title">2. Évaluation par compétence</h3>
+        <p id="eval-tp-meta" style="color:var(--text-soft);"></p>
+        <div id="eval-grid-content"></div>
+
+        <div style="margin-top:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <button class="btn orange" id="btn-save-eval">💾 Enregistrer</button>
+          <button class="btn secondary" id="btn-clear-eval">Effacer brouillon</button>
+          <span id="eval-save-status" style="color:var(--text-soft);"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TP TOURNANT TP-056 -->
+    <section id="view-tournant" class="view">
+      <div class="card">
+        <h2>🔁 TP-056 — TP tournant autonome (4h)</h2>
+        <p><strong>Mission :</strong> Frigoriste chez Jacques-Raynaud. Récupération fluide → Remplacement déshydrateur → Recharge.</p>
+        <div class="grid-cols-2" style="align-items:end;">
+          <div>
+            <label>Élève en cours</label>
+            <select id="tournant-eleve"></select>
+          </div>
+          <div>
+            <label>Note (calculée /20)</label>
+            <input type="text" id="tournant-note" readonly value="—" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Progression 5 phases (P0 → P5)</h3>
+        <div class="phase-progress" id="phase-progress"></div>
+      </div>
+
+      <div class="card" id="phase-detail-card" hidden>
+        <h3 id="phase-detail-title"></h3>
+        <p id="phase-detail-meta" style="color:var(--text-soft);"></p>
+        <div id="phase-checklist"></div>
+        <div id="phase-visas" style="margin-top:12px;"></div>
+      </div>
+
+      <div class="card">
+        <button class="btn orange" id="btn-save-tournant">💾 Enregistrer la session</button>
+        <span id="tournant-save-status" style="margin-left:12px;color:var(--text-soft);"></span>
+      </div>
+    </section>
+
+    <!-- RADAR -->
+    <section id="view-radar" class="view">
+      <div class="card">
+        <h2>🎯 Visualisation compétences EP3</h2>
+        <div class="grid-cols-3" style="align-items:end;">
+          <div>
+            <label>Élève</label>
+            <select id="radar-eleve"></select>
+          </div>
+          <div>
+            <label>Type</label>
+            <select id="radar-type">
+              <option value="radar">Radar (toile)</option>
+              <option value="bar">Bar graph</option>
+            </select>
+          </div>
+          <div>
+            <button class="btn small secondary" id="btn-refresh-radar">↻ Actualiser</button>
+          </div>
+        </div>
+        <p style="color:var(--text-soft);font-size:11pt;margin-top:8px;">Échelle : NA=0, ECA=1, A=2, M=3 — moyenne par compétence.</p>
+        <div style="position:relative;height:520px;">
+          <canvas id="radar-canvas"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- BULLETIN -->
+    <section id="view-bulletin" class="view">
+      <div class="card no-print">
+        <h2>🖨 Bulletin EP3 imprimable</h2>
+        <div class="grid-cols-3" style="align-items:end;">
+          <div>
+            <label>Élève</label>
+            <select id="bulletin-eleve"></select>
+          </div>
+          <div>
+            <button class="btn orange" id="btn-print-bulletin">🖨 Imprimer / PDF</button>
+          </div>
+          <div>
+            <button class="btn small secondary" id="btn-refresh-bulletin">↻ Actualiser</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bulletin-page" id="bulletin-content"></div>
+    </section>
+
+    <!-- CONFIG -->
+    <section id="view-config" class="view">
+      <div class="card">
+        <h2>⚙ Configuration</h2>
+        <div>
+          <label>Mon URL iCal EcoleDirecte</label>
+          <input type="url" id="config-ical-url" placeholder="https://api.ecoledirecte.com/..." />
+          <button class="btn small orange" id="btn-save-ical" style="margin-top:8px;">Enregistrer</button>
+        </div>
+        <div style="margin-top:24px;">
+          <h3>Apps Script</h3>
+          <p style="font-size:11pt;color:var(--text-soft);">Endpoint collecteur universel. Polling 8 s.</p>
+          <code style="font-size:10pt;background:var(--bg-alt);padding:8px;display:block;border-radius:4px;word-break:break-all;" id="config-collecteur-url"></code>
+        </div>
+        <div style="margin-top:24px;">
+          <h3>Buffer offline</h3>
+          <p>Items en attente : <strong id="config-buffer-count">0</strong></p>
+          <button class="btn small secondary" id="btn-retry-buffer">↻ Renvoyer maintenant</button>
+          <button class="btn small ghost" id="btn-clear-buffer" style="color:var(--rouge);">Vider le buffer</button>
+        </div>
+        <div style="margin-top:24px;">
+          <h3>À propos</h3>
+          <p style="font-size:11pt;">Version V1.0 — livraison 27/04/2026 · 4 enseignants : FH, PW, ZN, TM<br/>Sheet : <code style="font-size:9pt;">16T1T3y...dItk</code></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <span class="rgpd">Établissement privé — LP Jacques Raynaud · ÉQUATIO · Outil pédagogique interne · données pseudonymisées</span>
+  </footer>
+
+</div>
+
+<div id="sync-badge" class="sync-badge sync"><span class="icon">🟢</span><span id="sync-label">Sync</span></div>
+<div id="toast-container"></div>
+
+<script src="js/store.js"></script>
+<script src="js/inerweb-results.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/ical-parser.js"></script>
+<script src="js/eval-engine.js"></script>
+<script src="js/radar.js"></script>
+<script src="js/tp-tournant.js"></script>
+<script src="js/bulletin.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

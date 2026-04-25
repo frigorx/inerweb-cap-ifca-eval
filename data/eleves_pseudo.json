@@ -1,0 +1,38 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Pseudonymes RGPD — table E01..E24 sans nom réel. Correspondance E0x → vrai élève gardée localement sur USB côté prof maître (NEVER cloud).",
+    "lastUpdate": "2026-04-25",
+    "rgpd": "Aucun nom, prénom, date de naissance ou photo dans ce fichier. Conforme article 5 RGPD (minimisation)."
+  },
+  "classes": {
+    "CAP_IFCA_1": ["E01", "E02", "E03", "E04", "E05", "E06", "E07", "E08", "E09", "E10", "E11", "E12"],
+    "CAP_IFCA_2": ["E13", "E14", "E15", "E16", "E17", "E18", "E19", "E20", "E21", "E22", "E23", "E24"]
+  },
+  "eleves": [
+    {"pseudo": "E01", "classe": "CAP IFCA 1"},
+    {"pseudo": "E02", "classe": "CAP IFCA 1"},
+    {"pseudo": "E03", "classe": "CAP IFCA 1"},
+    {"pseudo": "E04", "classe": "CAP IFCA 1"},
+    {"pseudo": "E05", "classe": "CAP IFCA 1"},
+    {"pseudo": "E06", "classe": "CAP IFCA 1"},
+    {"pseudo": "E07", "classe": "CAP IFCA 1"},
+    {"pseudo": "E08", "classe": "CAP IFCA 1"},
+    {"pseudo": "E09", "classe": "CAP IFCA 1"},
+    {"pseudo": "E10", "classe": "CAP IFCA 1"},
+    {"pseudo": "E11", "classe": "CAP IFCA 1"},
+    {"pseudo": "E12", "classe": "CAP IFCA 1"},
+    {"pseudo": "E13", "classe": "CAP IFCA 2"},
+    {"pseudo": "E14", "classe": "CAP IFCA 2"},
+    {"pseudo": "E15", "classe": "CAP IFCA 2"},
+    {"pseudo": "E16", "classe": "CAP IFCA 2"},
+    {"pseudo": "E17", "classe": "CAP IFCA 2"},
+    {"pseudo": "E18", "classe": "CAP IFCA 2"},
+    {"pseudo": "E19", "classe": "CAP IFCA 2"},
+    {"pseudo": "E20", "classe": "CAP IFCA 2"},
+    {"pseudo": "E21", "classe": "CAP IFCA 2"},
+    {"pseudo": "E22", "classe": "CAP IFCA 2"},
+    {"pseudo": "E23", "classe": "CAP IFCA 2"},
+    {"pseudo": "E24", "classe": "CAP IFCA 2"}
+  ]
+}

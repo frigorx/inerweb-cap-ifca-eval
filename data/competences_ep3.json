@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Référentiel compétences EP3 CAP IFCA — Mise en service / Maintenance",
+    "lastUpdate": "2026-04-25",
+    "epreuve": "EP3",
+    "niveaux": {
+      "NA": {"label": "Non acquis", "score": 0, "couleur": "#c53030"},
+      "ECA": {"label": "En cours d'acquisition", "score": 1, "couleur": "#dd6b20"},
+      "A": {"label": "Acquis", "score": 2, "couleur": "#38a169"},
+      "M": {"label": "Maîtrisé", "score": 3, "couleur": "#1b3a63"}
+    }
+  },
+  "competences": [
+    {"code": "C1.3", "libelle": "Documentation technique / fiche d'intervention", "famille": "C1", "principale": false, "secondaire_ep3": true},
+    {"code": "C2.2", "libelle": "Sécurité — EPI, VAT, gestes professionnels", "famille": "C2", "principale": false, "secondaire_ep3": true},
+    {"code": "C3.7", "libelle": "Remplacement de composant", "famille": "C3", "principale": false, "secondaire_ep3": true},
+    {"code": "C4.1", "libelle": "Tirage au vide", "famille": "C4", "principale": true},
+    {"code": "C4.2", "libelle": "Identification fluide / charge", "famille": "C4", "principale": true},
+    {"code": "C4.3", "libelle": "Recherche d'étanchéité", "famille": "C4", "principale": true},
+    {"code": "C4.5", "libelle": "Mesures (T°, P, I, U)", "famille": "C4", "principale": true},
+    {"code": "C4.6", "libelle": "Réglage organe de régulation", "famille": "C4", "principale": true},
+    {"code": "C4.7", "libelle": "Pose / dépose manifold + installation", "famille": "C4", "principale": true},
+    {"code": "C5.1", "libelle": "Calculs frigorifiques / diagnostic", "famille": "C5", "principale": true}
+  ],
+  "axes_radar_ep3": ["C2.2", "C4.1", "C4.2", "C4.3", "C4.5", "C4.6", "C4.7", "C5.1"]
+}
