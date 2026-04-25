@@ -1,0 +1,59 @@
+{
+  "_meta": {
+    "version": "1.0-placeholder",
+    "description": "Mappings TP EP2 → compétences avec critères placeholders",
+    "lastUpdate": "2026-04-25",
+    "note": "À enrichir par les enseignants avec les critères propres à chaque TP."
+  },
+  "mappings": [
+    {
+      "tpId": "EP2-A",
+      "epreuve": "EP2",
+      "competences": [
+        {"code": "C2.1", "niveauAttendu": 5, "criteres": ["Procédure respectée", "Ordre des opérations correct"]},
+        {"code": "C2.2", "niveauAttendu": 5, "criteres": ["EPI portés", "Gestes sûrs", "Outillage adapté"]},
+        {"code": "C3.1", "niveauAttendu": 5, "criteres": ["Implantation conforme plan", "Fixations solides", "Niveaux respectés"]}
+      ]
+    },
+    {
+      "tpId": "EP2-B",
+      "epreuve": "EP2",
+      "competences": [
+        {"code": "C2.2", "niveauAttendu": 5, "criteres": ["EPI complets", "Pas de blessure"]},
+        {"code": "C3.2", "niveauAttendu": 5, "criteres": ["Cintrage propre sans pli", "Rayon respecté"]},
+        {"code": "C3.3", "niveauAttendu": 5, "criteres": ["Raccord étanche", "Couple de serrage respecté"]}
+      ]
+    },
+    {
+      "tpId": "EP2-C",
+      "epreuve": "EP2",
+      "competences": [
+        {"code": "C2.2", "niveauAttendu": 5, "criteres": ["EPI brasure (lunettes, gants, écran)", "Aire dégagée"]},
+        {"code": "C3.4", "niveauAttendu": 5, "criteres": ["Brasure pénétrée", "Aspect lisse", "Étanchéité contrôlée"]}
+      ]
+    },
+    {
+      "tpId": "EP2-D",
+      "epreuve": "EP2",
+      "competences": [
+        {"code": "C2.2", "niveauAttendu": 5, "criteres": ["VAT effectuée", "EPI 00"]},
+        {"code": "C3.5", "niveauAttendu": 5, "criteres": ["Schéma respecté", "Sertissage conforme", "Test continuité"]}
+      ]
+    },
+    {
+      "tpId": "EP2-E",
+      "epreuve": "EP2",
+      "competences": [
+        {"code": "C3.6", "niveauAttendu": 5, "criteres": ["Procédure démarrage", "Réglages dans plages", "Cyclage normal"]}
+      ]
+    },
+    {
+      "tpId": "EP2-F",
+      "epreuve": "EP2",
+      "competences": [
+        {"code": "C2.2", "niveauAttendu": 5, "criteres": ["VAT", "EPI", "Récupération fluide F-Gaz"]},
+        {"code": "C3.7", "niveauAttendu": 5, "criteres": ["Diagnostic correct", "Dépose propre", "Repose conforme", "Test final OK"]}
+      ]
+    }
+  ]
+}

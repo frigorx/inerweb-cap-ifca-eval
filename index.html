@@ -9,6 +9,7 @@
   <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>%E2%9D%84</text></svg>" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
   <script src="https://unpkg.com/ical.js@1.5.0/build/ical.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 </head>
 <body>
 
@@ -82,8 +83,16 @@
     <!-- ÉCRAN ÉVAL -->
     <section id="view-eval" class="view">
       <div class="card">
-        <h2>✍ Évaluation EP3 — Révisions CAP IFCA 2</h2>
-        <div class="grid-cols-2" style="align-items:center;">
+        <h2 id="eval-heading">✍ Évaluation EP3 — Révisions CAP IFCA 2</h2>
+        <div class="grid-cols-3" style="align-items:center;">
+          <div>
+            <label>Épreuve</label>
+            <select id="eval-epreuve">
+              <option value="EP3" selected>EP3 — Mise en service / maintenance</option>
+              <option value="EP1">EP1 — Préparation d'intervention</option>
+              <option value="EP2">EP2 — Réalisation d'intervention</option>
+            </select>
+          </div>
           <div>
             <label>Classe</label>
             <select id="eval-classe">
@@ -96,6 +105,7 @@
             <input type="text" id="eval-date" />
           </div>
         </div>
+        <p style="font-size:11pt;color:var(--text-soft);margin:6px 0 0;">Astuce : EP1/EP2 utilisent des TP placeholders enrichissables — les profs peuvent ajouter leurs critères dans <code>data/tp_ep{1,2}.json</code> et <code>data/mappings_ep{1,2}.json</code>.</p>
       </div>
 
       <div class="card">
@@ -188,10 +198,12 @@
             <select id="bulletin-eleve"></select>
           </div>
           <div>
-            <button class="btn orange" id="btn-print-bulletin">🖨 Imprimer / PDF</button>
+            <button class="btn orange" id="btn-print-bulletin">🖨 Imprimer</button>
+            <button class="btn" id="btn-pdf-bulletin" style="margin-left:6px;">📄 PDF</button>
           </div>
           <div>
             <button class="btn small secondary" id="btn-refresh-bulletin">↻ Actualiser</button>
+            <button class="btn small ghost" id="btn-pdf-tous" style="margin-left:6px;">📦 PDF tous (ZIP)</button>
           </div>
         </div>
       </div>

@@ -17,8 +17,45 @@
     fillSelect();
     document.getElementById('bulletin-eleve').onchange = render;
     document.getElementById('btn-print-bulletin').onclick = () => window.print();
+    document.getElementById('btn-pdf-bulletin').onclick = exportPDF;
+    document.getElementById('btn-pdf-tous').onclick = exportAllPDF;
     document.getElementById('btn-refresh-bulletin').onclick = render;
     render();
+  }
+
+  function exportPDF() {
+    if (typeof html2pdf === 'undefined') { toast('html2pdf non chargé', 'error'); return; }
+    const pseudo = document.getElementById('bulletin-eleve').value;
+    const el = document.getElementById('bulletin-content');
+    const opt = {
+      margin: 12,
+      filename: `bulletin_EP3_${pseudo}_${new Date().toISOString().slice(0,10)}.pdf`,
+      image: { type: 'jpeg', quality: 0.96 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(el).save();
+    toast(`PDF ${pseudo} en téléchargement…`, 'success');
+  }
+
+  async function exportAllPDF() {
+    if (typeof html2pdf === 'undefined') { toast('html2pdf non chargé', 'error'); return; }
+    if (!confirm(`Générer ${_eleves.eleves.length} PDF (un par élève) ? L'opération peut prendre ~1 min.`)) return;
+    const sel = document.getElementById('bulletin-eleve');
+    for (const e of _eleves.eleves) {
+      sel.value = e.pseudo;
+      render();
+      await new Promise(r => setTimeout(r, 350));
+      const opt = {
+        margin: 12,
+        filename: `bulletin_EP3_${e.pseudo}.pdf`,
+        image: { type: 'jpeg', quality: 0.92 },
+        html2canvas: { scale: 1.5, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      await html2pdf().set(opt).from(document.getElementById('bulletin-content')).save();
+    }
+    toast(`✓ ${_eleves.eleves.length} PDF générés`, 'success');
   }
 
   function fillSelect() {

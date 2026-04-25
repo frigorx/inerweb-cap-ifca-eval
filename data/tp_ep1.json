@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "version": "1.0-placeholder",
+    "description": "TP EP1 placeholders — à enrichir par les enseignants",
+    "lastUpdate": "2026-04-25",
+    "epreuve": "EP1",
+    "note": "Placeholders pour structure UI. Les profs renseigneront les opérations + critères réels."
+  },
+  "tps": [
+    {
+      "id": "EP1-A",
+      "titre": "Étude de dossier client + bordereau d'intervention",
+      "sousTitre": "Lecture plans, schémas, fiches techniques",
+      "theme": "preparation",
+      "duree": 120,
+      "difficulte": 2,
+      "type": "etude",
+      "competences": ["C1.1", "C1.2", "C1.3"],
+      "operations": [
+        "Lecture des plans + schéma fluidique",
+        "Identification fluide + caractéristiques",
+        "Liste des matériels nécessaires",
+        "Estimation durée intervention"
+      ]
+    },
+    {
+      "id": "EP1-B",
+      "titre": "Communication client / hiérarchie",
+      "sousTitre": "Restitution orale + écrit",
+      "theme": "communication",
+      "duree": 90,
+      "difficulte": 2,
+      "type": "oral",
+      "competences": ["C1.4", "C1.5"],
+      "operations": [
+        "Restitution orale du diagnostic au client",
+        "Compte-rendu écrit synthétique",
+        "Questions / réponses techniques"
+      ]
+    },
+    {
+      "id": "EP1-C",
+      "titre": "Préparation matérielle complète",
+      "sousTitre": "Liste matériel + contrôle disponibilité + chargement véhicule",
+      "theme": "logistique",
+      "duree": 60,
+      "difficulte": 1,
+      "type": "atelier",
+      "competences": ["C1.3"],
+      "operations": [
+        "Liste matériel par fiche technique",
+        "Contrôle disponibilité magasin",
+        "Vérification péremption fluides / lubrifiants"
+      ]
+    }
+  ]
+}
