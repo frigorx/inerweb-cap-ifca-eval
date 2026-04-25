@@ -1,0 +1,104 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Ajouts aux mappings INERWEB — Révisions EP3 CAP IFCA 2e année fin d'année 2026",
+    "lastUpdate": "2026-04-24",
+    "auteur": "F. Henninot",
+    "destinationFile": "data/tp-mappings/mappings.json",
+    "note": "Mappings des TP-050 à TP-055 vers CAP_IFCA EP3 Situation A (Mise en service). Niveau attendu 5 (Maîtrise) en fin de formation CAP 2e année."
+  },
+  "mappings": [
+    {
+      "tpId": "TP-050",
+      "formation": "CAP_IFCA",
+      "annee": [2],
+      "epreuve": "EP3",
+      "competences": [
+        {"code": "C2.2", "niveauAttendu": 5, "contexte": "A", "criteres": ["EPI portés en continu (lunettes, gants fluide, S3, gants 00, visière)", "VAT complète 3 points avec test préalable multimètre", "Commentaire sécurité oral"]},
+        {"code": "C4.1", "niveauAttendu": 5, "contexte": "A", "criteres": ["Tirage au vide ≤ –0,9 bar stable 1 min", "QCM 8 items ≥ 70 %", "Procédure arrêt pompe (vanne fermée avant arrêt)"]},
+        {"code": "C4.2", "niveauAttendu": 5, "contexte": "A", "criteres": ["Identification correcte par couple P/T", "Justification claire (comparaison avec table)", "Mise sous azote 3 bar stable"]},
+        {"code": "C4.3", "niveauAttendu": 5, "contexte": "A", "criteres": ["Dégazage progressif (pas brusque)", "Recherche de fuite 2 procédés (détecteur + mousse)", "Zone nettoyée après savon"]},
+        {"code": "C4.5", "niveauAttendu": 5, "contexte": "A", "criteres": ["Relevé PO/PK/TO/TK avec unités", "Valeurs plausibles"]},
+        {"code": "C4.7", "niveauAttendu": 5, "contexte": "A", "criteres": ["Étalonnage manifold < 1 an vérifié", "Tirage au vide du manifold avant ouverture vannes", "Zéro fuite audible à la pose"]}
+      ],
+      "sequencesSuggerees": ["S2"],
+      "dureeAdaptee": 240,
+      "remarques": "Premier TP de la progression Manipulation en 3 temps (TP-050 → TP-051 → TP-052). À réaliser S1 (semaine du 27/04/2026). Atelier sous azote obligatoire."
+    },
+    {
+      "tpId": "TP-051",
+      "formation": "CAP_IFCA",
+      "annee": [2],
+      "epreuve": "EP3",
+      "competences": [
+        {"code": "C2.2", "niveauAttendu": 5, "contexte": "A", "criteres": ["VAT avant démontage électrique", "Circuit hors pression", "EPI 00 + visière pendant tout le câblage"]},
+        {"code": "C3.7", "niveauAttendu": 5, "contexte": "A", "criteres": ["Photo câblage avant dépose", "Dépose propre avec clé plate adaptée", "Montage neuf avec joint neuf + serrage quart de tour", "Recâblage conforme photo (test traction bornes)", "Capot remis en place"]},
+        {"code": "C4.3", "niveauAttendu": 5, "contexte": "A", "criteres": ["Recherche de fuite 2 procédés APRÈS remplacement (obligatoire)", "Zone nettoyée"]},
+        {"code": "C4.6", "niveauAttendu": 5, "contexte": "A", "criteres": ["Distinction RANGE (Cut-out) vs DIFF (différentiel)", "Réglage Cut-in 2,5 bar / Cut-out 0,5 bar / Diff 2 bar", "Vérification sur 2 cycles répétables (± 0,1 bar)"]}
+      ],
+      "sequencesSuggerees": ["S2"],
+      "dureeAdaptee": 240,
+      "remarques": "TP de cœur Bloc A : remplacement composant défaillant + réglage organe de régulation. À réaliser S2 (semaine du 04/05/2026). Peut servir d'EP3 officiel pour élèves avancés."
+    },
+    {
+      "tpId": "TP-052",
+      "formation": "CAP_IFCA",
+      "annee": [2],
+      "epreuve": "EP3",
+      "competences": [
+        {"code": "C1.3", "niveauAttendu": 5, "contexte": "A", "criteres": ["Bon d'intervention complet (client, adresse, date, heures)", "Type d'intervention coché", "Descriptif télégraphique clair (7+ actions listées)", "Valeurs de réglages notées (Cut-in/Cut-out/Diff)", "Signature"]},
+        {"code": "C3.7", "niveauAttendu": 5, "contexte": "A", "criteres": ["Bouchons vannes service remis avec joints", "Serrage franc à la clé", "Remise en fonctionnement stable", "Cyclage pressostat vérifié"]},
+        {"code": "C4.3", "niveauAttendu": 5, "contexte": "A", "criteres": ["Contrôle étanchéité final 2 procédés sur chaque raccord touché", "Solution moussante nettoyée après contrôle", "Aucune fuite résiduelle"]},
+        {"code": "C4.7", "niveauAttendu": 5, "contexte": "A", "criteres": ["Pump-down complet (vannes service fermées d'abord, bypass ouvert)", "Zéro perte mesurable", "Flexibles démontés dans l'ordre HP puis BP", "Valise rangée"]}
+      ],
+      "sequencesSuggerees": ["S2"],
+      "dureeAdaptee": 240,
+      "remarques": "TP de conclusion Manipulation : focus sur dépose propre + documentation réglementaire. À réaliser S3 (semaine du 11/05/2026). Annexe : bon d'intervention EP3 identique à l'officiel."
+    },
+    {
+      "tpId": "TP-053",
+      "formation": "CAP_IFCA",
+      "annee": [2],
+      "epreuve": "EP3",
+      "competences": [
+        {"code": "C2.2", "niveauAttendu": 4, "contexte": "A", "criteres": ["EPI portés en continu", "Attention aux tuyaux chauds", "Respect du délai 5 min de stabilisation"]},
+        {"code": "C4.2", "niveauAttendu": 5, "contexte": "A", "criteres": ["Plaque signalétique relevée complète (fluide, charge, GWP, N° série)", "Fluide identifié"]},
+        {"code": "C4.5", "niveauAttendu": 5, "contexte": "A", "criteres": ["6 points T° relevés avec unités °C", "Sonde bien plaquée sur tube (10 s stabilisation)", "Distinction TSe (bulbe) vs Tasp (aspiration)", "T° air in/out mesurées à 15 s de stabilisation"]},
+        {"code": "C5.1", "niveauAttendu": 5, "contexte": "A", "criteres": ["Calcul ΔT condenseur = T air out − T air in", "Résultat en K avec unité", "Interprétation dans la plage 4-8 K"]}
+      ],
+      "sequencesSuggerees": ["S2"],
+      "dureeAdaptee": 240,
+      "remarques": "Premier TP de la progression Mesures en 3 temps (TP-053 → TP-054 → TP-055). Volontairement sans calcul SC/SR pour focus gestuelle. À réaliser S1 (semaine du 27/04/2026). Atelier sous fluide obligatoire."
+    },
+    {
+      "tpId": "TP-054",
+      "formation": "CAP_IFCA",
+      "annee": [2],
+      "epreuve": "EP3",
+      "competences": [
+        {"code": "C1.3", "niveauAttendu": 5, "contexte": "A", "criteres": ["Fiche de mise en service complète (identification, P/T, températures 6 points, I/U, SC, SR)", "Toutes unités présentes", "Signature"]},
+        {"code": "C2.2", "niveauAttendu": 5, "contexte": "A", "criteres": ["EPI électriques (gants 00 + visière) pour mesures I/U", "Aucun retrait pendant mesure"]},
+        {"code": "C4.2", "niveauAttendu": 5, "contexte": "A", "criteres": ["Fluide identifié (cohérence plaque vs comportement)"]},
+        {"code": "C4.5", "niveauAttendu": 5, "contexte": "A", "criteres": ["Relevés 6 points T° + PO/PK avec unités", "Mesure I compresseur correcte (un seul conducteur dans la pince)", "Mesure U réseau entre phase et neutre"]},
+        {"code": "C5.1", "niveauAttendu": 5, "contexte": "A", "criteres": ["Lecture table P/T correcte (T0 et TK)", "Calculs SC locale/totale (formules Tasp−T0 et TSe−T0)", "Calculs SR local/total (formules TK−TScd et TK−Tdet)", "Interprétations pertinentes (valeur dans plage, cause si anormal)", "Diagnostic croisé SC/SR/I cohérent"]}
+      ],
+      "sequencesSuggerees": ["S2"],
+      "dureeAdaptee": 240,
+      "remarques": "TP clé du Bloc B. À réaliser S2 (semaine du 04/05/2026). Annexe : fiche de mise en service EP3 identique à l'officielle. Peut servir d'EP3 officiel pour élèves avancés (couplé avec TP-051)."
+    },
+    {
+      "tpId": "TP-055",
+      "formation": "CAP_IFCA",
+      "annee": [2],
+      "epreuve": "EP3",
+      "competences": [
+        {"code": "C1.3", "niveauAttendu": 5, "contexte": "A", "criteres": ["Plaque FGaz complète (société, date, opérateur, fluide, type coché, charges, GWP, TeqCO₂, huile)", "Toutes unités", "Aucune case vide", "Conforme règlement F-Gaz 517/2014"]},
+        {"code": "C4.2", "niveauAttendu": 5, "contexte": "A", "criteres": ["Fluide identifié + GWP noté"]},
+        {"code": "C5.1", "niveauAttendu": 5, "contexte": "A", "criteres": ["Contrôle incondensables à l'arrêt (15 min équilibrage, comparaison HP mesurée vs théorique)", "Calcul TeqCO₂ = charge × GWP / 1000 correct avec unité t eq CO₂", "Fréquence réglementaire déduite (< 5 / 5-50 / 50-500 / > 500)", "Révision active SC/SR sans support", "Diagnostic global argumenté (synthèse écrite 3-4 lignes)"]}
+      ],
+      "sequencesSuggerees": ["S2"],
+      "dureeAdaptee": 240,
+      "remarques": "TP de synthèse Bloc B + documentation F-Gaz. À réaliser S3 (semaine du 11/05/2026). Annexe : plaque FGaz identique à l'officielle EP3. Combine découverte (incondensables) et révision active (SC/SR)."
+    }
+  ]
+}

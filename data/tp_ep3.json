@@ -1,0 +1,162 @@
+{
+  "_meta": {
+    "version": "1.1",
+    "description": "Catalogue TP révisions EP3 CAP IFCA — TP-050 à TP-055 + TP-056 tournant autonome",
+    "lastUpdate": "2026-04-25",
+    "auteur": "F. Henninot",
+    "epreuve": "EP3",
+    "classe": "CAP IFCA 2",
+    "note": "TP-056 ajouté à partir du livret 14_Livret_Recuperation_charte.docx — TP tournant 4h, autonomie élève + 5 visas prof STOP."
+  },
+  "tps": [
+    {
+      "id": "TP-050",
+      "titre": "Pose manifold + tirage au vide + recherche de fuite",
+      "sousTitre": "Préparation fluidique complète sous azote",
+      "theme": "mise-en-service",
+      "duree": 240,
+      "difficulte": 3,
+      "type": "atelier",
+      "seance": "S1_27-04-2026",
+      "competences": ["C2.2", "C4.1", "C4.2", "C4.3", "C4.5", "C4.7"],
+      "operations": [
+        "Consignation + VAT 3 points",
+        "Relevé initial P/T (PO, PK, TO, TK)",
+        "Identification fluide par couple P/T",
+        "Pose manifold sans fuite (étalonnage, tirage au vide manifold)",
+        "Dégazage progressif via bypass jusqu'à 0 bar",
+        "Tirage au vide profond ≤ –0,9 bar + tenue 1 min",
+        "Mise sous azote 3 bar",
+        "Recherche de fuite 2 procédés (détecteur + mousse)"
+      ]
+    },
+    {
+      "id": "TP-051",
+      "titre": "Remplacement + réglage du pressostat BP",
+      "sousTitre": "Dépose ancien, joint neuf, recâblage, Cut-in/Cut-out/Diff, 2 cycles",
+      "theme": "maintenance",
+      "duree": 240,
+      "difficulte": 3,
+      "type": "atelier",
+      "seance": "S2_04-05-2026",
+      "competences": ["C2.2", "C3.7", "C4.3", "C4.6"],
+      "operations": [
+        "VAT + circuit hors pression",
+        "Photo câblage + repérage",
+        "Dépose ancien pressostat",
+        "Montage neuf joint quart de tour",
+        "Recâblage selon photo + capot",
+        "Azote 3 bar + recherche fuite",
+        "Réglage Cut-in 2,5 / Cut-out 0,5 / Diff 2 + 2 cycles"
+      ]
+    },
+    {
+      "id": "TP-052",
+      "titre": "Dépose manifold + étanchéité finale + bon d'intervention",
+      "sousTitre": "Pump-down, bouchons, 2 procédés, document C-3",
+      "theme": "controle",
+      "duree": 240,
+      "difficulte": 3,
+      "type": "atelier",
+      "seance": "S3_11-05-2026",
+      "competences": ["C1.3", "C3.7", "C4.3", "C4.7"],
+      "operations": [
+        "Dépose manifold (pump-down zéro perte)",
+        "Bouchons vannes service (joints, serrage franc)",
+        "Étanchéité finale 2 procédés",
+        "Remise en fonctionnement + cyclage pressostat",
+        "Bon d'intervention EP3 (style télégraphique + valeurs)"
+      ]
+    },
+    {
+      "id": "TP-053",
+      "titre": "Mesures de températures pures (6 points + ΔT condenseur)",
+      "sousTitre": "Gestuelle relevé · sans calcul SC/SR",
+      "theme": "mesures",
+      "duree": 240,
+      "difficulte": 2,
+      "type": "mesures",
+      "seance": "S1_27-04-2026",
+      "competences": ["C2.2", "C4.2", "C4.5", "C5.1"],
+      "operations": [
+        "Plaque signalétique (fluide, charge, GWP, N°)",
+        "Stabilisation 5 min",
+        "T° HP : TSC, TEC, TScd",
+        "T° BP : Tdet, TSe (bulbe), Tasp",
+        "T° air condenseur + ΔT",
+        "Interprétation visuelle (QCM 5)",
+        "Synthèse tableau"
+      ]
+    },
+    {
+      "id": "TP-054",
+      "titre": "Mesures P/T + SC/SR + Fiche mise en service",
+      "sousTitre": "Calculs complets, diagnostic croisé, fiche C-2",
+      "theme": "mesures",
+      "duree": 240,
+      "difficulte": 3,
+      "type": "mesures",
+      "seance": "S2_04-05-2026",
+      "competences": ["C1.3", "C2.2", "C4.2", "C4.5", "C5.1"],
+      "operations": [
+        "Rappel 6 points T° (TP-053)",
+        "PO / PK aux manomètres",
+        "Lecture table P/T → T0 / TK",
+        "Surchauffe (Tasp−T0 / TSe−T0)",
+        "Sous-refroidissement (TK−TScd / TK−Tdet)",
+        "I compresseur + U réseau (EPI électriques)",
+        "Diagnostic croisé SC/SR/I",
+        "Fiche MES EP3 (C-2)"
+      ]
+    },
+    {
+      "id": "TP-055",
+      "titre": "Incondensables + révision SC/SR + TeqCO₂ + Plaque FGaz",
+      "sousTitre": "Diagnostic complet + documentation F-Gaz",
+      "theme": "diagnostic",
+      "duree": 240,
+      "difficulte": 3,
+      "type": "mesures",
+      "seance": "S3_11-05-2026",
+      "competences": ["C1.3", "C4.2", "C5.1"],
+      "operations": [
+        "Identification fluide + plaque",
+        "Incondensables à l'arrêt (T amb vs HP)",
+        "Mise en marche + relevés rapides",
+        "Révision SC/SR autonome (4 formules)",
+        "TeqCO₂ = Charge × GWP / 1000 + fréquence",
+        "Plaque FGaz (annexe C-1)",
+        "Synthèse diagnostic global"
+      ]
+    },
+    {
+      "id": "TP-056",
+      "titre": "TP tournant — Récupération fluide + remplacement déshydrateur + recharge",
+      "sousTitre": "Mission frigoriste Jacques-Raynaud — autonomie élève + 5 visas prof STOP",
+      "theme": "tournant_autonome",
+      "duree": 210,
+      "difficulte": 3,
+      "type": "tournant_autonome",
+      "seance": "Toutes séances atelier (4h)",
+      "competences": ["C2.2", "C4.2", "C4.3", "C4.5", "C4.7", "C5.1"],
+      "phases": [
+        {"id": "P0", "titre": "Sécurité", "duree": 15, "competences": ["C2.2"], "criteres": ["5 risques identifiés", "EPI complets", "gestes interdits cités", "engagement signé"]},
+        {"id": "P1", "titre": "Information", "duree": 20, "competences": ["C2.2", "C4.2"], "criteres": ["fluide identifié", "lecture bouteille", "calcul limite 80%"]},
+        {"id": "P2", "titre": "Préparation matériel", "duree": 20, "competences": ["C2.2", "C4.7"], "criteres": ["manifold 4 voies", "raccordement correct"]},
+        {"id": "P3", "titre": "Récupération fluide", "duree": 70, "competences": ["C4.2", "C4.5", "C4.7"], "criteres": ["tirage vide", "récupération", "purge station", "quantité notée"]},
+        {"id": "P4", "titre": "Remplacement déshydrateur", "duree": 30, "competences": ["C5.1"], "criteres": ["débrasage propre", "sens montage", "brasure correcte"]},
+        {"id": "P5", "titre": "Contrôle + recharge", "duree": 35, "competences": ["C4.2", "C4.3", "C4.5"], "criteres": ["vide profond", "azote 1 bar", "étanchéité", "recharge ajustée"]}
+      ],
+      "visasProfObligatoires": [
+        {"id": "V1", "phase": "P3", "label": "Tirage au vide validé"},
+        {"id": "V2", "phase": "P3", "label": "Quantité fluide récupérée"},
+        {"id": "V3", "phase": "P4", "label": "Avant brasure"},
+        {"id": "V4", "phase": "P4", "label": "Brasures vérifiées"},
+        {"id": "V5", "phase": "P5", "label": "Étanchéité + recharge finale"}
+      ],
+      "mode": "Cycle TP tournant — 2-3 élèves en autonomie pendant que les autres sont sur TP-050 à 055 (4h atelier)",
+      "noteSur": 20,
+      "baremePhases": {"P0": 4, "P1": 3, "P2": 3, "P3": 4, "P4": 3, "P5": 3}
+    }
+  ]
+}

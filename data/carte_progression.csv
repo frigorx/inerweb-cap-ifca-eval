@@ -1,0 +1,26 @@
+Semaine;Date;Jour;Créneau;Atelier / Activité;Groupe;Contenu pédagogique;Bloc EP3 visé;Compétences;Support;Statut
+S1;27/04/2026;Lundi;8h atelier;Atelier Manip (sous azote);DG tournants;TP tournant base : pose/dépose manomètres + réglage pressostat BP. 2 à 4 élèves avancés détachés en parallèle sur TP récupération de fluide.;A-1 / A-2 / A-6 / A-9 / A-10;C4.5 C4.6 C4.7 C3.7;TP_Intervention_Frigorifique_Revision_EP3_v3.docx + AFPA 10498-6;Prévu
+S1;27/04/2026;Lundi;8h atelier;Atelier Mesures (sous fluide);DG tournants;TP tournant base : relevés P/T + identification fluide + plaque signalétique + premiers calculs SR/SC;B-1 / B-3 / B-4;C4.2 C4.5 C5.1;Mesures et calculs frigorifiques.docx;Prévu
+S1;28/04/2026;Mardi;1h classe;Apport théorique;Classe entière;Révision surchauffe / sous-refroidissement (théorie + exercices guidés);Prépa B-3 / B-4;C5.1;AFPA 10498-1 + exercices SR/SC;Prévu
+S1;30/04/2026;Jeudi;1h demi-groupe;Apport théorique;DG-?;Suite SR/SC : applications sur relevés réels + delta T condenseur + pincement;Prépa B-3 / B-4;C5.1;Exercices SR/SC;Prévu
+S1;Semaine;Pascal Whart;1h/semaine;Apport théorique;Demi-groupe;À caler : surchauffe/sous-ref ou CERFA;B / C;C1.3 C5.1;AFPA + Mesures et calculs.docx;Prévu
+S2;04/05/2026;Lundi;8h atelier;Atelier Manip;DG tournants;TP tournant base + récup fluide en rotation. EP3 officiel Bloc A pour élèves au niveau.;A complet (120 pts);C2.2 C3.7 C4.1 à C4.7;Dossier EP3 CAP_ifca_EP3_24_25.pdf;Prévu
+S2;04/05/2026;Lundi;8h atelier;Atelier Mesures;DG tournants;TP tournant mesures complètes + plaque FGaz + début fiche MES. EP3 officiel Bloc B pour élèves au niveau.;B complet + C-1 + C-2;C1.3 C4.2 C4.5 C5.1;Dossier EP3;Prévu
+S2;05/05/2026;Mardi;1h classe;Apport théorique;Classe entière;Identification fluides (NF EN 378) + GWP + calcul TeqCO₂;B-1 / B-7;C4.2 C5.1;Skill fluides-nfen378;Prévu
+S2;07/05/2026;Jeudi;1h demi-groupe;Apport théorique;DG-?;Remplissage plaque FGaz + bon d'intervention sur cas concret;C-1 / C-4;C1.3;tp CEFA FI BSD.docx;Prévu
+S2;Semaine;Pascal Whart;1h/semaine;Apport théorique;Demi-groupe;À caler;B / C;C1.3 C5.1;;Prévu
+S3;11/05/2026;Lundi;8h atelier;Atelier Manip;DG tournants;Suite TP + récup fluide + EP3 Bloc A officiel (élèves supplémentaires au niveau);A complet;C2.2 C3.7 C4.1 à C4.7;Dossier EP3;Prévu
+S3;11/05/2026;Lundi;8h atelier;Atelier Mesures;DG tournants;Suite TP + EP3 Bloc B officiel. Bloc C documentation en fin d'aprem (collectif).;B + C complet;C1.3 C4.2 C4.5 C5.1;Dossier EP3 + plaque + CERFA;Prévu
+S3;12/05/2026;Mardi;1h classe;Apport théorique;Classe entière;CERFA 15497*02 étape par étape (bordereau déchets dangereux fluide);C-3;C1.3;TP_CERFA + skill fluides-nfen378;Prévu
+S3;14/05/2026;Jeudi;-;FÉRIÉ Ascension;-;-;-;-;-;Férié
+S3;Semaine;Pascal Whart;1h/semaine;Apport théorique;Demi-groupe;À caler : révision CERFA + SR/SC;C / B;C1.3 C5.1;;Prévu
+S4;18/05/2026;Lundi;8h atelier;Atelier Manip;DG tournants;Dernier passage EP3 Bloc A pour retardataires. Déjà passés = tutorat.;A complet;C2.2 C3.7 C4.1 à C4.7;Dossier EP3;Prévu
+S4;18/05/2026;Lundi;8h atelier;Atelier Mesures;DG tournants;Dernier passage EP3 Bloc B + finalisation dossiers EP3 (plaque, fiche MES, CERFA, bon intervention);B + C complet;C1.3 C4.2 C4.5 C5.1;Dossier EP3 complet;Prévu
+S4;19/05/2026;Mardi;1h classe;Apport théorique;Classe entière;Contrôle d'étanchéité (2 procédés) + suivi F-Gaz + obligations réglementaires;A-12 / B-5;C4.3;AFPA 05_10502 suivi étanchéité;Prévu
+S4;21/05/2026;Jeudi;1h demi-groupe;Apport théorique;DG-?;Finitions individuelles du dossier EP3 (accompagnement personnalisé);C-1 à C-4;C1.3;Dossiers élèves;Prévu
+S4;Semaine;Pascal Whart;1h/semaine;Apport théorique;Demi-groupe;À caler : dernières révisions ciblées;Toutes;Toutes;;Prévu
+S5;25/05/2026;Lundi;-;FÉRIÉ Lundi de Pentecôte;-;-;-;-;-;Férié
+S5;26/05/2026;Mardi;1h classe;Apport théorique;Classe entière;Révision orale ciblée pour candidats au rattrapage 1er juin;Tous blocs;Toutes;Grille EP3;Prévu
+S5;28/05/2026;Jeudi;1h demi-groupe;Apport théorique;DG-?;Dernière remédiation individuelle avant rattrapages;Points faibles;Selon élève;Dossier EP3;Prévu
+S5;Semaine;Pascal Whart;1h/semaine;Apport théorique;Demi-groupe;À caler;Toutes;;;Prévu
+S6;01/06/2026;Lundi;Journée;EP3 rattrapages;Candidats non finis;Journée entière dédiée aux rattrapages Blocs A / B / C selon échecs partiels;Selon élève;Toutes;Dossier EP3;Prévu
