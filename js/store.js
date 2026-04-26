@@ -70,9 +70,16 @@
     async load() {
       if (_correspondanceLoaded) return _correspondance;
       _correspondanceLoaded = true;
-      // Priorité 1 : localStorage (importé via UI)
+      // Priorité 1 : localStorage (déjà déverrouillé sur ce poste)
       let c = Store.get('correspondance.local');
-      // Priorité 2 : fichier sur le serveur (si présent)
+      // Priorité 2 : déchiffrement automatique avec mot de passe mémorisé
+      if (!c) {
+        const pwd = Store.get('correspondance.password');
+        if (pwd) {
+          try { c = await this.unlock(pwd); } catch (e) { console.warn('Déchiffrement auto échec', e); }
+        }
+      }
+      // Priorité 3 : fichier en clair sur le serveur (dev only — gitignored en prod)
       if (!c) c = await Catalog.loadOptional('correspondance_eleves.json');
       if (c && c.eleves) {
         _correspondance = c.eleves;
@@ -82,6 +89,46 @@
         });
       }
       return _correspondance;
+    },
+    /** Tente de déchiffrer data/eleves_chiffre.json avec le mot de passe.
+     *  Retourne {eleves:[...]} si OK, throw si mauvais mot de passe. */
+    async unlock(password) {
+      if (!password) throw new Error('Mot de passe vide');
+      const r = await fetch(`data/eleves_chiffre.json?v=${Date.now()}`, { cache: 'no-store' });
+      if (!r.ok) throw new Error('Fichier chiffré introuvable');
+      const enc = await r.json();
+      const fromB64 = (s) => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+      const salt = fromB64(enc.salt);
+      const iv = fromB64(enc.iv);
+      const ct = fromB64(enc.ciphertext);
+      const subtle = window.crypto.subtle;
+      const pwdKey = await subtle.importKey('raw', new TextEncoder().encode(password),
+        { name: 'PBKDF2' }, false, ['deriveKey']);
+      const key = await subtle.deriveKey(
+        { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+        pwdKey,
+        { name: 'AES-GCM', length: 256 },
+        false, ['decrypt']
+      );
+      let plaintext;
+      try {
+        const buf = await subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+        plaintext = new TextDecoder().decode(buf);
+      } catch (e) {
+        throw new Error('Mot de passe incorrect');
+      }
+      const data = JSON.parse(plaintext);
+      // Mémorise le password pour les ouvertures suivantes
+      Store.set('correspondance.password', password);
+      // Reset cache + populate
+      _correspondance = data.eleves;
+      _byPseudo = {};
+      _byIdCloud = {};
+      data.eleves.forEach(e => {
+        _byPseudo[e.pseudo] = e;
+        if (e.idCloud) _byIdCloud[e.idCloud] = e;
+      });
+      return data;
     },
     /** Import depuis un fichier JSON utilisateur. Stocké en localStorage. */
     importFromJson(jsonData) {
@@ -99,9 +146,10 @@
       });
       return jsonData.eleves.length;
     },
-    /** Retire la correspondance de ce poste. */
+    /** Retire la correspondance de ce poste (mot de passe + données). */
     clear() {
       Store.remove('correspondance.local');
+      Store.remove('correspondance.password');
       _correspondance = null;
       _byPseudo = {};
       _byIdCloud = {};

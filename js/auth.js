@@ -22,15 +22,31 @@
     });
   }
 
-  function login() {
+  async function login() {
     const code = document.getElementById('btn-login').dataset.profCode;
     const ical = document.getElementById('ical-url').value.trim();
+    const password = document.getElementById('login-password').value.trim();
     const err = document.getElementById('login-error');
     if (!code) {
       err.textContent = 'Sélectionner un enseignant.';
       return;
     }
     err.textContent = '';
+
+    // Tenter le déverrouillage si mot de passe saisi
+    if (password) {
+      err.textContent = 'Déverrouillage de la liste élèves…';
+      try {
+        await Correspondance.unlock(password);
+        err.style.color = 'var(--vert)';
+        err.textContent = '✅ 24 élèves chargés';
+      } catch (e) {
+        err.style.color = 'var(--rouge)';
+        err.textContent = '❌ Mot de passe incorrect';
+        return;
+      }
+    }
+
     Store.set('prof.current', code);
     if (ical) Store.set(`ical.url.${code}`, ical);
     showApp(code);
@@ -57,6 +73,7 @@
     document.getElementById('btn-login').onclick = login;
     document.getElementById('btn-logout').onclick = logout;
     document.getElementById('ical-url').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
+    document.getElementById('login-password').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
     // Auto-login si déjà connecté
     const cur = Store.get('prof.current');
     if (cur) {

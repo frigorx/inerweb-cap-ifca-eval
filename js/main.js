@@ -127,31 +127,31 @@
       }
     };
 
-    // === Upload correspondance élèves ===
-    const uploadInput = document.getElementById('upload-correspondance');
-    if (uploadInput) uploadInput.onchange = (e) => {
-      const f = e.target.files[0];
-      if (!f) return;
+    // === Déverrouillage par mot de passe (Config) ===
+    const btnUnlock = document.getElementById('btn-unlock');
+    if (btnUnlock) btnUnlock.onclick = async () => {
+      const pwd = document.getElementById('config-password').value.trim();
       const status = document.getElementById('upload-correspondance-status');
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        try {
-          const j = JSON.parse(ev.target.result);
-          const n = Correspondance.importFromJson(j);
-          status.innerHTML = `<span style="color:var(--vert);font-weight:700;">✅ ${n} élèves chargés. Recharge la page (F5) pour activer.</span>`;
-          toast(`${n} élèves importés — F5 pour activer`, 'success');
-        } catch (err) {
-          status.innerHTML = `<span style="color:var(--rouge);">❌ Erreur : ${err.message}</span>`;
-        }
-      };
-      reader.readAsText(f, 'utf-8');
+      if (!pwd) { status.innerHTML = '<span style="color:var(--rouge);">Mot de passe vide</span>'; return; }
+      status.innerHTML = '<span style="color:var(--text-soft);">Déverrouillage…</span>';
+      try {
+        const data = await Correspondance.unlock(pwd);
+        status.innerHTML = `<span style="color:var(--vert);font-weight:700;">✅ ${data.eleves.length} élèves chargés — recharge la page (F5)</span>`;
+        toast(`${data.eleves.length} élèves chargés — F5 pour activer`, 'success');
+        document.getElementById('config-password').value = '';
+      } catch (err) {
+        status.innerHTML = `<span style="color:var(--rouge);">❌ ${err.message}</span>`;
+      }
     };
+    const cfgPwd = document.getElementById('config-password');
+    if (cfgPwd) cfgPwd.addEventListener('keydown', (e) => { if (e.key === 'Enter') btnUnlock.click(); });
+
     const btnClearCorresp = document.getElementById('btn-clear-correspondance');
     if (btnClearCorresp) btnClearCorresp.onclick = () => {
-      if (!confirm('Retirer la table de correspondance de ce poste ? Tu reverras les codes M01..M24 au lieu des noms.')) return;
+      if (!confirm('Retirer la liste élèves de ce poste ? Tu reverras les codes M01..M24 au lieu des noms. Tu pourras tout récupérer en re-saisissant le mot de passe.')) return;
       Correspondance.clear();
-      document.getElementById('upload-correspondance-status').innerHTML = '<span style="color:var(--text-soft);">Correspondance retirée. Recharge la page.</span>';
-      toast('Correspondance retirée — F5 pour appliquer', 'info');
+      document.getElementById('upload-correspondance-status').innerHTML = '<span style="color:var(--text-soft);">Liste retirée. Recharge la page (F5).</span>';
+      toast('Liste retirée — F5 pour appliquer', 'info');
     };
   });
 

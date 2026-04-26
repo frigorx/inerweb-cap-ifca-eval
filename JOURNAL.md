@@ -75,3 +75,13 @@
 [2026-04-26 21:30] MODE_EMPLOI.html créé : 9 sections (446 lignes) → première fois 3 min · 9 écrans · évaluer pas-à-pas · TP-056 tournant · radar/bulletin · TP officiels · RGPD · dépannage · URLs · imprimable A4
 [2026-04-26 21:30] Boutons header app prof : 📖 Mode d'emploi (bleu) + 📚 TP officiels (orange) + 🎓 Espace élève (vert)
 [2026-04-26 21:30] Lien "Première fois ? Lire le mode d'emploi (3 min)" sur l'écran de connexion
+[2026-04-26 22:00] Retour Franck → "trop compliqué pour moi et mes collègues, marche sur téléphone ?"
+[2026-04-26 22:00] DÉCISION : auto-déverrouillage par mot de passe (zéro fichier à transporter)
+[2026-04-26 22:00] data/eleves_chiffre.json créé via test/chiffrer-eleves.mjs (AES-256-GCM + PBKDF2 100k iters, mot de passe "ifca-raynaud-2026")
+[2026-04-26 22:00] Fichier chiffré PEUT être commité sur GitHub (illisible sans mot de passe)
+[2026-04-26 22:00] store.js : Correspondance.unlock(password) — déchiffrement Web Crypto API natif navigateur
+[2026-04-26 22:00] auth.js : champ password sur écran login, déchiffrement avant showApp
+[2026-04-26 22:00] main.js (Config) : champ password de secours pour postes déjà connectés
+[2026-04-26 22:00] localStorage clés : correspondance.password (auto-reload) et correspondance.local (cache)
+[2026-04-26 22:00] MODE_EMPLOI.html réécrit : 1 page, 3 étapes simples, encart mot de passe géant, instructions téléphone séparées
+[2026-04-26 22:00] Test bout-en-bout : déchiffrement OK avec ifca-raynaud-2026, mauvais mot de passe rejeté

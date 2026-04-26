@@ -59,8 +59,13 @@
           <!-- généré dynamiquement -->
         </div>
 
-        <h3>2. URL iCal EcoleDirecte (optionnel)</h3>
-        <p style="margin-top:0;color:var(--text-soft);font-size:12pt;">Coller l'URL d'export iCal de votre agenda EcoleDirecte (Mon agenda &gt; Exporter). Stockée localement uniquement.</p>
+        <h3>2. Mot de passe pédagogique</h3>
+        <p style="margin-top:0;color:var(--text-soft);font-size:12pt;">Pour voir tes élèves avec leurs vrais noms. <strong>1 seule fois par poste</strong>, ensuite c'est mémorisé.</p>
+        <input type="password" id="login-password" placeholder="Mot de passe (donné par F. Henninot)" autocomplete="current-password" />
+        <p style="margin:6px 0 0;font-size:11pt;color:var(--text-soft);">💡 Vide ? Tu verras les codes M01..M24 au lieu des noms (mode dégradé).</p>
+
+        <h3 style="margin-top:24px;">3. URL iCal EcoleDirecte (optionnel)</h3>
+        <p style="margin-top:0;color:var(--text-soft);font-size:12pt;">Coller l'URL d'export iCal de ton agenda. Pas obligatoire.</p>
         <input type="url" id="ical-url" placeholder="https://api.ecoledirecte.com/v3/Eleves/.../agenda.ics" />
 
         <div style="margin-top:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
@@ -346,12 +351,13 @@
           <h3>🔒 Pseudonymisation</h3>
           <div id="config-rgpd-info" style="padding:12px;background:var(--bg-alt);border-left:4px solid var(--vert);border-radius:4px;font-size:12pt;line-height:1.6;"></div>
           <div style="margin-top:12px;padding:12px;background:#fff8e1;border-left:4px solid var(--orange);border-radius:4px;font-size:12pt;">
-            <strong>Activer la pseudonymisation forte sur ce poste :</strong><br/>
-            <p style="margin:6px 0;">Charger le fichier <code>correspondance_eleves.json</code> depuis ton USB :</p>
-            <input type="file" id="upload-correspondance" accept=".json,application/json" style="font-size:12pt;" />
-            <button class="btn small orange" id="btn-clear-correspondance" style="margin-left:8px;">🗑 Retirer du poste</button>
+            <strong>Mot de passe pédagogique</strong>
+            <p style="margin:6px 0;">Si tu vois M01..M24 au lieu des noms, c'est que ce poste n'a pas encore le mot de passe. Le saisir ici :</p>
+            <input type="password" id="config-password" placeholder="Mot de passe" style="max-width:300px;display:inline-block;" />
+            <button class="btn small orange" id="btn-unlock" style="margin-left:6px;">🔓 Déverrouiller</button>
+            <button class="btn small ghost" id="btn-clear-correspondance" style="color:var(--rouge);">🗑 Retirer du poste</button>
             <p id="upload-correspondance-status" style="margin:6px 0 0;font-size:11pt;"></p>
-            <p style="margin:8px 0 0;font-size:10pt;color:var(--text-soft);">Le fichier reste UNIQUEMENT sur ce navigateur (localStorage). Pas envoyé au cloud. Pas commit sur GitHub.</p>
+            <p style="margin:8px 0 0;font-size:10pt;color:var(--text-soft);">Le mot de passe reste sur ce navigateur uniquement. La liste déchiffrée n'est jamais envoyée au cloud.</p>
           </div>
         </div>
         <div style="margin-top:24px;">
