@@ -56,3 +56,14 @@
 [2026-04-26 20:30] tp-tournant.js : statut par élève (pas-commencé / en cours / terminé) + bouton "passer au suivant" + grille planning rotation 24 élèves cliquable
 [2026-04-26 20:30] dashboard.js : carte TP-056 sur écran Aujourd'hui (qui est en autonomie maintenant + 3 stats)
 [2026-04-26 20:30] main.js : bandeau "🔒 Correspondance locale chargée" affiché en haut quand le fichier local est trouvé
+[2026-04-26 21:00] Pseudonymisation FORTE activée — triple identité par élève :
+  (1) idCloud M01..M24 = ce qui part au Sheet (neutre)
+  (2) pseudo MFrédéric = ce que voit le prof (lisible)
+  (3) Prénom NOM = surimpression côté prof, jamais en cloud
+[2026-04-26 21:00] store.js : Correspondance.toIdCloud() / toPseudo() / label() — traduction bidirectionnelle
+[2026-04-26 21:00] inerweb-results.js : write traduit pseudo→idCloud avant POST · read traduit idCloud→pseudo en cache local
+[2026-04-26 21:00] Cache local conservé en pseudo (vues affichent immédiatement les noms)
+[2026-04-26 21:00] Bandeau écran principal : "🔒 Pseudonymisation forte active" (vert) si correspondance chargée
+[2026-04-26 21:00] Onglet ⚙ Config : section RGPD explicite avec exemple "Tu vois MFrédéric — Frédéric MENDY · Sheet contient M14"
+[2026-04-26 21:00] Test bout-en-bout : POST M14 → Sheet → READ M14, aucune fuite "Frédéric" ni "MENDY" dans le payload distant
+[2026-04-26 21:00] Transparent pour le prof : 0 changement dans son utilisation, juste un bandeau vert qui rassure

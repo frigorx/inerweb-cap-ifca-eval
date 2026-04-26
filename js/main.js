@@ -12,8 +12,8 @@
       await Correspondance.load();
       if (Correspondance.available()) {
         const banner = document.createElement('div');
-        banner.style.cssText = 'background:#fff8e1;border-left:4px solid var(--jaune);padding:6px 14px;font-size:11pt;margin-bottom:8px;';
-        banner.innerHTML = '🔒 Correspondance locale chargée — noms réels visibles côté prof. <strong>Sheet ne reçoit que les pseudos.</strong>';
+        banner.style.cssText = 'background:#e8f5e9;border-left:4px solid var(--vert);padding:6px 14px;font-size:11pt;margin-bottom:8px;';
+        banner.innerHTML = '🔒 Mode pseudonymisation forte actif — tu vois les vrais noms, le Sheet ne contient que des codes anonymes (M01..M24).';
         document.querySelector('main.app-main')?.prepend(banner);
       }
       Eval.init();
@@ -30,6 +30,25 @@
       if (inpTxt) inpTxt.value = ictext;
       const cu = document.getElementById('config-collecteur-url');
       if (cu) cu.textContent = inerwebResults.COLLECTEUR_URL;
+      // Affichage état RGPD
+      const rgpdEl = document.getElementById('config-rgpd-info');
+      if (rgpdEl) {
+        if (Correspondance.available()) {
+          rgpdEl.innerHTML = `
+            <strong style="color:var(--vert);">✅ Pseudonymisation forte active</strong><br/>
+            • Tu vois : <code>MFrédéric — Frédéric MENDY</code><br/>
+            • Le Sheet contient : <code>M14</code> (rien d'identifiant)<br/>
+            • La table de correspondance est <strong>uniquement sur ce poste</strong> (fichier <code>data/correspondance_eleves.json</code>)<br/>
+            • Si quelqu'un récupère le Sheet, il ne peut PAS retrouver les élèves`;
+        } else {
+          rgpdEl.style.borderLeftColor = 'var(--rouge)';
+          rgpdEl.innerHTML = `
+            <strong style="color:var(--rouge);">⚠️ Pseudonymisation partielle</strong><br/>
+            • La table de correspondance n'est pas chargée sur ce poste<br/>
+            • Le Sheet reçoit le pseudo affiché tel quel<br/>
+            • Pour activer la pseudonymisation forte : copier <code>data/correspondance_eleves.json</code> depuis l'USB`;
+        }
+      }
       updateBufferCount();
       inerwebResults.onUpdate(updateBufferCount);
     },

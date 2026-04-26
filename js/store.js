@@ -57,8 +57,14 @@
     }
   };
 
-  // === Correspondance Pseudo → vrai Nom (LOCAL uniquement, jamais cloud) ===
+  // === Correspondance triple identité (LOCAL uniquement, jamais cloud) ===
+  // idCloud (M01..) → pseudo (MFrédéric) → "Prénom NOM" (Frédéric MENDY)
+  // - idCloud : ce qui part au Sheet, neutre
+  // - pseudo : ce que voit le prof, lisible
+  // - nom+prénom : surimpression côté prof seulement
   let _correspondance = null;
+  let _byPseudo = {};
+  let _byIdCloud = {};
   let _correspondanceLoaded = false;
   window.Correspondance = {
     async load() {
@@ -66,24 +72,38 @@
       _correspondanceLoaded = true;
       const c = await Catalog.loadOptional('correspondance_eleves.json');
       if (c && c.eleves) {
-        _correspondance = {};
-        c.eleves.forEach(e => { _correspondance[e.pseudo] = e; });
+        _correspondance = c.eleves;
+        c.eleves.forEach(e => {
+          _byPseudo[e.pseudo] = e;
+          if (e.idCloud) _byIdCloud[e.idCloud] = e;
+        });
       }
       return _correspondance;
     },
-    /** Retourne "Prénom NOM" si correspondance dispo, sinon le pseudo. */
-    label(pseudo) {
-      if (!_correspondance || !_correspondance[pseudo]) return pseudo;
-      const e = _correspondance[pseudo];
-      return `${e.prenom} ${e.nom}`;
+    /** Convertit pseudo → idCloud (ce qui part au Sheet). Fallback : retourne le pseudo. */
+    toIdCloud(pseudo) {
+      if (!pseudo) return pseudo;
+      const e = _byPseudo[pseudo];
+      return (e && e.idCloud) ? e.idCloud : pseudo;
     },
-    /** Retourne objet {prenom, nom} ou null. */
-    get(pseudo) {
-      return _correspondance ? (_correspondance[pseudo] || null) : null;
+    /** Convertit idCloud → pseudo (ce que voit le prof). Fallback : retourne l'idCloud. */
+    toPseudo(idCloud) {
+      if (!idCloud) return idCloud;
+      const e = _byIdCloud[idCloud];
+      return e ? e.pseudo : idCloud;
     },
-    /** True si correspondance chargée et au moins 1 élève dedans. */
+    /** Retourne "Prénom NOM" si correspondance dispo. Accepte idCloud OU pseudo. */
+    label(idOrPseudo) {
+      if (!idOrPseudo) return idOrPseudo;
+      const e = _byPseudo[idOrPseudo] || _byIdCloud[idOrPseudo];
+      return e ? `${e.prenom} ${e.nom}` : idOrPseudo;
+    },
+    /** Retourne objet élève complet ou null. */
+    get(idOrPseudo) {
+      return _byPseudo[idOrPseudo] || _byIdCloud[idOrPseudo] || null;
+    },
     available() {
-      return _correspondance && Object.keys(_correspondance).length > 0;
+      return _correspondance && _correspondance.length > 0;
     }
   };
 

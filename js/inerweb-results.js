@@ -21,12 +21,22 @@
     onUpdate(cb) { this._listeners.add(cb); return () => this._listeners.delete(cb); },
     _emit() { this._listeners.forEach(cb => { try { cb(); } catch (e) { console.error(e); } }); },
 
-    /** Push une évaluation. Si fetch fail → buffer offline. */
+    /** Push une évaluation. Si fetch fail → buffer offline.
+     *  TRADUCTION TRANSPARENTE : si Correspondance dispo, pseudo → idCloud (Sheet ne voit JAMAIS le prénom).
+     */
     async write(row) {
+      const cloudRow = { ...row, _timestamp: new Date().toISOString() };
+      // Pseudo → idCloud avant envoi cloud
+      if (window.Correspondance && Correspondance.available() && cloudRow.Pseudo) {
+        const id = Correspondance.toIdCloud(cloudRow.Pseudo);
+        if (id !== cloudRow.Pseudo) {
+          cloudRow.Pseudo = id; // ce qui part au Sheet : M14 (pas MFrédéric)
+        }
+      }
       const payload = {
         action: 'write',
         module: MODULE_KEY,
-        row: { ...row, _timestamp: new Date().toISOString() }
+        row: cloudRow
       };
       try {
         const r = await fetch(COLLECTEUR_URL, {
@@ -126,7 +136,12 @@
 
     _appendLocal(row) {
       const all = Store.get(REMOTE_KEY, []);
-      all.push(row);
+      // En cache local on garde le pseudo (pas l'idCloud) pour que les vues affichent direct
+      const localRow = { ...row };
+      if (window.Correspondance && Correspondance.available() && localRow.Pseudo) {
+        localRow.Pseudo = Correspondance.toPseudo(localRow.Pseudo);
+      }
+      all.push(localRow);
       Store.set(REMOTE_KEY, all);
     },
     _setRemote(data) {
@@ -141,6 +156,16 @@
         });
       } else {
         rows = data;
+      }
+      // Traduction inverse idCloud → pseudo (ce que voit le prof)
+      if (window.Correspondance && Correspondance.available()) {
+        rows = rows.map(r => {
+          if (r && r.Pseudo) {
+            const p = Correspondance.toPseudo(r.Pseudo);
+            if (p !== r.Pseudo) return { ...r, Pseudo: p };
+          }
+          return r;
+        });
       }
       // Last-write-wins : merge avec local
       const local = Store.get(REMOTE_KEY, []);
