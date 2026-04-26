@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>TP 1A — Pose manifold + tirage au vide — CAP IFCA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 10mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lexend', Calibri, sans-serif; font-size: 10.5pt; line-height: 1.5; color: #000; background: white; padding: 10mm; }
+.sheet { max-width: 190mm; margin: 0 auto; }
+.header { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 8px; align-items: center; border: 2px solid #000; padding: 6px 10px; margin-bottom: 10px; }
+.header .logo { font-size: 9.5pt; font-weight: 700; line-height: 1.2; }
+.header .logo span { font-size: 8pt; font-weight: 400; display: block; color: #333; }
+.header .titre { text-align: center; font-size: 12pt; font-weight: 800; line-height: 1.15; }
+.header .titre span { font-size: 8.5pt; font-weight: 600; display: block; color: #333; margin-top: 2px; }
+.header .ref { text-align: right; font-size: 8.5pt; }
+.header .ref b { display: block; font-size: 10pt; }
+.identite { display: grid; grid-template-columns: 2fr 2fr 1fr 1fr; gap: 6px; margin-bottom: 10px; font-size: 10pt; }
+.identite .champ { border: 1px solid #000; padding: 4px 8px; min-height: 28px; }
+.identite .champ .lbl { font-size: 7.5pt; color: #333; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; }
+.identite .champ .val { height: 14px; border-bottom: 1px dotted #666; margin-top: 2px; }
+h2.section { font-size: 11pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; margin: 10px 0 5px; padding: 4px 8px; background: #000; color: white; }
+h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 6px; }
+.objectifs { border: 1px solid #000; padding: 6px 10px; margin-bottom: 8px; font-size: 10pt; }
+.securite { border: 2px solid #000; padding: 6px 8px; margin-bottom: 8px; }
+.securite .titre-sec { font-weight: 800; font-size: 10pt; margin-bottom: 4px; }
+.securite .epi-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; margin: 4px 0; font-size: 9pt; }
+.securite .epi-case { border: 1px solid #000; padding: 3px 6px 3px 22px; position: relative; text-align: center; min-height: 28px; }
+.securite .epi-case .chk { position: absolute; left: 3px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; border: 1.5px solid #000; background: white; }
+.securite .consigne-sec { font-size: 9pt; margin-top: 3px; line-height: 1.4; }
+.materiel { border: 1px solid #000; padding: 6px 10px; margin-bottom: 10px; font-size: 9.5pt; columns: 3; column-gap: 12px; }
+.materiel .item { display: flex; gap: 5px; align-items: center; margin-bottom: 2px; break-inside: avoid; }
+.materiel .chk { width: 11px; height: 11px; border: 1.5px solid #000; background: white; flex-shrink: 0; }
+.etape { border: 1.5px solid #000; margin-bottom: 10px; page-break-inside: avoid; background: white; }
+.etape-header { background: #000; color: white; padding: 5px 10px; display: flex; align-items: center; gap: 8px; font-size: 10.5pt; font-weight: 700; }
+.etape-header .num { background: white; color: #000; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11pt; flex-shrink: 0; }
+.etape-header .titre { flex: 1; text-transform: uppercase; letter-spacing: 0.3px; }
+.etape-header .ep3 { background: white; color: #000; padding: 1px 6px; font-size: 8.5pt; font-weight: 700; letter-spacing: 0.4px; }
+.etape-body { padding: 8px 10px; font-size: 10pt; }
+.bloc { margin-bottom: 8px; page-break-inside: avoid; }
+.bloc-titre { font-size: 9pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.bloc-titre .icon { width: 16px; height: 16px; border: 1.5px solid #000; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10pt; font-weight: 800; }
+.pas-a-pas { counter-reset: pas; list-style: none; padding-left: 0; }
+.pas-a-pas li { counter-increment: pas; padding-left: 24px; position: relative; margin-bottom: 3px; font-size: 10pt; line-height: 1.45; }
+.pas-a-pas li::before { content: counter(pas); position: absolute; left: 0; top: 1px; width: 18px; height: 18px; background: #000; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9pt; font-weight: 700; }
+.pourquoi { background: #f5f5f5; border-left: 3px solid #000; padding: 5px 10px; font-size: 9.5pt; line-height: 1.45; font-style: italic; }
+.pourquoi b { font-style: normal; font-weight: 700; }
+.pieges { border: 1px solid #000; background: #fffbeb; padding: 5px 10px; font-size: 9.5pt; line-height: 1.45; }
+.pieges ul { margin-left: 16px; }
+.pieges li { margin-bottom: 2px; }
+.cibles { background: #e8e8e8; border: 1.5px solid #000; padding: 4px 10px; font-size: 10pt; font-weight: 700; }
+.cibles .lbl { font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.4px; font-weight: 800; margin-right: 6px; }
+.releve { background: white; border: 1px dashed #000; padding: 6px 10px; font-size: 9.5pt; }
+.releve .lbl-rel { font-weight: 800; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.ligne-ecriture { border-bottom: 1px dotted #000; height: 18px; margin-bottom: 2px; }
+.ligne-inline { display: inline-block; border-bottom: 1px dotted #000; min-width: 60px; height: 15px; vertical-align: bottom; }
+.tableau-relev { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 3px 0; }
+.tableau-relev th, .tableau-relev td { border: 1px solid #000; padding: 3px 6px; text-align: center; }
+.tableau-relev th { background: #eee; font-weight: 700; font-size: 8.5pt; }
+.tableau-relev td.vide { height: 22px; }
+.tableau-relev td.lbl-cell { text-align: left; font-weight: 600; background: #fafafa; }
+.case-cocher { display: inline-block; width: 12px; height: 12px; border: 1.5px solid #000; background: white; vertical-align: middle; margin-right: 4px; }
+.qcm { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 14px; font-size: 9.5pt; margin-top: 3px; }
+.qcm .q { display: flex; align-items: flex-start; gap: 4px; }
+.validation { background: #000; color: white; padding: 4px 10px; font-size: 9pt; margin-top: 6px; font-weight: 600; }
+.validation b { font-weight: 800; }
+.autoeval { border: 2px solid #000; padding: 6px 10px; margin-top: 12px; page-break-inside: avoid; }
+.autoeval .titre-ae { font-weight: 800; font-size: 10.5pt; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+.autoeval table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+.autoeval th, .autoeval td { border: 1px solid #000; padding: 3px 6px; text-align: center; }
+.autoeval th { background: #eee; font-weight: 700; font-size: 8.5pt; }
+.autoeval td.critere { text-align: left; font-weight: 500; }
+.footer-doc { margin-top: 8px; padding-top: 4px; border-top: 1px solid #000; font-size: 8pt; color: #333; display: flex; justify-content: space-between; }
+@media screen { body { background: #e5e5e5; } .sheet { background: white; padding: 12mm; box-shadow: 0 2px 10px rgba(0,0,0,0.15); margin: 20px auto; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique · CAP IFCA</span></div>
+    <div class="titre">TP 1A — Pose du manifold + Tirage au vide + Mise sous azote<span>Atelier Manipulation fluidique · Progression Bloc A · 1/3</span></div>
+    <div class="ref"><b>Durée : 4 h</b>Date : 27/04/2026<br>À réaliser en binôme</div>
+  </div>
+
+  <div class="identite">
+    <div class="champ"><div class="lbl">NOM — Prénom 1</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">NOM — Prénom 2 (binôme)</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Classe</div><div class="val">CAP IFCA 2</div></div>
+    <div class="champ"><div class="lbl">Note / 20</div><div class="val"></div></div>
+  </div>
+
+  <h2 class="section"><span class="num">1</span>Objectif du TP</h2>
+  <div class="objectifs">
+    Ce TP est le <b>1<sup>er</sup> des 3 TP Manipulation</b>. Il est centré sur la <b>préparation fluidique avant intervention</b>. À la fin : je fais une VAT complète · je relève P/T initiales au poste fixe · j'identifie le gaz · je pose un manifold sans fuite avec tirage au vide du manifold · je dégaze progressivement · je tire un vide profond ≤ –0,9 bar stable · je mets sous azote 3 bar pour le test du pressostat.
+  </div>
+
+  <h2 class="section"><span class="num">2</span>Sécurité — EPI en continu</h2>
+  <div class="securite">
+    <div class="titre-sec">Je coche quand j'ai mon EPI</div>
+    <div class="epi-list">
+      <div class="epi-case"><span class="chk"></span>Lunettes</div>
+      <div class="epi-case"><span class="chk"></span>Gants fluide</div>
+      <div class="epi-case"><span class="chk"></span>Chaussures S3</div>
+      <div class="epi-case"><span class="chk"></span>Gants isolants 00</div>
+      <div class="epi-case"><span class="chk"></span>Visière</div>
+    </div>
+    <div class="consigne-sec"><b>VAT obligatoire</b> avant toute intervention. <b>Aucune émission de gaz</b> hors manifold. <b>Purge progressive</b>, jamais brusque.</div>
+  </div>
+
+  <h2 class="section"><span class="num">3</span>Matériel</h2>
+  <div class="materiel">
+    <div class="item"><span class="chk"></span>Manifold 2 voies étalonné</div>
+    <div class="item"><span class="chk"></span>Flexibles + bypass</div>
+    <div class="item"><span class="chk"></span>Pompe à vide</div>
+    <div class="item"><span class="chk"></span>Bouteille N₂ + détendeur</div>
+    <div class="item"><span class="chk"></span>Multimètre</div>
+    <div class="item"><span class="chk"></span>Gants 00 + visière</div>
+    <div class="item"><span class="chk"></span>Chronomètre</div>
+    <div class="item"><span class="chk"></span>Feuille + crayon</div>
+  </div>
+
+  <h2 class="section"><span class="num">4</span>Déroulé du TP — 8 étapes</h2>
+
+  <!-- ÉTAPE 1 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">1</span><span class="titre">Consignation + VAT</span><span class="ep3">A-5 · C2.2</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je descends le disjoncteur général en position OFF.</li>
+          <li>J'enfile <b>gants 00 + visière</b>.</li>
+          <li>Je règle le multimètre en <b>V~</b>, calibre 500 V.</li>
+          <li>Je <b>teste le multimètre sur une source connue</b> (prise 230 V) → je dois lire ~230 V.</li>
+          <li>Je mesure en <b>sortie</b> du disjoncteur les 3 points : Phase/Neutre, Phase/Terre, Neutre/Terre. Chacun doit être à 0 V.</li>
+          <li>Je note les 3 valeurs. Commentaire oral : « consignée, VAT OK ».</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">La VAT est la <b>preuve</b> que l'installation est hors tension. Sans elle, aucune garantie. Si une valeur n'est pas 0 V, je n'avance pas.</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Pas de test préalable du multimètre → fausse sécurité.</li>
+          <li>Mesurer en entrée du disjoncteur → lecture 230 V alors que l'installation est consignée.</li>
+          <li>Retirer gants 00 / visière pendant la mesure.</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Valeurs cibles :</span>0 V sur les 3 points · multimètre testé</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mon relevé</div>
+        <table class="tableau-relev">
+          <thead><tr><th>Test 230 V</th><th>Phase / Neutre</th><th>Phase / Terre</th><th>Neutre / Terre</th></tr></thead>
+          <tbody><tr><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> test préalable · 3 valeurs 0 V · EPI élec.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 2 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">2</span><span class="titre">Relevé initial P/T (poste fixe)</span><span class="ep3">A-1 · C4.5</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je repère les 2 manomètres fixes de l'installation.</li>
+          <li>Je lis <b>PO</b> (BP, bleu) et <b>PK</b> (HP, rouge). Unité : bar.</li>
+          <li>Je lis les températures <b>TO</b> et <b>TK</b>. Unité : °C.</li>
+          <li>Je note avec unités.</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Ce relevé sert à identifier le gaz (étape 3) et à avoir un état initial de référence.</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Oublier les unités.</li>
+          <li>Confondre manomètres BP et HP.</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Installation sous azote :</span>PO ≈ PK ≈ 5 bar · T ambiante</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mon relevé</div>
+        <table class="tableau-relev">
+          <thead><tr><th>PO (bar)</th><th>PK (bar)</th><th>TO (°C)</th><th>TK (°C)</th></tr></thead>
+          <tbody><tr><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> 4 valeurs complètes · unités.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 3 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">3</span><span class="titre">Identification du gaz</span><span class="ep3">A-3 · C4.2</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je prends ma table P/T des fluides.</li>
+          <li>À la T° ambiante relevée, je cherche quelle pression aurait chaque fluide :<br>&nbsp;&nbsp;• R-134a à 20°C ≈ <b>4,7 bar</b> · R-449A à 20°C ≈ <b>11 bar</b> · R-404A à 20°C ≈ <b>10,5 bar</b> · N₂ : pression indépendante de T.</li>
+          <li>Je compare avec ma mesure et je conclus par écrit.</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Identifier le gaz avant intervention est <b>obligatoire</b> (règlement F-Gaz). Impossible de charger le bon fluide ou faire un diagnostic sans savoir ce qu'il y a dans le circuit.</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Se fier à la couleur de la bouteille seule.</li>
+          <li>Ne vérifier que P ou T seule → il faut le <b>couple P/T</b>.</li>
+          <li>Oublier de regarder la plaque signalétique (fluide prévu).</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Typique :</span>PO ≈ PK ≈ 5 bar à 20°C → azote sec</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Ma conclusion + justification</div>
+        <div class="ligne-ecriture"></div>
+        <div class="ligne-ecriture"></div>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> conclusion correcte · justification P/T claire.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 4 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">4</span><span class="titre">Pose du manifold sans fuite</span><span class="ep3">A-2 · C4.7</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je vérifie la <b>date d'étalonnage</b> du manifold (&lt; 1 an).</li>
+          <li>J'inspecte les joints. Je les change si douteux.</li>
+          <li>Toutes les vannes du manifold fermées, bypass fermé.</li>
+          <li>Je raccorde flexible <b>bleu</b> sur vanne BP, flexible <b>rouge</b> sur vanne HP de l'installation.</li>
+          <li>J'ouvre le bypass du manifold. Je branche la pompe à vide sur le port central. <b>Je tire le vide du manifold seul</b> (vannes service fermées côté installation).</li>
+          <li>Vide fait, je ferme la vanne pompe. J'ouvre les vannes de service BP et HP.</li>
+          <li>Je desserre légèrement les presse-étoupes puis je les resserre à la main.</li>
+          <li>Je vérifie : aucun souffle, aucune fuite audible.</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Un manifold non purgé avant ouverture des vannes <b>pollue le circuit avec de l'air</b>. C'est l'erreur la plus fréquente en CAP.</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Ouvrir les vannes avant d'avoir tiré le vide du manifold.</li>
+          <li>Forcer les presse-étoupes à la clé.</li>
+          <li>Oublier le bypass pendant le tirage au vide du manifold.</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Objectif :</span>zéro fuite audible · manifold purgé avant ouverture</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Je coche</div>
+        <div class="qcm">
+          <div class="q"><span class="case-cocher"></span>Étalonnage &lt; 1 an vérifié</div>
+          <div class="q"><span class="case-cocher"></span>Joints inspectés</div>
+          <div class="q"><span class="case-cocher"></span>Couleur flexibles respectée</div>
+          <div class="q"><span class="case-cocher"></span>Manifold purgé avant ouverture</div>
+          <div class="q"><span class="case-cocher"></span>Presse-étoupes à la main</div>
+          <div class="q"><span class="case-cocher"></span>Zéro fuite audible</div>
+        </div>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> étalonnage · purge · pose sans fuite · explications orales.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 5 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">5</span><span class="titre">Dégazage sécurisé</span><span class="ep3">A-4 · C4.3</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je vérifie que la zone de purge est dégagée.</li>
+          <li>J'ouvre le bypass du manifold <b>très progressivement</b> (quart de tour).</li>
+          <li>Je surveille le manomètre descendre doucement.</li>
+          <li>Je continue jusqu'à <b>0 bar</b>. Je referme le bypass.</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">On enlève d'abord l'azote pour pouvoir tirer un vide profond ensuite. Une purge brusque entraîne projections, bruit, et peut déplacer l'huile du compresseur.</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Ouvrir le bypass d'un coup.</li>
+          <li>Arrêter avant 0 bar.</li>
+          <li>Diriger la purge vers soi ou un équipement sensible.</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Objectif :</span>0 bar atteint · pas de bruit violent</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Pression finale : <span class="ligne-inline" style="min-width:80px"></span> bar</div>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> purge progressive · 0 bar atteint.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 6 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">6</span><span class="titre">Tirage au vide profond</span><span class="ep3">A-7 · C4.1</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je vérifie l'<b>huile de la pompe</b> : propre, niveau OK.</li>
+          <li>Je raccorde la pompe sur le port central du manifold.</li>
+          <li>J'ouvre toutes les vannes du manifold (BP, HP, bypass).</li>
+          <li>Je lance la pompe. Je laisse tourner <b>au moins 30 minutes</b>.</li>
+          <li>Je regarde le manomètre descendre : objectif <b>≤ –0,9 bar</b>.</li>
+          <li>Quand le vide est atteint, je <b>ferme d'abord la vanne pompe</b>, puis j'arrête la pompe.</li>
+          <li>Je chronomètre <b>1 minute</b>. Le manomètre ne doit pas remonter.</li>
+          <li>Je remplis le QCM ci-dessous pendant que la pompe tourne.</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Le vide profond élimine <b>l'air et l'humidité</b>. Sans lui : corrosion, acides, oxydation huile, perte de rendement. La tenue 1 min détecte les <b>fuites</b>.</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Pompe à huile sale → contamination.</li>
+          <li>Arrêter la pompe sans fermer la vanne d'abord → remontée.</li>
+          <li>Sauter le chronométrage 1 min.</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Objectif :</span>vide ≤ –0,9 bar · stable 1 min · QCM ≥ 70 %</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ QCM — je coche les 8 avantages du tirage au vide</div>
+        <div class="qcm">
+          <div class="q"><span class="case-cocher"></span>Éliminer l'air et l'humidité</div>
+          <div class="q"><span class="case-cocher"></span>Prévenir l'oxydation de l'huile</div>
+          <div class="q"><span class="case-cocher"></span>Améliorer l'efficacité énergétique</div>
+          <div class="q"><span class="case-cocher"></span>Limiter la formation d'acides</div>
+          <div class="q"><span class="case-cocher"></span>Réduire le point d'ébullition humidité</div>
+          <div class="q"><span class="case-cocher"></span>Garantir la pureté du fluide</div>
+          <div class="q"><span class="case-cocher"></span>Détecter les fuites par tenue vide</div>
+          <div class="q"><span class="case-cocher"></span>Respecter réglementation / fabricants</div>
+        </div>
+        <div class="lbl-rel" style="margin-top:5px">✎ Vide atteint : <span class="ligne-inline" style="min-width:80px"></span> bar · Tenue : <span class="ligne-inline" style="min-width:60px"></span> min</div>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> vide stable ≥ 1 min · QCM ≥ 70 %.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 7 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">7</span><span class="titre">Mise sous azote 3 bar</span><span class="ep3">A-8 · C4.2</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je raccorde la bouteille <b>N₂</b> au manifold via le détendeur bouteille.</li>
+          <li>Je ferme la vanne pompe. Vannes BP et HP côté installation ouvertes.</li>
+          <li>J'ouvre <b>doucement</b> le détendeur bouteille : surveillance du manomètre.</li>
+          <li>Je coupe le détendeur quand j'atteins <b>~ 3 bar</b>.</li>
+          <li>Je chronomètre 30 s : la pression ne doit pas chuter.</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">À 3 bar, je suis dans la <b>plage de travail du pressostat BP</b> (Cut-in ≈ 2,5 bar). Je pourrai tester son cyclage au TP suivant (TP 1B).</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Ouvrir le détendeur trop vite → coup de pression.</li>
+          <li>Dépasser 3 bar → risque composants BP.</li>
+          <li>Oublier de refermer le détendeur après stabilisation.</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Objectif :</span>~ 3 bar stables 30 s · pas de fuite</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Pression atteinte : <span class="ligne-inline" style="min-width:60px"></span> bar · stabilité sur : <span class="ligne-inline" style="min-width:60px"></span> s</div>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> pression cible · stabilité 30 s · détendeur refermé.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 8 : Recherche de fuite OBLIGATOIRE -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">8</span><span class="titre">Recherche de fuite — détecteur électronique + savon</span><span class="ep3">A-12 · C4.3</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je prends le <b>détecteur électronique de fuites</b>. Je l'allume, je le laisse se calibrer (30 s en air propre).</li>
+          <li>Je passe la sonde <b>lentement</b> à 1 cm max de chaque raccord que j'ai touché : vannes de service BP et HP côté installation, raccords flexibles côté manifold, raccord bouteille N₂.</li>
+          <li>Si alarme → je note le point et je reprends le serrage. Je refais le test.</li>
+          <li>En <b>complément</b>, j'applique une solution moussante (savon) sur chaque raccord. Je surveille 30 s : aucune bulle ne doit apparaître.</li>
+          <li>Je nettoie les traces de savon au chiffon propre.</li>
+          <li>Je note mes résultats dans le tableau.</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Le règlement F-Gaz impose un contrôle d'étanchéité <b>à chaque intervention</b> qui ouvre le circuit. Le détecteur électronique détecte les <b>petites fuites invisibles</b> au savon. Les 2 procédés se complètent : obligatoire à chaque TP.</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Passer le détecteur trop vite → fuite non détectée.</li>
+          <li>Oublier un raccord (flexibles manifold souvent oubliés).</li>
+          <li>Laisser la mousse sèche sur l'installation → corrosion à long terme.</li>
+          <li>Faire un seul des 2 procédés.</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Objectif :</span>aucune alarme détecteur · aucune bulle savon · zone nettoyée</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mon contrôle d'étanchéité</div>
+        <table class="tableau-relev">
+          <thead><tr><th>Point testé</th><th>Détecteur (OK / Fuite)</th><th>Mousse (OK / Fuite)</th></tr></thead>
+          <tbody>
+            <tr><td class="lbl-cell">Vanne de service BP</td><td class="vide"></td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">Vanne de service HP</td><td class="vide"></td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">Flexible BP côté manifold</td><td class="vide"></td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">Flexible HP côté manifold</td><td class="vide"></td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">Raccord bouteille N₂</td><td class="vide"></td><td class="vide"></td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:3px"><span class="case-cocher"></span>Zone nettoyée (machine + sol)</div>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> 2 procédés utilisés · chaque raccord testé · zone propre.</div>
+    </div>
+  </div>
+
+  <!-- AUTO-ÉVAL -->
+  <div class="autoeval">
+    <div class="titre-ae">Auto-évaluation — fin de TP</div>
+    <table>
+      <thead><tr><th style="text-align:left">Critère</th><th>Oui</th><th>Partiel</th><th>Non</th><th>Commentaire</th></tr></thead>
+      <tbody>
+        <tr><td class="critere">EPI portés en continu</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">VAT complète 3 points + test préalable</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Relevé P/T initial + identification gaz</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Manifold posé, manifold purgé avant ouverture</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Dégazage progressif à 0 bar</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Vide ≤ –0,9 bar stable 1 min + QCM</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Mise sous azote 3 bar stable</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Recherche de fuite (détecteur + savon)</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GRILLE ENSEIGNANT -->
+  <div class="autoeval" style="margin-top:12px">
+    <div class="titre-ae">Grille d'évaluation par compétences (partie enseignant)</div>
+    <table>
+      <thead><tr><th style="text-align:left">Compétence</th><th>Étape</th><th>NA</th><th>EC</th><th>A</th><th>M</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td class="critere"><b>C2.2</b> — Sécurité + VAT</td><td>1</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 15</td></tr>
+        <tr><td class="critere"><b>C4.5</b> — Relevé P/T initial</td><td>2</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 10</td></tr>
+        <tr><td class="critere"><b>C4.2</b> — Identification gaz par P/T</td><td>3 · 7</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 10</td></tr>
+        <tr><td class="critere"><b>C4.7</b> — Pose manifold sans fuite</td><td>4</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 20</td></tr>
+        <tr><td class="critere"><b>C4.3</b> — Dégazage progressif</td><td>5</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 10</td></tr>
+        <tr><td class="critere"><b>C4.1</b> — Tirage au vide profond</td><td>6</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 20</td></tr>
+        <tr><td class="critere"><b>C4.3</b> — Recherche de fuite (2 procédés)</td><td>8</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 15</td></tr>
+        <tr><td class="critere" style="background:#eee"><b>TOTAL</b></td><td colspan="5" style="text-align:right"><b>Note brute / 100 · × 20 / 100 :</b></td><td><b>/ 20</b></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:8.5pt;margin-top:4px;font-style:italic">Observations enseignant :</div>
+    <div class="ligne-ecriture"></div>
+    <div class="ligne-ecriture"></div>
+  </div>
+
+  <div class="footer-doc">
+    <span>TP 1A — Pose manifold · CAP IFCA 2 · F. Henninot · inerWeb Édu</span>
+    <span>LPP Jacques Raynaud · 27/04/2026 · Progression Bloc A 1/3</span>
+  </div>
+</div>
+</body>
+</html>

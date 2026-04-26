@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>TP 2A — Mesures de températures — CAP IFCA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 10mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lexend', Calibri, sans-serif; font-size: 10.5pt; line-height: 1.5; color: #000; background: white; padding: 10mm; }
+.sheet { max-width: 190mm; margin: 0 auto; }
+.header { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 8px; align-items: center; border: 2px solid #000; padding: 6px 10px; margin-bottom: 10px; }
+.header .logo { font-size: 9.5pt; font-weight: 700; line-height: 1.2; }
+.header .logo span { font-size: 8pt; font-weight: 400; display: block; color: #333; }
+.header .titre { text-align: center; font-size: 12pt; font-weight: 800; line-height: 1.15; }
+.header .titre span { font-size: 8.5pt; font-weight: 600; display: block; color: #333; margin-top: 2px; }
+.header .ref { text-align: right; font-size: 8.5pt; }
+.header .ref b { display: block; font-size: 10pt; }
+.identite { display: grid; grid-template-columns: 2fr 2fr 1fr 1fr; gap: 6px; margin-bottom: 10px; font-size: 10pt; }
+.identite .champ { border: 1px solid #000; padding: 4px 8px; min-height: 28px; }
+.identite .champ .lbl { font-size: 7.5pt; color: #333; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; }
+.identite .champ .val { height: 14px; border-bottom: 1px dotted #666; margin-top: 2px; }
+h2.section { font-size: 11pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; margin: 10px 0 5px; padding: 4px 8px; background: #000; color: white; }
+h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 6px; }
+.objectifs { border: 1px solid #000; padding: 6px 10px; margin-bottom: 8px; font-size: 10pt; }
+.securite { border: 2px solid #000; padding: 6px 8px; margin-bottom: 8px; }
+.securite .titre-sec { font-weight: 800; font-size: 10pt; margin-bottom: 4px; }
+.securite .epi-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; margin: 4px 0; font-size: 9pt; }
+.securite .epi-case { border: 1px solid #000; padding: 3px 6px 3px 22px; position: relative; text-align: center; min-height: 28px; }
+.securite .epi-case .chk { position: absolute; left: 3px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; border: 1.5px solid #000; background: white; }
+.securite .consigne-sec { font-size: 9pt; margin-top: 3px; line-height: 1.4; }
+.materiel { border: 1px solid #000; padding: 6px 10px; margin-bottom: 10px; font-size: 9.5pt; columns: 3; column-gap: 12px; }
+.materiel .item { display: flex; gap: 5px; align-items: center; margin-bottom: 2px; break-inside: avoid; }
+.materiel .chk { width: 11px; height: 11px; border: 1.5px solid #000; background: white; flex-shrink: 0; }
+.etape { border: 1.5px solid #000; margin-bottom: 10px; page-break-inside: avoid; background: white; }
+.etape-header { background: #000; color: white; padding: 5px 10px; display: flex; align-items: center; gap: 8px; font-size: 10.5pt; font-weight: 700; }
+.etape-header .num { background: white; color: #000; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11pt; flex-shrink: 0; }
+.etape-header .titre { flex: 1; text-transform: uppercase; letter-spacing: 0.3px; }
+.etape-header .ep3 { background: white; color: #000; padding: 1px 6px; font-size: 8.5pt; font-weight: 700; letter-spacing: 0.4px; }
+.etape-body { padding: 8px 10px; font-size: 10pt; }
+.bloc { margin-bottom: 8px; page-break-inside: avoid; }
+.bloc-titre { font-size: 9pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.bloc-titre .icon { width: 16px; height: 16px; border: 1.5px solid #000; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10pt; font-weight: 800; }
+.pas-a-pas { counter-reset: pas; list-style: none; padding-left: 0; }
+.pas-a-pas li { counter-increment: pas; padding-left: 24px; position: relative; margin-bottom: 3px; font-size: 10pt; line-height: 1.45; }
+.pas-a-pas li::before { content: counter(pas); position: absolute; left: 0; top: 1px; width: 18px; height: 18px; background: #000; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9pt; font-weight: 700; }
+.pourquoi { background: #f5f5f5; border-left: 3px solid #000; padding: 5px 10px; font-size: 9.5pt; line-height: 1.45; font-style: italic; }
+.pourquoi b { font-style: normal; font-weight: 700; }
+.pieges { border: 1px solid #000; background: #fffbeb; padding: 5px 10px; font-size: 9.5pt; line-height: 1.45; }
+.pieges ul { margin-left: 16px; }
+.pieges li { margin-bottom: 2px; }
+.cibles { background: #e8e8e8; border: 1.5px solid #000; padding: 4px 10px; font-size: 10pt; font-weight: 700; }
+.cibles .lbl { font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.4px; font-weight: 800; margin-right: 6px; }
+.releve { background: white; border: 1px dashed #000; padding: 6px 10px; font-size: 9.5pt; }
+.releve .lbl-rel { font-weight: 800; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.ligne-ecriture { border-bottom: 1px dotted #000; height: 18px; margin-bottom: 2px; }
+.ligne-inline { display: inline-block; border-bottom: 1px dotted #000; min-width: 60px; height: 15px; vertical-align: bottom; }
+.tableau-relev { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 3px 0; }
+.tableau-relev th, .tableau-relev td { border: 1px solid #000; padding: 3px 6px; text-align: center; }
+.tableau-relev th { background: #eee; font-weight: 700; font-size: 8.5pt; }
+.tableau-relev td.vide { height: 22px; }
+.tableau-relev td.lbl-cell { text-align: left; font-weight: 600; background: #fafafa; }
+.case-cocher { display: inline-block; width: 12px; height: 12px; border: 1.5px solid #000; background: white; vertical-align: middle; margin-right: 4px; }
+.qcm { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 14px; font-size: 9.5pt; margin-top: 3px; }
+.qcm .q { display: flex; align-items: flex-start; gap: 4px; }
+.validation { background: #000; color: white; padding: 4px 10px; font-size: 9pt; margin-top: 6px; font-weight: 600; }
+.validation b { font-weight: 800; }
+.formule { background: white; border: 2px solid #000; padding: 6px 10px; font-size: 11pt; text-align: center; font-weight: 700; margin: 4px 0; font-family: 'Courier New', monospace; }
+.autoeval { border: 2px solid #000; padding: 6px 10px; margin-top: 12px; page-break-inside: avoid; }
+.autoeval .titre-ae { font-weight: 800; font-size: 10.5pt; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+.autoeval table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+.autoeval th, .autoeval td { border: 1px solid #000; padding: 3px 6px; text-align: center; }
+.autoeval th { background: #eee; font-weight: 700; font-size: 8.5pt; }
+.autoeval td.critere { text-align: left; font-weight: 500; }
+.footer-doc { margin-top: 8px; padding-top: 4px; border-top: 1px solid #000; font-size: 8pt; color: #333; display: flex; justify-content: space-between; }
+@media screen { body { background: #e5e5e5; } .sheet { background: white; padding: 12mm; box-shadow: 0 2px 10px rgba(0,0,0,0.15); margin: 20px auto; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique · CAP IFCA</span></div>
+    <div class="titre">TP 2A — Mesures de températures sur installation en marche<span>Atelier Mesures · Progression Bloc B · 1/3</span></div>
+    <div class="ref"><b>Durée : 4 h</b>Date : 27/04/2026<br>À réaliser en binôme</div>
+  </div>
+
+  <div class="identite">
+    <div class="champ"><div class="lbl">NOM — Prénom 1</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">NOM — Prénom 2 (binôme)</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Classe</div><div class="val">CAP IFCA 2</div></div>
+    <div class="champ"><div class="lbl">Note / 20</div><div class="val"></div></div>
+  </div>
+
+  <h2 class="section"><span class="num">1</span>Objectif du TP</h2>
+  <div class="objectifs">
+    Ce TP est le <b>premier des 3 TP Mesures</b>. Il est centré sur la <b>gestuelle du relevé de température</b>. À la fin : je sais identifier un fluide par sa plaque signalétique · je démarre une installation et j'attends la stabilisation · je mesure correctement les 6 points de température du cycle · je mesure le ΔT condenseur · j'interprète visuellement mes mesures (où il fait chaud, où il fait froid, est-ce cohérent ?). <b>Pas de calcul de surchauffe ni de sous-refroidissement dans ce TP</b> — ce sera le TP 2B.
+  </div>
+
+  <h2 class="section"><span class="num">2</span>Sécurité — EPI en continu</h2>
+  <div class="securite">
+    <div class="titre-sec">Je coche quand j'ai mon EPI</div>
+    <div class="epi-list">
+      <div class="epi-case"><span class="chk"></span>Lunettes</div>
+      <div class="epi-case"><span class="chk"></span>Gants fluide</div>
+      <div class="epi-case"><span class="chk"></span>Chaussures S3</div>
+      <div class="epi-case"><span class="chk"></span>Gants isolants 00</div>
+      <div class="epi-case"><span class="chk"></span>Visière</div>
+    </div>
+    <div class="consigne-sec">Installation <b>en marche</b> : attention aux tuyaux de refoulement qui chauffent (jusqu'à 90 °C) et aux ventilateurs. Thermomètre : je le protège des chocs.</div>
+  </div>
+
+  <h2 class="section"><span class="num">3</span>Matériel</h2>
+  <div class="materiel">
+    <div class="item"><span class="chk"></span>Thermomètre de contact</div>
+    <div class="item"><span class="chk"></span>Sonde air séparée</div>
+    <div class="item"><span class="chk"></span>Chiffon propre</div>
+    <div class="item"><span class="chk"></span>Plaque signalétique lisible</div>
+    <div class="item"><span class="chk"></span>Feuille de relevé</div>
+    <div class="item"><span class="chk"></span>Crayon / stylo</div>
+    <div class="item"><span class="chk"></span>Chronomètre</div>
+    <div class="item"><span class="chk"></span>Calculatrice</div>
+  </div>
+
+  <h2 class="section"><span class="num">4</span>Repérage des 6 points de température</h2>
+  <div class="objectifs">
+    <b>Les 6 points de mesure sur le circuit :</b><br>
+    <b>TSC</b> — sortie compresseur (refoulement, très chaud) · <b>TEC</b> — entrée condenseur · <b>TScd</b> — sortie condenseur (liquide à peine chaud) · <b>Tdet</b> — entrée détendeur · <b>TSe</b> — sortie évaporateur (au bulbe du détendeur) · <b>Tasp</b> — aspiration compresseur (légèrement supérieur à TSe).<br>
+    <b>En plus :</b> T air entrée et T air sortie condenseur (pour ΔT condenseur).
+  </div>
+
+  <h2 class="section"><span class="num">5</span>Déroulé du TP — 7 étapes</h2>
+
+  <!-- ÉTAPE 1 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">1</span><span class="titre">Identification du fluide + plaque signalétique</span><span class="ep3">B-1 · C4.2</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je localise la <b>plaque signalétique</b> de l'installation (sur le compresseur ou le groupe).</li>
+          <li>Je relève : <b>fabricant, modèle, fluide (R-…), charge (kg), GWP</b>, pressions max HP/BP, puissance compresseur.</li>
+          <li>Je note tout dans le tableau ci-dessous.</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Connaître le fluide est obligatoire avant toute mesure. Une plaque illisible = pas d'intervention légale (règlement F-Gaz).</div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Oublier le <b>GWP</b> (utile plus tard pour la TeqCO₂).</li>
+          <li>Confondre fluide prévu (plaque) et fluide réellement présent (peut être un retrofit non tracé).</li>
+        </ul></div>
+      </div>
+
+      <div class="cibles"><span class="lbl">À relever :</span>fluide · charge · GWP · N° série · pressions max</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Plaque</div>
+        <table class="tableau-relev">
+          <thead><tr><th>Fluide</th><th>Charge (kg)</th><th>GWP</th><th>N° série</th><th>P HP max (bar)</th><th>P BP max (bar)</th></tr></thead>
+          <tbody><tr><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> 6 valeurs complètes · fluide identifié.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 2 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">2</span><span class="titre">Mise en marche + stabilisation</span><span class="ep3">B-3 · C2.2</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je dégage mon poste, mes outils sont prêts (thermomètre, sonde air, feuille).</li>
+          <li>Je mets l'installation en marche au disjoncteur général.</li>
+          <li>J'écoute le démarrage du compresseur : ronflement régulier, pas de claquement.</li>
+          <li>J'attends <b>au moins 5 minutes</b> avant de commencer les mesures.</li>
+          <li>Je note l'heure exacte de début de mesure.</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Sans stabilisation, les températures sont <b>en train de monter</b> (le circuit chauffe progressivement). Mes mesures seraient fausses et incohérentes entre elles.</div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Commencer les mesures avant 5 min.</li>
+          <li>Mesurer en début de cycle (juste après enclenchement compresseur).</li>
+        </ul></div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Objectif :</span>5 min d'attente respectées · régime stable</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Heure début mesure : <span class="ligne-inline" style="min-width:80px"></span></div>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> délai respecté · observation démarrage correcte.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 3 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">3</span><span class="titre">Températures côté HP — refoulement et condenseur</span><span class="ep3">B-3 · C4.5</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je nettoie la sonde du thermomètre (chiffon propre).</li>
+          <li>Je mesure <b>TSC (sortie compresseur)</b> : je pose la sonde sur le tube de refoulement, juste en sortie du compresseur. <b>Attention, ça chauffe beaucoup</b> (60 à 90 °C). Je tiens 10 s pour stabilisation.</li>
+          <li>Je mesure <b>TEC (entrée condenseur)</b> : juste avant l'entrée dans le bloc du condenseur.</li>
+          <li>Je mesure <b>TScd (sortie condenseur)</b> : en sortie du bloc, avant le filtre ou le voyant liquide.</li>
+          <li>Je note les 3 valeurs avec leur unité (°C).</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Ces 3 mesures montrent l'<b>évolution de la température côté haute pression</b> : le fluide est vapeur très chaude à la sortie du compresseur, se refroidit dans le condenseur, et ressort en liquide à peine tiède. Si TScd est encore très chaud, c'est que le condenseur ne fait pas son travail.</div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Sonde mal plaquée sur le tube → valeur inférieure à la vraie T°.</li>
+          <li>Mesurer trop loin du compresseur pour TSC → valeur dégradée.</li>
+          <li>Oublier l'unité.</li>
+        </ul></div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Ordres de grandeur typiques :</span>TSC ≈ 60 à 90 °C · TEC ≈ 50 à 70 °C · TScd ≈ T° ambiante + 3 à 8 °C</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mes mesures</div>
+        <table class="tableau-relev">
+          <thead><tr><th>Point</th><th>TSC (sortie comp.)</th><th>TEC (entrée cond.)</th><th>TScd (sortie cond.)</th></tr></thead>
+          <tbody><tr><td class="lbl-cell">Valeur (°C)</td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> 3 valeurs cohérentes · unités · sonde bien posée.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 4 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">4</span><span class="titre">Températures côté BP — détendeur et évaporateur</span><span class="ep3">B-3 · C4.5</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je mesure <b>Tdet (entrée détendeur)</b> : sur le tube juste en amont du détendeur. Doit être proche de TScd (peu de perte).</li>
+          <li>Je mesure <b>TSe (sortie évaporateur)</b> : <b>au bulbe du détendeur</b>, c'est-à-dire sur le tube où est fixé le bulbe (côté aspiration, juste après l'évaporateur).</li>
+          <li>Je mesure <b>Tasp (aspiration compresseur)</b> : sur le tube d'aspiration, juste avant l'entrée du compresseur.</li>
+          <li>Je note les 3 valeurs avec leur unité.</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Ces 3 mesures montrent le côté <b>basse pression</b>. TSe et Tasp sont froides (le fluide s'est évaporé). Une grosse différence TSe → Tasp indique un réchauffement parasite de la ligne d'aspiration (isolation HS ?).</div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Confondre <b>TSe</b> (au bulbe) et <b>Tasp</b> (aspiration compresseur) — ce sont 2 points distincts.</li>
+          <li>Mesurer Tdet loin du détendeur → valeur dégradée.</li>
+        </ul></div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Ordres de grandeur typiques :</span>Tdet ≈ TScd · TSe ≈ T°évaporation + 3 à 6 K · Tasp ≈ TSe + 0 à 4 K</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mes mesures</div>
+        <table class="tableau-relev">
+          <thead><tr><th>Point</th><th>Tdet (entrée détendeur)</th><th>TSe (sortie évap. / bulbe)</th><th>Tasp (aspir. compresseur)</th></tr></thead>
+          <tbody><tr><td class="lbl-cell">Valeur (°C)</td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> 3 valeurs cohérentes · TSe et Tasp bien distinguées.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 5 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">5</span><span class="titre">Températures de l'air au condenseur + ΔT</span><span class="ep3">B-3 · C5.1</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je prends la sonde air (distincte du thermomètre de contact).</li>
+          <li>Je mesure <b>T air in</b> : je place la sonde devant le condenseur, côté aspiration de l'air (<b>entrée</b>). J'attends 15 s pour stabilisation.</li>
+          <li>Je mesure <b>T air out</b> : je place la sonde derrière le condenseur, côté sortie de l'air (<b>refoulement</b>). 15 s aussi.</li>
+          <li>Je calcule le <b>ΔT condenseur</b> :</li>
+        </ol>
+        <div class="formule">ΔT condenseur = T air out − T air in</div>
+        <ol class="pas-a-pas" start="5" style="counter-reset: pas 4">
+          <li>Je note le résultat en K (même chose que °C pour un écart).</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Le ΔT condenseur mesure l'efficacité du <b>transfert thermique fluide → air</b>. Un condenseur encrassé donne un grand ΔT (l'air passe moins bien, il chauffe plus). Un ventilateur HS donne aussi un grand ΔT.</div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Mesurer T air in trop près du condenseur → déjà réchauffée par rayonnement.</li>
+          <li>Confondre entrée (aspiration) et sortie (refoulement) de l'air.</li>
+          <li>Oublier d'attendre 15 s de stabilisation sonde air.</li>
+        </ul></div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Valeur typique :</span>ΔT condenseur = 4 à 8 K pour un condenseur propre</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mes mesures + calcul</div>
+        <table class="tableau-relev">
+          <thead><tr><th>T air in (°C)</th><th>T air out (°C)</th><th>ΔT condenseur (K)</th><th>Détail calcul</th></tr></thead>
+          <tbody><tr><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> valeurs cohérentes · calcul correct · unité K.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 6 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">6</span><span class="titre">Interprétation visuelle de mes mesures</span><span class="ep3">B-3 · C5.1</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je regarde mes 6 valeurs côté circuit et je réponds aux questions ci-dessous.</li>
+          <li>Pour chaque question, je coche OUI / NON et je justifie en une phrase.</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Avant de calculer quoi que ce soit, je dois <b>voir</b> si mes mesures sont cohérentes. L'œil technique vient avant la calculatrice. Si TSC est froid (par exemple 30 °C), il y a un problème que les calculs ne détecteront pas forcément.</div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Objectif :</span>cohérence globale des mesures, identification d'anomalies visibles</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mes réponses</div>
+        <table class="tableau-relev">
+          <thead><tr><th style="text-align:left">Question</th><th>OUI</th><th>NON</th><th>Justification courte</th></tr></thead>
+          <tbody>
+            <tr><td class="lbl-cell">TSC est-elle significativement chaude (&gt; 50 °C) ?</td><td>☐</td><td>☐</td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">TScd est-elle proche de T ambiante (écart &lt; 10 °C) ?</td><td>☐</td><td>☐</td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">TSe est-elle froide (&lt; 10 °C) ?</td><td>☐</td><td>☐</td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">Tasp est-elle proche de TSe (écart &lt; 5 K) ?</td><td>☐</td><td>☐</td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">ΔT condenseur est-il dans la plage 4 à 8 K ?</td><td>☐</td><td>☐</td><td class="vide"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> 5 questions répondues · justifications cohérentes.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 7 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">7</span><span class="titre">Synthèse — tableau récapitulatif</span><span class="ep3">B-3 · C1.3</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je reporte toutes mes mesures dans le tableau récapitulatif ci-dessous.</li>
+          <li>Je vérifie que chaque case a une valeur et son unité.</li>
+          <li>Je conclus en une phrase : « Installation cohérente / Anomalie visible sur… ».</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Ce tableau est la <b>base</b> du TP 2B (semaine suivante) : on y ajoutera PO/PK et les calculs de surchauffe / sous-refroidissement. Bien remplir aujourd'hui évitera de tout refaire.</div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Objectif :</span>tableau complet · toutes unités · conclusion écrite</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Tableau récapitulatif de mes mesures</div>
+        <table class="tableau-relev">
+          <thead><tr><th>TSC</th><th>TEC</th><th>TScd</th><th>Tdet</th><th>TSe</th><th>Tasp</th><th>T air in</th><th>T air out</th><th>ΔT cond.</th></tr></thead>
+          <tbody><tr><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+        <div class="lbl-rel" style="margin-top:5px">✎ Ma conclusion</div>
+        <div class="ligne-ecriture"></div>
+        <div class="ligne-ecriture"></div>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> tableau complet · conclusion cohérente avec les mesures.</div>
+    </div>
+  </div>
+
+  <!-- AUTO-ÉVALUATION -->
+  <div class="autoeval">
+    <div class="titre-ae">Auto-évaluation — fin de TP</div>
+    <table>
+      <thead><tr><th style="text-align:left">Critère</th><th>Oui</th><th>Partiel</th><th>Non</th><th>Commentaire</th></tr></thead>
+      <tbody>
+        <tr><td class="critere">EPI portés en continu</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Plaque signalétique relevée (fluide + GWP)</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">5 min de stabilisation respectées</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">6 points circuit mesurés avec unités</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">T air in / out + ΔT condenseur</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Interprétation cohérente</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Tableau de synthèse complet</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GRILLE ENSEIGNANT -->
+  <div class="autoeval" style="margin-top:12px">
+    <div class="titre-ae">Grille d'évaluation par compétences (partie enseignant)</div>
+    <table>
+      <thead>
+        <tr><th style="text-align:left">Compétence</th><th>Étape</th><th>Non acquis</th><th>En cours</th><th>Acquis</th><th>Maîtrisé</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="critere"><b>C2.2</b> — Sécurité + EPI</td><td>2</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 10</td></tr>
+        <tr><td class="critere"><b>C4.2</b> — Identification fluide + plaque</td><td>1</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 10</td></tr>
+        <tr><td class="critere"><b>C4.5</b> — Relevé T° côté HP (3 points)</td><td>3</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 20</td></tr>
+        <tr><td class="critere"><b>C4.5</b> — Relevé T° côté BP (3 points)</td><td>4</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 20</td></tr>
+        <tr><td class="critere"><b>C5.1</b> — Calcul ΔT condenseur</td><td>5</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 10</td></tr>
+        <tr><td class="critere"><b>C5.1</b> — Interprétation visuelle</td><td>6</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 15</td></tr>
+        <tr><td class="critere"><b>C1.3</b> — Synthèse écrite</td><td>7</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 15</td></tr>
+        <tr><td class="critere" style="background:#eee"><b>TOTAL</b></td><td colspan="5" style="text-align:right"><b>Note brute / 100 · convertie × 20 / 100 :</b></td><td><b>/ 20</b></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:8.5pt;margin-top:4px;font-style:italic">Observations enseignant :</div>
+    <div class="ligne-ecriture"></div>
+    <div class="ligne-ecriture"></div>
+  </div>
+
+  <div class="footer-doc">
+    <span>TP 2A — Mesures de T° · CAP IFCA 2 · F. Henninot · inerWeb Édu</span>
+    <span>LPP Jacques Raynaud · 27/04/2026 · Progression Bloc B 1/3</span>
+  </div>
+</div>
+</body>
+</html>

@@ -6,58 +6,96 @@
   <title>inerWeb Édu — Espace élève CAP IFCA</title>
   <link rel="stylesheet" href="eleve.css" />
   <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>%E2%9D%84</text></svg>" />
+  <style>
+    .grand-bouton {
+      display: block;
+      background: var(--bg-card);
+      border: 4px solid var(--bleu);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .grand-bouton:hover { transform: translateY(-2px); border-color: var(--orange); }
+    .grand-bouton .titre {
+      font-family: "Trebuchet MS", sans-serif;
+      font-weight: 700;
+      font-size: 28pt;
+      color: var(--bleu);
+      margin: 0;
+    }
+    .grand-bouton .desc {
+      font-size: 16pt;
+      color: var(--text-soft);
+      margin: 8px 0 0;
+    }
+    .grand-bouton .picto {
+      font-size: 56pt;
+      float: left;
+      margin-right: 22px;
+      line-height: 1;
+    }
+    .grand-bouton.officiel { border-color: var(--orange); }
+    .grand-bouton.officiel .titre { color: var(--orange); }
+    .grand-bouton.adaptation {
+      border-color: var(--vert);
+      border-style: dashed;
+    }
+    .grand-bouton.adaptation .titre { color: var(--vert); }
+    .grand-bouton.livret { border-color: var(--bleu); background: var(--bg-cool); }
+
+    .warning-box {
+      background: #fff8e1;
+      border-left: 6px solid var(--jaune);
+      padding: 14px 18px;
+      margin: 16px;
+      font-size: 14pt;
+      border-radius: 6px;
+    }
+  </style>
 </head>
 <body>
 
 <header class="eleve-header">
   <div class="logo">❄ inerWeb <span class="badge">Édu</span></div>
-  <div class="title">Espace élève — CAP IFCA — Révisions EP3</div>
-  <a href="livret.html" style="background:#fff;color:var(--bleu);padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:700;font-size:14pt;">📖 Livret papier</a>
+  <div class="title">Espace élève — CAP IFCA</div>
 </header>
 
-<!-- ÉCRAN 1 : choix du TP -->
-<section id="screen-select" class="selector">
-  <h1>👋 Bonjour ! Choisis ton TP du jour</h1>
-  <p style="font-size: 17pt;">Clique sur le TP que ton prof t'a demandé de faire.</p>
-  <div class="tp-grid" id="tp-grid"></div>
-</section>
+<section style="max-width:900px;margin:24px auto;">
 
-<!-- ÉCRAN 2 : choix de la version -->
-<section id="screen-version" class="selector" hidden>
-  <h2 id="version-tp-titre"></h2>
-  <p style="font-size: 17pt;">Choisis ta version :</p>
-  <div class="version-bar">
-    <button class="v1" data-v="V1">🟢 V1 — pas-à-pas (guidé)</button>
-    <button class="v2" data-v="V2">🟧 V2 — consolidé (proche EP3)</button>
-  </div>
-  <button class="btn-nav prev" id="back-to-select">← Retour</button>
-</section>
+  <h1 style="text-align:center;margin:0 24px;">👋 Bonjour ! Que veux-tu faire aujourd'hui ?</h1>
 
-<!-- ÉCRAN 3 : fiche guidance -->
-<section id="screen-fiche" class="fiche" hidden>
-  <div class="progression">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-      <strong id="fiche-titre" style="font-size:18pt;color:var(--bleu);"></strong>
-      <span id="fiche-version-label" style="font-size:14pt;color:var(--orange);font-weight:700;"></span>
-    </div>
-    <div class="barre"><div class="fill" id="fill"></div></div>
+  <a class="grand-bouton officiel" href="tp-officiels/index.html">
+    <span class="picto">📚</span>
+    <div class="titre">Les TP officiels</div>
+    <p class="desc">Les 6 TP rédigés par M. Henninot pour les révisions EP3 (S1, S2, S3). Tu peux les consulter ou les télécharger en HTML / ZIP.</p>
+    <p class="desc" style="font-weight:700;color:var(--orange);">→ Source officielle</p>
+  </a>
+
+  <a class="grand-bouton livret" href="tp-officiels/Package_EP3_CAP_IFCA_final.zip" download>
+    <span class="picto">⬇</span>
+    <div class="titre">Télécharger le package complet</div>
+    <p class="desc">ZIP avec tous les TP, annexes (C-1 plaque F-Gaz, C-2 fiche MES, C-3 bon d'intervention), 9 fiches Whart et carte progression. <strong>~290 Ko.</strong></p>
+  </a>
+
+  <div class="warning-box">
+    <strong>⚠️ La rubrique ci-dessous est une adaptation DYS/lecture limitée — version expérimentale qui n'est PAS validée par M. Henninot.</strong> Elle simplifie chaque TP en pas-à-pas, mais le contenu officiel reste celui des TP HTML ci-dessus.
   </div>
 
-  <div class="fiche-mission" id="fiche-mission"></div>
+  <a class="grand-bouton adaptation" href="adaptation-dys.html">
+    <span class="picto">🧩</span>
+    <div class="titre">Adaptation lecture simplifiée (expé)</div>
+    <p class="desc">Les mêmes TP en version pas-à-pas, 1 action = 1 carte, pictogrammes, aide à chaque étape. <em>Pour élèves DYS / lecture limitée.</em></p>
+    <p class="desc" style="color:var(--rouge);font-style:italic;">⚠ Reformulation par l'IA — peut diverger du TP officiel. Toujours vérifier sur le TP officiel.</p>
+  </a>
 
-  <div id="etapes-container"></div>
-
-  <div id="defi-container"></div>
-
-  <div id="secours-container"></div>
-
-  <div class="nav-bar">
-    <button class="btn-nav prev" id="back-from-fiche">← Changer de TP</button>
-    <button class="btn-nav print" onclick="window.print()">🖨 Imprimer cette fiche</button>
-  </div>
 </section>
 
-<script src="eleve.js"></script>
+<footer style="text-align:center;padding:24px;font-size:12pt;color:var(--text-soft);">
+  Établissement privé — LP Jacques Raynaud · ÉQUATIO · CAP IFCA
+</footer>
 
 </body>
 </html>

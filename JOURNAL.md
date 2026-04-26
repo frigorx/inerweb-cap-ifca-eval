@@ -38,3 +38,11 @@
 [2026-04-26 10:15] iCal → fallback "coller le contenu .ics" en Config (contourne CORS EcoleDirecte)
 [2026-04-26 10:25] eleve/livret.html → générateur livret papier A4 par TP (V1+V2+ateliers) avec page de garde + cases nom/date manuscrites
 [2026-04-26 10:30] index.html : nouvel ordre onglets (Aujourd'hui → Progression → Élèves → ...) — vue de pilotage en premier
+[2026-04-26 19:30] Retour Franck → "tu as fait à TA sauce sans utiliser mes vrais TP"
+[2026-04-26 19:30] DECISION: option B + bonus → servir les 6 HTML originaux tels quels + ZIP source téléchargeable
+[2026-04-26 19:35] Copié 8 fichiers HTML (6 TP officiels S1/S2/S3 + 2 historiques S1) dans eleve/tp-officiels/
+[2026-04-26 19:35] Copié Package_EP3_CAP_IFCA_final.zip (287 Ko) téléchargeable
+[2026-04-26 19:40] eleve/tp-officiels/index.html : page d'accueil avec consulter+télécharger pour chaque TP + ZIP global
+[2026-04-26 19:42] eleve/index.html : nouveau MENU à 3 grands boutons (Officiels en orange / Package ZIP / Adaptation DYS expé en vert dashed)
+[2026-04-26 19:43] adaptation-dys.html dégradée au statut expérimental avec avertissement IA en haut
+[2026-04-26 19:44] Lien depuis app prof : 2 boutons distincts "📚 TP officiels" (orange) et "🎓 Espace élève" (vert)

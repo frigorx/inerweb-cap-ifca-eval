@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>TP 1C — Dépose + étanchéité + remise en service — CAP IFCA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 10mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lexend', Calibri, sans-serif; font-size: 10.5pt; line-height: 1.5; color: #000; background: white; padding: 10mm; }
+.sheet { max-width: 190mm; margin: 0 auto; }
+.header { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 8px; align-items: center; border: 2px solid #000; padding: 6px 10px; margin-bottom: 10px; }
+.header .logo { font-size: 9.5pt; font-weight: 700; line-height: 1.2; }
+.header .logo span { font-size: 8pt; font-weight: 400; display: block; color: #333; }
+.header .titre { text-align: center; font-size: 12pt; font-weight: 800; line-height: 1.15; }
+.header .titre span { font-size: 8.5pt; font-weight: 600; display: block; color: #333; margin-top: 2px; }
+.header .ref { text-align: right; font-size: 8.5pt; }
+.header .ref b { display: block; font-size: 10pt; }
+.identite { display: grid; grid-template-columns: 2fr 2fr 1fr 1fr; gap: 6px; margin-bottom: 10px; font-size: 10pt; }
+.identite .champ { border: 1px solid #000; padding: 4px 8px; min-height: 28px; }
+.identite .champ .lbl { font-size: 7.5pt; color: #333; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; }
+.identite .champ .val { height: 14px; border-bottom: 1px dotted #666; margin-top: 2px; }
+h2.section { font-size: 11pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; margin: 10px 0 5px; padding: 4px 8px; background: #000; color: white; }
+h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 6px; }
+.objectifs { border: 1px solid #000; padding: 6px 10px; margin-bottom: 8px; font-size: 10pt; }
+.securite { border: 2px solid #000; padding: 6px 8px; margin-bottom: 8px; }
+.securite .titre-sec { font-weight: 800; font-size: 10pt; margin-bottom: 4px; }
+.securite .epi-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; margin: 4px 0; font-size: 9pt; }
+.securite .epi-case { border: 1px solid #000; padding: 3px 6px 3px 22px; position: relative; text-align: center; min-height: 28px; }
+.securite .epi-case .chk { position: absolute; left: 3px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; border: 1.5px solid #000; background: white; }
+.securite .consigne-sec { font-size: 9pt; margin-top: 3px; line-height: 1.4; }
+.materiel { border: 1px solid #000; padding: 6px 10px; margin-bottom: 10px; font-size: 9.5pt; columns: 3; column-gap: 12px; }
+.materiel .item { display: flex; gap: 5px; align-items: center; margin-bottom: 2px; break-inside: avoid; }
+.materiel .chk { width: 11px; height: 11px; border: 1.5px solid #000; background: white; flex-shrink: 0; }
+.etape { border: 1.5px solid #000; margin-bottom: 10px; page-break-inside: avoid; background: white; }
+.etape-header { background: #000; color: white; padding: 5px 10px; display: flex; align-items: center; gap: 8px; font-size: 10.5pt; font-weight: 700; }
+.etape-header .num { background: white; color: #000; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11pt; flex-shrink: 0; }
+.etape-header .titre { flex: 1; text-transform: uppercase; letter-spacing: 0.3px; }
+.etape-header .ep3 { background: white; color: #000; padding: 1px 6px; font-size: 8.5pt; font-weight: 700; letter-spacing: 0.4px; }
+.etape-body { padding: 8px 10px; font-size: 10pt; }
+.bloc { margin-bottom: 8px; page-break-inside: avoid; }
+.bloc-titre { font-size: 9pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.bloc-titre .icon { width: 16px; height: 16px; border: 1.5px solid #000; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10pt; font-weight: 800; }
+.pas-a-pas { counter-reset: pas; list-style: none; padding-left: 0; }
+.pas-a-pas li { counter-increment: pas; padding-left: 24px; position: relative; margin-bottom: 3px; font-size: 10pt; line-height: 1.45; }
+.pas-a-pas li::before { content: counter(pas); position: absolute; left: 0; top: 1px; width: 18px; height: 18px; background: #000; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9pt; font-weight: 700; }
+.pourquoi { background: #f5f5f5; border-left: 3px solid #000; padding: 5px 10px; font-size: 9.5pt; line-height: 1.45; font-style: italic; }
+.pourquoi b { font-style: normal; font-weight: 700; }
+.pieges { border: 1px solid #000; background: #fffbeb; padding: 5px 10px; font-size: 9.5pt; line-height: 1.45; }
+.pieges ul { margin-left: 16px; }
+.pieges li { margin-bottom: 2px; }
+.cibles { background: #e8e8e8; border: 1.5px solid #000; padding: 4px 10px; font-size: 10pt; font-weight: 700; }
+.cibles .lbl { font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.4px; font-weight: 800; margin-right: 6px; }
+.releve { background: white; border: 1px dashed #000; padding: 6px 10px; font-size: 9.5pt; }
+.releve .lbl-rel { font-weight: 800; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.ligne-ecriture { border-bottom: 1px dotted #000; height: 18px; margin-bottom: 2px; }
+.ligne-inline { display: inline-block; border-bottom: 1px dotted #000; min-width: 60px; height: 15px; vertical-align: bottom; }
+.tableau-relev { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 3px 0; }
+.tableau-relev th, .tableau-relev td { border: 1px solid #000; padding: 3px 6px; text-align: center; }
+.tableau-relev th { background: #eee; font-weight: 700; font-size: 8.5pt; }
+.tableau-relev td.vide { height: 22px; }
+.tableau-relev td.lbl-cell { text-align: left; font-weight: 600; background: #fafafa; }
+.case-cocher { display: inline-block; width: 12px; height: 12px; border: 1.5px solid #000; background: white; vertical-align: middle; margin-right: 4px; }
+.qcm { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 14px; font-size: 9.5pt; margin-top: 3px; }
+.qcm .q { display: flex; align-items: flex-start; gap: 4px; }
+.validation { background: #000; color: white; padding: 4px 10px; font-size: 9pt; margin-top: 6px; font-weight: 600; }
+.validation b { font-weight: 800; }
+.autoeval { border: 2px solid #000; padding: 6px 10px; margin-top: 12px; page-break-inside: avoid; }
+.autoeval .titre-ae { font-weight: 800; font-size: 10.5pt; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+.autoeval table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+.autoeval th, .autoeval td { border: 1px solid #000; padding: 3px 6px; text-align: center; }
+.autoeval th { background: #eee; font-weight: 700; font-size: 8.5pt; }
+.autoeval td.critere { text-align: left; font-weight: 500; }
+.footer-doc { margin-top: 8px; padding-top: 4px; border-top: 1px solid #000; font-size: 8pt; color: #333; display: flex; justify-content: space-between; }
+@media screen { body { background: #e5e5e5; } .sheet { background: white; padding: 12mm; box-shadow: 0 2px 10px rgba(0,0,0,0.15); margin: 20px auto; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique · CAP IFCA</span></div>
+    <div class="titre">TP 1C — Dépose du manifold + Contrôle d'étanchéité + Remise en service<span>Atelier Manipulation fluidique · Progression Bloc A · 3/3</span></div>
+    <div class="ref"><b>Durée : 4 h</b>Date : 11/05/2026<br>À réaliser en binôme</div>
+  </div>
+
+  <div class="identite">
+    <div class="champ"><div class="lbl">NOM — Prénom 1</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">NOM — Prénom 2 (binôme)</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Classe</div><div class="val">CAP IFCA 2</div></div>
+    <div class="champ"><div class="lbl">Note / 20</div><div class="val"></div></div>
+  </div>
+
+  <h2 class="section"><span class="num">1</span>Objectif du TP</h2>
+  <div class="objectifs">
+    Ce TP est le <b>3<sup>e</sup> des 3 TP Manipulation</b>. On part d'une installation sous 3 bar N₂ avec pressostat remplacé et réglé (état laissé par le TP 1B). À la fin : je dépose le manifold sans perte (pump-down) · je remets les bouchons sur les vannes de service · je contrôle l'étanchéité avec les 2 procédés réglementaires · je remets en fonctionnement et je vérifie le cyclage du pressostat · je rédige un bon d'intervention professionnel.
+  </div>
+
+  <h2 class="section"><span class="num">2</span>Sécurité — EPI en continu</h2>
+  <div class="securite">
+    <div class="titre-sec">Je coche quand j'ai mon EPI</div>
+    <div class="epi-list">
+      <div class="epi-case"><span class="chk"></span>Lunettes</div>
+      <div class="epi-case"><span class="chk"></span>Gants fluide</div>
+      <div class="epi-case"><span class="chk"></span>Chaussures S3</div>
+      <div class="epi-case"><span class="chk"></span>Gants isolants 00</div>
+      <div class="epi-case"><span class="chk"></span>Visière</div>
+    </div>
+    <div class="consigne-sec"><b>Remise en service</b> : attention tuyau de refoulement qui chauffe. <b>Étanchéité obligatoire</b> avant remise sous tension.</div>
+  </div>
+
+  <h2 class="section"><span class="num">3</span>Matériel</h2>
+  <div class="materiel">
+    <div class="item"><span class="chk"></span>Manifold + flexibles</div>
+    <div class="item"><span class="chk"></span>Jeu de bouchons + joints</div>
+    <div class="item"><span class="chk"></span>Clé plate adaptée</div>
+    <div class="item"><span class="chk"></span>Détecteur électronique</div>
+    <div class="item"><span class="chk"></span>Solution moussante</div>
+    <div class="item"><span class="chk"></span>Chiffon propre</div>
+    <div class="item"><span class="chk"></span>Chronomètre</div>
+    <div class="item"><span class="chk"></span>Bon d'intervention vierge</div>
+    <div class="item"><span class="chk"></span>Gants 00 + visière</div>
+    <div class="item"><span class="chk"></span>Feuille + crayon</div>
+  </div>
+
+  <h2 class="section"><span class="num">4</span>Déroulé du TP — 5 étapes</h2>
+
+  <!-- ÉTAPE 1 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">1</span><span class="titre">Dépose du manifold — pump-down</span><span class="ep3">A-10 · C4.7</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je ferme les <b>2 vannes de service</b> (BP et HP) côté installation. L'installation est maintenant isolée.</li>
+          <li>J'ouvre le <b>bypass</b> du manifold : HP et BP s'égalisent dans les flexibles.</li>
+          <li>Si besoin (installation réelle avec fluide), je récupère le gaz piégé en ouvrant très légèrement la vanne BP côté installation pour que le circuit aspire le contenu des flexibles.</li>
+          <li>Je ferme toutes les vannes du manifold.</li>
+          <li>Je dévisse d'abord le flexible <b>HP</b> côté installation, puis côté manifold.</li>
+          <li>Je fais pareil avec le flexible <b>BP</b>.</li>
+          <li>Je range le manifold, les flexibles et accessoires dans la valise.</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Fermer les vannes <b>avant</b> de toucher les flexibles préserve la charge. L'égalisation par bypass récupère le fluide piégé (obligation F-Gaz : <b>aucune émission atmosphérique</b>).</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Dévisser les flexibles avant de fermer les vannes → perte totale de la charge.</li>
+          <li>Sauter l'égalisation → perte du fluide des flexibles.</li>
+          <li>Ranger des flexibles encore sous pression → dangereux.</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Objectif :</span>zéro perte · installation pressurisée conservée · valise rangée</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Je coche</div>
+        <div class="qcm">
+          <div class="q"><span class="case-cocher"></span>Vannes service fermées en 1er</div>
+          <div class="q"><span class="case-cocher"></span>Bypass ouvert (égalisation)</div>
+          <div class="q"><span class="case-cocher"></span>Pump-down effectué</div>
+          <div class="q"><span class="case-cocher"></span>Flexibles démontés dans l'ordre</div>
+          <div class="q"><span class="case-cocher"></span>Zéro perte mesurable</div>
+          <div class="q"><span class="case-cocher"></span>Valise rangée</div>
+        </div>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> pump-down complet · zéro perte · valise rangée.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 2 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">2</span><span class="titre">Remise des bouchons sur les vannes de service</span><span class="ep3">A-11 · C3.7</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je prends les 2 bouchons d'origine (ou neufs si les anciens sont abîmés).</li>
+          <li>Je vérifie les joints : présents et intacts.</li>
+          <li>Je visse à la main puis je serre d'un <b>quart de tour franc à la clé</b>. Pas plus.</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Les bouchons protègent les vannes de la poussière, de l'humidité et des chocs. C'est une <b>sécurité secondaire</b> si une vanne a un micro-fuite.</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Serrer trop fort → filet cassé, impossible de dévisser plus tard.</li>
+          <li>Oublier le joint.</li>
+          <li>Bouchon de mauvaise taille.</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Objectif :</span>2 bouchons en place · serrage franc · joints visibles</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Je coche</div>
+        <div class="qcm">
+          <div class="q"><span class="case-cocher"></span>Bouchon BP serré (joint OK)</div>
+          <div class="q"><span class="case-cocher"></span>Bouchon HP serré (joint OK)</div>
+        </div>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> bouchons présents · serrage correct.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 3 : Contrôle d'étanchéité final -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">3</span><span class="titre">Contrôle d'étanchéité final — détecteur électronique + savon</span><span class="ep3">A-12 · C4.3</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je prends le détecteur électronique. Je l'allume et je le laisse se calibrer 30 s en air propre.</li>
+          <li>Je passe la sonde <b>lentement</b> à 1 cm de chaque raccord que j'ai touché : bouchons BP et HP, pressostat BP remplacé, tout raccord démonté/remonté.</li>
+          <li>Si alarme → je note le point et je reprends le serrage. Je refais le test.</li>
+          <li>En complément, j'applique la solution moussante sur les mêmes points. 30 s d'observation : aucune bulle.</li>
+          <li>Je nettoie toutes les traces de mousse au chiffon propre (machine ET sol).</li>
+          <li>Je note mes résultats dans le tableau.</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Le règlement F-Gaz impose <b>les 2 procédés</b> pour toute intervention sur installation &gt; 5 Teq CO₂. Le savon détecte les grosses fuites, le détecteur électronique les petites fuites invisibles.</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Ne faire qu'un seul des 2 procédés.</li>
+          <li>Laisser le savon sur l'installation → corrosion.</li>
+          <li>Oublier certains raccords (commence par ceux qu'on a ouverts).</li>
+          <li>Remettre sous tension avant le contrôle.</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Objectif :</span>aucune fuite détectée par les 2 procédés · zone propre</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mon contrôle</div>
+        <table class="tableau-relev">
+          <thead><tr><th>Point testé</th><th>Détecteur (OK / Fuite)</th><th>Mousse (OK / Fuite)</th></tr></thead>
+          <tbody>
+            <tr><td class="lbl-cell">Bouchon vanne BP</td><td class="vide"></td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">Bouchon vanne HP</td><td class="vide"></td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">Pressostat BP remplacé</td><td class="vide"></td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">Raccord capillaire / filtre</td><td class="vide"></td><td class="vide"></td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:3px"><span class="case-cocher"></span>Zone nettoyée (machine + sol)</div>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> 2 procédés · chaque raccord testé · zone propre.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 4 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">4</span><span class="titre">Remise en fonctionnement</span><span class="ep3">A-13 · C3.7</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je range mes outils et déchets (ancien pressostat, ancien joint).</li>
+          <li>Je remonte le disjoncteur général en position <b>ON (I)</b>.</li>
+          <li>J'écoute le démarrage du compresseur : ronflement régulier, pas de cliquetis.</li>
+          <li>J'attends 5 minutes pour que les paramètres se stabilisent.</li>
+          <li>Je vérifie que le pressostat BP <b>cycle correctement</b> : il doit couper puis réenclencher selon les réglages du TP 1B.</li>
+          <li>Je nettoie le poste de travail.</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Sans test du cyclage pressostat, on ne peut pas garantir que l'intervention du TP 1B fonctionne en conditions réelles. C'est l'étape de <b>validation finale</b> de toute l'intervention.</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Partir sans vérifier le cyclage pressostat.</li>
+          <li>Laisser les outils en vrac → pénalisation examen.</li>
+          <li>Oublier de jeter les déchets (ancien pressostat, joint).</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Objectif :</span>installation en marche stable · cyclage pressostat OK · poste rangé</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Je coche</div>
+        <div class="qcm">
+          <div class="q"><span class="case-cocher"></span>Disjoncteur ON</div>
+          <div class="q"><span class="case-cocher"></span>Compresseur en marche</div>
+          <div class="q"><span class="case-cocher"></span>Paramètres stables après 5 min</div>
+          <div class="q"><span class="case-cocher"></span>Cyclage pressostat OK</div>
+          <div class="q"><span class="case-cocher"></span>Outils rangés</div>
+          <div class="q"><span class="case-cocher"></span>Poste propre · déchets évacués</div>
+        </div>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> installation fonctionnelle · cyclage vérifié · zone nettoyée.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 5 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">5</span><span class="titre">Rédaction du bon d'intervention</span><span class="ep3">C-3 · C1.3</span></div>
+    <div class="etape-body">
+      <div class="bloc"><div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je prends le bon d'intervention vierge (annexe ci-dessous).</li>
+          <li>Je remplis le haut : client (LPP Jacques Raynaud), adresse, date, heure arrivée, heure départ, temps passé.</li>
+          <li>Je coche <b>ENTRETIEN</b> (ou MISE EN SERVICE selon le scénario).</li>
+          <li>Dans <b>Descriptif de la mission</b>, je note en style télégraphique : Pose mano · Tirage vide · Remplacement pressostat BP · Test azote OK · Réglage 0,5 bar · Étanchéité 2 procédés OK · Remise en service.</li>
+          <li>Dans <b>Commentaires / valeurs de réglages</b>, j'inscris : Cut-in = 2,5 bar · Cut-out = 0,5 bar · Diff = 2 bar · cyclage vérifié 2 cycles.</li>
+          <li>Je signe en bas (nom + prénom).</li>
+        </ol>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Le bon d'intervention est le <b>document de traçabilité</b> remis au client. Il prouve la nature et les résultats de l'intervention. À l'EP3, c'est la tâche C-3.</div>
+      </div>
+      <div class="bloc"><div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Oublier une rubrique (date, heure, etc.).</li>
+          <li>Descriptif trop vague (« j'ai réparé »).</li>
+          <li>Oublier les valeurs de réglages.</li>
+          <li>Oublier la signature.</li>
+        </ul></div>
+      </div>
+      <div class="cibles"><span class="lbl">Objectif :</span>bon complet · descriptif télégraphique clair · réglages notés · signé</div>
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Je coche au remplissage</div>
+        <div class="qcm">
+          <div class="q"><span class="case-cocher"></span>Client + adresse + date</div>
+          <div class="q"><span class="case-cocher"></span>Heure arrivée / départ / temps</div>
+          <div class="q"><span class="case-cocher"></span>Type coché (ENTRETIEN)</div>
+          <div class="q"><span class="case-cocher"></span>Descriptif style télégraphique</div>
+          <div class="q"><span class="case-cocher"></span>Valeurs de réglages notées</div>
+          <div class="q"><span class="case-cocher"></span>Nom + signature</div>
+        </div>
+      </div>
+      <div class="validation"><b>Validation enseignant :</b> bon complet · transcription fidèle · signature.</div>
+    </div>
+  </div>
+
+  <!-- ANNEXE BON D'INTERVENTION EP3 -->
+  <h2 class="section" style="margin-top:16px">ANNEXE — Bon d'intervention à remplir <span style="background:white;color:#000;padding:0 6px;font-size:9pt;margin-left:8px">document EP3 · Tâche C-3</span></h2>
+  <div style="border:3px solid #000;padding:10px 14px;margin-bottom:10px;background:white">
+    <p style="font-weight:700;font-size:9.5pt;font-style:italic;margin-bottom:8px">À remplir en fin de TP. Document identique à celui attendu à l'EP3 (C-3).</p>
+
+    <div style="text-align:center;font-size:13pt;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;border-bottom:2px solid #000;padding-bottom:4px">Bon d'intervention</div>
+
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:4px">
+      <tr>
+        <td style="border:1px solid #000;padding:8px;width:20%;text-align:center;font-weight:800;font-size:16pt">IFCA</td>
+        <td style="border:1px solid #000;padding:8px;width:40%"><b>Client :</b><br>LPP Jacques Raynaud</td>
+        <td style="border:1px solid #000;padding:8px;width:40%"><b>Adresse :</b><br>59 av Charles Suzini — Marseille 13013</td>
+      </tr>
+    </table>
+
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:4px">
+      <tr>
+        <td style="border:1px solid #000;padding:8px;text-align:center;font-weight:700">TYPE D'INTERVENTION :</td>
+        <td style="border:1px solid #000;padding:8px;text-align:center">DÉPANNAGE ☐</td>
+        <td style="border:1px solid #000;padding:8px;text-align:center">ENTRETIEN ☐</td>
+        <td style="border:1px solid #000;padding:8px;text-align:center">MISE EN SERVICE ☐</td>
+      </tr>
+    </table>
+
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:4px">
+      <tr>
+        <td style="border:1px solid #000;padding:8px;width:40%;vertical-align:top"><b>Technicien(s)(ne)</b><br><br><b>Nom :</b> _______________________<br><br><b>Prénoms :</b> _______________________</td>
+        <td style="border:1px solid #000;padding:8px;width:35%;vertical-align:top"><b>Date :</b><br><br>____/____/__________<br><br><b>Heure d'arrivée :</b> ____ h ____<br><br><b>Heure de départ :</b> ____ h ____</td>
+        <td style="border:1px solid #000;padding:8px;width:25%;vertical-align:top"><b>Temps passé :</b><br><br><br>____ h ____</td>
+      </tr>
+    </table>
+
+    <div style="border:1px solid #000;padding:8px;margin-bottom:4px">
+      <div style="font-weight:700;margin-bottom:4px">Descriptif de la mission :</div>
+      <div style="height:20px;border-bottom:1px dotted #666;margin-bottom:2px"></div>
+      <div style="height:20px;border-bottom:1px dotted #666;margin-bottom:2px"></div>
+      <div style="height:20px;border-bottom:1px dotted #666;margin-bottom:2px"></div>
+      <div style="height:20px;border-bottom:1px dotted #666;margin-bottom:2px"></div>
+      <div style="height:20px;border-bottom:1px dotted #666;margin-bottom:2px"></div>
+      <div style="height:20px;border-bottom:1px dotted #666;margin-bottom:2px"></div>
+      <div style="font-size:8.5pt;font-style:italic;color:#555;margin-top:4px">Style télégraphique : <i>Pose mano / Tirage vide / Remplacement pressostat BP / Test azote OK / Réglage 0,5 bar / Étanchéité 2 procédés OK / Remise en service</i></div>
+    </div>
+
+    <div style="border:1px solid #000;padding:8px">
+      <div style="font-weight:700;margin-bottom:4px">Commentaire / Observations / Valeur de réglages :</div>
+      <div style="height:20px;border-bottom:1px dotted #666;margin-bottom:2px"></div>
+      <div style="height:20px;border-bottom:1px dotted #666;margin-bottom:2px"></div>
+      <div style="height:20px;border-bottom:1px dotted #666;margin-bottom:2px"></div>
+      <div style="height:20px;border-bottom:1px dotted #666;margin-bottom:2px"></div>
+      <div style="font-size:8.5pt;font-style:italic;color:#555;margin-top:4px">À noter : <i>Cut-in = _____ bar · Cut-out = _____ bar · Différentiel = _____ bar · cyclage vérifié 2 cycles</i></div>
+    </div>
+  </div>
+
+  <!-- AUTO-ÉVAL -->
+  <div class="autoeval">
+    <div class="titre-ae">Auto-évaluation — fin de TP</div>
+    <table>
+      <thead><tr><th style="text-align:left">Critère</th><th>Oui</th><th>Partiel</th><th>Non</th><th>Commentaire</th></tr></thead>
+      <tbody>
+        <tr><td class="critere">EPI portés en continu</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Dépose manifold sans perte (pump-down)</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Bouchons vannes service posés</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Contrôle étanchéité 2 procédés</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Remise en service + cyclage pressostat</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Bon d'intervention rempli + signé</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GRILLE ENSEIGNANT -->
+  <div class="autoeval" style="margin-top:12px">
+    <div class="titre-ae">Grille d'évaluation par compétences (partie enseignant)</div>
+    <table>
+      <thead><tr><th style="text-align:left">Compétence</th><th>Étape</th><th>NA</th><th>EC</th><th>A</th><th>M</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td class="critere"><b>C4.7</b> — Dépose manifold pump-down</td><td>1</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 20</td></tr>
+        <tr><td class="critere"><b>C3.7</b> — Remise bouchons + remise en service</td><td>2 · 4</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 15</td></tr>
+        <tr><td class="critere"><b>C4.3</b> — Contrôle étanchéité (2 procédés)</td><td>3</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 20</td></tr>
+        <tr><td class="critere"><b>C1.3</b> — Bon d'intervention rédigé</td><td>5</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 15</td></tr>
+        <tr><td class="critere" style="background:#eee"><b>TOTAL</b></td><td colspan="5" style="text-align:right"><b>Note brute / 70 · × 20 / 70 :</b></td><td><b>/ 20</b></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:8.5pt;margin-top:4px;font-style:italic">Observations enseignant :</div>
+    <div class="ligne-ecriture"></div>
+    <div class="ligne-ecriture"></div>
+  </div>
+
+  <div class="footer-doc">
+    <span>TP 1C — Dépose + étanchéité + remise en service · CAP IFCA 2 · F. Henninot · inerWeb Édu</span>
+    <span>LPP Jacques Raynaud · 11/05/2026 · Progression Bloc A 3/3</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>TP 2B — Mesures P/T + Surchauffe + Sous-refroidissement — CAP IFCA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 10mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lexend', Calibri, sans-serif; font-size: 10.5pt; line-height: 1.5; color: #000; background: white; padding: 10mm; }
+.sheet { max-width: 190mm; margin: 0 auto; }
+.header { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 8px; align-items: center; border: 2px solid #000; padding: 6px 10px; margin-bottom: 10px; }
+.header .logo { font-size: 9.5pt; font-weight: 700; line-height: 1.2; }
+.header .logo span { font-size: 8pt; font-weight: 400; display: block; color: #333; }
+.header .titre { text-align: center; font-size: 12pt; font-weight: 800; line-height: 1.15; }
+.header .titre span { font-size: 8.5pt; font-weight: 600; display: block; color: #333; margin-top: 2px; }
+.header .ref { text-align: right; font-size: 8.5pt; }
+.header .ref b { display: block; font-size: 10pt; }
+.identite { display: grid; grid-template-columns: 2fr 2fr 1fr 1fr; gap: 6px; margin-bottom: 10px; font-size: 10pt; }
+.identite .champ { border: 1px solid #000; padding: 4px 8px; min-height: 28px; }
+.identite .champ .lbl { font-size: 7.5pt; color: #333; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; }
+.identite .champ .val { height: 14px; border-bottom: 1px dotted #666; margin-top: 2px; }
+h2.section { font-size: 11pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; margin: 10px 0 5px; padding: 4px 8px; background: #000; color: white; }
+h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 6px; }
+.objectifs { border: 1px solid #000; padding: 6px 10px; margin-bottom: 8px; font-size: 10pt; }
+.securite { border: 2px solid #000; padding: 6px 8px; margin-bottom: 8px; }
+.securite .titre-sec { font-weight: 800; font-size: 10pt; margin-bottom: 4px; }
+.securite .epi-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; margin: 4px 0; font-size: 9pt; }
+.securite .epi-case { border: 1px solid #000; padding: 3px 6px 3px 22px; position: relative; text-align: center; min-height: 28px; }
+.securite .epi-case .chk { position: absolute; left: 3px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; border: 1.5px solid #000; background: white; }
+.securite .consigne-sec { font-size: 9pt; margin-top: 3px; line-height: 1.4; }
+.materiel { border: 1px solid #000; padding: 6px 10px; margin-bottom: 10px; font-size: 9.5pt; columns: 3; column-gap: 12px; }
+.materiel .item { display: flex; gap: 5px; align-items: center; margin-bottom: 2px; break-inside: avoid; }
+.materiel .chk { width: 11px; height: 11px; border: 1.5px solid #000; background: white; flex-shrink: 0; }
+.etape { border: 1.5px solid #000; margin-bottom: 10px; page-break-inside: avoid; background: white; }
+.etape-header { background: #000; color: white; padding: 5px 10px; display: flex; align-items: center; gap: 8px; font-size: 10.5pt; font-weight: 700; }
+.etape-header .num { background: white; color: #000; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11pt; flex-shrink: 0; }
+.etape-header .titre { flex: 1; text-transform: uppercase; letter-spacing: 0.3px; }
+.etape-header .ep3 { background: white; color: #000; padding: 1px 6px; font-size: 8.5pt; font-weight: 700; letter-spacing: 0.4px; }
+.etape-body { padding: 8px 10px; font-size: 10pt; }
+.bloc { margin-bottom: 8px; page-break-inside: avoid; }
+.bloc-titre { font-size: 9pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.bloc-titre .icon { width: 16px; height: 16px; border: 1.5px solid #000; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10pt; font-weight: 800; }
+.pas-a-pas { counter-reset: pas; list-style: none; padding-left: 0; }
+.pas-a-pas li { counter-increment: pas; padding-left: 24px; position: relative; margin-bottom: 3px; font-size: 10pt; line-height: 1.45; }
+.pas-a-pas li::before { content: counter(pas); position: absolute; left: 0; top: 1px; width: 18px; height: 18px; background: #000; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9pt; font-weight: 700; }
+.pourquoi { background: #f5f5f5; border-left: 3px solid #000; padding: 5px 10px; font-size: 9.5pt; line-height: 1.45; font-style: italic; }
+.pourquoi b { font-style: normal; font-weight: 700; }
+.pieges { border: 1px solid #000; background: #fffbeb; padding: 5px 10px; font-size: 9.5pt; line-height: 1.45; }
+.pieges ul { margin-left: 16px; }
+.pieges li { margin-bottom: 2px; }
+.cibles { background: #e8e8e8; border: 1.5px solid #000; padding: 4px 10px; font-size: 10pt; font-weight: 700; }
+.cibles .lbl { font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.4px; font-weight: 800; margin-right: 6px; }
+.releve { background: white; border: 1px dashed #000; padding: 6px 10px; font-size: 9.5pt; }
+.releve .lbl-rel { font-weight: 800; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.ligne-ecriture { border-bottom: 1px dotted #000; height: 18px; margin-bottom: 2px; }
+.ligne-inline { display: inline-block; border-bottom: 1px dotted #000; min-width: 60px; height: 15px; vertical-align: bottom; }
+.tableau-relev { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 3px 0; }
+.tableau-relev th, .tableau-relev td { border: 1px solid #000; padding: 3px 6px; text-align: center; }
+.tableau-relev th { background: #eee; font-weight: 700; font-size: 8.5pt; }
+.tableau-relev td.vide { height: 22px; }
+.tableau-relev td.lbl-cell { text-align: left; font-weight: 600; background: #fafafa; }
+.case-cocher { display: inline-block; width: 12px; height: 12px; border: 1.5px solid #000; background: white; vertical-align: middle; margin-right: 4px; }
+.qcm { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 14px; font-size: 9.5pt; margin-top: 3px; }
+.qcm .q { display: flex; align-items: flex-start; gap: 4px; }
+.validation { background: #000; color: white; padding: 4px 10px; font-size: 9pt; margin-top: 6px; font-weight: 600; }
+.validation b { font-weight: 800; }
+.formule { background: white; border: 2px solid #000; padding: 6px 10px; font-size: 11pt; text-align: center; font-weight: 700; margin: 4px 0; font-family: 'Courier New', monospace; }
+.autoeval { border: 2px solid #000; padding: 6px 10px; margin-top: 12px; page-break-inside: avoid; }
+.autoeval .titre-ae { font-weight: 800; font-size: 10.5pt; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+.autoeval table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+.autoeval th, .autoeval td { border: 1px solid #000; padding: 3px 6px; text-align: center; }
+.autoeval th { background: #eee; font-weight: 700; font-size: 8.5pt; }
+.autoeval td.critere { text-align: left; font-weight: 500; }
+.footer-doc { margin-top: 8px; padding-top: 4px; border-top: 1px solid #000; font-size: 8pt; color: #333; display: flex; justify-content: space-between; }
+@media screen { body { background: #e5e5e5; } .sheet { background: white; padding: 12mm; box-shadow: 0 2px 10px rgba(0,0,0,0.15); margin: 20px auto; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique · CAP IFCA</span></div>
+    <div class="titre">TP 2B — Mesures P/T + Surchauffe + Sous-refroidissement<span>Atelier Mesures · Progression Bloc B · 2/3</span></div>
+    <div class="ref"><b>Durée : 4 h</b>Date : 04/05/2026<br>À réaliser en binôme</div>
+  </div>
+
+  <div class="identite">
+    <div class="champ"><div class="lbl">NOM — Prénom 1</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">NOM — Prénom 2 (binôme)</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Classe</div><div class="val">CAP IFCA 2</div></div>
+    <div class="champ"><div class="lbl">Note / 20</div><div class="val"></div></div>
+  </div>
+
+  <h2 class="section"><span class="num">1</span>Objectif du TP</h2>
+  <div class="objectifs">
+    Ce TP est le <b>2<sup>e</sup> des 3 TP Mesures</b>. Il s'appuie sur les relevés T° du TP 2A. À la fin : je relève PO et PK au manomètre · j'utilise la table P/T pour obtenir T0 et TK · je calcule la <b>surchauffe (locale + totale)</b> · je calcule le <b>sous-refroidissement (local + total)</b> · je mesure l'<b>intensité et la tension</b> absorbées · j'interprète mes résultats et détecte les anomalies (surcharge, sous-charge, filtre bouché, détendeur mal réglé).
+  </div>
+
+  <h2 class="section"><span class="num">2</span>Sécurité — EPI en continu</h2>
+  <div class="securite">
+    <div class="titre-sec">Je coche quand j'ai mon EPI</div>
+    <div class="epi-list">
+      <div class="epi-case"><span class="chk"></span>Lunettes</div>
+      <div class="epi-case"><span class="chk"></span>Gants fluide</div>
+      <div class="epi-case"><span class="chk"></span>Chaussures S3</div>
+      <div class="epi-case"><span class="chk"></span>Gants isolants 00</div>
+      <div class="epi-case"><span class="chk"></span>Visière</div>
+    </div>
+    <div class="consigne-sec"><b>Pour les mesures électriques</b> (étape 6) : gants 00 + visière obligatoires. Sans EPI élec, pas de mesure.</div>
+  </div>
+
+  <h2 class="section"><span class="num">3</span>Matériel</h2>
+  <div class="materiel">
+    <div class="item"><span class="chk"></span>Thermomètre de contact</div>
+    <div class="item"><span class="chk"></span>Pince ampèremétrique</div>
+    <div class="item"><span class="chk"></span>Multimètre</div>
+    <div class="item"><span class="chk"></span>Gants 00 + visière</div>
+    <div class="item"><span class="chk"></span>Table P/T du fluide</div>
+    <div class="item"><span class="chk"></span>Calculatrice</div>
+    <div class="item"><span class="chk"></span>Plaque signalétique</div>
+    <div class="item"><span class="chk"></span>Feuille + crayon</div>
+  </div>
+
+  <h2 class="section"><span class="num">4</span>Déroulé du TP — 8 étapes</h2>
+
+  <!-- ÉTAPE 1 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">1</span><span class="titre">Relevé rapide des 6 points T° (rappel TP 2A)</span><span class="ep3">B-3 · C4.5</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Installation en marche depuis au moins 5 min (régime stable).</li>
+          <li>Je mesure rapidement les 6 points avec mon thermomètre de contact (procédure vue en TP 2A).</li>
+          <li>Je note dans le tableau ci-dessous avec unités.</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Les T° relevées ici vont servir à <b>calculer</b> la surchauffe (TSe et Tasp) et le sous-refroidissement (TScd et Tdet) dans les étapes suivantes.</div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Objectif :</span>6 valeurs avec unités · régime stable</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mes mesures</div>
+        <table class="tableau-relev">
+          <thead><tr><th>TSC</th><th>TEC</th><th>TScd</th><th>Tdet</th><th>TSe</th><th>Tasp</th></tr></thead>
+          <tbody><tr><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> 6 valeurs cohérentes · unités présentes.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 2 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">2</span><span class="titre">Relevé des pressions HP et BP</span><span class="ep3">B-3 · C4.5</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je lis <b>PO</b> au manomètre <b>BP (bleu)</b>. Unité : bar.</li>
+          <li>Je lis <b>PK</b> au manomètre <b>HP (rouge)</b>. Unité : bar.</li>
+          <li>Je note les 2 valeurs avec leurs unités.</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Les pressions seules ne signifient rien. Je vais les <b>convertir</b> en températures d'évaporation (T0) et de condensation (TK) grâce à la table P/T. Ces températures sont la référence pour calculer surchauffe et sous-refroidissement.</div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Confondre manomètre BP et HP (bleu = BP, rouge = HP).</li>
+          <li>Oublier les unités (bar).</li>
+          <li>Lire l'aiguille quand elle n'est pas stable (ressayer).</li>
+        </ul></div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Objectif :</span>2 pressions lues avec unités</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mes pressions</div>
+        <table class="tableau-relev">
+          <thead><tr><th>PO — pression BP (bar)</th><th>PK — pression HP (bar)</th></tr></thead>
+          <tbody><tr><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> PO et PK lues · unités.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 3 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">3</span><span class="titre">Lecture de la table P/T → T0 et TK</span><span class="ep3">B-3 · C5.1</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je reprends la plaque signalétique : <b>quel est le fluide ?</b> (R-134a, R-404A, R-449A…).</li>
+          <li>Je prends la bonne table P/T.</li>
+          <li>Je cherche dans la colonne <b>pression</b> la valeur de PO. Je lis en face la <b>température</b> correspondante : c'est <b>T0</b> (température d'évaporation).</li>
+          <li>Je fais pareil pour PK → je lis <b>TK</b> (température de condensation).</li>
+          <li>Je note les 2 températures avec leur unité (°C).</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">T0 et TK sont des températures <b>théoriques</b> calculées depuis la pression. Elles correspondent à la température à laquelle le fluide <b>change d'état</b> (évaporation ou condensation). Elles servent de <b>référence</b> pour mesurer surchauffe et sous-refroidissement réels.</div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Utiliser la <b>mauvaise table</b> (mauvais fluide) → T0 et TK faux.</li>
+          <li>Confondre pression absolue et pression relative (les tables donnent en général la relative, comme les manomètres).</li>
+          <li>Interpoler mal entre 2 lignes de la table.</li>
+        </ul></div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Objectif :</span>T0 et TK lues dans la bonne table, avec unités</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mes températures théoriques</div>
+        <table class="tableau-relev">
+          <thead><tr><th>Fluide</th><th>PO (bar)</th><th>T0 (°C) — via table</th><th>PK (bar)</th><th>TK (°C) — via table</th></tr></thead>
+          <tbody><tr><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> fluide identifié · table correcte · T0 et TK cohérentes.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 4 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">4</span><span class="titre">Calcul de la surchauffe</span><span class="ep3">B-4 · C5.1</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je reprends <b>TSe</b>, <b>Tasp</b> (étape 1) et <b>T0</b> (étape 3).</li>
+          <li>J'applique les 2 formules :</li>
+        </ol>
+        <div class="formule">Surchauffe locale = Tasp − T0</div>
+        <div class="formule">Surchauffe totale = TSe − T0</div>
+        <ol class="pas-a-pas" start="3" style="counter-reset: pas 2">
+          <li>Je note les 2 résultats en K.</li>
+          <li>J'interprète : <b>surchauffe trop faible</b> (&lt; 3 K) → risque de liquide à l'aspiration (coup de liquide). <b>Surchauffe trop forte</b> (&gt; 12 K) → détendeur trop fermé ou manque de fluide.</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">La surchauffe garantit que le fluide arrivant au compresseur est <b>100 % vapeur</b>. Sans surchauffe, du liquide entre dans le compresseur et peut le casser (les compresseurs sont faits pour comprimer de la vapeur, pas du liquide).</div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Confondre <b>Tasp</b> (surchauffe locale) et <b>TSe</b> (surchauffe totale).</li>
+          <li>Utiliser T° plaque au lieu de <b>T0 calculée</b>.</li>
+          <li>Oublier l'unité (K).</li>
+        </ul></div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Valeurs typiques :</span>Surchauffe locale 2 à 6 K · Surchauffe totale 5 à 10 K</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mes calculs</div>
+        <table class="tableau-relev">
+          <thead><tr><th>Formule</th><th>Détail du calcul</th><th>Résultat (K)</th></tr></thead>
+          <tbody>
+            <tr><td class="lbl-cell">Surchauffe locale = Tasp − T0</td><td class="vide"></td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">Surchauffe totale = TSe − T0</td><td class="vide"></td><td class="vide"></td></tr>
+          </tbody>
+        </table>
+        <div class="lbl-rel" style="margin-top:5px">✎ Interprétation</div>
+        <div class="ligne-ecriture"></div>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> 2 calculs corrects · interprétation pertinente.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 5 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">5</span><span class="titre">Calcul du sous-refroidissement</span><span class="ep3">B-4 · C5.1</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je reprends <b>TScd</b>, <b>Tdet</b> (étape 1) et <b>TK</b> (étape 3).</li>
+          <li>J'applique les 2 formules :</li>
+        </ol>
+        <div class="formule">Sous-refroidissement local = TK − TScd</div>
+        <div class="formule">Sous-refroidissement total = TK − Tdet</div>
+        <ol class="pas-a-pas" start="3" style="counter-reset: pas 2">
+          <li>Je note les 2 résultats en K.</li>
+          <li>J'interprète : <b>trop faible</b> (&lt; 2 K) → manque de fluide ou condenseur saturé. <b>Trop fort</b> (&gt; 10 K) → filtre déshydrateur bouché ou condenseur surdimensionné.</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Le sous-refroidissement garantit que le fluide arrivant au détendeur est <b>100 % liquide</b> (pas de bulles). Sans lui, le détendeur ne peut pas contrôler correctement le débit et l'évaporateur est mal alimenté.</div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Inverser TScd et Tdet.</li>
+          <li>Oublier l'unité (K).</li>
+          <li>Avoir un résultat négatif → refaire la mesure (erreur de lecture probable).</li>
+        </ul></div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Valeur typique :</span>Sous-refroidissement total 3 à 8 K</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mes calculs</div>
+        <table class="tableau-relev">
+          <thead><tr><th>Formule</th><th>Détail du calcul</th><th>Résultat (K)</th></tr></thead>
+          <tbody>
+            <tr><td class="lbl-cell">Sous-ref. local = TK − TScd</td><td class="vide"></td><td class="vide"></td></tr>
+            <tr><td class="lbl-cell">Sous-ref. total = TK − Tdet</td><td class="vide"></td><td class="vide"></td></tr>
+          </tbody>
+        </table>
+        <div class="lbl-rel" style="margin-top:5px">✎ Interprétation</div>
+        <div class="ligne-ecriture"></div>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> 2 calculs corrects · interprétation pertinente.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 6 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">6</span><span class="titre">Mesure intensité + tension (sous EPI électriques)</span><span class="ep3">B-5 · C4.5</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>J'enfile mes <b>gants isolants 00</b> et ma <b>visière</b>. Je ne les retire qu'après avoir fini l'étape.</li>
+          <li>Je règle la pince ampèremétrique en <b>A~</b>, calibre adapté (généralement 20 A).</li>
+          <li>J'ouvre la pince et je l'enserre autour d'<b>un seul conducteur de phase</b> du compresseur.</li>
+          <li>Je lis <b>I compresseur</b> en régime stable.</li>
+          <li>Je règle le multimètre en <b>V~</b>, calibre 500 V. Je mesure la tension aux bornes du disjoncteur général.</li>
+          <li>Je note les 2 valeurs avec unités.</li>
+          <li>Je compare I compresseur avec I plaque (± 10 % accepté).</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">L'intensité absorbée reflète la charge du compresseur. <b>Trop élevée</b> → surcharge (excès de fluide, condenseur encrassé). <b>Trop basse</b> → sous-charge (manque de fluide, fuite).</div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">!</span>Pièges à éviter</div>
+        <div class="pieges"><ul>
+          <li>Mesurer sans EPI électriques.</li>
+          <li>Prendre <b>tous</b> les conducteurs dans la pince → lecture 0 A.</li>
+          <li>Mauvais calibre sur la pince.</li>
+        </ul></div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Objectif :</span>I compresseur ≈ I plaque ± 10 % · U ≈ 230 V ± 10 %</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mes mesures</div>
+        <table class="tableau-relev">
+          <thead><tr><th>I compresseur (A)</th><th>U réseau (V)</th><th>I plaque (A)</th><th>Écart I (%)</th></tr></thead>
+          <tbody><tr><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> EPI élec · mesures cohérentes avec la plaque.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 7 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">7</span><span class="titre">Interprétation croisée SC / SR / I</span><span class="ep3">B-4 · C5.1</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je regarde mes 3 résultats : surchauffe, sous-refroidissement, intensité.</li>
+          <li>Je réponds aux 4 questions diagnostic ci-dessous.</li>
+          <li>Je conclus : installation <b>normale</b> ou <b>anomalie détectée</b> (laquelle ?).</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Aucune mesure seule ne suffit à diagnostiquer. C'est le <b>croisement</b> qui donne l'information : SC forte + SR faible + I basse = manque de fluide probable. SC faible + SR fort + I forte = surcharge. L'art du frigoriste, c'est de lire cette combinaison.</div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Objectif :</span>diagnostic cohérent, justifié par 2 ou 3 indicateurs</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Mon diagnostic</div>
+        <table class="tableau-relev">
+          <thead><tr><th style="text-align:left">Question</th><th>OUI</th><th>NON</th></tr></thead>
+          <tbody>
+            <tr><td class="lbl-cell">Surchauffe totale dans la plage 5-10 K ?</td><td>☐</td><td>☐</td></tr>
+            <tr><td class="lbl-cell">Sous-ref. total dans la plage 3-8 K ?</td><td>☐</td><td>☐</td></tr>
+            <tr><td class="lbl-cell">I compresseur dans ± 10 % de la plaque ?</td><td>☐</td><td>☐</td></tr>
+            <tr><td class="lbl-cell">Tension réseau dans ± 10 % de 230 V ?</td><td>☐</td><td>☐</td></tr>
+          </tbody>
+        </table>
+        <div class="lbl-rel" style="margin-top:5px">✎ Conclusion diagnostic</div>
+        <div class="ligne-ecriture"></div>
+        <div class="ligne-ecriture"></div>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> 4 réponses cohérentes · conclusion argumentée.</div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 8 -->
+  <div class="etape">
+    <div class="etape-header"><span class="num">8</span><span class="titre">Début de la fiche de mise en service</span><span class="ep3">C-2 · C1.3</span></div>
+    <div class="etape-body">
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">✓</span>Ce que je fais</div>
+        <ol class="pas-a-pas">
+          <li>Je prends la fiche de mise en service vierge (EP3 Bloc C).</li>
+          <li>Je recopie l'identification client (LPP Jacques Raynaud, adresse, date, fluide).</li>
+          <li>Je reporte les valeurs : PO, PK, T0, TK, TSC, TEC, TScd, Tdet, TSe, Tasp.</li>
+          <li>Je reporte I compresseur et U réseau.</li>
+          <li>Je reporte les 2 surchauffes et les 2 sous-refroidissements.</li>
+          <li>Je signe en bas.</li>
+        </ol>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-titre"><span class="icon">?</span>Pourquoi</div>
+        <div class="pourquoi">Cette fiche est l'un des <b>5 documents attendus</b> à l'EP3 Bloc C. Savoir la remplir rapidement et proprement fait gagner des points en examen.</div>
+      </div>
+
+      <div class="cibles"><span class="lbl">Objectif :</span>fiche complète · toutes unités · transcription fidèle</div>
+
+      <div class="releve" style="margin-top:5px">
+        <div class="lbl-rel">✎ Je coche</div>
+        <div class="qcm">
+          <div class="q"><span class="case-cocher"></span>Identification client complète</div>
+          <div class="q"><span class="case-cocher"></span>Pressions / températures</div>
+          <div class="q"><span class="case-cocher"></span>Intensité / tension</div>
+          <div class="q"><span class="case-cocher"></span>Surchauffe / sous-ref</div>
+          <div class="q"><span class="case-cocher"></span>Date + nom</div>
+          <div class="q"><span class="case-cocher"></span>Aucune case oubliée</div>
+        </div>
+      </div>
+
+      <div class="validation"><b>Validation enseignant :</b> fiche complète · transcription fidèle · unités.</div>
+    </div>
+  </div>
+
+  <!-- ANNEXE FICHE DE MISE EN SERVICE EP3 -->
+  <h2 class="section" style="margin-top:16px">ANNEXE — Fiche de mise en service à remplir <span style="background:white;color:#000;padding:0 6px;font-size:9pt;margin-left:8px">document EP3 · Tâche C-2</span></h2>
+  <div style="border:2px solid #000;padding:10px 14px;margin-bottom:10px">
+    <p style="font-weight:700;font-size:9.5pt;font-style:italic;margin-bottom:6px">À remplir à partir de mes relevés des étapes 1 à 7 ci-dessus. Document identique à celui attendu à l'EP3.</p>
+
+    <div style="text-align:center;font-size:13pt;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;border-bottom:2px solid #000;padding-bottom:4px">Fiche de mise en service</div>
+
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:6px">
+      <tr>
+        <td style="border:1px solid #000;padding:4px 8px;width:20%"><b>Nom :</b></td>
+        <td style="border:1px solid #000;padding:4px 8px;width:50%"><b>Adresse :</b></td>
+        <td style="border:1px solid #000;padding:4px 8px;width:30%"><b>Date :</b><br>___/___/_____</td>
+      </tr>
+    </table>
+
+    <div style="background:#000;color:white;padding:3px 8px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;font-size:10pt;margin-bottom:0">Équipement</div>
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:6px">
+      <tr>
+        <th style="border:1px solid #000;padding:4px 8px;background:#eee">Marque</th>
+        <th style="border:1px solid #000;padding:4px 8px;background:#eee">Type</th>
+        <th style="border:1px solid #000;padding:4px 8px;background:#eee">Référence</th>
+        <th style="border:1px solid #000;padding:4px 8px;background:#eee">N° série</th>
+      </tr>
+      <tr>
+        <td style="border:1px solid #000;padding:8px;height:26px">NA</td>
+        <td style="border:1px solid #000;padding:8px"></td>
+        <td style="border:1px solid #000;padding:8px"></td>
+        <td style="border:1px solid #000;padding:8px">NA</td>
+      </tr>
+    </table>
+
+    <table style="width:100%;border-collapse:collapse;font-size:9.5pt;margin-bottom:6px">
+      <tr>
+        <th style="border:1px solid #000;padding:4px;background:#eee">Nature du fluide</th>
+        <th style="border:1px solid #000;padding:4px;background:#eee">Pression HP</th>
+        <th style="border:1px solid #000;padding:4px;background:#eee">Température condensation</th>
+        <th style="border:1px solid #000;padding:4px;background:#eee">Pression BP</th>
+        <th style="border:1px solid #000;padding:4px;background:#eee">Température d'évaporation</th>
+      </tr>
+      <tr>
+        <td style="border:1px solid #000;padding:8px;height:26px"><b>R :</b>___________</td>
+        <td style="border:1px solid #000;padding:8px"><b>Pk :</b>________</td>
+        <td style="border:1px solid #000;padding:8px"><b>T°k :</b>________</td>
+        <td style="border:1px solid #000;padding:8px"><b>Po :</b>________</td>
+        <td style="border:1px solid #000;padding:8px"><b>T°o :</b>________</td>
+      </tr>
+    </table>
+
+    <table style="width:100%;border-collapse:collapse;font-size:9.5pt;margin-bottom:6px">
+      <tr>
+        <td style="border:1px solid #000;padding:6px 8px;width:60%">θ de refoulement du compresseur</td>
+        <td style="border:1px solid #000;padding:6px 8px;text-align:center;width:10%;height:24px">&nbsp;</td>
+        <td style="border:1px solid #000;padding:6px 8px;width:60%">θ de l'aspiration du compresseur</td>
+        <td style="border:1px solid #000;padding:6px 8px;text-align:center;width:10%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #000;padding:6px 8px">θ de sortie condenseur</td>
+        <td style="border:1px solid #000;padding:6px 8px;text-align:center;height:24px">&nbsp;</td>
+        <td style="border:1px solid #000;padding:6px 8px">θ sortie de l'évaporateur</td>
+        <td style="border:1px solid #000;padding:6px 8px;text-align:center">&nbsp;</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #000;padding:6px 8px">Intensité absorbée par le compresseur</td>
+        <td style="border:1px solid #000;padding:6px 8px;text-align:center;height:24px">&nbsp;</td>
+        <td style="border:1px solid #000;padding:6px 8px">Intensité absorbée à l'évaporateur</td>
+        <td style="border:1px solid #000;padding:6px 8px;text-align:center">&nbsp;</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #000;padding:6px 8px">Sens de rotation du Ventilo-condenseur</td>
+        <td style="border:1px solid #000;padding:6px 8px;text-align:center;font-size:13pt">↺&nbsp;&nbsp;↻</td>
+        <td style="border:1px solid #000;padding:6px 8px">Sens de rotation du ventilo-évaporateur</td>
+        <td style="border:1px solid #000;padding:6px 8px;text-align:center;font-size:13pt">↺&nbsp;&nbsp;↻</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #000;padding:6px 8px">Point de consigne de régulation</td>
+        <td style="border:1px solid #000;padding:6px 8px;text-align:center;height:24px">&nbsp;</td>
+        <td style="border:1px solid #000;padding:6px 8px" colspan="2"><b>Pbp</b> cut in : _______ diff : _______<br><b>Php sécu</b> cut off : _______ diff : _______</td>
+      </tr>
+    </table>
+
+    <table style="width:100%;border-collapse:collapse;font-size:10pt">
+      <tr>
+        <td style="border:1px solid #000;padding:8px;width:50%;height:44px"><b>Valeur de surchauffe :</b><br><br>________________</td>
+        <td style="border:1px solid #000;padding:8px;width:50%"><b>Valeur de sous-refroidissement :</b><br><br>________________</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- AUTO-ÉVALUATION -->
+  <div class="autoeval">
+    <div class="titre-ae">Auto-évaluation — fin de TP</div>
+    <table>
+      <thead><tr><th style="text-align:left">Critère</th><th>Oui</th><th>Partiel</th><th>Non</th><th>Commentaire</th></tr></thead>
+      <tbody>
+        <tr><td class="critere">EPI portés en continu (dont élec. étape 6)</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">6 points T° relevés + unités</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">PO / PK lus</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">T0 / TK déduits via table P/T</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Calcul surchauffe + interprétation</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Calcul sous-refroidissement + interprétation</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Mesure I + U + écart plaque</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Diagnostic croisé cohérent</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+        <tr><td class="critere">Fiche de mise en service remplie</td><td>☐</td><td>☐</td><td>☐</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GRILLE ENSEIGNANT -->
+  <div class="autoeval" style="margin-top:12px">
+    <div class="titre-ae">Grille d'évaluation par compétences (partie enseignant)</div>
+    <table>
+      <thead>
+        <tr><th style="text-align:left">Compétence</th><th>Étape</th><th>Non acquis</th><th>En cours</th><th>Acquis</th><th>Maîtrisé</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="critere"><b>C2.2</b> — Sécurité + EPI électriques</td><td>6</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 10</td></tr>
+        <tr><td class="critere"><b>C4.5</b> — Relevés complets (T° + P)</td><td>1 · 2</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 20</td></tr>
+        <tr><td class="critere"><b>C5.1</b> — Lecture table P/T (T0 et TK)</td><td>3</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 15</td></tr>
+        <tr><td class="critere"><b>C5.1</b> — Calcul surchauffe + interprétation</td><td>4</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 15</td></tr>
+        <tr><td class="critere"><b>C5.1</b> — Calcul sous-refroidissement + interprétation</td><td>5</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 15</td></tr>
+        <tr><td class="critere"><b>C4.5</b> — Mesures électriques sous EPI</td><td>6</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 15</td></tr>
+        <tr><td class="critere"><b>C5.1</b> — Diagnostic croisé</td><td>7</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 10</td></tr>
+        <tr><td class="critere"><b>C1.3</b> — Fiche de mise en service</td><td>8</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>/ 15</td></tr>
+        <tr><td class="critere" style="background:#eee"><b>TOTAL</b></td><td colspan="5" style="text-align:right"><b>Note brute / 115 · convertie × 20 / 115 :</b></td><td><b>/ 20</b></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:8.5pt;margin-top:4px;font-style:italic">Observations enseignant :</div>
+    <div class="ligne-ecriture"></div>
+    <div class="ligne-ecriture"></div>
+  </div>
+
+  <div class="footer-doc">
+    <span>TP 2B — Mesures P/T + SC/SR · CAP IFCA 2 · F. Henninot · inerWeb Édu</span>
+    <span>LPP Jacques Raynaud · 04/05/2026 · Progression Bloc B 2/3</span>
+  </div>
+</div>
+</body>
+</html>

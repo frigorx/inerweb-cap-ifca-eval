@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adaptation DYS (expé) — CAP IFCA EP3</title>
+  <link rel="stylesheet" href="eleve.css" />
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>%E2%9D%84</text></svg>" />
+</head>
+<body>
+
+<header class="eleve-header">
+  <div class="logo">❄ inerWeb <span class="badge">Édu</span></div>
+  <div class="title">⚠ Adaptation DYS (expérimentale) — CAP IFCA EP3</div>
+  <a href="index.html" style="background:#fff;color:var(--bleu);padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:700;font-size:14pt;">← Menu</a>
+  <a href="tp-officiels/index.html" style="background:#ff6b35;color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:700;font-size:14pt;">📚 TP officiels</a>
+</header>
+
+<div style="background:#fff8e1;border-left:6px solid #fbc02d;padding:14px 18px;margin:16px;font-size:14pt;border-radius:6px;">
+  <strong>⚠ Version expérimentale générée par l'IA.</strong> Cette adaptation simplifie la lecture pour les élèves DYS / TDAH / lecture limitée, mais le contenu peut diverger des TP officiels rédigés par M. Henninot. <strong>En cas de doute, consulter les <a href="tp-officiels/index.html" style="color:#ff6b35;">TP officiels</a>.</strong>
+</div>
+
+<!-- ÉCRAN 1 : choix du TP -->
+<section id="screen-select" class="selector">
+  <h1>👋 Bonjour ! Choisis ton TP du jour</h1>
+  <p style="font-size: 17pt;">Clique sur le TP que ton prof t'a demandé de faire.</p>
+  <div class="tp-grid" id="tp-grid"></div>
+</section>
+
+<!-- ÉCRAN 2 : choix de la version -->
+<section id="screen-version" class="selector" hidden>
+  <h2 id="version-tp-titre"></h2>
+  <p style="font-size: 17pt;">Choisis ta version :</p>
+  <div class="version-bar">
+    <button class="v1" data-v="V1">🟢 V1 — pas-à-pas (guidé)</button>
+    <button class="v2" data-v="V2">🟧 V2 — consolidé (proche EP3)</button>
+  </div>
+  <button class="btn-nav prev" id="back-to-select">← Retour</button>
+</section>
+
+<!-- ÉCRAN 3 : fiche guidance -->
+<section id="screen-fiche" class="fiche" hidden>
+  <div class="progression">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <strong id="fiche-titre" style="font-size:18pt;color:var(--bleu);"></strong>
+      <span id="fiche-version-label" style="font-size:14pt;color:var(--orange);font-weight:700;"></span>
+    </div>
+    <div class="barre"><div class="fill" id="fill"></div></div>
+  </div>
+
+  <div class="fiche-mission" id="fiche-mission"></div>
+
+  <div id="etapes-container"></div>
+
+  <div id="defi-container"></div>
+
+  <div id="secours-container"></div>
+
+  <div class="nav-bar">
+    <button class="btn-nav prev" id="back-from-fiche">← Changer de TP</button>
+    <button class="btn-nav print" onclick="window.print()">🖨 Imprimer cette fiche</button>
+  </div>
+</section>
+
+<script src="eleve.js"></script>
+
+</body>
+</html>

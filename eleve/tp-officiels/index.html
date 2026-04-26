@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TP officiels — CAP IFCA EP3 — F. Henninot</title>
+  <link rel="stylesheet" href="../eleve.css" />
+  <style>
+    .package-bar {
+      background: var(--bg-warm);
+      border: 3px solid var(--orange);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .package-bar .icon { font-size: 40pt; }
+    .package-bar .info { flex: 1; min-width: 240px; }
+    .package-bar .info strong { font-size: 18pt; color: var(--orange); }
+    .package-bar .info p { margin: 4px 0; font-size: 14pt; }
+    .package-bar a.btn-dl {
+      background: var(--orange); color: #fff; padding: 14px 22px;
+      font-family: 'Trebuchet MS', sans-serif; font-size: 16pt; font-weight: 700;
+      border-radius: 8px; text-decoration: none; display: inline-block;
+    }
+    .package-bar a.btn-dl:hover { background: var(--orange-clair, #ff8a5b); }
+
+    .seance-bloc {
+      background: #fff;
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 16px;
+      border-left: 6px solid var(--bleu);
+    }
+    .seance-bloc h2 { margin: 0 0 12px; }
+    .tp-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .tp-row:last-child { border-bottom: none; }
+    .tp-row .nom { font-size: 15pt; font-weight: 700; color: var(--bleu); }
+    .tp-row .file { font-size: 11pt; color: var(--text-soft); font-family: Consolas, monospace; }
+    .tp-row a.action {
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13pt;
+    }
+    .tp-row a.view { background: var(--bleu); color: #fff; }
+    .tp-row a.dl { background: var(--vert); color: #fff; }
+
+    .info-bandeau {
+      background: var(--bg-cool);
+      padding: 14px 22px;
+      margin: 16px;
+      border-radius: 10px;
+      font-size: 14pt;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<header class="eleve-header">
+  <div class="logo">❄ inerWeb <span class="badge">Édu</span></div>
+  <div class="title">TP officiels — F. Henninot</div>
+  <a href="../index.html" style="background:#fff;color:var(--bleu);padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:700;font-size:14pt;">← Espace élève</a>
+</header>
+
+<div class="info-bandeau">
+  📚 Voici les <strong>6 TP HTML officiels</strong> rédigés par F. Henninot pour les révisions EP3 CAP IFCA 2 (S1/S2/S3).
+  Tu peux les <strong>consulter en ligne</strong> ou les <strong>télécharger en HTML</strong> (impression directe Ctrl+P).
+  Le <strong>package complet ZIP</strong> contient en plus les annexes, les mappings et les fiches Whart.
+</div>
+
+<div class="package-bar">
+  <div class="icon">📦</div>
+  <div class="info">
+    <strong>Package complet — 287 Ko</strong>
+    <p>ZIP contenant les 6 TP HTML + 2 TP historiques + annexes C-1/C-2/C-3 + mappings JSON + 9 fiches Whart + carte progression CSV/HTML/XLSX.</p>
+  </div>
+  <a class="btn-dl" href="Package_EP3_CAP_IFCA_final.zip" download>⬇ Télécharger le ZIP</a>
+</div>
+
+<div class="seance-bloc">
+  <h2 style="color:var(--orange);">📅 Séance 1 — Lundi 27 avril 2026</h2>
+  <div class="tp-row">
+    <div>
+      <div class="nom">TP-050 — Pose manifold + tirage au vide + recherche de fuite</div>
+      <div class="file">S1_27-04-2026/TP1A_Pose_manifold_tirage_vide.html</div>
+    </div>
+    <a class="action view" href="S1_27-04-2026/TP1A_Pose_manifold_tirage_vide.html" target="_blank">📖 Ouvrir</a>
+    <a class="action dl" href="S1_27-04-2026/TP1A_Pose_manifold_tirage_vide.html" download>⬇ HTML</a>
+  </div>
+  <div class="tp-row">
+    <div>
+      <div class="nom">TP-053 — Mesures de températures pures (6 points + ΔT condenseur)</div>
+      <div class="file">S1_27-04-2026/TP2A_Mesures_temperatures.html</div>
+    </div>
+    <a class="action view" href="S1_27-04-2026/TP2A_Mesures_temperatures.html" target="_blank">📖 Ouvrir</a>
+    <a class="action dl" href="S1_27-04-2026/TP2A_Mesures_temperatures.html" download>⬇ HTML</a>
+  </div>
+  <div class="tp-row" style="background:var(--bg-cool);border-radius:6px;margin-top:6px;">
+    <div>
+      <div class="nom" style="color:var(--text-soft);">📜 Historique : TP1 — Pose/dépose manos + pressostat BP</div>
+      <div class="file">S1_27-04-2026/TP1_Pose_depose_manos_pressostat_BP.html</div>
+    </div>
+    <a class="action view" href="S1_27-04-2026/TP1_Pose_depose_manos_pressostat_BP.html" target="_blank">📖 Ouvrir</a>
+    <a class="action dl" href="S1_27-04-2026/TP1_Pose_depose_manos_pressostat_BP.html" download>⬇ HTML</a>
+  </div>
+  <div class="tp-row" style="background:var(--bg-cool);border-radius:6px;">
+    <div>
+      <div class="nom" style="color:var(--text-soft);">📜 Historique : TP2 — Mesures frigorifiques</div>
+      <div class="file">S1_27-04-2026/TP2_Mesures_frigorifiques.html</div>
+    </div>
+    <a class="action view" href="S1_27-04-2026/TP2_Mesures_frigorifiques.html" target="_blank">📖 Ouvrir</a>
+    <a class="action dl" href="S1_27-04-2026/TP2_Mesures_frigorifiques.html" download>⬇ HTML</a>
+  </div>
+</div>
+
+<div class="seance-bloc">
+  <h2 style="color:var(--orange);">📅 Séance 2 — Lundi 04 mai 2026</h2>
+  <div class="tp-row">
+    <div>
+      <div class="nom">TP-051 — Remplacement + réglage du pressostat BP</div>
+      <div class="file">S2_04-05-2026/TP1B_Remplacement_reglage_pressostat.html</div>
+    </div>
+    <a class="action view" href="S2_04-05-2026/TP1B_Remplacement_reglage_pressostat.html" target="_blank">📖 Ouvrir</a>
+    <a class="action dl" href="S2_04-05-2026/TP1B_Remplacement_reglage_pressostat.html" download>⬇ HTML</a>
+  </div>
+  <div class="tp-row">
+    <div>
+      <div class="nom">TP-054 — Mesures P/T + Surchauffe + Sous-refroidissement + Fiche MES</div>
+      <div class="file">S2_04-05-2026/TP2B_Mesures_PT_surchauffe_sous_refroidissement.html</div>
+    </div>
+    <a class="action view" href="S2_04-05-2026/TP2B_Mesures_PT_surchauffe_sous_refroidissement.html" target="_blank">📖 Ouvrir</a>
+    <a class="action dl" href="S2_04-05-2026/TP2B_Mesures_PT_surchauffe_sous_refroidissement.html" download>⬇ HTML</a>
+  </div>
+</div>
+
+<div class="seance-bloc">
+  <h2 style="color:var(--orange);">📅 Séance 3 — Lundi 11 mai 2026</h2>
+  <div class="tp-row">
+    <div>
+      <div class="nom">TP-052 — Dépose manifold + étanchéité + bon d'intervention</div>
+      <div class="file">S3_11-05-2026/TP1C_Depose_etancheite_remise_service.html</div>
+    </div>
+    <a class="action view" href="S3_11-05-2026/TP1C_Depose_etancheite_remise_service.html" target="_blank">📖 Ouvrir</a>
+    <a class="action dl" href="S3_11-05-2026/TP1C_Depose_etancheite_remise_service.html" download>⬇ HTML</a>
+  </div>
+  <div class="tp-row">
+    <div>
+      <div class="nom">TP-055 — Incondensables + révision SC/SR + TeqCO₂ + Plaque F-Gaz</div>
+      <div class="file">S3_11-05-2026/TP2C_Incondensables_revision_SC_SR.html</div>
+    </div>
+    <a class="action view" href="S3_11-05-2026/TP2C_Incondensables_revision_SC_SR.html" target="_blank">📖 Ouvrir</a>
+    <a class="action dl" href="S3_11-05-2026/TP2C_Incondensables_revision_SC_SR.html" download>⬇ HTML</a>
+  </div>
+</div>
+
+<div class="info-bandeau">
+  💡 <strong>Conseil impression</strong> : ouvrir le TP, faire <kbd>Ctrl</kbd>+<kbd>P</kbd>, choisir « Enregistrer en PDF » ou imprimer directement.
+  Les TP HTML sont déjà conçus en format A4 imprimable.
+</div>
+
+</body>
+</html>
