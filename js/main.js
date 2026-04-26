@@ -126,6 +126,33 @@
         updateBufferCount();
       }
     };
+
+    // === Upload correspondance élèves ===
+    const uploadInput = document.getElementById('upload-correspondance');
+    if (uploadInput) uploadInput.onchange = (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      const status = document.getElementById('upload-correspondance-status');
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const j = JSON.parse(ev.target.result);
+          const n = Correspondance.importFromJson(j);
+          status.innerHTML = `<span style="color:var(--vert);font-weight:700;">✅ ${n} élèves chargés. Recharge la page (F5) pour activer.</span>`;
+          toast(`${n} élèves importés — F5 pour activer`, 'success');
+        } catch (err) {
+          status.innerHTML = `<span style="color:var(--rouge);">❌ Erreur : ${err.message}</span>`;
+        }
+      };
+      reader.readAsText(f, 'utf-8');
+    };
+    const btnClearCorresp = document.getElementById('btn-clear-correspondance');
+    if (btnClearCorresp) btnClearCorresp.onclick = () => {
+      if (!confirm('Retirer la table de correspondance de ce poste ? Tu reverras les codes M01..M24 au lieu des noms.')) return;
+      Correspondance.clear();
+      document.getElementById('upload-correspondance-status').innerHTML = '<span style="color:var(--text-soft);">Correspondance retirée. Recharge la page.</span>';
+      toast('Correspondance retirée — F5 pour appliquer', 'info');
+    };
   });
 
   window.App = App;

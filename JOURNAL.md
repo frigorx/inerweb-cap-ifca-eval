@@ -67,3 +67,11 @@
 [2026-04-26 21:00] Onglet ⚙ Config : section RGPD explicite avec exemple "Tu vois MFrédéric — Frédéric MENDY · Sheet contient M14"
 [2026-04-26 21:00] Test bout-en-bout : POST M14 → Sheet → READ M14, aucune fuite "Frédéric" ni "MENDY" dans le payload distant
 [2026-04-26 21:00] Transparent pour le prof : 0 changement dans son utilisation, juste un bandeau vert qui rassure
+[2026-04-26 21:30] Retour Franck → "j'ai pas vu mes élèves" → cause : correspondance LOCALE absente du serveur GitHub Pages (fichier gitignored)
+[2026-04-26 21:30] Solution UPLOAD : input file dans Config pour importer le fichier dans localStorage du navigateur (chaque prof importe une fois par poste)
+[2026-04-26 21:30] store.js : Correspondance.importFromJson() + .clear() — gestion via localStorage (clé correspondance.local) en priorité 1, fichier serveur en priorité 2
+[2026-04-26 21:30] main.js : handler upload + bouton retirer
+[2026-04-26 21:30] Config : section avec input file + bouton "Retirer du poste" + texte explicatif "reste UNIQUEMENT sur ce navigateur"
+[2026-04-26 21:30] MODE_EMPLOI.html créé : 9 sections (446 lignes) → première fois 3 min · 9 écrans · évaluer pas-à-pas · TP-056 tournant · radar/bulletin · TP officiels · RGPD · dépannage · URLs · imprimable A4
+[2026-04-26 21:30] Boutons header app prof : 📖 Mode d'emploi (bleu) + 📚 TP officiels (orange) + 🎓 Espace élève (vert)
+[2026-04-26 21:30] Lien "Première fois ? Lire le mode d'emploi (3 min)" sur l'écran de connexion

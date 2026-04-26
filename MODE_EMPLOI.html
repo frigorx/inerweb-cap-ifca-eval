@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mode d'emploi — inerWeb Eval CAP IFCA</title>
+  <style>
+    /* charte stricte : Calibri 14pt min, max 3 niveaux hiérarchie, fond clair */
+    :root {
+      --bleu: #1b3a63;
+      --orange: #ff6b35;
+      --vert: #2e7d32;
+      --rouge: #c53030;
+      --jaune: #fbc02d;
+      --bg: #ffffff;
+      --bg-warm: #fff8f0;
+      --bg-cool: #eef3fb;
+      --bg-alt: #f6f8fb;
+      --text: #1a1a1a;
+      --text-soft: #4a5568;
+      --border: #d9e1ec;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg-alt);
+      color: var(--text);
+      font-family: Calibri, "Segoe UI", Tahoma, sans-serif;
+      font-size: 14pt;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-weight: 700;
+      color: var(--bleu);
+      margin: 0 0 12px;
+      line-height: 1.25;
+    }
+    h1 { font-size: 28pt; }
+    h2 { font-size: 22pt; margin-top: 32px; padding-top: 14px; border-top: 3px solid var(--orange); }
+    h3 { font-size: 17pt; color: var(--orange); margin-top: 20px; }
+    a { color: var(--bleu); }
+    code { background: var(--bg-alt); padding: 2px 6px; border-radius: 3px; font-size: 12pt; }
+
+    header {
+      background: var(--bleu);
+      color: #fff;
+      padding: 18px 28px;
+      border-bottom: 6px solid var(--orange);
+    }
+    header .logo { font-family: "Trebuchet MS"; font-weight: 700; font-size: 22pt; }
+    header .logo .badge { background: var(--orange); padding: 2px 10px; border-radius: 4px; font-size: 14pt; }
+    header .sub { font-size: 14pt; opacity: 0.9; margin-top: 4px; }
+
+    main {
+      max-width: 21cm;
+      margin: 0 auto;
+      padding: 24px;
+      background: #fff;
+    }
+
+    .toc {
+      background: var(--bg-cool);
+      border-left: 5px solid var(--bleu);
+      padding: 14px 22px;
+      margin: 20px 0;
+      border-radius: 6px;
+    }
+    .toc ol { padding-left: 22px; margin: 8px 0; }
+    .toc li { margin: 4px 0; font-size: 14pt; }
+
+    .step {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0;
+      page-break-inside: avoid;
+    }
+    .step .num {
+      display: inline-block;
+      background: var(--bleu);
+      color: #fff;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 38px;
+      font-family: "Trebuchet MS"; font-weight: 700;
+      font-size: 18pt;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .step .titre {
+      font-family: "Trebuchet MS"; font-weight: 700;
+      font-size: 18pt; color: var(--bleu);
+      vertical-align: middle;
+    }
+
+    .alerte {
+      background: #fff8e1;
+      border-left: 5px solid var(--jaune);
+      padding: 12px 18px;
+      margin: 14px 0;
+      border-radius: 4px;
+    }
+    .alerte::before { content: "⚠️ "; }
+
+    .info {
+      background: var(--bg-cool);
+      border-left: 5px solid var(--bleu);
+      padding: 12px 18px;
+      margin: 14px 0;
+      border-radius: 4px;
+    }
+    .info::before { content: "💡 "; }
+
+    .ok {
+      background: #e8f5e9;
+      border-left: 5px solid var(--vert);
+      padding: 12px 18px;
+      margin: 14px 0;
+      border-radius: 4px;
+    }
+    .ok::before { content: "✅ "; }
+
+    .danger {
+      background: #fef2f2;
+      border-left: 5px solid var(--rouge);
+      padding: 12px 18px;
+      margin: 14px 0;
+      border-radius: 4px;
+    }
+    .danger::before { content: "🚨 "; }
+
+    .ecran {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 12px;
+      background: var(--bg-alt);
+      border-radius: 6px;
+      margin: 8px 0;
+    }
+    .ecran .icone { font-size: 36pt; text-align: center; }
+    .ecran .desc strong { color: var(--bleu); font-size: 16pt; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 13pt;
+    }
+    th { background: var(--bleu); color: #fff; padding: 8px 10px; text-align: left; }
+    td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+    tr:nth-child(even) td { background: var(--bg-alt); }
+
+    .actions-bar {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13pt;
+      cursor: pointer;
+      border: none;
+    }
+    .btn.print { background: var(--bleu); color: #fff; }
+    .btn.back { background: #fff; color: var(--bleu); border: 2px solid var(--bleu); }
+    .btn.app { background: var(--orange); color: #fff; }
+
+    @media print {
+      .actions-bar { display: none; }
+      header { background: #fff; color: #000; border-bottom: 3px solid #000; }
+      header .logo { color: #000; }
+      header .badge { color: #fff; }
+      main { box-shadow: none; }
+      h2 { page-break-before: auto; break-before: auto; }
+      .step { page-break-inside: avoid; break-inside: avoid; }
+      @page { size: A4; margin: 1.4cm; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">❄ inerWeb <span class="badge">Édu</span></div>
+  <div class="sub">Mode d'emploi prof — Eval CAP IFCA · F. Henninot · LP Jacques Raynaud</div>
+</header>
+
+<div class="actions-bar">
+  <button class="btn print" onclick="window.print()">🖨 Imprimer ce mode d'emploi</button>
+  <a class="btn app" href="index.html">→ Aller à l'app</a>
+  <a class="btn back" href="eleve/">→ Espace élève</a>
+</div>
+
+<main>
+
+<h1>👋 Bienvenue Franck</h1>
+<p>Voici comment utiliser <strong>inerWeb Eval CAP IFCA</strong> en classe. Ce document est imprimable (Ctrl+P → A4).</p>
+
+<div class="toc">
+  <strong>Sommaire</strong>
+  <ol>
+    <li><a href="#etape-0">Première fois sur un poste — 3 minutes</a></li>
+    <li><a href="#ecrans">Les 9 écrans de l'app</a></li>
+    <li><a href="#evaluer">Évaluer un élève — pas à pas</a></li>
+    <li><a href="#tournant">Faire tourner le TP-056</a></li>
+    <li><a href="#radar">Voir un radar / un bulletin</a></li>
+    <li><a href="#tp-officiels">Les TP officiels (papier ou écran)</a></li>
+    <li><a href="#rgpd">Pseudonymisation : qui voit quoi ?</a></li>
+    <li><a href="#urgence">En cas de problème</a></li>
+    <li><a href="#urls">URLs utiles</a></li>
+  </ol>
+</div>
+
+<!-- ============================== -->
+<h2 id="etape-0">1. Première fois sur un poste — 3 minutes</h2>
+
+<div class="alerte">
+<strong>Important.</strong> Ton fichier <code>correspondance_eleves.json</code> (sur ta clé USB) doit être <strong>importé sur chaque poste</strong> où tu veux voir les vrais noms. Sinon tu verras <code>M01..M24</code> à la place.
+</div>
+
+<div class="step">
+<span class="num">1</span><span class="titre">Ouvrir l'app</span>
+<p>Adresse : <a href="https://frigorx.github.io/inerweb-cap-ifca-eval/">https://frigorx.github.io/inerweb-cap-ifca-eval/</a></p>
+<p>Tu choisis ton initiales (FH, PW, ZN ou TM) → Continuer.</p>
+</div>
+
+<div class="step">
+<span class="num">2</span><span class="titre">Importer ta liste d'élèves (table de correspondance)</span>
+<p>Aller dans l'onglet <strong>⚙ Config</strong>.</p>
+<p>Section <strong>🔒 Pseudonymisation</strong> → bouton <strong>« Choisir un fichier »</strong> → sélectionner ton fichier <code>correspondance_eleves.json</code> sur ton USB.</p>
+<p>Recharger la page (F5).</p>
+<div class="ok">Si tout va bien : un bandeau vert apparaît en haut → <em>« 🔒 Mode pseudonymisation forte actif »</em> et tes élèves apparaissent avec leurs vrais noms partout dans l'app.</div>
+</div>
+
+<div class="step">
+<span class="num">3</span><span class="titre">Vérifier que ça marche</span>
+<p>Onglet <strong>👥 Élèves</strong> → tu dois voir les 24 cartes avec « MFrédéric — Frédéric MENDY » etc.</p>
+<p>Si tu vois des codes M01..M24 → l'import a échoué, refais l'étape 2.</p>
+</div>
+
+<div class="info">
+<strong>Astuce :</strong> tu n'as à faire ces 3 étapes <strong>qu'une seule fois</strong> par poste. L'app se souvient de toi. À l'ouverture suivante, tu cliques juste FH et tout reprend.
+</div>
+
+<!-- ============================== -->
+<h2 id="ecrans">2. Les 9 écrans de l'app</h2>
+
+<p>En haut de l'app, une barre d'onglets. Voici à quoi sert chacun :</p>
+
+<div class="ecran"><div class="icone">🏠</div><div class="desc"><strong>Aujourd'hui</strong> — vue de pilotage. Stats du jour, qui est en autonomie sur le TP-056, activité récente. <em>C'est ton tableau de bord.</em></div></div>
+
+<div class="ecran"><div class="icone">🗺</div><div class="desc"><strong>Carte progression</strong> — grille semaines S1/S2/S3 × élèves × TP. Couleurs : vert acquis, jaune en cours, rouge non acquis. <em>Vue inspecteurs.</em></div></div>
+
+<div class="ecran"><div class="icone">👥</div><div class="desc"><strong>Élèves</strong> — une carte par élève avec score moyen et alertes (≥3 NA = bordure rouge). Tri possible par score, par alerte. <em>Pour repérer qui décroche.</em></div></div>
+
+<div class="ecran"><div class="icone">✍</div><div class="desc"><strong>Évaluation</strong> — saisir les notes. 1 ligne par élève × 1 colonne par compétence × 4 boutons NA/ECA/A/M. <em>C'est l'écran principal de saisie.</em></div></div>
+
+<div class="ecran"><div class="icone">🔁</div><div class="desc"><strong>TP-056</strong> — pilotage du TP tournant. Statut par élève, bouton « passer au suivant », planning visuel des 24 élèves.</div></div>
+
+<div class="ecran"><div class="icone">🎯</div><div class="desc"><strong>Radar</strong> — toile d'araignée par élève (ou bar graph en toggle). <em>Format préféré inspecteurs.</em></div></div>
+
+<div class="ecran"><div class="icone">🖨</div><div class="desc"><strong>Bulletin</strong> — bulletin EP3 par élève imprimable A4. Bouton « PDF tous » pour générer 24 PDFs en 1 minute.</div></div>
+
+<div class="ecran"><div class="icone">📅</div><div class="desc"><strong>Agenda</strong> — fusion des 4 iCal EcoleDirecte des profs. Filtre auto CAP/IFCA/FROID/CVC. <em>Si vide : voir Config pour coller le .ics manuellement.</em></div></div>
+
+<div class="ecran"><div class="icone">⚙</div><div class="desc"><strong>Config</strong> — URL iCal, import correspondance élèves, état RGPD, buffer offline.</div></div>
+
+<!-- ============================== -->
+<h2 id="evaluer">3. Évaluer un élève — pas à pas</h2>
+
+<div class="step">
+<span class="num">1</span><span class="titre">Aller sur ✍ Évaluation</span>
+<p>Choisir l'épreuve (EP3 par défaut), la classe (CAP IFCA 2), la date.</p>
+</div>
+
+<div class="step">
+<span class="num">2</span><span class="titre">Choisir le TP du jour</span>
+<p>Cliquer sur la carte du TP → ex : <strong>TP-050 — Pose manifold</strong>.</p>
+<p>La grille s'ouvre : 1 ligne par élève × 1 colonne par compétence du TP.</p>
+</div>
+
+<div class="step">
+<span class="num">3</span><span class="titre">Cliquer le niveau</span>
+<p>Pour chaque élève × chaque compétence, cliquer <strong>NA</strong>, <strong>ECA</strong>, <strong>A</strong> ou <strong>M</strong>.</p>
+<p>Re-cliquer le même niveau = annuler. La note auto /20 se calcule à droite.</p>
+</div>
+
+<div class="step">
+<span class="num">4</span><span class="titre">Enregistrer</span>
+<p>Bouton <strong>💾 Enregistrer</strong> en bas. Ça pousse vers le Google Sheet.</p>
+<div class="ok">Indicateur 🟢 sync en bas à droite = tout est bien parti.</div>
+<div class="alerte">Indicateur 🟡 buffer = pas de réseau. Pas grave : ça repart tout seul dès que ça revient. Ne pas fermer le navigateur tant qu'on n'a pas vu le 🟢.</div>
+</div>
+
+<!-- ============================== -->
+<h2 id="tournant">4. Faire tourner le TP-056 (récupération fluide)</h2>
+
+<p>Le TP-056 est un <strong>TP d'autonomie</strong> : 2-3 élèves le font pendant que les autres sont sur TP-050 à TP-055. Cycle sur les 4h d'atelier.</p>
+
+<div class="step">
+<span class="num">1</span><span class="titre">Aller sur 🔁 TP-056</span>
+<p>Tu vois 3 panneaux : sélecteur élève · statut · note auto.</p>
+<p>Plus bas : la <strong>grille planning des 24 élèves</strong> avec icônes :</p>
+<table>
+<tr><th>Icône</th><th>Statut</th><th>Sens</th></tr>
+<tr><td>⏳</td><td>Pas commencé</td><td>L'élève n'a pas encore fait le TP</td></tr>
+<tr><td>🔄</td><td>En cours</td><td>L'élève est actuellement sur le TP en autonomie</td></tr>
+<tr><td>✅</td><td>Terminé</td><td>L'élève a fini, note enregistrée</td></tr>
+</table>
+</div>
+
+<div class="step">
+<span class="num">2</span><span class="titre">Lancer un élève</span>
+<p>Choisir l'élève dans le sélecteur (ou cliquer sur sa carte dans la grille).</p>
+<p>Dans le champ <strong>Statut</strong> : choisir <strong>« En cours (autonomie) »</strong>.</p>
+</div>
+
+<div class="step">
+<span class="num">3</span><span class="titre">Pendant le TP</span>
+<p>L'élève coche les phases P0 → P5 dans l'app (ou sur papier si tu lui as donné le livret).</p>
+<p>Tu apposes les <strong>5 visas STOP</strong> aux moments critiques (tirage vide, brasures, etc.).</p>
+</div>
+
+<div class="step">
+<span class="num">4</span><span class="titre">Quand l'élève a fini</span>
+<p>Bouton <strong>⏭ Marquer fini + passer au suivant</strong>. La note est sauvegardée et l'élève suivant pas-encore-passé est sélectionné automatiquement.</p>
+</div>
+
+<div class="info">
+<strong>Sur 🏠 Aujourd'hui</strong> tu vois en permanence : <em>« En autonomie atelier maintenant : Frédéric MENDY »</em> + 3 compteurs (à passer / en cours / terminés).
+</div>
+
+<!-- ============================== -->
+<h2 id="radar">5. Voir un radar ou un bulletin</h2>
+
+<div class="step">
+<span class="num">1</span><span class="titre">Radar individuel</span>
+<p>Onglet <strong>🎯 Radar</strong> → choisir l'élève dans la liste déroulante.</p>
+<p>Toggle Radar / Bar graph selon préférence.</p>
+<p>Les axes sont les compétences EP3 (C2.2, C4.1..C4.7, C5.1).</p>
+</div>
+
+<div class="step">
+<span class="num">2</span><span class="titre">Bulletin imprimable</span>
+<p>Onglet <strong>🖨 Bulletin</strong> → choisir l'élève.</p>
+<p>3 boutons :</p>
+<ul style="font-size: 13pt;">
+  <li><strong>🖨 Imprimer</strong> — fenêtre d'impression standard</li>
+  <li><strong>📄 PDF</strong> — télécharge un PDF de cet élève</li>
+  <li><strong>📦 PDF tous</strong> — génère 24 PDFs en boucle (~1 min)</li>
+</ul>
+</div>
+
+<!-- ============================== -->
+<h2 id="tp-officiels">6. Les TP officiels (papier ou écran)</h2>
+
+<p>Tes 6 TP HTML originaux sont accessibles à <strong>📚 TP officiels</strong> (bouton orange dans le header).</p>
+
+<table>
+<tr><th>Action</th><th>Comment</th></tr>
+<tr><td>Lire en ligne</td><td>Bouton 📖 Ouvrir → s'ouvre dans un nouvel onglet</td></tr>
+<tr><td>Télécharger 1 TP en HTML</td><td>Bouton ⬇ HTML → téléchargement direct</td></tr>
+<tr><td>Imprimer 1 TP en A4</td><td>Ouvrir le TP → Ctrl+P → A4 portrait</td></tr>
+<tr><td>Télécharger TOUT le package</td><td>Bouton ⬇ ZIP en haut (287 Ko avec annexes)</td></tr>
+</table>
+
+<div class="info">Tes TP sont déjà conçus en format A4 imprimable. Pas besoin de les retravailler.</div>
+
+<!-- ============================== -->
+<h2 id="rgpd">7. Pseudonymisation : qui voit quoi ?</h2>
+
+<table>
+<tr><th>Endroit</th><th>Ce qui est visible</th></tr>
+<tr><td>Toi (prof) sur ton poste</td><td><code>MFrédéric — Frédéric MENDY</code> partout (lisible)</td></tr>
+<tr><td>Google Sheet (cloud)</td><td><code>M14</code> uniquement (anonyme)</td></tr>
+<tr><td>GitHub (repo public)</td><td>Aucun nom, aucun pseudo nominatif</td></tr>
+<tr><td>Autre poste sans correspondance</td><td><code>M14</code> à la place de l'élève</td></tr>
+</table>
+
+<div class="ok">
+<strong>3 niveaux de protection :</strong><br/>
+1. Le repo GitHub n'a aucune donnée nominative.<br/>
+2. Le Sheet Google ne reçoit que des codes anonymes M01..M24.<br/>
+3. La table de correspondance reste sur TON poste (importée via Config) ou ton USB.
+</div>
+
+<div class="danger">
+<strong>NE JAMAIS</strong> :<br/>
+• Coller la table de correspondance dans un mail, un Drive partagé, un Slack, etc.<br/>
+• Pousser le fichier sur GitHub (le <code>.gitignore</code> empêche déjà l'erreur).<br/>
+• Laisser un poste public ouvert avec la correspondance importée → bouton <strong>« Retirer du poste »</strong> en fin de cours.
+</div>
+
+<!-- ============================== -->
+<h2 id="urgence">8. En cas de problème</h2>
+
+<table>
+<tr><th>Symptôme</th><th>Solution</th></tr>
+<tr><td>Je vois M01..M24 au lieu des noms</td><td>Aller en ⚙ Config → Importer <code>correspondance_eleves.json</code> + F5</td></tr>
+<tr><td>Indicateur 🔴 sync</td><td>Vérifier le Wi-Fi. Refaire F5. Les évals saisies sont en buffer local, elles repartent tout seul.</td></tr>
+<tr><td>Indicateur 🟡 (N) en attente</td><td>Normal pendant une coupure. Bouton « Renvoyer maintenant » en Config.</td></tr>
+<tr><td>L'agenda iCal est vide</td><td>EcoleDirecte bloque le fetch direct. Aller en Config → coller le contenu .ics dans le textarea.</td></tr>
+<tr><td>J'ai mal cliqué un niveau</td><td>Re-cliquer le même niveau = annule. Cliquer un autre niveau = remplace.</td></tr>
+<tr><td>Je veux corriger après avoir enregistré</td><td>Re-faire l'évaluation → le système garde la dernière (last-write-wins). L'ancienne ligne reste en Sheet mais le radar/bulletin affichent la nouvelle.</td></tr>
+<tr><td>Tout est cassé</td><td>Aller directement sur le Sheet : <a href="https://docs.google.com/spreadsheets/d/16T1T3yL6M49OhJUQS1SmFHwW7Bywp7m2kSXDiXdmItk/edit">URL directe</a>. Saisir à la main si besoin.</td></tr>
+</table>
+
+<div class="info">
+<strong>En fin de séance, geste recommandé :</strong> télécharger le Sheet en XLSX (Fichier > Télécharger > Excel). Garde une copie sur USB. C'est ton filet de sécurité.
+</div>
+
+<!-- ============================== -->
+<h2 id="urls">9. URLs utiles</h2>
+
+<table>
+<tr><th>Quoi</th><th>URL</th></tr>
+<tr><td>App principale</td><td><a href="https://frigorx.github.io/inerweb-cap-ifca-eval/">frigorx.github.io/inerweb-cap-ifca-eval/</a></td></tr>
+<tr><td>Mode d'emploi (cette page)</td><td><a href="https://frigorx.github.io/inerweb-cap-ifca-eval/MODE_EMPLOI.html">MODE_EMPLOI.html</a></td></tr>
+<tr><td>Espace élève</td><td><a href="https://frigorx.github.io/inerweb-cap-ifca-eval/eleve/">/eleve/</a></td></tr>
+<tr><td>TP officiels</td><td><a href="https://frigorx.github.io/inerweb-cap-ifca-eval/eleve/tp-officiels/">/eleve/tp-officiels/</a></td></tr>
+<tr><td>Repo GitHub</td><td><a href="https://github.com/frigorx/inerweb-cap-ifca-eval">github.com/frigorx/inerweb-cap-ifca-eval</a></td></tr>
+<tr><td>Google Sheet (notes)</td><td><a href="https://docs.google.com/spreadsheets/d/16T1T3yL6M49OhJUQS1SmFHwW7Bywp7m2kSXDiXdmItk/edit">docs.google.com/spreadsheets/d/16T1T3y…</a></td></tr>
+</table>
+
+<div style="margin-top:30px;padding-top:14px;border-top:2px solid var(--bleu);text-align:center;font-size:11pt;color:var(--text-soft);">
+  Établissement privé — LP Jacques Raynaud · ÉQUATIO · CAP IFCA · F. Henninot · données pseudonymisées RGPD<br/>
+  inerWeb Édu · v1.8.0 · 2026-04-26
+</div>
+
+</main>
+
+</body>
+</html>

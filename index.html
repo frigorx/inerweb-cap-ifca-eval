@@ -23,8 +23,9 @@
       <span class="signature">par F. Henninot</span>
     </div>
     <div class="title-app">Eval CAP IFCA · EP3</div>
-    <a href="eleve/tp-officiels/" target="_blank" rel="noopener" style="background:var(--orange);color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:700;font-size:13pt;" title="Les 6 TP officiels en HTML + ZIP complet">📚 TP officiels →</a>
-    <a href="eleve/" target="_blank" rel="noopener" style="background:var(--vert);color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:700;font-size:13pt;" title="Espace élève (menu)">🎓 Espace élève →</a>
+    <a href="MODE_EMPLOI.html" target="_blank" rel="noopener" style="background:var(--bleu);color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:700;font-size:13pt;" title="Mode d'emploi prof (imprimable)">📖 Mode d'emploi</a>
+    <a href="eleve/tp-officiels/" target="_blank" rel="noopener" style="background:var(--orange);color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:700;font-size:13pt;" title="Les 6 TP officiels en HTML + ZIP complet">📚 TP officiels</a>
+    <a href="eleve/" target="_blank" rel="noopener" style="background:var(--vert);color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:700;font-size:13pt;" title="Espace élève (menu)">🎓 Espace élève</a>
     <div id="prof-badge" class="prof-badge" hidden>
       <span class="dot" id="prof-dot"></span>
       <span id="prof-label">—</span>
@@ -51,6 +52,7 @@
       <div class="card">
         <h1>Bienvenue sur inerWeb Eval CAP IFCA</h1>
         <p>Outil partagé d'évaluation EP1/EP2/EP3 — sélectionnez votre profil enseignant pour commencer.</p>
+        <p><a href="MODE_EMPLOI.html" target="_blank" style="color:var(--bleu);font-weight:700;">📖 Première fois ? Lire le mode d'emploi (3 min)</a></p>
 
         <h3>1. Choisissez votre identifiant</h3>
         <div class="profs-grid" id="profs-grid">
@@ -343,6 +345,14 @@
         <div style="margin-top:24px;">
           <h3>🔒 Pseudonymisation</h3>
           <div id="config-rgpd-info" style="padding:12px;background:var(--bg-alt);border-left:4px solid var(--vert);border-radius:4px;font-size:12pt;line-height:1.6;"></div>
+          <div style="margin-top:12px;padding:12px;background:#fff8e1;border-left:4px solid var(--orange);border-radius:4px;font-size:12pt;">
+            <strong>Activer la pseudonymisation forte sur ce poste :</strong><br/>
+            <p style="margin:6px 0;">Charger le fichier <code>correspondance_eleves.json</code> depuis ton USB :</p>
+            <input type="file" id="upload-correspondance" accept=".json,application/json" style="font-size:12pt;" />
+            <button class="btn small orange" id="btn-clear-correspondance" style="margin-left:8px;">🗑 Retirer du poste</button>
+            <p id="upload-correspondance-status" style="margin:6px 0 0;font-size:11pt;"></p>
+            <p style="margin:8px 0 0;font-size:10pt;color:var(--text-soft);">Le fichier reste UNIQUEMENT sur ce navigateur (localStorage). Pas envoyé au cloud. Pas commit sur GitHub.</p>
+          </div>
         </div>
         <div style="margin-top:24px;">
           <h3>À propos</h3>

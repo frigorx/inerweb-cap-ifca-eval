@@ -70,7 +70,10 @@
     async load() {
       if (_correspondanceLoaded) return _correspondance;
       _correspondanceLoaded = true;
-      const c = await Catalog.loadOptional('correspondance_eleves.json');
+      // Priorité 1 : localStorage (importé via UI)
+      let c = Store.get('correspondance.local');
+      // Priorité 2 : fichier sur le serveur (si présent)
+      if (!c) c = await Catalog.loadOptional('correspondance_eleves.json');
       if (c && c.eleves) {
         _correspondance = c.eleves;
         c.eleves.forEach(e => {
@@ -79,6 +82,29 @@
         });
       }
       return _correspondance;
+    },
+    /** Import depuis un fichier JSON utilisateur. Stocké en localStorage. */
+    importFromJson(jsonData) {
+      if (!jsonData || !jsonData.eleves || !Array.isArray(jsonData.eleves)) {
+        throw new Error('Format invalide : attendu { eleves: [...] }');
+      }
+      Store.set('correspondance.local', jsonData);
+      // Reset cache
+      _correspondance = jsonData.eleves;
+      _byPseudo = {};
+      _byIdCloud = {};
+      jsonData.eleves.forEach(e => {
+        _byPseudo[e.pseudo] = e;
+        if (e.idCloud) _byIdCloud[e.idCloud] = e;
+      });
+      return jsonData.eleves.length;
+    },
+    /** Retire la correspondance de ce poste. */
+    clear() {
+      Store.remove('correspondance.local');
+      _correspondance = null;
+      _byPseudo = {};
+      _byIdCloud = {};
     },
     /** Convertit pseudo → idCloud (ce qui part au Sheet). Fallback : retourne le pseudo. */
     toIdCloud(pseudo) {
