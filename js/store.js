@@ -40,6 +40,50 @@
         console.error('[Catalog]', file, e);
         return null;
       }
+    },
+    /** Chargement silencieux d'un fichier optionnel (404 = pas d'erreur, retourne null). */
+    async loadOptional(file) {
+      if (_cache[file] !== undefined) return _cache[file];
+      try {
+        const r = await fetch(`data/${file}?v=${Date.now()}`, { cache: 'no-store' });
+        if (!r.ok) { _cache[file] = null; return null; }
+        const j = await r.json();
+        _cache[file] = j;
+        return j;
+      } catch (e) {
+        _cache[file] = null;
+        return null;
+      }
+    }
+  };
+
+  // === Correspondance Pseudo → vrai Nom (LOCAL uniquement, jamais cloud) ===
+  let _correspondance = null;
+  let _correspondanceLoaded = false;
+  window.Correspondance = {
+    async load() {
+      if (_correspondanceLoaded) return _correspondance;
+      _correspondanceLoaded = true;
+      const c = await Catalog.loadOptional('correspondance_eleves.json');
+      if (c && c.eleves) {
+        _correspondance = {};
+        c.eleves.forEach(e => { _correspondance[e.pseudo] = e; });
+      }
+      return _correspondance;
+    },
+    /** Retourne "Prénom NOM" si correspondance dispo, sinon le pseudo. */
+    label(pseudo) {
+      if (!_correspondance || !_correspondance[pseudo]) return pseudo;
+      const e = _correspondance[pseudo];
+      return `${e.prenom} ${e.nom}`;
+    },
+    /** Retourne objet {prenom, nom} ou null. */
+    get(pseudo) {
+      return _correspondance ? (_correspondance[pseudo] || null) : null;
+    },
+    /** True si correspondance chargée et au moins 1 élève dedans. */
+    available() {
+      return _correspondance && Object.keys(_correspondance).length > 0;
     }
   };
 

@@ -1,6 +1,10 @@
 node_modules/
 *.log
 correspondance_eleves.json
+local/
+*.private.*
+*-prive.*
+data/correspondance_*.json
 .env
 .env.*
 .clasp.json

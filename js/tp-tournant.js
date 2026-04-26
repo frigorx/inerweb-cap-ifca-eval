@@ -15,8 +15,18 @@
     _tp = cat.tps.find(t => t.id === 'TP-056');
     _eleves = el;
     fillEleveSelector();
-    document.getElementById('tournant-eleve').onchange = loadState;
+    document.getElementById('tournant-eleve').onchange = () => { loadState(); renderRotation(); };
     document.getElementById('btn-save-tournant').onclick = save;
+    const btnSuivant = document.getElementById('btn-tournant-suivant');
+    if (btnSuivant) btnSuivant.onclick = passerAuSuivant;
+    const selStatut = document.getElementById('tournant-statut');
+    if (selStatut) selStatut.onchange = (ev) => {
+      if (!_state) return;
+      setStatut(_state.pseudo, ev.target.value);
+      fillEleveSelector();
+      renderRotation();
+    };
+    renderRotation();
     loadState();
   }
 
@@ -26,9 +36,68 @@
     _eleves.eleves.forEach(e => {
       const o = document.createElement('option');
       o.value = e.pseudo;
-      o.textContent = `${e.pseudo} (${e.classe})`;
+      const nom = window.Correspondance ? Correspondance.label(e.pseudo) : e.pseudo;
+      const labelNom = (window.Correspondance && Correspondance.available() && nom !== e.pseudo) ? ` — ${nom}` : '';
+      const statut = Store.get(`tournant.statut.${e.pseudo}`, 'pas-commence');
+      const icon = statut === 'termine' ? '✅' : statut === 'en-cours' ? '🔄' : '⏳';
+      o.textContent = `${icon} ${e.pseudo}${labelNom}`;
       sel.appendChild(o);
     });
+  }
+
+  function getStatut(pseudo) {
+    return Store.get(`tournant.statut.${pseudo}`, 'pas-commence');
+  }
+  function setStatut(pseudo, statut) {
+    Store.set(`tournant.statut.${pseudo}`, statut);
+  }
+
+  function renderRotation() {
+    const grid = document.getElementById('tournant-rotation-grid');
+    if (!grid) return;
+    const counts = { 'pas-commence': 0, 'en-cours': 0, 'termine': 0 };
+    grid.innerHTML = _eleves.eleves.map(e => {
+      const st = getStatut(e.pseudo);
+      counts[st]++;
+      const nom = window.Correspondance ? Correspondance.label(e.pseudo) : e.pseudo;
+      const showNom = window.Correspondance && Correspondance.available() && nom !== e.pseudo;
+      const colors = {
+        'pas-commence': { bg: '#eee', border: '#aaa', text: '#666', icon: '⏳' },
+        'en-cours':     { bg: '#fff8e1', border: '#fbc02d', text: '#c08600', icon: '🔄' },
+        'termine':      { bg: '#e8f5e9', border: '#38a169', text: '#1b5e20', icon: '✅' }
+      };
+      const c = colors[st];
+      return `<div style="background:${c.bg};border:2px solid ${c.border};padding:8px;border-radius:6px;cursor:pointer;text-align:center;" onclick="document.getElementById('tournant-eleve').value='${e.pseudo}';document.getElementById('tournant-eleve').dispatchEvent(new Event('change'));">
+        <div style="font-size:18pt;">${c.icon}</div>
+        <div style="font-weight:700;color:${c.text};font-size:12pt;">${e.pseudo}</div>
+        ${showNom ? `<div style="font-size:10pt;color:${c.text};">${nom}</div>` : ''}
+      </div>`;
+    }).join('');
+    const info = document.getElementById('tournant-rotation-info');
+    if (info) info.textContent = `${counts['termine']} terminé · ${counts['en-cours']} en cours · ${counts['pas-commence']} à passer`;
+  }
+
+  function passerAuSuivant() {
+    if (!_state) return;
+    setStatut(_state.pseudo, 'termine');
+    // Trouver le prochain "pas-commence" ou "en-cours"
+    const idx = _eleves.eleves.findIndex(e => e.pseudo === _state.pseudo);
+    let next = null;
+    for (let i = 1; i <= _eleves.eleves.length; i++) {
+      const candidat = _eleves.eleves[(idx + i) % _eleves.eleves.length];
+      if (getStatut(candidat.pseudo) !== 'termine') { next = candidat; break; }
+    }
+    if (next) {
+      setStatut(next.pseudo, 'en-cours');
+      document.getElementById('tournant-eleve').value = next.pseudo;
+      const nomReel = window.Correspondance ? Correspondance.label(next.pseudo) : next.pseudo;
+      toast(`Suivant : ${nomReel}`, 'success');
+      loadState();
+    } else {
+      toast('Tous les élèves ont terminé le TP-056 🎉', 'success');
+    }
+    fillEleveSelector();
+    renderRotation();
   }
 
   function stateKey(pseudo) { return `tournant.${pseudo}`; }
@@ -44,6 +113,8 @@
     const pseudo = document.getElementById('tournant-eleve').value;
     if (!pseudo) return;
     _state = Store.get(stateKey(pseudo)) || defaultState(pseudo);
+    const selStatut = document.getElementById('tournant-statut');
+    if (selStatut) selStatut.value = getStatut(pseudo);
     renderProgress();
     if (_activePhase) selectPhase(_activePhase);
     else if (_tp.phases.length) selectPhase(_tp.phases[0].id);

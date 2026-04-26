@@ -131,8 +131,10 @@
 
     eleves.forEach(e => {
       const tr = document.createElement('tr');
-      // Cellule pseudo
-      tr.innerHTML = `<td style="padding:8px;background:var(--bg-alt);font-family:'Trebuchet MS',sans-serif;font-weight:700;color:var(--bleu);font-size:14pt;">${e.pseudo}</td>`;
+      // Cellule pseudo + nom réel en surimpression si correspondance dispo
+      const nomReel = window.Correspondance ? Correspondance.label(e.pseudo) : e.pseudo;
+      const showNom = window.Correspondance && Correspondance.available() && nomReel !== e.pseudo;
+      tr.innerHTML = `<td style="padding:8px;background:var(--bg-alt);font-family:'Trebuchet MS',sans-serif;font-weight:700;color:var(--bleu);font-size:13pt;">${e.pseudo}${showNom ? `<br/><span style="font-size:10pt;font-weight:normal;color:var(--orange);">${nomReel}</span>` : ''}</td>`;
       // 1 cellule par compétence avec 4 mini-boutons NA/ECA/A/M alignés horizontalement
       codes.forEach(code => {
         const cur = _draft[e.pseudo]?.[code] || null;

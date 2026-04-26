@@ -99,6 +99,11 @@
       </div>
 
       <div class="card">
+        <h3>🔁 TP-056 tournant — état atelier</h3>
+        <div id="aujourdhui-tournant"></div>
+      </div>
+
+      <div class="card">
         <h3>👥 Activité récente — qui a fait quoi</h3>
         <div id="aujourdhui-activite" style="font-size:12pt;"></div>
       </div>
@@ -210,16 +215,33 @@
       <div class="card">
         <h2>🔁 TP-056 — TP tournant autonome (4h)</h2>
         <p><strong>Mission :</strong> Frigoriste chez Jacques-Raynaud. Récupération fluide → Remplacement déshydrateur → Recharge.</p>
-        <div class="grid-cols-2" style="align-items:end;">
+        <div class="grid-cols-3" style="align-items:end;">
           <div>
             <label>Élève en cours</label>
             <select id="tournant-eleve"></select>
+          </div>
+          <div>
+            <label>Statut</label>
+            <select id="tournant-statut">
+              <option value="pas-commence">Pas commencé</option>
+              <option value="en-cours">En cours (autonomie)</option>
+              <option value="termine">Terminé</option>
+            </select>
           </div>
           <div>
             <label>Note (calculée /20)</label>
             <input type="text" id="tournant-note" readonly value="—" />
           </div>
         </div>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn small orange" id="btn-tournant-suivant">⏭ Marquer fini + passer au suivant</button>
+          <span id="tournant-rotation-info" style="color:var(--text-soft);font-size:12pt;align-self:center;"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🗓 Planning rotation TP-056 — vue d'ensemble</h3>
+        <div id="tournant-rotation-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;"></div>
       </div>
 
       <div class="card">

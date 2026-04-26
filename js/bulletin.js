@@ -64,7 +64,9 @@
     _eleves.eleves.forEach(e => {
       const o = document.createElement('option');
       o.value = e.pseudo;
-      o.textContent = `${e.pseudo} (${e.classe})`;
+      const nom = window.Correspondance ? Correspondance.label(e.pseudo) : e.pseudo;
+      const labelNom = (window.Correspondance && Correspondance.available() && nom !== e.pseudo) ? ` — ${nom}` : '';
+      o.textContent = `${e.pseudo}${labelNom} (${e.classe})`;
       sel.appendChild(o);
     });
   }

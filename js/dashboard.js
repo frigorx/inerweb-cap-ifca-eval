@@ -55,6 +55,9 @@
     document.getElementById('stat-eleves-semaine').textContent = `${elevesEvalues.size}/${_eleves.eleves.length}`;
     document.getElementById('stat-comp-couvertes').textContent = `${compsCouvertes.size}/${_comps.axes_radar_ep3.length}`;
 
+    // État TP-056 tournant
+    renderTournantSummary();
+
     // Actions du jour selon date
     const actions = computeActionsDuJour(now);
     document.getElementById('aujourdhui-actions').innerHTML = actions.map(a => `
@@ -92,7 +95,7 @@
               return `<tr style="border-bottom:1px solid var(--border);">
                 <td style="padding:6px 8px;font-size:11pt;color:var(--text-soft);">${formatRelative(d)}</td>
                 <td style="padding:6px 8px;"><span style="background:${prof?.couleur||'#777'};color:#fff;padding:2px 8px;border-radius:10px;font-size:10pt;font-weight:700;">${r.Prof||'?'}</span></td>
-                <td style="padding:6px 8px;font-weight:700;color:var(--bleu);">${r.Pseudo||''}</td>
+                <td style="padding:6px 8px;font-weight:700;color:var(--bleu);" title="${escapeHtml(Correspondance.label(r.Pseudo||''))}">${r.Pseudo||''}${Correspondance.available() ? `<br/><small style="font-size:10pt;font-weight:normal;color:var(--text-soft);">${escapeHtml(Correspondance.label(r.Pseudo||''))}</small>` : ''}</td>
                 <td style="padding:6px 8px;">${r.TP||''}</td>
                 <td style="padding:6px 8px;">${r.Code||''}</td>
                 <td style="padding:6px 8px;text-align:center;"><span style="background:${niv?.couleur||'#777'};color:#fff;padding:2px 10px;border-radius:4px;font-weight:700;">${r.Niveau||''}</span></td>
@@ -257,10 +260,13 @@
       const alert = e.naCount >= 3 ? 'border:3px solid var(--rouge);' : (e.naCount >= 1 ? 'border-left:6px solid var(--jaune);' : 'border-left:6px solid var(--vert);');
       const moyTxt = e.moy === null ? '—' : e.moy.toFixed(1) + '/20';
       const moyColor = e.moy === null ? 'var(--text-soft)' : (e.moy >= 12 ? 'var(--vert)' : (e.moy >= 8 ? 'var(--jaune)' : 'var(--rouge)'));
+      const nomReel = Correspondance.label(e.pseudo);
+      const showNom = Correspondance.available() && nomReel !== e.pseudo;
       return `<div style="background:#fff;${alert}border-radius:8px;padding:14px;box-shadow:var(--shadow);">
         <div style="display:flex;justify-content:space-between;align-items:start;">
           <div>
-            <div style="font-family:'Trebuchet MS',sans-serif;font-weight:700;font-size:20pt;color:var(--bleu);">${e.pseudo}</div>
+            <div style="font-family:'Trebuchet MS',sans-serif;font-weight:700;font-size:18pt;color:var(--bleu);">${e.pseudo}</div>
+            ${showNom ? `<div style="font-size:13pt;font-weight:700;color:var(--orange);">${escapeHtml(nomReel)}</div>` : ''}
             <div style="font-size:11pt;color:var(--text-soft);">${e.classe}</div>
           </div>
           <div style="font-family:'Trebuchet MS',sans-serif;font-size:24pt;font-weight:700;color:${moyColor};">${moyTxt}</div>
@@ -277,6 +283,29 @@
         </div>
       </div>`;
     }).join('')}</div>`;
+  }
+
+  function renderTournantSummary() {
+    const el = document.getElementById('aujourdhui-tournant');
+    if (!el || !_eleves) return;
+    const counts = { 'pas-commence': [], 'en-cours': [], 'termine': [] };
+    _eleves.eleves.forEach(e => {
+      const s = Store.get(`tournant.statut.${e.pseudo}`, 'pas-commence');
+      counts[s].push(e.pseudo);
+    });
+    const enCours = counts['en-cours'].map(p => {
+      const nom = window.Correspondance ? Correspondance.label(p) : p;
+      return `<strong style="color:var(--orange);">${nom}</strong>`;
+    }).join(', ') || '<em style="color:var(--text-soft);">personne en autonomie</em>';
+    el.innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">
+        <div style="background:#eee;padding:10px;border-radius:6px;text-align:center;"><div style="font-size:24pt;">⏳</div><strong>${counts['pas-commence'].length}</strong> à passer</div>
+        <div style="background:#fff8e1;padding:10px;border-radius:6px;text-align:center;border:2px solid var(--jaune);"><div style="font-size:24pt;">🔄</div><strong>${counts['en-cours'].length}</strong> en cours</div>
+        <div style="background:#e8f5e9;padding:10px;border-radius:6px;text-align:center;"><div style="font-size:24pt;">✅</div><strong>${counts['termine'].length}</strong> terminés</div>
+      </div>
+      <p style="font-size:13pt;">En autonomie atelier maintenant : ${enCours}</p>
+      <button class="btn small orange" onclick="App.show('tournant')">🔁 Aller au TP-056 →</button>
+    `;
   }
 
   function escapeHtml(s) {

@@ -46,3 +46,13 @@
 [2026-04-26 19:42] eleve/index.html : nouveau MENU à 3 grands boutons (Officiels en orange / Package ZIP / Adaptation DYS expé en vert dashed)
 [2026-04-26 19:43] adaptation-dys.html dégradée au statut expérimental avec avertissement IA en haut
 [2026-04-26 19:44] Lien depuis app prof : 2 boutons distincts "📚 TP officiels" (orange) et "🎓 Espace élève" (vert)
+[2026-04-26 20:30] Liste réelle 24 élèves CAP IFCA reçue de Franck (à garder LOCAL)
+[2026-04-26 20:30] data/correspondance_eleves.json créé EN LOCAL UNIQUEMENT, gitignored (4 règles : correspondance_eleves.json + data/correspondance_*.json + local/ + *.private.* + *-prive.*)
+[2026-04-26 20:30] git check-ignore confirme : correspondance_eleves.json bloqué par règle ligne 7
+[2026-04-26 20:30] eleves_pseudo.json mis à jour avec les 24 vrais pseudos format "1re lettre nom + prénom complet"
+[2026-04-26 20:30] ⚠ Pseudonymisation FAIBLE (prénom en clair dans le pseudo) — choix prof Franck assumé
+[2026-04-26 20:30] store.js : Correspondance.load() / .label() / .available() — chargement silencieux du fichier optionnel
+[2026-04-26 20:30] dashboard.js + eval-engine.js + radar.js + bulletin.js + tp-tournant.js : affichage "Prénom NOM" en surimpression côté prof seulement
+[2026-04-26 20:30] tp-tournant.js : statut par élève (pas-commencé / en cours / terminé) + bouton "passer au suivant" + grille planning rotation 24 élèves cliquable
+[2026-04-26 20:30] dashboard.js : carte TP-056 sur écran Aujourd'hui (qui est en autonomie maintenant + 3 stats)
+[2026-04-26 20:30] main.js : bandeau "🔒 Correspondance locale chargée" affiché en haut quand le fichier local est trouvé

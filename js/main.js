@@ -5,9 +5,17 @@
 
   const App = {
     currentView: 'aujourdhui',
-    onLogin(profCode) {
+    async onLogin(profCode) {
       this.show('aujourdhui');
       inerwebResults.startPolling();
+      // Chargement silencieux de la correspondance LOCALE (jamais cloud)
+      await Correspondance.load();
+      if (Correspondance.available()) {
+        const banner = document.createElement('div');
+        banner.style.cssText = 'background:#fff8e1;border-left:4px solid var(--jaune);padding:6px 14px;font-size:11pt;margin-bottom:8px;';
+        banner.innerHTML = '🔒 Correspondance locale chargée — noms réels visibles côté prof. <strong>Sheet ne reçoit que les pseudos.</strong>';
+        document.querySelector('main.app-main')?.prepend(banner);
+      }
       Eval.init();
       Radar.init();
       Tournant.init();
