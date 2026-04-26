@@ -81,7 +81,7 @@
     const card = document.getElementById('eval-grid-card');
     card.hidden = false;
     document.getElementById('eval-tp-title').textContent = `${_selectedTP.id} — ${_selectedTP.titre}`;
-    document.getElementById('eval-tp-meta').textContent = `Épreuve ${_epreuve} · Compétences : ${_selectedTP.competences.join(' · ')} — niveau attendu fin CAP : Maîtrisé (M)`;
+    document.getElementById('eval-tp-meta').textContent = `Épreuve ${_epreuve} · ${_selectedTP.competences.length} compétences évaluées · niveau attendu fin CAP : Maîtrisé (M)`;
 
     _draft = Store.get(`draft.eval.${_epreuve}.${_selectedTP.id}`, {}) || {};
 
@@ -93,35 +93,81 @@
     const wrap = document.getElementById('eval-grid-content');
     wrap.innerHTML = '';
 
-    codes.forEach(code => {
-      const c = _comps.find(x => x.code === code);
-      const m = mapping?.competences?.find(x => x.code === code);
-      const block = document.createElement('div');
-      block.className = 'competence-block';
-      block.innerHTML = `
-        <h4>
-          <span><span class="competence-code">${code}</span> ${c ? c.libelle : ''}</span>
-          <span style="font-size:11pt;color:var(--text-soft);">N attendu ${m?.niveauAttendu || '5'}</span>
-        </h4>
-        ${m?.criteres ? `<details style="font-size:11pt;color:var(--text-soft);margin-bottom:8px;"><summary>Critères (${m.criteres.length})</summary><ul>${m.criteres.map(cr => `<li>${escapeHtml(cr)}</li>`).join('')}</ul></details>` : ''}
-        <div class="elv-grid"></div>`;
-      const elvGrid = block.querySelector('.elv-grid');
+    // Légende compétences (1 ligne expliquant chaque code, replié par défaut)
+    const legend = document.createElement('details');
+    legend.className = 'comp-legend card';
+    legend.style.cssText = 'background:var(--bg-alt);padding:12px;margin-bottom:14px;';
+    legend.innerHTML = `
+      <summary style="cursor:pointer;font-weight:700;color:var(--bleu);font-size:13pt;">📖 Détail des ${codes.length} compétences (cliquer pour déplier)</summary>
+      <table style="margin-top:10px;width:100%;border-collapse:collapse;font-size:12pt;">
+        <thead><tr style="background:var(--bleu);color:#fff;"><th style="padding:6px 8px;text-align:left;">Code</th><th style="padding:6px 8px;text-align:left;">Libellé</th><th style="padding:6px 8px;text-align:left;">Critères clés</th></tr></thead>
+        <tbody>
+          ${codes.map(code => {
+            const c = _comps.find(x => x.code === code);
+            const m = mapping?.competences?.find(x => x.code === code);
+            return `<tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:6px 8px;"><span class="competence-code">${code}</span></td>
+              <td style="padding:6px 8px;">${c ? escapeHtml(c.libelle) : ''}</td>
+              <td style="padding:6px 8px;font-size:11pt;color:var(--text-soft);">${m?.criteres?.slice(0,2).map(escapeHtml).join(' · ') || '—'}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>`;
+    wrap.appendChild(legend);
 
-      eleves.forEach(e => {
+    // Grille pivotée : 1 ligne par élève × N colonnes (1 par compétence) × 4 niveaux par cellule
+    const table = document.createElement('table');
+    table.className = 'eval-pivot';
+    table.style.cssText = 'width:100%;border-collapse:separate;border-spacing:2px;font-size:12pt;';
+
+    const headerRow = document.createElement('tr');
+    headerRow.innerHTML = `<th style="background:var(--bleu);color:#fff;padding:8px;text-align:left;border-radius:4px;min-width:80px;">Élève</th>` +
+      codes.map(code => {
+        const c = _comps.find(x => x.code === code);
+        return `<th style="background:var(--bleu);color:#fff;padding:8px;text-align:center;border-radius:4px;min-width:140px;" title="${c ? escapeHtml(c.libelle) : ''}">${code}</th>`;
+      }).join('') +
+      `<th style="background:var(--orange);color:#fff;padding:8px;text-align:center;border-radius:4px;min-width:90px;">Note auto</th>`;
+    table.appendChild(headerRow);
+
+    eleves.forEach(e => {
+      const tr = document.createElement('tr');
+      // Cellule pseudo
+      tr.innerHTML = `<td style="padding:8px;background:var(--bg-alt);font-family:'Trebuchet MS',sans-serif;font-weight:700;color:var(--bleu);font-size:14pt;">${e.pseudo}</td>`;
+      // 1 cellule par compétence avec 4 mini-boutons NA/ECA/A/M alignés horizontalement
+      codes.forEach(code => {
         const cur = _draft[e.pseudo]?.[code] || null;
-        const row = document.createElement('div');
-        row.className = 'eval-grid';
-        row.innerHTML = `
-          <div class="pseudo">${e.pseudo}</div>
-          ${NIVEAUX.map(n => `<div class="eval-niveau ${n.code} ${cur === n.code ? 'selected' : ''}" data-pseudo="${e.pseudo}" data-code="${code}" data-niveau="${n.code}" title="${n.label}">${n.code}</div>`).join('')}`;
-        elvGrid.appendChild(row);
+        const td = document.createElement('td');
+        td.style.cssText = 'padding:3px;background:#fff;border:1px solid var(--border);';
+        td.innerHTML = `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;">
+          ${NIVEAUX.map(n => `<button class="eval-niveau ${n.code} ${cur === n.code ? 'selected' : ''}" data-pseudo="${e.pseudo}" data-code="${code}" data-niveau="${n.code}" title="${n.label}" style="padding:6px 0;font-size:10pt;border-radius:4px;border:2px solid var(--border);cursor:pointer;font-weight:700;">${n.code}</button>`).join('')}
+        </div>`;
+        tr.appendChild(td);
       });
-      wrap.appendChild(block);
+      // Note auto (moyenne sur les compétences renseignées, /20)
+      const noteTd = document.createElement('td');
+      noteTd.style.cssText = 'padding:6px;background:#fff5ef;text-align:center;font-weight:700;color:var(--orange);font-size:14pt;';
+      noteTd.id = `note-${e.pseudo}`;
+      noteTd.textContent = computeNote(e.pseudo, codes);
+      tr.appendChild(noteTd);
+      table.appendChild(tr);
     });
+    wrap.appendChild(table);
+
+    // Légende niveaux + actions rapides
+    const helper = document.createElement('div');
+    helper.style.cssText = 'margin-top:14px;padding:12px;background:var(--bg-alt);border-radius:6px;font-size:12pt;display:flex;gap:16px;flex-wrap:wrap;align-items:center;';
+    helper.innerHTML = `
+      <strong>Niveaux :</strong>
+      <span style="background:var(--rouge);color:#fff;padding:3px 10px;border-radius:4px;font-weight:700;">NA</span> Non acquis
+      <span style="background:var(--jaune);color:#fff;padding:3px 10px;border-radius:4px;font-weight:700;">ECA</span> En cours
+      <span style="background:var(--vert);color:#fff;padding:3px 10px;border-radius:4px;font-weight:700;">A</span> Acquis
+      <span style="background:var(--bleu);color:#fff;padding:3px 10px;border-radius:4px;font-weight:700;">M</span> Maîtrisé
+      <span style="margin-left:auto;color:var(--text-soft);">Astuce : 1 clic = sélectionne · 2e clic = annule</span>`;
+    wrap.appendChild(helper);
 
     wrap.onclick = (ev) => {
-      const t = ev.target;
-      if (!t.classList.contains('eval-niveau')) return;
+      const t = ev.target.closest('button.eval-niveau');
+      if (!t) return;
       const ps = t.dataset.pseudo;
       const code = t.dataset.code;
       const niveau = t.dataset.niveau;
@@ -131,11 +177,23 @@
         t.classList.remove('selected');
       } else {
         _draft[ps][code] = niveau;
-        t.parentElement.querySelectorAll(`.eval-niveau[data-pseudo="${ps}"][data-code="${code}"]`).forEach(x => x.classList.remove('selected'));
+        t.parentElement.querySelectorAll(`button.eval-niveau[data-pseudo="${ps}"][data-code="${code}"]`).forEach(x => x.classList.remove('selected'));
         t.classList.add('selected');
       }
       Store.set(`draft.eval.${_epreuve}.${_selectedTP.id}`, _draft);
+      // refresh note
+      const noteEl = document.getElementById(`note-${ps}`);
+      if (noteEl) noteEl.textContent = computeNote(ps, codes);
     };
+  }
+
+  function computeNote(pseudo, codes) {
+    const map = { NA: 0, ECA: 7, A: 14, M: 18 };
+    const niveaux = _draft[pseudo] || {};
+    const vals = codes.map(c => niveaux[c]).filter(Boolean);
+    if (vals.length === 0) return '—';
+    const moy = vals.reduce((s, n) => s + map[n], 0) / vals.length;
+    return moy.toFixed(1) + '/20';
   }
 
   async function saveEval() {

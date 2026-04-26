@@ -6,19 +6,20 @@
   const KEYWORDS = ['cap', 'ifca', 'froid', 'cvc', 'mfer'];
 
   async function fetchICalForProf(code) {
+    // Priorité 1 : texte .ics collé manuellement (contourne CORS)
+    const pasted = Store.get(`ical.text.${code}`);
+    if (pasted) return parseICalText(pasted, code);
+
+    // Priorité 2 : URL fetch direct (souvent bloqué par CORS EcoleDirecte)
     const url = Store.get(`ical.url.${code}`);
     if (!url) return [];
     try {
-      // EcoleDirecte ne supporte pas CORS direct → on tente quand même
       const r = await fetch(url, { cache: 'no-store' });
       if (!r.ok) throw new Error('HTTP ' + r.status);
       const text = await r.text();
       return parseICalText(text, code);
     } catch (e) {
-      console.warn(`[iCal ${code}] fetch échec`, e);
-      // Fallback : on cache sous forme de demande à coller manuellement
-      const cached = Store.get(`ical.text.${code}`);
-      if (cached) return parseICalText(cached, code);
+      console.warn(`[iCal ${code}] fetch échec — utiliser le mode "coller le contenu" en Config`, e);
       return [];
     }
   }

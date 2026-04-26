@@ -4,20 +4,22 @@
   'use strict';
 
   const App = {
-    currentView: 'eval',
+    currentView: 'aujourdhui',
     onLogin(profCode) {
-      this.show('eval');
-      // Démarrer polling
+      this.show('aujourdhui');
       inerwebResults.startPolling();
-      // Init des modules
       Eval.init();
       Radar.init();
       Tournant.init();
       Bulletin.init();
-      // Préremplir config iCal
+      Dashboard.init();
+
       const ic = Store.get(`ical.url.${profCode}`, '');
       const inp = document.getElementById('config-ical-url');
       if (inp) inp.value = ic;
+      const ictext = Store.get(`ical.text.${profCode}`, '');
+      const inpTxt = document.getElementById('config-ical-text');
+      if (inpTxt) inpTxt.value = ictext;
       const cu = document.getElementById('config-collecteur-url');
       if (cu) cu.textContent = inerwebResults.COLLECTEUR_URL;
       updateBufferCount();
@@ -28,10 +30,22 @@
       document.querySelectorAll('section.view').forEach(s => s.classList.remove('visible'));
       document.getElementById('view-' + view)?.classList.add('visible');
       document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('active', b.dataset.view === view));
-      // Hooks par vue
+      if (view === 'aujourdhui') Dashboard.renderAujourdhui();
+      if (view === 'progression') Dashboard.renderProgression();
+      if (view === 'eleves') Dashboard.renderEleves();
       if (view === 'agenda') Agenda.refresh();
       if (view === 'radar') Radar.render();
       if (view === 'bulletin') Bulletin.render();
+    },
+    showRadar(pseudo) {
+      this.show('radar');
+      const sel = document.getElementById('radar-eleve');
+      if (sel) { sel.value = pseudo; sel.dispatchEvent(new Event('change')); }
+    },
+    showBulletin(pseudo) {
+      this.show('bulletin');
+      const sel = document.getElementById('bulletin-eleve');
+      if (sel) { sel.value = pseudo; sel.dispatchEvent(new Event('change')); }
     }
   };
 
@@ -46,13 +60,33 @@
       const b = e.target.closest('button[data-view]');
       if (b) App.show(b.dataset.view);
     });
-    // Config
     document.getElementById('btn-save-ical').onclick = () => {
       const cur = Store.get('prof.current');
       if (!cur) return;
       const v = document.getElementById('config-ical-url').value.trim();
       Store.set(`ical.url.${cur}`, v);
-      toast('iCal sauvegardé', 'success');
+      toast('iCal URL sauvegardée', 'success');
+    };
+    const btnSaveText = document.getElementById('btn-save-ical-text');
+    if (btnSaveText) btnSaveText.onclick = () => {
+      const cur = Store.get('prof.current');
+      if (!cur) return;
+      const v = document.getElementById('config-ical-text').value.trim();
+      const status = document.getElementById('config-ical-text-status');
+      if (!v) {
+        Store.remove(`ical.text.${cur}`);
+        status.textContent = 'Effacé.';
+        toast('Contenu .ics effacé', 'info');
+        return;
+      }
+      if (!v.includes('BEGIN:VCALENDAR')) {
+        status.innerHTML = '<span style="color:var(--rouge);">⚠️ Ne ressemble pas à un .ics (BEGIN:VCALENDAR manquant)</span>';
+        return;
+      }
+      Store.set(`ical.text.${cur}`, v);
+      const lines = v.split('\n').length;
+      status.innerHTML = `<span style="color:var(--vert);">✓ Sauvegardé (${lines} lignes)</span>`;
+      toast('Contenu .ics sauvegardé', 'success');
     };
     document.getElementById('btn-retry-buffer').onclick = async () => {
       const r = await inerwebResults.retryBuffer();

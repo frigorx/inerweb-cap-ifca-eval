@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Livret papier — TP CAP IFCA</title>
+  <link rel="stylesheet" href="eleve.css" />
+  <style>
+    body { background: #fff; }
+    .selector-papier {
+      max-width: 21cm; margin: 16px auto; background: #fff; padding: 20px; border-radius: 10px;
+    }
+    .livret-cover {
+      page-break-after: always;
+      min-height: 95vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px;
+    }
+    .livret-cover h1 { font-size: 40pt; }
+    .livret-cover .id-bloc {
+      background: var(--bleu); color: #fff; padding: 18px 30px; border-radius: 12px;
+      font-size: 32pt; font-family: 'Trebuchet MS'; font-weight: 700; margin: 20px 0;
+    }
+    .livret-cover .info { font-size: 18pt; margin: 8px 0; }
+    .livret-cover .nom-eleve {
+      border: 2px dashed var(--orange); padding: 12px 20px; margin-top: 30px;
+      font-size: 18pt; min-width: 300px;
+    }
+    .partie {
+      page-break-before: always;
+      padding-top: 0;
+    }
+    .partie-titre {
+      background: linear-gradient(90deg, var(--bleu), var(--bleu-clair, #2a5689));
+      color: #fff; padding: 14px 20px; border-radius: 8px; font-size: 22pt;
+      font-family: 'Trebuchet MS'; font-weight: 700; margin-bottom: 16px;
+    }
+    @media print {
+      .selector-papier, .toolbar { display: none !important; }
+      .livret-cover, .partie { page-break-before: always; }
+      .livret-cover { page-break-after: always; }
+      .etape { box-shadow: none; }
+      @page { size: A4; margin: 1.2cm; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="toolbar selector-papier no-print">
+  <h1>📚 Livret papier — Imprimer un TP complet</h1>
+  <p style="font-size:16pt;">Choisis un TP, le livret se génère avec V1 (guidée) + V2 (consolidée) + ateliers de secours. Tu pourras ensuite imprimer en A4.</p>
+  <div style="margin:18px 0;">
+    <label style="font-size:16pt;">TP à imprimer</label>
+    <select id="livret-tp" style="font-size:16pt;padding:10px;width:100%;max-width:500px;">
+      <option value="">— Choisis un TP —</option>
+    </select>
+  </div>
+  <div>
+    <label style="font-size:16pt;">Versions à inclure</label>
+    <div style="display:flex;gap:14px;margin-top:6px;flex-wrap:wrap;">
+      <label style="font-size:14pt;font-weight:normal;display:flex;align-items:center;gap:6px;"><input type="checkbox" id="inc-v1" checked style="width:24px;height:24px;" /> V1 ultra-guidée</label>
+      <label style="font-size:14pt;font-weight:normal;display:flex;align-items:center;gap:6px;"><input type="checkbox" id="inc-v2" checked style="width:24px;height:24px;" /> V2 consolidée</label>
+      <label style="font-size:14pt;font-weight:normal;display:flex;align-items:center;gap:6px;"><input type="checkbox" id="inc-secours" checked style="width:24px;height:24px;" /> Ateliers de secours</label>
+    </div>
+  </div>
+  <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+    <button class="btn-nav next" id="btn-build">📖 Générer le livret</button>
+    <button class="btn-nav print" onclick="window.print()">🖨 Imprimer</button>
+    <a href="index.html" class="btn-nav prev" style="text-decoration:none;display:inline-block;">← Retour</a>
+  </div>
+  <p style="font-size:13pt;color:var(--text-soft);margin-top:14px;">
+    💡 Conseil : aperçu d'impression Chrome/Edge → "Plus de paramètres" → marges "Aucune" si trop serré.
+  </p>
+</div>
+
+<div id="livret-output"></div>
+
+<script>
+let GUIDE = null;
+fetch('../data/eleve_guidance_ep3.json?v=' + Date.now())
+  .then(r => r.json())
+  .then(d => {
+    GUIDE = d;
+    const sel = document.getElementById('livret-tp');
+    Object.keys(d.tps).forEach(id => {
+      const o = document.createElement('option');
+      o.value = id;
+      o.textContent = `${id} — ${d.tps[id].titre}`;
+      sel.appendChild(o);
+    });
+  });
+
+document.getElementById('btn-build').onclick = () => {
+  const tpId = document.getElementById('livret-tp').value;
+  if (!tpId) { alert('Choisis un TP.'); return; }
+  const tp = GUIDE.tps[tpId];
+  const inc1 = document.getElementById('inc-v1').checked;
+  const inc2 = document.getElementById('inc-v2').checked;
+  const incS = document.getElementById('inc-secours').checked;
+
+  let html = `
+    <div class="livret-cover">
+      <div style="font-size:60pt;">❄</div>
+      <h1>inerWeb <span style="color:var(--orange);">Édu</span></h1>
+      <div class="id-bloc">${tpId}</div>
+      <div style="font-size:24pt;font-weight:700;color:var(--bleu);margin:10px 0;">${escapeHtml(tp.titre)}</div>
+      <div class="info">⏱ Durée : ${Math.round(tp.duree_min/60)}h</div>
+      <div class="info">🎯 ${tp.competences_visees.length} compétences travaillées</div>
+      <div class="info" style="margin-top:14px;font-style:italic;font-size:16pt;">"${escapeHtml(tp.mission)}"</div>
+      <div class="nom-eleve">Nom : _______________________</div>
+      <div class="nom-eleve">Date : ____ / ____ / 2026</div>
+      <div style="margin-top:30px;font-size:13pt;color:var(--text-soft);">
+        Établissement privé — LP Jacques Raynaud · ÉQUATIO · CAP IFCA
+      </div>
+    </div>
+  `;
+
+  if (inc1 && tp.V1) html += renderVersion(tp.V1, 'V1 — pas-à-pas guidé');
+  if (inc2 && tp.V2) html += renderVersion(tp.V2, 'V2 — consolidé EP3');
+  if (incS) {
+    const liens = ((tp.V1?.secours_lien || '') + ' ' + (tp.V2?.secours_lien || '')).match(/ATELIER-[A-Z0-9]+/g) || [];
+    const ateliers = [...new Set(liens)].map(id => GUIDE.secours[id]).filter(Boolean);
+    if (ateliers.length) {
+      html += `<div class="partie"><div class="partie-titre">🚨 Ateliers de secours (si tu bloques)</div>`;
+      ateliers.forEach(a => {
+        html += `
+          <div class="etape">
+            <div><span class="etape-titre">${escapeHtml(a.titre)}</span> <span style="float:right;font-size:14pt;color:var(--text-soft);">⏱ ${a.duree} min</span></div>
+            <div class="etape-action"><strong>Objectif :</strong> ${escapeHtml(a.objectif)}</div>
+            <ul class="checklist">
+              ${a.etapes.map(e => `<li><input type="checkbox" disabled /><span>${escapeHtml(e)}</span></li>`).join('')}
+            </ul>
+          </div>`;
+      });
+      html += `</div>`;
+    }
+  }
+
+  document.getElementById('livret-output').innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+function renderVersion(ver, titre) {
+  return `<div class="partie">
+    <div class="partie-titre">${titre}</div>
+    <div style="background:var(--bg-warm);border-left:5px solid var(--orange);padding:12px;margin-bottom:14px;font-size:16pt;">
+      <strong>Public :</strong> ${escapeHtml(ver.public || '')}
+    </div>
+    ${ver.etapes.map(et => `
+      <div class="etape">
+        <div>
+          <span class="etape-num">${et.num}</span>
+          <span class="etape-titre"><span class="etape-picto">${et.picto || '📌'}</span>${escapeHtml(et.titre)}</span>
+          ${et.duree ? `<span style="float:right;font-size:14pt;color:var(--text-soft);">⏱ ~${et.duree} min</span>` : ''}
+        </div>
+        <div class="etape-action">${escapeHtml(et.action)}</div>
+        <ul class="checklist">
+          ${et.checklist.map(c => `<li><input type="checkbox" disabled /><span>${escapeHtml(c)}</span></li>`).join('')}
+        </ul>
+        ${et.aide ? `<div class="aide print-show" open><summary style="font-weight:700;color:var(--orange);">💡 Aide :</summary><div class="aide-content">${escapeHtml(et.aide)}</div></div>` : ''}
+        ${et.stop_prof ? `<div class="stop-prof">STOP — ${escapeHtml(et.stop_label || 'Visa du prof obligatoire')} <br/><small style="font-weight:normal;">Prof : ____________  Date/heure : ____________</small></div>` : ''}
+      </div>
+    `).join('')}
+    ${ver.defi ? `<div class="defi"><h3>Défi bonus</h3><p style="font-size:16pt;">${escapeHtml(ver.defi)}</p></div>` : ''}
+  </div>`;
+}
+
+function escapeHtml(s) {
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+</script>
+
+</body>
+</html>

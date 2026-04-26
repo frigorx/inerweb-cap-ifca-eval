@@ -32,11 +32,14 @@
   </header>
 
   <nav class="tabs" id="tabs" hidden>
-    <button data-view="agenda">📅 Agenda</button>
-    <button data-view="eval" class="active">✍ Évaluation</button>
-    <button data-view="tournant">🔁 TP-056 tournant</button>
+    <button data-view="aujourdhui" class="active">🏠 Aujourd'hui</button>
+    <button data-view="progression">🗺 Carte progression</button>
+    <button data-view="eleves">👥 Élèves</button>
+    <button data-view="eval">✍ Évaluation</button>
+    <button data-view="tournant">🔁 TP-056</button>
     <button data-view="radar">🎯 Radar</button>
     <button data-view="bulletin">🖨 Bulletin</button>
+    <button data-view="agenda">📅 Agenda</button>
     <button data-view="config">⚙ Config</button>
   </nav>
 
@@ -66,6 +69,80 @@
           <strong>RGPD :</strong> Établissement privé — LP Jacques Raynaud · ÉQUATIO · Outil pédagogique interne. Données pseudonymisées (E01→E24). Aucun nom élève en cloud. Table de correspondance stockée localement (USB côté prof maître).
         </div>
       </div>
+    </section>
+
+    <!-- ÉCRAN AUJOURD'HUI — qui fait quoi maintenant -->
+    <section id="view-aujourdhui" class="view visible">
+      <div class="card">
+        <h2>🏠 Aujourd'hui — <span id="today-date" style="color:var(--orange);"></span></h2>
+        <p>Vue de pilotage : ce qui se passe MAINTENANT, qui doit faire quoi.</p>
+        <div class="grid-cols-3">
+          <div style="background:var(--bg-alt);padding:14px;border-radius:6px;border-left:4px solid var(--bleu);">
+            <div style="font-size:11pt;color:var(--text-soft);">Évaluations enregistrées (24h)</div>
+            <div id="stat-eval-24h" style="font-size:28pt;font-weight:700;color:var(--bleu);">—</div>
+          </div>
+          <div style="background:var(--bg-alt);padding:14px;border-radius:6px;border-left:4px solid var(--orange);">
+            <div style="font-size:11pt;color:var(--text-soft);">Élèves évalués cette semaine</div>
+            <div id="stat-eleves-semaine" style="font-size:28pt;font-weight:700;color:var(--orange);">—</div>
+          </div>
+          <div style="background:var(--bg-alt);padding:14px;border-radius:6px;border-left:4px solid var(--vert);">
+            <div style="font-size:11pt;color:var(--text-soft);">Compétences couvertes</div>
+            <div id="stat-comp-couvertes" style="font-size:28pt;font-weight:700;color:var(--vert);">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📋 Mes actions du jour</h3>
+        <div id="aujourdhui-actions"></div>
+      </div>
+
+      <div class="card">
+        <h3>👥 Activité récente — qui a fait quoi</h3>
+        <div id="aujourdhui-activite" style="font-size:12pt;"></div>
+      </div>
+    </section>
+
+    <!-- ÉCRAN CARTE PROGRESSION — semaines × classes × TP -->
+    <section id="view-progression" class="view">
+      <div class="card no-print">
+        <h2>🗺 Carte de progression — révisions EP3</h2>
+        <p>Semaines S1 → S3 × CAP IFCA 2 × 7 TP. Vert = fait, jaune = en cours, gris = à venir.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn small secondary" id="btn-print-progression">🖨 Imprimer A4 paysage</button>
+          <button class="btn small ghost" id="btn-refresh-progression">↻ Actualiser</button>
+        </div>
+      </div>
+      <div class="card" id="progression-content"></div>
+    </section>
+
+    <!-- ÉCRAN ÉLÈVES — vue carte par carte -->
+    <section id="view-eleves" class="view">
+      <div class="card no-print">
+        <h2>👥 Élèves — fiches individuelles</h2>
+        <div class="grid-cols-3" style="align-items:end;">
+          <div>
+            <label>Classe</label>
+            <select id="eleves-classe">
+              <option value="all">Toutes les classes</option>
+              <option value="CAP IFCA 2" selected>CAP IFCA 2</option>
+              <option value="CAP IFCA 1">CAP IFCA 1</option>
+            </select>
+          </div>
+          <div>
+            <label>Tri</label>
+            <select id="eleves-tri">
+              <option value="pseudo">Pseudo (E01..E24)</option>
+              <option value="score">Score décroissant</option>
+              <option value="alerte">Alertes en premier</option>
+            </select>
+          </div>
+          <div>
+            <button class="btn small secondary" id="btn-refresh-eleves">↻ Actualiser</button>
+          </div>
+        </div>
+      </div>
+      <div id="eleves-cards"></div>
     </section>
 
     <!-- ÉCRAN AGENDA -->
@@ -219,7 +296,15 @@
         <div>
           <label>Mon URL iCal EcoleDirecte</label>
           <input type="url" id="config-ical-url" placeholder="https://api.ecoledirecte.com/..." />
-          <button class="btn small orange" id="btn-save-ical" style="margin-top:8px;">Enregistrer</button>
+          <button class="btn small orange" id="btn-save-ical" style="margin-top:8px;">Enregistrer URL</button>
+          <p style="font-size:11pt;color:var(--text-soft);margin-top:6px;">⚠️ EcoleDirecte bloque souvent l'accès direct (CORS). Si l'agenda est vide, utilisez le mode "coller le contenu" ci-dessous.</p>
+        </div>
+        <div style="margin-top:18px;">
+          <label>OU coller le contenu .ics directement (alternative si CORS bloque)</label>
+          <p style="font-size:11pt;color:var(--text-soft);margin:0 0 6px;">Sur EcoleDirecte → Mon agenda → Exporter → ouvrir le .ics avec Bloc-notes → tout copier → coller ici.</p>
+          <textarea id="config-ical-text" rows="6" placeholder="BEGIN:VCALENDAR&#10;VERSION:2.0&#10;..." style="font-family:Consolas,monospace;font-size:11pt;"></textarea>
+          <button class="btn small orange" id="btn-save-ical-text" style="margin-top:8px;">Enregistrer le contenu .ics</button>
+          <span id="config-ical-text-status" style="margin-left:10px;color:var(--text-soft);"></span>
         </div>
         <div style="margin-top:24px;">
           <h3>Apps Script</h3>
@@ -258,6 +343,7 @@
 <script src="js/radar.js"></script>
 <script src="js/tp-tournant.js"></script>
 <script src="js/bulletin.js"></script>
+<script src="js/dashboard.js"></script>
 <script src="js/main.js"></script>
 
 </body>

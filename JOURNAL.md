@@ -31,3 +31,10 @@
 [2026-04-25 21:30] CSS anti-DYS strict (Calibri 14pt min, max 3 lignes par bloc, picto+texte)
 [2026-04-25 21:30] Lien "Espace élève" ajouté depuis l'app prof
 [2026-04-25 21:30] AUDIT_TP_REPORT.md rédigé : points forts/faibles + 6 recommandations + 6 évolutions V2
+[2026-04-26 09:00] Retour Franck → 5 corrections : (1) éval pivotée, (2) carte progression interactive, (3) qui-fait-quoi instinctif, (4) iCal cassé, (5) imprimable papier
+[2026-04-26 09:30] Inspiration "Le Mur" (HAL/le-mur.html) — 8 onglets type tableau de bord prof
+[2026-04-26 09:45] eval-engine.js → grille pivotée 1 ligne/élève × N colonnes compétences + note auto + légende repliable
+[2026-04-26 10:00] dashboard.js → 3 nouvelles vues : Aujourd'hui (qui-fait-quoi-maintenant) + Carte progression (semaines × élèves × TP) + Élèves (cartes individuelles avec alertes)
+[2026-04-26 10:15] iCal → fallback "coller le contenu .ics" en Config (contourne CORS EcoleDirecte)
+[2026-04-26 10:25] eleve/livret.html → générateur livret papier A4 par TP (V1+V2+ateliers) avec page de garde + cases nom/date manuscrites
+[2026-04-26 10:30] index.html : nouvel ordre onglets (Aujourd'hui → Progression → Élèves → ...) — vue de pilotage en premier
