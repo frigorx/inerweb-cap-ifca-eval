@@ -76,7 +76,12 @@
       if (!c) {
         const pwd = Store.get('correspondance.password');
         if (pwd) {
-          try { c = await this.unlock(pwd); } catch (e) { console.warn('Déchiffrement auto échec', e); }
+          try {
+            c = await this.unlock(pwd);
+          } catch (e) {
+            console.warn('Mot de passe stocké invalide (peut-être changé) — purge auto');
+            Store.remove('correspondance.password');
+          }
         }
       }
       // Priorité 3 : fichier en clair sur le serveur (dev only — gitignored en prod)

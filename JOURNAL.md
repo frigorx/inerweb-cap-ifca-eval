@@ -85,3 +85,7 @@
 [2026-04-26 22:00] localStorage clés : correspondance.password (auto-reload) et correspondance.local (cache)
 [2026-04-26 22:00] MODE_EMPLOI.html réécrit : 1 page, 3 étapes simples, encart mot de passe géant, instructions téléphone séparées
 [2026-04-26 22:00] Test bout-en-bout : déchiffrement OK avec ifca-raynaud-2026, mauvais mot de passe rejeté
+[2026-04-26 22:30] Mot de passe changé "ifca-raynaud-2026" → "2IFCA2526" sur demande Franck
+[2026-04-26 22:30] data/eleves_chiffre.json regénéré (nouveau salt + iv + ciphertext)
+[2026-04-26 22:30] store.js : purge auto du mot de passe stocké si déchiffrement échoue (pour les postes qui avaient l'ancien)
+[2026-04-26 22:30] MODE_EMPLOI.html : 7 références au mot de passe mises à jour
