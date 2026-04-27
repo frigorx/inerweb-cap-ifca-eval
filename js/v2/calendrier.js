@@ -419,8 +419,10 @@
     else render();
   }
 
-  document.addEventListener('correspondance-loaded', () => {
-    if (agenda && document.getElementById('calendrier-root')) render();
+  ['correspondance-loaded', 'sync-merged'].forEach(ev => {
+    document.addEventListener(ev, () => {
+      if (agenda && document.getElementById('calendrier-root')) render();
+    });
   });
 
   window.Calendrier = { init, onShown, render };

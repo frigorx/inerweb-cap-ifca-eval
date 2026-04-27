@@ -156,6 +156,11 @@
     if (btnBanDist) btnBanDist.onclick = () => {
       if (window.DistributeModal && DistributeModal.open) DistributeModal.open();
     };
+    /* Forcer la sync 4 profs via Google Sheet */
+    const btnBanSync = document.getElementById('btn-banner-sync');
+    if (btnBanSync) btnBanSync.onclick = () => {
+      if (window.Sync && Sync.pullNow) Sync.pullNow();
+    };
     document.getElementById('ical-url').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
     document.getElementById('login-password').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
     // Auto-login si déjà connecté

@@ -183,10 +183,16 @@
     else { renderShell(); populateSelector(); }
   }
 
-  /* Refresh sélecteur élèves quand les vrais noms arrivent */
-  document.addEventListener('correspondance-loaded', () => {
-    _elevesCache = null;
-    if (document.getElementById('ccf-radar-eleve')) populateSelector();
+  /* Refresh quand vrais noms arrivent OU sync 4 profs */
+  ['correspondance-loaded', 'sync-merged'].forEach(ev => {
+    document.addEventListener(ev, () => {
+      _elevesCache = null;
+      if (document.getElementById('ccf-radar-eleve')) {
+        populateSelector();
+        const sel = document.getElementById('ccf-radar-eleve');
+        if (sel && sel.value) updateRadar(sel.value);
+      }
+    });
   });
 
   window.CCFRadar = { init, onShown, refreshCCF };

@@ -174,7 +174,9 @@
     window.toast && window.toast(`✅ ${_eleves.length} lignes exportées`, 'success');
   }
 
-  /* ============ Push automatique vers Sheet (Apps Script) ============ */
+  /* ============ Push complet vers Sheet (sync 4 profs) ============
+   * Envoie la saisie ENTIÈRE en JSON pour permettre la reconstitution
+   * sur n'importe quel poste après pull. */
   async function pushSheet(idCloud) {
     await ensureLoaded();
     if (!window.inerwebResults) return { ok: false, reason: 'inerwebResults indisponible' };
@@ -184,6 +186,7 @@
     const row = {
       Module: 'CCF-EP3',
       Pseudo: idCloud,
+      SaisieJSON: JSON.stringify(stored.saisie || {}),  /* clé : permet le pull */
       Note20: fmtNote(r).replace('—', '0'),
       TotalBrut: r.totalBrut,
       TachesNotees: Object.keys(stored.saisie || {}).length,
@@ -191,10 +194,9 @@
       BlocA: r.pointsParBloc['A'] || 0,
       BlocB: r.pointsParBloc['B'] || 0,
       BlocC: r.pointsParBloc['C'] || 0,
-      Evaluateur: stored.signataire || '',
-      DateMaj: stored.updatedAt || new Date().toISOString()
+      Evaluateur: stored.signataire || (Store.get('prof.current') || ''),
+      UpdatedAt: stored.updatedAt || new Date().toISOString()
     };
-    /* inerwebResults.write traduit déjà pseudo→idCloud anonyme automatiquement */
     return inerwebResults.write(row);
   }
 

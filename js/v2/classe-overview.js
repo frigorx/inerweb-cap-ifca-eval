@@ -261,9 +261,11 @@
     else render();
   }
 
-  /* Refresh auto quand les vrais noms arrivent après déchiffrement bandeau */
-  document.addEventListener('correspondance-loaded', () => {
-    if (bareme && document.getElementById('classe-overview-root')) render();
+  /* Refresh auto quand les vrais noms arrivent OU quand un autre prof a poussé sur la Sheet */
+  ['correspondance-loaded', 'sync-merged'].forEach(ev => {
+    document.addEventListener(ev, () => {
+      if (bareme && document.getElementById('classe-overview-root')) render();
+    });
   });
 
   window.ClasseOverview = { init, onShown, render };

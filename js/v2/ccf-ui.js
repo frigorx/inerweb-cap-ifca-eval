@@ -271,10 +271,16 @@
     else if (!document.getElementById('ccf-eleve')) renderHeader(), renderEleveSelector();
   }
 
-  /* Refresh sélecteur élèves quand les vrais noms arrivent */
-  document.addEventListener('correspondance-loaded', () => {
-    _elevesCache = null;
-    if (document.getElementById('ccf-eleve')) renderEleveSelector();
+  /* Refresh quand vrais noms arrivent OU sync 4 profs (autre prof a poussé) */
+  ['correspondance-loaded', 'sync-merged'].forEach(ev => {
+    document.addEventListener(ev, () => {
+      _elevesCache = null;
+      if (document.getElementById('ccf-eleve')) {
+        renderEleveSelector();
+        /* Si un élève est déjà sélectionné, recharger sa saisie depuis le store mergé */
+        if (currentEleve) switchEleve(currentEleve);
+      }
+    });
   });
 
   window.CCFUI = { init, onShown };

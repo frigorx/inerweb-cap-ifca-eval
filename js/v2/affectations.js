@@ -41,8 +41,10 @@
       dateExecution: null,        /* date où l'élève FAIT effectivement le TP */
       seanceId: null,              /* lien vers la séance du calendrier (si distribué depuis là) */
       distribuePar: Store.get('prof.current') || ''
-    }, cur, fields);
+    }, cur, fields, { updatedAt: new Date().toISOString() });
     Store.set(key(pseudo, tpId), merged);
+    /* Push Sheet pour sync 4 profs */
+    if (window.Sync && Sync.pushAffect) Sync.pushAffect(pseudo, tpId, merged).catch(() => {});
     return merged;
   }
 

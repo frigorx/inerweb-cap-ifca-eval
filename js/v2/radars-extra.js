@@ -315,9 +315,11 @@
     else { initClasse(); }
   }
 
-  document.addEventListener('correspondance-loaded', () => {
-    if (document.getElementById('radar-formatif-eleve')) initFormatif();
-    if (document.getElementById('radar-classe-canvas')) initClasse();
+  ['correspondance-loaded', 'sync-merged'].forEach(ev => {
+    document.addEventListener(ev, () => {
+      if (document.getElementById('radar-formatif-eleve')) initFormatif();
+      if (document.getElementById('radar-classe-canvas')) initClasse();
+    });
   });
 
   window.RadarFormatif = { init: initFormatif, onShown: onShownFormatif };

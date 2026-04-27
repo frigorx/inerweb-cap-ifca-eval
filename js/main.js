@@ -10,6 +10,8 @@
       inerwebResults.startPolling();
       // Chargement silencieux de la correspondance LOCALE (jamais cloud)
       await Correspondance.load();
+      /* v2.0 : Sync 4 profs via Google Sheet (pull initial + abonnement updates) */
+      if (window.Sync && Sync.init) Sync.init();
       /* v2.0 : bandeau d'info dans le header v2 — pas de doublon en haut de main */
       Eval.init();
       Radar.init();

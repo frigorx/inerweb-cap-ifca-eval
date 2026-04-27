@@ -44,6 +44,8 @@
         Affectations.set(pseudo, tpId, { statut: 'fait', dateExecution: (data.date || new Date().toISOString().slice(0, 10)) });
       }
     }
+    /* Push Sheet pour sync 4 profs (anonymisé idCloud côté inerwebResults) */
+    if (window.Sync && Sync.pushTPEval) Sync.pushTPEval(pseudo, tpId, merged).catch(() => {});
     return merged;
   }
 
