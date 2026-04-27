@@ -186,13 +186,23 @@
     }
   };
 
-  // Profs
+  // Profs — fallback hardcodé, surchargé par data/profs.json si présent (chargement async)
   window.PROFS = [
-    { code: 'FH', nom: 'F. Henninot', couleur: '#1b3a63' },
-    { code: 'PW', nom: 'P. Whart',    couleur: '#ff6b35' },
-    { code: 'ZN', nom: 'ZN (à conf.)', couleur: '#2d8659' },
-    { code: 'TM', nom: 'TM (à conf.)', couleur: '#6b3a8a' }
+    { code: 'FH', nom: 'F. Henninot',  prenom: 'Franck', couleur: '#1b3a63', role: 'admin' },
+    { code: 'PW', nom: 'P. Whart',     prenom: '',       couleur: '#ff6b35', role: 'prof'  },
+    { code: 'ZN', nom: 'ZN',           prenom: '',       couleur: '#2d8659', role: 'prof'  },
+    { code: 'TM', nom: 'TM',           prenom: '',       couleur: '#6b3a8a', role: 'prof'  }
   ];
+  /** Promise résolue quand data/profs.json est chargé (ou que le fallback est confirmé). */
+  window.PROFS_READY = (async () => {
+    try {
+      const j = await Catalog.loadOptional('profs.json');
+      if (j && Array.isArray(j.profs) && j.profs.length) {
+        window.PROFS = j.profs;
+      }
+    } catch (e) { /* fallback hardcodé déjà en place */ }
+    return window.PROFS;
+  })();
 
   window.NIVEAUX = [
     { code: 'NA',  label: 'Non acquis',   score: 0, couleur: '#c53030' },

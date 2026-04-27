@@ -6,6 +6,7 @@
   <title>inerWeb Eval CAP IFCA — EP3 (V1)</title>
   <meta name="description" content="Évaluation et suivi de positionnement CAP IFCA EP1/EP2/EP3 — outil partagé 4 enseignants LP Jacques Raynaud" />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/v2.css" />
   <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>%E2%9D%84</text></svg>" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
   <script src="https://unpkg.com/ical.js@1.5.0/build/ical.min.js" defer></script>
@@ -44,6 +45,18 @@
     <button data-view="agenda">📅 Agenda</button>
     <button data-view="config">⚙ Config</button>
   </nav>
+
+  <!-- v2.0 — Barre 4 pôles + sous-onglets (cachées tant que pas loggué) -->
+  <nav class="poles-bar" id="poles-bar" hidden></nav>
+  <nav class="sub-tabs"  id="sub-tabs"  hidden></nav>
+  <div  class="prof-banner" id="prof-banner" hidden>
+    <span class="pill" id="prof-banner-pill">FH</span>
+    <span id="prof-banner-name">—</span>
+    <span style="flex:1"></span>
+    <span id="prof-banner-status" style="font-size:11pt;color:#666"></span>
+    <button id="btn-profile-edit" title="Modifier mes paramètres">✎ Mes paramètres</button>
+    <button id="btn-banner-logout" title="Changer de prof">↻ Changer</button>
+  </div>
 
   <main class="app-main">
 
@@ -379,6 +392,8 @@
 <div id="toast-container"></div>
 
 <script src="js/store.js"></script>
+<script src="js/v2/profile.js"></script>
+<script src="js/v2/layout.js"></script>
 <script src="js/inerweb-results.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/ical-parser.js"></script>
