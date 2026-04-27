@@ -56,10 +56,54 @@
     const prof = PROFS.find(p => p.code === code);
     if (!prof) return;
     document.getElementById('view-login').classList.remove('visible');
-    document.getElementById('tabs').hidden = false;
-    document.getElementById('prof-badge').hidden = false;
-    document.getElementById('prof-dot').style.background = prof.couleur;
-    document.getElementById('prof-label').textContent = `${prof.code} — ${prof.nom}`;
+    /* v1.9 : badge + ancienne barre d'onglets — conservés mais cachés */
+    document.getElementById('tabs').hidden = true;
+    document.getElementById('prof-badge').hidden = true;
+    /* v2.0 : barre 4 pôles + bandeau prof */
+    const polesBar = document.getElementById('poles-bar');
+    const subTabs  = document.getElementById('sub-tabs');
+    const banner   = document.getElementById('prof-banner');
+    if (polesBar) polesBar.hidden = false;
+    if (subTabs)  subTabs.hidden  = false;
+    if (banner) {
+      banner.hidden = false;
+      const pill = document.getElementById('prof-banner-pill');
+      const name = document.getElementById('prof-banner-name');
+      const status = document.getElementById('prof-banner-status');
+      if (pill) { pill.textContent = prof.code; pill.style.background = prof.couleur; }
+      if (name) {
+        const me = window.ProfMe && ProfMe.get(code);
+        const fullName = me && me.prenom && me.nom ? `${me.prenom} ${me.nom}` : prof.nom;
+        name.textContent = fullName;
+      }
+      if (status) {
+        const ok = window.ProfMe && ProfMe.isComplete(code);
+        const corrOk = window.Correspondance && Correspondance.available();
+        const bits = [];
+        bits.push(ok ? '🔒 Profil OK' : '⚠ Profil à compléter');
+        bits.push(corrOk ? '🔒 Élèves déchiffrés' : '🔓 Mode pseudonymes');
+        status.textContent = bits.join(' · ');
+      }
+    }
+
+    /* Init nav 4 pôles */
+    if (window.Layout && Layout.init) Layout.init();
+
+    /* Profil incomplet → forcer écran paramètres au 1er passage */
+    if (window.ProfMe && !ProfMe.isComplete(code)) {
+      window.showProfileScreen(code, {
+        canCancel: false,
+        onSaved: () => {
+          /* Refresh bandeau après save */
+          const me = ProfMe.get(code);
+          const name = document.getElementById('prof-banner-name');
+          if (name && me && me.prenom && me.nom) name.textContent = `${me.prenom} ${me.nom}`;
+          const status = document.getElementById('prof-banner-status');
+          if (status) status.textContent = '🔒 Profil OK · ' + (Correspondance && Correspondance.available() ? '🔒 Élèves déchiffrés' : '🔓 Mode pseudonymes');
+        }
+      });
+    }
+
     if (window.App && App.onLogin) App.onLogin(code);
   }
 
@@ -68,10 +112,20 @@
     location.reload();
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
+    /* Attendre la liste profs chargée depuis data/profs.json (sinon fallback hardcodé) */
+    if (window.PROFS_READY) { try { await PROFS_READY; } catch (e) {} }
     renderProfs();
     document.getElementById('btn-login').onclick = login;
     document.getElementById('btn-logout').onclick = logout;
+    /* v2.0 : bandeau (changer de prof + modifier paramètres) */
+    const btnBannerLogout = document.getElementById('btn-banner-logout');
+    if (btnBannerLogout) btnBannerLogout.onclick = logout;
+    const btnProfileEdit = document.getElementById('btn-profile-edit');
+    if (btnProfileEdit) btnProfileEdit.onclick = () => {
+      const cur = Store.get('prof.current');
+      if (cur && window.showProfileScreen) window.showProfileScreen(cur, { canCancel: true });
+    };
     document.getElementById('ical-url').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
     document.getElementById('login-password').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
     // Auto-login si déjà connecté
