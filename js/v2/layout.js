@@ -120,8 +120,9 @@
     const target = document.getElementById('view-' + viewName);
     if (target) target.classList.add('visible');
     /* Hook v2.0 : init lazy des modules quand leur vue s'ouvre */
-    if (viewName === 'ccf'       && window.CCFUI    && CCFUI.onShown)    CCFUI.onShown();
-    if (viewName === 'ccf-radar' && window.CCFRadar && CCFRadar.onShown) CCFRadar.onShown();
+    if (viewName === 'ccf'       && window.CCFUI         && CCFUI.onShown)         CCFUI.onShown();
+    if (viewName === 'ccf-radar' && window.CCFRadar      && CCFRadar.onShown)      CCFRadar.onShown();
+    if (viewName === 'eleves'    && window.ClasseOverview && ClasseOverview.onShown) ClasseOverview.onShown();
     /* Hook legacy : permet aux modules existants de réagir */
     if (window.App && typeof window.App.onViewShown === 'function') {
       try { window.App.onViewShown(viewName); } catch (e) { console.warn(e); }
@@ -149,8 +150,8 @@
       });
     }
 
-    /* Démarre sur Atelier > Aujourd'hui */
-    switchPole('atelier');
+    /* Démarre sur la vue d'ensemble Élèves — vue de pilotage immédiate */
+    switchPole('eleves');
   }
 
   window.Layout = { init, switchPole, showView, POLES };

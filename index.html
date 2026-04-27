@@ -142,33 +142,17 @@
       <div class="card" id="progression-content"></div>
     </section>
 
-    <!-- ÉCRAN ÉLÈVES — vue carte par carte -->
+    <!-- ÉCRAN ÉLÈVES — vue d'ensemble classe (v2.0) -->
     <section id="view-eleves" class="view">
-      <div class="card no-print">
-        <h2>👥 Élèves — fiches individuelles</h2>
-        <div class="grid-cols-3" style="align-items:end;">
-          <div>
-            <label>Classe</label>
-            <select id="eleves-classe">
-              <option value="all">Toutes les classes</option>
-              <option value="CAP IFCA 2" selected>CAP IFCA 2</option>
-              <option value="CAP IFCA 1">CAP IFCA 1</option>
-            </select>
-          </div>
-          <div>
-            <label>Tri</label>
-            <select id="eleves-tri">
-              <option value="pseudo">Pseudo (E01..E24)</option>
-              <option value="score">Score décroissant</option>
-              <option value="alerte">Alertes en premier</option>
-            </select>
-          </div>
-          <div>
-            <button class="btn small secondary" id="btn-refresh-eleves">↻ Actualiser</button>
-          </div>
-        </div>
+      <div class="card">
+        <h2>📊 Vue d'ensemble — CAP IFCA 2</h2>
+        <p style="font-size:12pt;color:var(--text-soft);margin-top:-2px;">
+          Une carte par élève · clic = saisir/modifier sa CCF EP3 · couleur selon note (rouge &lt; 10, orange 10-13, vert ≥ 14).
+        </p>
+        <div id="classe-overview-root"></div>
       </div>
-      <div id="eleves-cards"></div>
+      <!-- Ancienne vue conservée cachée pour compat -->
+      <div id="eleves-cards" style="display:none"></div>
     </section>
 
     <!-- ÉCRAN AGENDA -->
@@ -420,6 +404,7 @@
 <script src="js/v2/ccf-engine.js"></script>
 <script src="js/v2/ccf-ui.js"></script>
 <script src="js/v2/ccf-radar.js"></script>
+<script src="js/v2/classe-overview.js"></script>
 <script src="js/inerweb-results.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/ical-parser.js"></script>

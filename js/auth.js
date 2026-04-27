@@ -3,6 +3,38 @@
 (function() {
   'use strict';
 
+  /** Affiche le statut bandeau prof avec bouton actionnable si correspondance non chargée. */
+  function renderBannerStatus(el) {
+    if (!el) return;
+    const corrOk = window.Correspondance && Correspondance.available();
+    if (corrOk) {
+      el.innerHTML = '<span style="color:#38a169;font-weight:700">🔒 24 élèves chargés (vrais noms visibles)</span>';
+    } else {
+      el.innerHTML = `
+        <span style="color:#dd6b20;font-weight:700">⚠ Tu vois M01..M24 (codes anonymes)</span>
+        <button id="banner-unlock-btn" class="banner-action-btn">🔓 Voir les vrais noms</button>
+      `;
+      const btn = document.getElementById('banner-unlock-btn');
+      if (btn) btn.onclick = bannerUnlock;
+    }
+  }
+
+  function bannerUnlock() {
+    const pwd = prompt('Mot de passe pédagogique (donné par F. Henninot) pour voir les noms des 24 élèves :');
+    if (!pwd) return;
+    Correspondance.unlock(pwd).then(() => {
+      window.toast && window.toast('✅ 24 élèves chargés', 'success');
+      const status = document.getElementById('prof-banner-status');
+      renderBannerStatus(status);
+      /* Refresh écrans qui affichent des noms */
+      if (window.ClasseOverview && ClasseOverview.onShown) ClasseOverview.onShown();
+      if (window.CCFUI && CCFUI.onShown) CCFUI.onShown();
+      if (window.CCFRadar && CCFRadar.onShown) CCFRadar.onShown();
+    }).catch(() => {
+      window.toast && window.toast('❌ Mot de passe incorrect', 'error');
+    });
+  }
+
   function renderProfs() {
     const grid = document.getElementById('profs-grid');
     grid.innerHTML = '';
@@ -77,12 +109,7 @@
         name.textContent = fullName;
       }
       if (status) {
-        const ok = window.ProfMe && ProfMe.isComplete(code);
-        const corrOk = window.Correspondance && Correspondance.available();
-        const bits = [];
-        bits.push(ok ? '🔒 Profil OK' : '⚠ Profil à compléter');
-        bits.push(corrOk ? '🔒 Élèves déchiffrés' : '🔓 Mode pseudonymes');
-        status.textContent = bits.join(' · ');
+        renderBannerStatus(status);
       }
     }
 
