@@ -96,6 +96,19 @@
     document.getElementById('tl-close').onclick = close;
     document.getElementById('tl-close-foot').onclick = close;
     overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+
+    /* Boutons ✍ Noter / ✏ Modifier sur chaque TP */
+    overlay.querySelectorAll('.tl-eval-btn').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const p = btn.dataset.pseudo;
+        const tp = btn.dataset.tpid;
+        if (window.TPEvalModal) {
+          close();
+          TPEvalModal.open(tp, p);
+        }
+      };
+    });
     document.getElementById('tl-go-ccf').onclick = () => {
       close();
       if (window.Layout && Layout.switchPole) {
@@ -118,13 +131,26 @@
     const meta = window.Affectations.tpMeta(a.tpId);
     const dt = a.dateExecution || (a.distribueLe ? a.distribueLe.slice(0, 10) : '');
     const tit = meta ? meta.titre : '';
+    /* Évaluation formative existante ? */
+    const ev = window.TPEval ? TPEval.get(a.pseudo, a.tpId) : null;
+    let evHtml = '';
+    if (ev && ev.comp) {
+      const niveaux = Object.entries(ev.comp).map(([c, lvl]) => {
+        const meta2 = TPEval.NIVEAUX.find(n => n.code === lvl);
+        return `<span class="tl-niv" style="background:${meta2 ? meta2.couleur : '#888'}">${c}: ${lvl}</span>`;
+      }).join(' ');
+      evHtml = `<div class="tl-eval">✍ Noté · ${niveaux}${ev.commentaire ? ` · <em>"${escapeHtml(ev.commentaire)}"</em>` : ''}</div>`;
+    }
+    const evBtn = `<button class="tl-eval-btn" data-pseudo="${escapeHtml(a.pseudo)}" data-tpid="${a.tpId}" title="${ev ? 'Modifier' : 'Noter'} l'évaluation formative">${ev ? '✏ Modifier' : '✍ Noter'}</button>`;
+
     return `
       <div class="tl-row tl-affect">
         <div class="tl-date">${frDate(dt)}</div>
         <div class="tl-bullet" style="background:${sm.couleur}">${sm.icone}</div>
         <div class="tl-content">
-          <strong>${a.tpId}</strong> — ${escapeHtml(tit)}
+          <strong>${a.tpId}</strong> — ${escapeHtml(tit)} ${evBtn}
           <div class="tl-sub">Statut : <strong style="color:${sm.couleur}">${sm.label}</strong>${a.distribuePar ? ' · distribué par ' + a.distribuePar : ''}</div>
+          ${evHtml}
         </div>
       </div>
     `;

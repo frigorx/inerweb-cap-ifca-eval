@@ -110,7 +110,8 @@
     });
 
     /* Click handlers : carte → bascule CCF avec élève pré-sélectionné.
-       Clic sur badge TP → cycle de statut (todo→encours→fait→validé→encours...) */
+       Clic simple sur badge TP → cycle de statut (todo→encours→fait→validé→todo...)
+       Double-clic sur badge TP → ouvre la modale d'évaluation formative */
     root.querySelectorAll('.eleve-tp-badge').forEach(badge => {
       badge.onclick = (e) => {
         e.stopPropagation();
@@ -125,6 +126,12 @@
         const meta = Affectations.statutMeta(next);
         window.toast && window.toast(`${meta.icone} ${tpId} : ${meta.label}`, 'success');
         render();
+      };
+      badge.ondblclick = (e) => {
+        e.stopPropagation();
+        const pseudo = badge.dataset.pseudo;
+        const tpId = badge.dataset.tpid;
+        if (window.TPEvalModal) TPEvalModal.open(tpId, pseudo);
       };
     });
 
@@ -199,8 +206,11 @@
           const sm = window.Affectations.statutMeta(a.statut);
           const tit = meta ? meta.titre : '';
           const dateStr = a.dateExecution ? a.dateExecution.split('-').reverse().join('/') : '';
-          return `<span class="eleve-tp-badge" data-pseudo="${escapeHtml(e.pseudo)}" data-tpid="${a.tpId}" style="border-color:${sm.couleur}" title="${escapeHtml(tit)} — ${sm.label}${dateStr ? ' · '+dateStr : ''} (clic = changer statut)">
-            ${sm.icone} <strong>${a.tpId}</strong>
+          /* Indicateur si le TP a déjà été noté formativement */
+          const hasEval = window.TPEval && TPEval.get(e.pseudo, a.tpId);
+          const evalIcon = hasEval ? '✍' : '';
+          return `<span class="eleve-tp-badge" data-pseudo="${escapeHtml(e.pseudo)}" data-tpid="${a.tpId}" style="border-color:${sm.couleur}" title="${escapeHtml(tit)} — ${sm.label}${dateStr ? ' · '+dateStr : ''}${hasEval ? ' · ✍ noté' : ''}\nClic = changer statut · double-clic = évaluer">
+            ${sm.icone} <strong>${a.tpId}</strong>${evalIcon ? `<span class="eleve-tp-evaltag">${evalIcon}</span>` : ''}
           </span>`;
         }).join('')}
       </div>

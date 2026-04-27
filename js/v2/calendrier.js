@@ -315,7 +315,8 @@
 
           <div class="seance-actions-bar">
             <span id="seance-summary">Distribuer aux élèves présents (date d'exécution = ${frDate(s.date)})</span>
-            <button class="btn orange big" id="seance-distribute">📤 Distribuer le(s) TP de la séance</button>
+            <button class="btn orange big" id="seance-distribute">📤 Distribuer</button>
+            <button class="btn big" id="seance-evaluer" style="background:#38a169;color:#fff;border:0;">✍ Évaluer maintenant</button>
           </div>
         ` : `<p class="seance-no-tp">Pas de TP à distribuer pour cette séance (épreuve type ${isCcf ? 'CCF' : ''}).${isCcf ? ' Utilise le pôle ✅ Évaluer pour saisir les notes le jour J.' : ''}</p>`}
       </div>
@@ -333,6 +334,25 @@
 
     const distBtn = document.getElementById('seance-distribute');
     if (distBtn) distBtn.onclick = doDistribute;
+
+    /* Bouton ✍ Évaluer maintenant — ouvre la modale en mode batch
+       sur les élèves présents, pour le 1er TP de la séance (ou le seul) */
+    const evalBtn = document.getElementById('seance-evaluer');
+    if (evalBtn) evalBtn.onclick = () => {
+      const eleves = Array.from(document.querySelectorAll('input[name="seance-eleve"]:checked')).map(c => c.value);
+      if (eleves.length === 0) { alert('Coche au moins un élève à évaluer.'); return; }
+      const tps = selectedSeance.tps || [];
+      if (tps.length === 0) { alert('Pas de TP attaché à cette séance.'); return; }
+      /* Si plusieurs TP : on demande lequel évaluer */
+      let tpId = tps[0];
+      if (tps.length > 1) {
+        const choix = prompt(`Quel TP veux-tu évaluer ?\n${tps.map((t, i) => `${i+1}. ${t}`).join('\n')}\n\nTape le numéro (1-${tps.length}) :`, '1');
+        const idx = parseInt(choix, 10) - 1;
+        if (isNaN(idx) || idx < 0 || idx >= tps.length) return;
+        tpId = tps[idx];
+      }
+      window.TPEvalModal && TPEvalModal.openBatch(tpId, eleves);
+    };
 
     /* Scroll into view */
     setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
