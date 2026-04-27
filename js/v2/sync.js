@@ -16,6 +16,7 @@
     const rows = inerwebResults.getAllRows() || [];
     let ccf = 0, tpeval = 0, affect = 0;
 
+    let userTP = 0;
     rows.forEach(row => {
       if (!row || !row.Module) return;
       try {
@@ -25,6 +26,8 @@
           if (mergeTPEval(row)) tpeval++;
         } else if (row.Module === 'AFFECT') {
           if (mergeAffect(row)) affect++;
+        } else if (row.Module === 'TP-USER') {
+          if (mergeUserTP(row)) userTP++;
         }
       } catch (e) {
         console.warn('[sync] merge row', e, row);
@@ -79,6 +82,34 @@
       evaluateur: row.Evaluateur || '',
       updatedAt: row.UpdatedAt || new Date().toISOString()
     });
+    return true;
+  }
+
+  function mergeUserTP(row) {
+    if (!row.TpId) return false;
+    const localKey = `tp.user.${row.TpId}`;
+    const local = Store.get(localKey);
+    if (local && local.updatedAt && row.UpdatedAt && local.updatedAt >= row.UpdatedAt) {
+      return false;
+    }
+    let comp = [];
+    if (row.CompJSON) {
+      try { comp = JSON.parse(row.CompJSON); } catch (e) {}
+    }
+    /* On garde le dataUrl local s'il existe (le contenu reste local au poste qui l'a importé) */
+    Store.set(localKey, Object.assign({}, local || {}, {
+      id: row.TpId,
+      titre: row.Titre || (local && local.titre) || row.TpId,
+      semaine: row.Semaine || (local && local.semaine) || 'S-',
+      duree: row.Duree || (local && local.duree) || '?',
+      comp,
+      importPar: row.ImportPar || '',
+      tailleKo: row.TailleKo || (local && local.tailleKo) || 0,
+      typeFichier: row.TypeFichier || (local && local.typeFichier) || '',
+      isUser: true,
+      updatedAt: row.UpdatedAt || new Date().toISOString()
+      /* dataUrl conservé tel quel s'il était présent en local */
+    }));
     return true;
   }
 

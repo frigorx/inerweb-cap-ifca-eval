@@ -227,14 +227,18 @@
       </div>
     </section>
 
-    <!-- BIBLIOTHÈQUE TP — accès direct aux TP officiels (v2.0-δ) -->
+    <!-- BIBLIOTHÈQUE TP — TP officiels + drag-drop import user (v2.0-IMPORT) -->
     <section id="view-biblio-tp" class="view">
       <div class="card">
-        <h2>📚 Bibliothèque TP officiels — CAP IFCA EP3</h2>
+        <h2>📚 Bibliothèque TP — CAP IFCA EP3</h2>
         <p style="font-size:12pt;color:var(--text-soft);margin-top:-2px;">
-          Tes TP de révision EP3 organisés par semaine de session.
-          Clic sur un TP pour l'ouvrir dans un nouvel onglet (consultation prof + élève).
+          TP officiels EP3 + tes TP perso importés par drag-drop. Clic = ouvre dans un nouvel onglet.
+          Glisse n'importe quel HTML/PDF dans la zone ci-dessous pour l'ajouter à ta biblio.
         </p>
+        <div id="biblio-root"></div>
+      </div>
+      <!-- Ancienne grille statique conservée hidden pour compat -->
+      <div class="card" style="display:none">
         <div class="biblio-grid">
           <article class="biblio-sem">
             <header class="biblio-sem-hdr"><span>Semaine 1</span><span class="dt">27 avril 2026</span></header>
@@ -513,6 +517,8 @@
 <script src="js/v2/radars-extra.js"></script>
 <script src="js/v2/affectations.js"></script>
 <script src="js/v2/distribute-modal.js"></script>
+<script src="js/v2/tp-import.js"></script>
+<script src="js/v2/biblio-tp.js"></script>
 <script src="js/v2/tp-eval.js"></script>
 <script src="js/v2/tp-eval-modal.js"></script>
 <script src="js/v2/calendrier.js"></script>

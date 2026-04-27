@@ -118,6 +118,7 @@
       if (viewName === 'radar-classe'    && window.RadarClasse    && RadarClasse.onShown)    RadarClasse.onShown();
       if (viewName === 'eleves'     && window.ClasseOverview && ClasseOverview.onShown) ClasseOverview.onShown();
       if (viewName === 'calendrier' && window.Calendrier     && Calendrier.onShown)     Calendrier.onShown();
+      if (viewName === 'biblio-tp'  && window.BiblioTP       && BiblioTP.onShown)       BiblioTP.onShown();
       /* Hooks legacy v1.9 : refresh des écrans Dashboard/Agenda/Radar/Bulletin */
       if (viewName === 'aujourdhui' && window.Dashboard && Dashboard.renderAujourdhui)  Dashboard.renderAujourdhui();
       if (viewName === 'progression'&& window.Dashboard && Dashboard.renderProgression) Dashboard.renderProgression();
