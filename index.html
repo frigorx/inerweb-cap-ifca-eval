@@ -230,6 +230,29 @@
       </div>
     </section>
 
+    <!-- ÉCRAN CCF EP3 — saisie barème officiel -->
+    <section id="view-ccf" class="view">
+      <div class="card">
+        <h2>✅ CCF EP3 — Entretien & mise en service</h2>
+        <p style="font-size:12pt;color:var(--text-soft);margin-top:-4px;">
+          Barème officiel session 2024/25 · 25 tâches · 4 niveaux (NA/EC/A/PA) · note finale auto sur 20.
+          <strong>Données stockées localement</strong>, jamais visibles élève, jamais dans École Directe.
+        </p>
+        <div id="ccf-root"></div>
+      </div>
+    </section>
+
+    <!-- ÉCRAN RADAR CCF -->
+    <section id="view-ccf-radar" class="view">
+      <div class="card">
+        <h2>🎯 Radar CCF EP3 — toile par compétence</h2>
+        <p style="font-size:12pt;color:var(--text-soft);">
+          Visualisation par compétence officielle (C1.3 → C5.1) à partir de la saisie CCF.
+        </p>
+        <div id="ccf-radar-root"></div>
+      </div>
+    </section>
+
     <!-- TP TOURNANT TP-056 -->
     <section id="view-tournant" class="view">
       <div class="card">
@@ -394,6 +417,9 @@
 <script src="js/store.js"></script>
 <script src="js/v2/profile.js"></script>
 <script src="js/v2/layout.js"></script>
+<script src="js/v2/ccf-engine.js"></script>
+<script src="js/v2/ccf-ui.js"></script>
+<script src="js/v2/ccf-radar.js"></script>
 <script src="js/inerweb-results.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/ical-parser.js"></script>
