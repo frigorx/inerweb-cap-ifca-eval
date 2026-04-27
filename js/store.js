@@ -96,7 +96,8 @@
       return _correspondance;
     },
     /** Tente de déchiffrer data/eleves_chiffre.json avec le mot de passe.
-     *  Retourne {eleves:[...]} si OK, throw si mauvais mot de passe. */
+     *  Retourne {eleves:[...]} si OK, throw si mauvais mot de passe.
+     *  Dispatch l'event 'correspondance-loaded' pour que tous les modules refresh. */
     async unlock(password) {
       if (!password) throw new Error('Mot de passe vide');
       const r = await fetch(`data/eleves_chiffre.json?v=${Date.now()}`, { cache: 'no-store' });
@@ -133,6 +134,10 @@
         _byPseudo[e.pseudo] = e;
         if (e.idCloud) _byIdCloud[e.idCloud] = e;
       });
+      /* Notifier tous les modules : refresh de leurs sélecteurs, grilles, bandeaux */
+      try {
+        document.dispatchEvent(new CustomEvent('correspondance-loaded', { detail: { count: data.eleves.length } }));
+      } catch (e) {}
       return data;
     },
     /** Import depuis un fichier JSON utilisateur. Stocké en localStorage. */

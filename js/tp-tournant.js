@@ -28,6 +28,10 @@
     };
     renderRotation();
     loadState();
+    /* Refresh quand les vrais noms arrivent après déchiffrement bandeau */
+    document.addEventListener('correspondance-loaded', () => {
+      if (_eleves) { fillEleveSelector(); renderRotation(); }
+    });
   }
 
   function fillEleveSelector() {

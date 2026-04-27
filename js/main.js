@@ -6,16 +6,11 @@
   const App = {
     currentView: 'aujourdhui',
     async onLogin(profCode) {
-      this.show('aujourdhui');
+      /* v2.0 : Layout pilote la vue affichée — on n'appelle plus this.show() ici. */
       inerwebResults.startPolling();
       // Chargement silencieux de la correspondance LOCALE (jamais cloud)
       await Correspondance.load();
-      if (Correspondance.available()) {
-        const banner = document.createElement('div');
-        banner.style.cssText = 'background:#e8f5e9;border-left:4px solid var(--vert);padding:6px 14px;font-size:11pt;margin-bottom:8px;';
-        banner.innerHTML = '🔒 Mode pseudonymisation forte actif — tu vois les vrais noms, le Sheet ne contient que des codes anonymes (M01..M24).';
-        document.querySelector('main.app-main')?.prepend(banner);
-      }
+      /* v2.0 : bandeau d'info dans le header v2 — pas de doublon en haut de main */
       Eval.init();
       Radar.init();
       Tournant.init();

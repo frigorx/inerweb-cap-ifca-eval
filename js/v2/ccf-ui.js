@@ -63,6 +63,7 @@
           Sélectionne un élève et coche les niveaux pour calculer.
         </div>
         <div class="ccf-note-actions">
+          <button class="btn small orange" id="ccf-mail" title="Envoyer le bilan de cet élève à ton mail" disabled>📧 Mail bilan</button>
           <button class="btn small ghost" id="ccf-reset" title="Effacer cette saisie">↺ Effacer</button>
           <button class="btn small secondary" id="ccf-print" title="Imprimer">🖨 Imprimer</button>
         </div>
@@ -73,6 +74,10 @@
     document.getElementById('ccf-eleve').onchange = (e) => switchEleve(e.target.value);
     document.getElementById('ccf-reset').onclick = resetSaisie;
     document.getElementById('ccf-print').onclick = () => window.print();
+    const btnMail = document.getElementById('ccf-mail');
+    if (btnMail) btnMail.onclick = () => {
+      if (currentEleve && window.CCFExport) CCFExport.mailBilanEleve(currentEleve);
+    };
   }
 
   async function renderEleveSelector() {
@@ -196,6 +201,9 @@
     /* Note grande */
     const val = document.getElementById('ccf-note-val');
     if (val) val.textContent = r.totalBrut > 0 ? r.note20.toFixed(1).replace('.', ',') : '—';
+    /* Activer / désactiver le bouton "Mail bilan" selon qu'il y a une saisie */
+    const btnMail = document.getElementById('ccf-mail');
+    if (btnMail) btnMail.disabled = (Object.keys(saisie).length === 0) || !currentEleve;
     /* Détail */
     const det = document.getElementById('ccf-note-detail');
     if (det) {
@@ -227,6 +235,10 @@
       const prof = Store.get('prof.current') || '';
       CCF.save('ep3', currentEleve, saisie, prof);
       flashSavedIndicator();
+      /* Push Sheet en arrière-plan (anonymisé idCloud, jamais le vrai nom) */
+      if (window.CCFExport && CCFExport.pushSheet) {
+        CCFExport.pushSheet(currentEleve).catch(() => {});
+      }
     }, DEBOUNCE_MS);
   }
 
@@ -258,6 +270,12 @@
     if (!bareme) init();
     else if (!document.getElementById('ccf-eleve')) renderHeader(), renderEleveSelector();
   }
+
+  /* Refresh sélecteur élèves quand les vrais noms arrivent */
+  document.addEventListener('correspondance-loaded', () => {
+    _elevesCache = null;
+    if (document.getElementById('ccf-eleve')) renderEleveSelector();
+  });
 
   window.CCFUI = { init, onShown };
   document.addEventListener('DOMContentLoaded', () => {

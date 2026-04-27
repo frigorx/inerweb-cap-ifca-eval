@@ -26,10 +26,8 @@
       window.toast && window.toast('✅ 24 élèves chargés', 'success');
       const status = document.getElementById('prof-banner-status');
       renderBannerStatus(status);
-      /* Refresh écrans qui affichent des noms */
-      if (window.ClasseOverview && ClasseOverview.onShown) ClasseOverview.onShown();
-      if (window.CCFUI && CCFUI.onShown) CCFUI.onShown();
-      if (window.CCFRadar && CCFRadar.onShown) CCFRadar.onShown();
+      /* L'event 'correspondance-loaded' est dispatché par Correspondance.unlock,
+         tous les modules abonnés (Tournant, ClasseOverview, CCFUI, CCFRadar...) refresh tout seuls. */
     }).catch(() => {
       window.toast && window.toast('❌ Mot de passe incorrect', 'error');
     });

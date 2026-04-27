@@ -34,6 +34,9 @@
           <span class="lab">Tâches notées</span>
           <span class="big" id="ccf-radar-tot">0 / 0</span>
         </div>
+        <div class="ccf-radar-actions">
+          <button class="btn small orange" id="ccf-radar-mail" disabled title="Envoyer le bilan de cet élève à ton mail">📧 Mail bilan</button>
+        </div>
       </div>
       <div class="ccf-radar-canvas-wrap">
         <canvas id="ccf-radar-canvas"></canvas>
@@ -41,6 +44,11 @@
       <div class="ccf-radar-legend" id="ccf-radar-legend"></div>
     `;
     document.getElementById('ccf-radar-eleve').onchange = (e) => updateRadar(e.target.value);
+    const btnMail = document.getElementById('ccf-radar-mail');
+    if (btnMail) btnMail.onclick = () => {
+      const sel = document.getElementById('ccf-radar-eleve');
+      if (sel && sel.value && window.CCFExport) CCFExport.mailBilanEleve(sel.value);
+    };
   }
 
   let _elevesCache = null;
@@ -90,6 +98,8 @@
 
     if (noteEl) noteEl.textContent = tachesFaites > 0 ? r.note20.toFixed(1).replace('.', ',') : '—';
     if (totEl)  totEl.textContent  = `${tachesFaites} / ${tachesTot}`;
+    const btnMail = document.getElementById('ccf-radar-mail');
+    if (btnMail) btnMail.disabled = tachesFaites === 0;
 
     /* Données radar : 1 axe par compétence du barème */
     const compsKeys = Object.keys(bareme.competences);
@@ -172,6 +182,12 @@
     if (!bareme) init();
     else { renderShell(); populateSelector(); }
   }
+
+  /* Refresh sélecteur élèves quand les vrais noms arrivent */
+  document.addEventListener('correspondance-loaded', () => {
+    _elevesCache = null;
+    if (document.getElementById('ccf-radar-eleve')) populateSelector();
+  });
 
   window.CCFRadar = { init, onShown, refreshCCF };
   /* Compat : alias pour le hook depuis ccf-ui.js */

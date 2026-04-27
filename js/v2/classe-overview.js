@@ -88,6 +88,8 @@
 
       <div class="overview-actions">
         <button class="btn orange big" id="btn-distribute-tp">📤 Distribuer un TP</button>
+        <button class="btn secondary" id="btn-mail-classe" title="Envoyer le bilan complet de la classe à ton mail (pseudonymisé)">📧 Envoyer bilan classe par mail</button>
+        <button class="btn secondary" id="btn-export-csv" title="Télécharger un CSV pour import École Directe (anonymisé)">📥 Export CSV (École Directe)</button>
         ${list.some(e => e.anonyme) ? `
           <button class="btn secondary" id="ov-unlock">🔓 Voir les vrais noms</button>` : ''}
       </div>
@@ -128,6 +130,12 @@
     if (btnDist) btnDist.onclick = () => {
       if (window.DistributeModal && DistributeModal.open) DistributeModal.open();
     };
+
+    const btnMail = document.getElementById('btn-mail-classe');
+    if (btnMail) btnMail.onclick = () => window.CCFExport && CCFExport.mailBilanClasse();
+
+    const btnCsv = document.getElementById('btn-export-csv');
+    if (btnCsv) btnCsv.onclick = () => window.CCFExport && CCFExport.exportCSV();
   }
 
   function renderCard(e) {
@@ -214,6 +222,11 @@
     if (!bareme) init();
     else render();
   }
+
+  /* Refresh auto quand les vrais noms arrivent après déchiffrement bandeau */
+  document.addEventListener('correspondance-loaded', () => {
+    if (bareme && document.getElementById('classe-overview-root')) render();
+  });
 
   window.ClasseOverview = { init, onShown, render };
 })();

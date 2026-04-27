@@ -925,3 +925,12 @@
 .dist-footer #dist-summary strong { color: #ff6b35; }
 .dist-footer .btn { font-size: 14pt; padding: 10px 22px; }
 .dist-footer .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Bouton actions sur radar CCF */
+.ccf-radar-actions {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+}
+.ccf-radar-actions .btn { padding: 8px 14px; font-size: 12pt; }
+.ccf-radar-actions .btn:disabled { opacity: 0.4; cursor: not-allowed; }
