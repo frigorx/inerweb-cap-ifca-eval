@@ -3,395 +3,392 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mode d'emploi — inerWeb Eval CAP IFCA</title>
+  <title>Mode d'emploi — inerWeb Eval CAP IFCA · v2.0</title>
   <style>
     :root {
       --bleu: #1b3a63;
       --orange: #ff6b35;
-      --vert: #2e7d32;
+      --vert: #38a169;
       --rouge: #c53030;
-      --jaune: #fbc02d;
-      --bg: #ffffff;
-      --bg-warm: #fff8f0;
-      --bg-cool: #eef3fb;
-      --bg-alt: #f6f8fb;
+      --bg-warm: #fff8e1;
+      --bg-cool: #f4f6fa;
+      --border: #e0e4ea;
       --text: #1a1a1a;
-      --text-soft: #4a5568;
-      --border: #d9e1ec;
+      --text-soft: #555;
     }
     * { box-sizing: border-box; }
-    html, body {
-      margin: 0; padding: 0;
-      background: var(--bg-alt);
-      color: var(--text);
-      font-family: Calibri, "Segoe UI", Tahoma, sans-serif;
-      font-size: 16pt;
+    body {
+      font-family: 'Calibri', sans-serif;
+      font-size: 14pt;
       line-height: 1.6;
-    }
-    h1, h2, h3 {
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-weight: 700;
-      color: var(--bleu);
-      margin: 0 0 14px;
-      line-height: 1.25;
-    }
-    h1 { font-size: 32pt; }
-    h2 { font-size: 24pt; margin-top: 32px; padding: 14px 0 8px; border-top: 4px solid var(--orange); }
-    h3 { font-size: 19pt; color: var(--orange); margin-top: 20px; }
-    a { color: var(--bleu); }
-    code { background: var(--bg-alt); padding: 2px 6px; border-radius: 3px; font-size: 14pt; font-family: Consolas, monospace; }
-    kbd { background: #fff; border: 2px solid var(--bleu); padding: 3px 10px; border-radius: 4px; font-family: monospace; font-size: 14pt; font-weight: 700; }
-
-    header {
-      background: var(--bleu);
-      color: #fff;
-      padding: 22px 28px;
-      border-bottom: 6px solid var(--orange);
-    }
-    header .logo { font-family: "Trebuchet MS"; font-weight: 700; font-size: 28pt; }
-    header .logo .badge { background: var(--orange); padding: 2px 12px; border-radius: 4px; font-size: 18pt; }
-    header .sub { font-size: 16pt; opacity: 0.9; margin-top: 4px; }
-
-    main {
-      max-width: 21cm;
+      color: var(--text);
+      background: #fff;
+      max-width: 880px;
       margin: 0 auto;
-      padding: 28px;
-      background: #fff;
+      padding: 30px 24px 60px;
     }
-
-    .vignette {
-      background: linear-gradient(135deg, var(--vert) 0%, #66bb6a 100%);
-      color: #fff;
-      padding: 22px 28px;
-      border-radius: 12px;
-      margin: 20px 0;
-      font-size: 18pt;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    h1 {
+      font-family: 'Trebuchet MS', sans-serif;
+      color: var(--bleu);
+      font-size: 28pt;
+      border-bottom: 4px solid var(--orange);
+      padding-bottom: 10px;
+      margin-bottom: 4px;
     }
-    .vignette strong { font-size: 22pt; display: block; margin-bottom: 8px; font-family: "Trebuchet MS"; }
-
-    .step-big {
-      background: #fff;
-      border: 3px solid var(--orange);
-      border-radius: 12px;
-      padding: 22px 26px;
-      margin: 18px 0;
-      box-shadow: 0 2px 8px rgba(255,107,53,0.18);
-      page-break-inside: avoid;
-    }
-    .step-big .num {
-      display: inline-block;
+    .version-tag {
       background: var(--orange);
       color: #fff;
-      width: 48px; height: 48px;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 48px;
-      font-family: "Trebuchet MS"; font-weight: 700;
-      font-size: 24pt;
-      margin-right: 14px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12pt;
+      font-family: 'Trebuchet MS', sans-serif;
       vertical-align: middle;
+      margin-left: 10px;
     }
-    .step-big .titre {
-      font-family: "Trebuchet MS"; font-weight: 700;
-      font-size: 22pt; color: var(--bleu);
-      vertical-align: middle;
-    }
-    .step-big .action {
-      background: var(--bg-warm);
+    h2 {
+      font-family: 'Trebuchet MS', sans-serif;
+      color: var(--bleu);
+      font-size: 20pt;
+      margin-top: 36px;
       border-left: 5px solid var(--orange);
-      padding: 12px 16px;
-      margin: 12px 0;
-      font-size: 17pt;
-      line-height: 1.5;
+      padding-left: 12px;
     }
-    .step-big .action::before { content: "👉 "; font-size: 20pt; }
-
-    .alerte {
-      background: #fff8e1;
-      border-left: 5px solid var(--jaune);
-      padding: 14px 18px;
-      margin: 14px 0;
-      border-radius: 4px;
+    h3 {
+      font-family: 'Trebuchet MS', sans-serif;
+      color: var(--bleu);
       font-size: 15pt;
+      margin-top: 22px;
     }
-    .alerte::before { content: "⚠️ "; }
-
-    .info {
+    .lead {
+      font-size: 15pt;
+      color: var(--text-soft);
+      margin: 4px 0 24px;
+    }
+    .box {
       background: var(--bg-cool);
-      border-left: 5px solid var(--bleu);
+      border-left: 4px solid var(--bleu);
       padding: 14px 18px;
+      border-radius: 6px;
       margin: 14px 0;
-      border-radius: 4px;
-      font-size: 15pt;
     }
-    .info::before { content: "💡 "; }
-
-    .ok {
-      background: #e8f5e9;
-      border-left: 5px solid var(--vert);
-      padding: 14px 18px;
+    .box.warm  { background: var(--bg-warm); border-left-color: var(--orange); }
+    .box.green { background: #e8f5e9;        border-left-color: var(--vert); }
+    .box.red   { background: #fff0f0;        border-left-color: var(--rouge); }
+    .step {
+      display: flex;
+      gap: 14px;
       margin: 14px 0;
-      border-radius: 4px;
-      font-size: 15pt;
+      padding: 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
     }
-    .ok::before { content: "✅ "; }
-
+    .step-num {
+      flex-shrink: 0;
+      width: 38px; height: 38px;
+      background: var(--bleu);
+      color: #fff;
+      font-family: 'Trebuchet MS', sans-serif;
+      font-weight: 700;
+      font-size: 18pt;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-body { flex: 1; }
+    .step-body strong { color: var(--bleu); font-size: 15pt; display: block; }
+    .pole-card {
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      margin: 10px 0;
+    }
+    .pole-card .pole-title {
+      font-family: 'Trebuchet MS', sans-serif;
+      font-size: 18pt;
+      color: var(--bleu);
+      font-weight: 700;
+    }
+    code {
+      background: var(--bg-cool);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: 'Consolas', monospace;
+      font-size: 12pt;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 14px 0;
-      font-size: 14pt;
+      margin: 12px 0;
     }
-    th { background: var(--bleu); color: #fff; padding: 10px 12px; text-align: left; }
-    td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
-    tr:nth-child(even) td { background: var(--bg-alt); }
-
-    .actions-bar {
-      position: sticky;
-      top: 0;
-      background: #fff;
-      padding: 12px;
-      border-bottom: 1px solid var(--border);
-      z-index: 10;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
     }
-    .btn {
-      padding: 10px 18px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14pt;
-      cursor: pointer;
-      border: none;
-    }
-    .btn.print { background: var(--bleu); color: #fff; }
-    .btn.app { background: var(--orange); color: #fff; }
-
-    .password-box {
-      background: var(--bg-cool);
-      border: 4px dashed var(--bleu);
-      border-radius: 14px;
-      padding: 22px 28px;
-      margin: 20px 0;
-      text-align: center;
-      font-size: 18pt;
-    }
-    .password-box .pwd {
+    th { background: var(--bg-cool); font-family: 'Trebuchet MS', sans-serif; color: var(--bleu); }
+    .pwd {
       display: inline-block;
-      background: #fff;
-      color: var(--bleu);
-      font-family: Consolas, monospace;
+      background: var(--orange);
+      color: #fff;
+      font-family: 'Trebuchet MS', sans-serif;
       font-weight: 700;
-      font-size: 26pt;
-      padding: 10px 22px;
-      border-radius: 8px;
-      margin: 10px;
+      padding: 6px 16px;
+      font-size: 18pt;
+      border-radius: 6px;
       letter-spacing: 1px;
-      border: 3px solid var(--bleu);
     }
-
-    @media print {
-      .actions-bar { display: none; }
-      header { background: #fff; color: #000; border-bottom: 3px solid #000; }
-      header .logo { color: #000; }
-      header .badge { color: #fff; }
-      .vignette { background: #f0fdf4; color: var(--vert); border: 3px solid var(--vert); }
-      .step-big { box-shadow: none; }
-      @page { size: A4; margin: 1.4cm; }
+    .toc {
+      background: var(--bg-cool);
+      padding: 14px 22px;
+      border-radius: 6px;
+      margin-bottom: 30px;
+    }
+    .toc ol { margin: 6px 0 0 24px; padding: 0; }
+    .toc li { margin: 4px 0; }
+    .toc a { color: var(--bleu); text-decoration: none; font-weight: 700; }
+    .toc a:hover { color: var(--orange); }
+    .updated {
+      text-align: right;
+      color: #888;
+      font-size: 11pt;
+      font-style: italic;
+      margin-top: 40px;
+      border-top: 1px dashed var(--border);
+      padding-top: 14px;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">❄ inerWeb <span class="badge">Édu</span></div>
-  <div class="sub">Mode d'emploi prof — Eval CAP IFCA · F. Henninot</div>
-</header>
+<h1>Mode d'emploi <span class="version-tag">v2.0-ε</span></h1>
+<p class="lead">inerWeb Eval CAP IFCA — outil partagé d'évaluation, de suivi et de distribution de TP pour les 4 enseignants Froid/CVC du LP Privé Jacques Raynaud (Campus ÉQUATIO).</p>
 
-<div class="actions-bar">
-  <button class="btn print" onclick="window.print()">🖨 Imprimer</button>
-  <a class="btn app" href="index.html">→ Aller à l'app</a>
+<div class="toc">
+  <strong>Sommaire</strong>
+  <ol>
+    <li><a href="#login">Première connexion (3 min)</a></li>
+    <li><a href="#poles">Les 4 pôles de l'app</a></li>
+    <li><a href="#noms">Voir les vrais noms des élèves</a></li>
+    <li><a href="#distribuer">Distribuer un TP à plusieurs élèves</a></li>
+    <li><a href="#ccf">Évaluer un CCF EP3</a></li>
+    <li><a href="#radars">Radars et progression</a></li>
+    <li><a href="#parametres">Mes paramètres prof</a></li>
+    <li><a href="#rgpd">RGPD — ce qui sort, ce qui reste</a></li>
+    <li><a href="#depannage">Dépannage</a></li>
+  </ol>
 </div>
 
-<main>
+<h2 id="login">1. Première connexion <small style="font-size:13pt;color:#888">— 3 min</small></h2>
 
-<h1>👋 Démarrage en 2 minutes</h1>
-
-<div class="vignette">
-  <strong>🎯 Pour démarrer, tu n'as besoin que de 3 choses :</strong>
-  1. L'adresse de l'app<br/>
-  2. Tes initiales (FH, PW, ZN, TM)<br/>
-  3. Le mot de passe pédagogique
-</div>
-
-<div class="password-box">
-  <div>🔑 <strong>Mot de passe pédagogique</strong></div>
-  <div class="pwd">2IFCA2526</div>
-  <div style="font-size:14pt;color:var(--text-soft);margin-top:6px;">
-    À taper la première fois sur chaque appareil. Ensuite, l'app le mémorise.
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <strong>Ouvre l'app</strong>
+    <p>Adresse : <code>https://frigorx.github.io/inerweb-cap-ifca-eval/</code> (à mettre en favoris).</p>
   </div>
 </div>
 
-<h2>📱 Marche sur PC, tablette, téléphone</h2>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <strong>Mot de passe pédagogique</strong>
+    <p>Saisis le mot de passe partagé par F. Henninot : <span class="pwd">2IFCA2526</span></p>
+  </div>
+</div>
 
-<p>L'app est un site web. Elle marche partout :</p>
-<ul style="font-size:16pt;line-height:1.8;">
-  <li><strong>PC / Mac</strong> : ouvrir l'adresse dans Chrome / Edge / Firefox</li>
-  <li><strong>Téléphone Android / iPhone</strong> : ouvrir l'adresse dans le navigateur (Chrome / Safari)</li>
-  <li><strong>Tablette</strong> : pareil que téléphone</li>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <strong>Choisis tes initiales</strong>
+    <p>Clic sur ton bouton parmi les 4 : <strong>FH</strong>, <strong>PW</strong>, <strong>ZN</strong>, <strong>TM</strong>.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <strong>Renseigne tes paramètres (1ère fois seulement)</strong>
+    <p>L'écran <em>Mes paramètres</em> s'affiche automatiquement :</p>
+    <ul>
+      <li><strong>Prénom NOM</strong> — pour le bandeau et les bilans CCF.</li>
+      <li><strong>Mail destinataire CCF</strong> (obligatoire) — c'est <em>à toi</em> que tes bilans CCF arriveront.</li>
+      <li><strong>École Directe</strong> (optionnel) — identifiant + mdp si tu veux pousser le cahier de texte.</li>
+    </ul>
+    <p>Tout est stocké <strong>uniquement dans ce navigateur</strong>. Aucun envoi serveur. Tu peux modifier après via le bouton <code>✎ Mes paramètres</code> du bandeau.</p>
+  </div>
+</div>
+
+<h2 id="poles">2. Les 4 pôles de l'app</h2>
+<p>L'app est organisée en 4 pôles + 1 paramètres. Tu les vois en barre haute après login.</p>
+
+<div class="pole-card">
+  <div class="pole-title">📅 Atelier</div>
+  <p>Sous-onglets : <em>Aujourd'hui</em>, <strong>Bibliothèque TP</strong>, Calendrier, TP-056 tournant.</p>
+  <p>📚 La <strong>Bibliothèque TP</strong> regroupe tes 6 TP officiels EP3 par semaine de session (S1 27/04, S2 04/05, S3 11/05). Clic = ouvre le TP en HTML dans un nouvel onglet.</p>
+  <p style="font-size:12pt;color:var(--text-soft);"><em>Évolution prévue : le calendrier deviendra la porte d'entrée principale au login. Clic sur un jour → propose le TP prévu et permet la distribution directe avec date d'exécution tracée.</em></p>
+</div>
+
+<div class="pole-card">
+  <div class="pole-title">🗺 Carte</div>
+  <p>Vue annuelle : ce qui est prévu vs ce qui est réalisé, par semaine et par classe.</p>
+</div>
+
+<div class="pole-card">
+  <div class="pole-title">✅ Évaluer</div>
+  <p>Cinq sous-onglets :</p>
+  <ul>
+    <li><strong>CCF EP3</strong> — saisie barème officiel session 2024/25 (25 tâches, 4 niveaux NA/EC/A/PA, note auto sur 20).</li>
+    <li><strong>Radar CCF</strong> — toile d'araignée par compétence (C1.3 → C5.1) pour un élève.</li>
+    <li><strong>Progression libre</strong> — évaluation formative hors examen.</li>
+    <li><strong>Radar progression</strong> — toile d'araignée formative.</li>
+    <li><strong>Bulletin</strong> — fiche imprimable individuelle.</li>
+  </ul>
+</div>
+
+<div class="pole-card">
+  <div class="pole-title">📊 Élèves <small style="color:#888;font-size:11pt">(écran d'accueil par défaut)</small></div>
+  <p>Vue d'ensemble : 24 cartes élèves · 4 stats classe · bouton <strong>📤 Distribuer un TP</strong>. Clic sur une carte = bascule sur l'écran CCF EP3 avec cet élève déjà sélectionné.</p>
+</div>
+
+<h2 id="noms">3. Voir les vrais noms des élèves</h2>
+<p>Au démarrage, tu vois les pseudos de tes élèves (ABadis, MFrédéric, BKaïss…) — pas les vrais prénoms.</p>
+
+<div class="box warm">
+  <strong>Pour voir les vrais noms :</strong>
+  <p>Dans le bandeau du haut, clique sur le bouton orange <strong>🔓 Voir les vrais noms</strong>.<br>
+  Saisis le mot de passe pédagogique <span class="pwd">2IFCA2526</span>.<br>
+  Toutes les vues affichent maintenant le vrai prénom NOM (le pseudo reste affiché en complément).</p>
+  <p style="margin-top:10px;font-size:12pt;color:var(--text-soft);">Le mot de passe est mémorisé sur ce poste. Plus besoin de le ressaisir au prochain login.</p>
+</div>
+
+<div class="box green">
+  <strong>RGPD :</strong> les vrais noms sont déchiffrés <em>localement</em> dans ton navigateur uniquement. Le serveur GitHub Pages, le Sheet, le mail et École Directe ne reçoivent <strong>JAMAIS</strong> les noms — toujours les pseudos.
+</div>
+
+<h2 id="distribuer">4. Distribuer un TP à plusieurs élèves</h2>
+<p>Cas typique : tu lances une rotation, ou tu donnes le même TP à toute la classe.</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <strong>Sur l'écran d'accueil (vue d'ensemble), clic sur <code>📤 Distribuer un TP</code></strong>
+    <p>Bouton orange XL en haut, juste sous les 4 stats.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <strong>Choisis le TP (étape ①)</strong>
+    <p>Liste des 6 TP de ta bibliothèque officielle (TP-1, TP-1A, TP-2, TP-2A, TP-1B, TP-2B). Un seul à la fois.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <strong>Coche les élèves (étape ②)</strong>
+    <p>Multi-sélection. Boutons utiles : <code>☑ Tous</code> pour toute la classe, <code>☐ Aucun</code> pour repartir de zéro. Le compteur en haut montre combien sont sélectionnés.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <strong>Clic sur <code>📤 Distribuer</code></strong>
+    <p>Toast vert "✅ TP distribué à N élèves". Chaque carte élève affiche maintenant un badge <code>⏳ TP-1A</code> (statut en cours).</p>
+  </div>
+</div>
+
+<h2 id="ccf">5. Évaluer un CCF EP3</h2>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <strong>Bascule sur le pôle ✅ Évaluer → CCF EP3</strong>
+    <p>Ou clic direct sur la carte d'un élève dans la vue d'ensemble.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <strong>Choisis l'élève dans le menu</strong>
+    <p>Si déjà sélectionné via clic sur la carte, c'est déjà fait.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <strong>Coche le niveau pour chaque tâche</strong>
+    <p>4 colonnes : <strong>NA</strong> (rouge) · <strong>EC</strong> (orange) · <strong>A</strong> (vert) · <strong>PA</strong> (bleu).<br>
+    25 tâches au total réparties en 4 blocs : 0 sécurité (30 pts), A fluidiques (120), B mesures (100), C documentation (50).<br>
+    La note se calcule en temps réel : <strong>(total brut × 20) / 280</strong> = note finale sur 20.</p>
+    <p>Clic sur une cellule déjà cochée = désélectionner. Bouton <code>↺ Effacer</code> pour reset complet.</p>
+  </div>
+</div>
+
+<div class="box green">
+  <strong>Sauvegarde automatique</strong> : chaque modification est enregistrée 0,4 s après la dernière action. Tu peux fermer l'onglet, tout est conservé localement.
+</div>
+
+<h2 id="radars">6. Radars et progression</h2>
+<p>Pour visualiser où en est un élève :</p>
+<ul>
+  <li><strong>🎯 Radar CCF</strong> — toile d'araignée à 10 axes (les 10 compétences C1.3, C2.2, C3.7, C4.1, C4.2, C4.3, C4.5, C4.6, C4.7, C5.1). Niveau moyen 0..3 par compétence + note CCF /20 grand format.</li>
+  <li><strong>📈 Radar progression</strong> — l'ancien radar formatif (échelle NA/ECA/A/M).</li>
+  <li><strong>🖨 Bulletin</strong> — fiche A4 imprimable / PDF par élève.</li>
 </ul>
 
-<div class="info">
-Aucune installation. Pas d'application à télécharger. Pas de fichier à transporter. Juste un mot de passe.
-</div>
-
-<!-- ============================== -->
-<h2>✨ Première utilisation — 3 étapes</h2>
-
-<div class="step-big">
-<span class="num">1</span><span class="titre">Ouvrir l'app</span>
-<div class="action">Tape cette adresse dans ton navigateur :</div>
-<p style="font-size:18pt;text-align:center;background:var(--bg-cool);padding:14px;border-radius:8px;">
-  <a href="https://frigorx.github.io/inerweb-cap-ifca-eval/" style="font-family:Consolas;font-weight:700;">https://frigorx.github.io/inerweb-cap-ifca-eval/</a>
-</p>
-<div class="info">Astuce : enregistre cette adresse en favori (étoile en haut du navigateur).</div>
-</div>
-
-<div class="step-big">
-<span class="num">2</span><span class="titre">Cliquer sur tes initiales</span>
-<div class="action">Choisis dans la grille : <strong>FH</strong> · <strong>PW</strong> · <strong>ZN</strong> · <strong>TM</strong></div>
-</div>
-
-<div class="step-big">
-<span class="num">3</span><span class="titre">Taper le mot de passe</span>
-<div class="action">Dans le champ « Mot de passe pédagogique » → tape : <code>2IFCA2526</code></div>
-<p>Puis clique <strong>Continuer →</strong></p>
-<div class="ok">L'app charge tes 24 élèves avec leurs vrais noms automatiquement. Tu n'auras plus jamais à le refaire sur ce navigateur.</div>
-</div>
-
-<!-- ============================== -->
-<h2>🤝 Comment expliquer à un collègue</h2>
-
-<p>Tu peux lui dire exactement ces 3 phrases :</p>
-
-<div class="vignette">
-  <strong>Explication ultra-courte :</strong>
-  1. « Va sur <strong>frigorx.github.io/inerweb-cap-ifca-eval</strong> »<br/>
-  2. « Clique tes initiales (PW, ZN ou TM) »<br/>
-  3. « Tape le mot de passe : <strong>2IFCA2526</strong> »<br/>
-  <em style="font-size:14pt;display:block;margin-top:10px;">→ C'est tout. Tu y es.</em>
-</div>
-
-<div class="info">
-Ton collègue n'a <strong>rien à installer</strong>, <strong>aucun fichier à transporter</strong>, <strong>aucune clé USB</strong>. Le mot de passe suffit.
-</div>
-
-<!-- ============================== -->
-<h2>🔐 Pourquoi un mot de passe ?</h2>
-
-<p>Pour respecter la <strong>loi RGPD</strong> sur la protection des données :</p>
-
+<h2 id="parametres">7. Mes paramètres prof</h2>
+<p>Modifiables à tout moment via le bouton <code>✎ Mes paramètres</code> dans le bandeau du haut.</p>
 <table>
-<tr><th>Sans mot de passe</th><th>Avec mot de passe</th></tr>
-<tr>
-  <td>Tu vois <strong>M01..M24</strong> (codes anonymes)</td>
-  <td>Tu vois <strong>les vrais noms</strong> (Frédéric MENDY...)</td>
-</tr>
-<tr>
-  <td>Tu sais pas qui est qui</td>
-  <td>Tu reconnais immédiatement chaque élève</td>
-</tr>
+  <thead><tr><th>Champ</th><th>Usage</th><th>Stocké où</th></tr></thead>
+  <tbody>
+    <tr><td>Prénom + Nom</td><td>Affichage bandeau, signature des évals</td><td>localStorage local</td></tr>
+    <tr><td>Mail CCF</td><td>Adresse où arrivent les bilans CCF (obligatoire)</td><td>localStorage local</td></tr>
+    <tr><td>ED login</td><td>Push cahier de texte ED (optionnel)</td><td>localStorage local</td></tr>
+    <tr><td>ED mot de passe</td><td>idem (optionnel)</td><td>localStorage local</td></tr>
+  </tbody>
+</table>
+<p style="font-size:12pt;color:var(--text-soft);"><strong>Aucun de ces champs ne quitte ton navigateur.</strong> Chaque collègue saisit les siens sur SON poste.</p>
+
+<h2 id="rgpd">8. RGPD — ce qui sort, ce qui reste</h2>
+<table>
+  <thead><tr><th>Donnée</th><th>Stockage</th><th>Sortie réseau</th></tr></thead>
+  <tbody>
+    <tr><td>Vrais noms élèves</td><td>Fichier chiffré AES-256, déchiffré côté navigateur</td><td>❌ JAMAIS</td></tr>
+    <tr><td>Pseudos élèves (ABadis…)</td><td>Fichier public</td><td>✅ OK (pas de fuite identifiante)</td></tr>
+    <tr><td>Notes CCF / saisies</td><td>localStorage navigateur</td><td>(à venir : Google Sheet anonymisé)</td></tr>
+    <tr><td>Mail destinataire CCF</td><td>localStorage de chaque prof</td><td>❌ Reste local</td></tr>
+    <tr><td>ED login / mdp</td><td>localStorage de chaque prof</td><td>❌ Reste local (sauf push ED ciblé)</td></tr>
+  </tbody>
 </table>
 
-<div class="ok">
-La liste des noms est <strong>chiffrée</strong> (AES-256-GCM, comme sur les sites bancaires). Sans le mot de passe, personne ne peut lire la liste — même en téléchargeant le site web.
+<h2 id="depannage">9. Dépannage</h2>
+
+<div class="box red">
+  <strong>Je vois encore l'ancienne UI</strong><br>
+  → <code>Ctrl + Shift + R</code> pour vider le cache du navigateur. Sur téléphone : fermer + rouvrir l'onglet.
 </div>
 
-<div class="alerte">
-<strong>Le mot de passe est confidentiel.</strong> Donne-le seulement aux 4 enseignants qui doivent évaluer (FH, PW, ZN, TM). Pas par mail public, pas dans un Slack ouvert.
+<div class="box red">
+  <strong>Les vrais noms ne s'affichent pas après le bouton 🔓</strong><br>
+  → Vérifie que tu as bien tapé <span class="pwd">2IFCA2526</span> (respecter la casse). Si toujours non, ouvre ⚙ Config → section pseudonymisation, retape le mdp.
 </div>
 
-<!-- ============================== -->
-<h2>📲 Sur téléphone — étape par étape</h2>
-
-<div class="step-big">
-<span class="num">1</span><span class="titre">Ouvrir Chrome / Safari sur le téléphone</span>
-<div class="action">Taper l'adresse : <code>frigorx.github.io/inerweb-cap-ifca-eval</code></div>
+<div class="box red">
+  <strong>J'ai cliqué [PW] par erreur, je veux changer pour [FH]</strong><br>
+  → Bouton <code>↻ Changer</code> dans le bandeau du haut.
 </div>
 
-<div class="step-big">
-<span class="num">2</span><span class="titre">Tap sur tes initiales</span>
-<div class="action">Le doigt sur FH (par exemple)</div>
+<div class="box red">
+  <strong>Je ne retrouve plus mes saisies CCF</strong><br>
+  → Les saisies sont liées au navigateur. Si tu changes de PC, elles ne suivent pas (encore). Phase suivante : sync Google Sheet.
 </div>
 
-<div class="step-big">
-<span class="num">3</span><span class="titre">Tap dans le champ « Mot de passe »</span>
-<div class="action">Le clavier du téléphone s'ouvre. Tape <code>2IFCA2526</code></div>
-</div>
-
-<div class="step-big">
-<span class="num">4</span><span class="titre">Tap sur « Continuer → »</span>
-<div class="action">L'app se charge avec tous les élèves.</div>
-</div>
-
-<div class="info">
-Sur téléphone, ajoute l'app à ton écran d'accueil :
-<ul style="font-size:14pt;">
-<li><strong>iPhone (Safari)</strong> : tap le bouton Partager → « Sur l'écran d'accueil »</li>
-<li><strong>Android (Chrome)</strong> : 3 points en haut à droite → « Ajouter à l'écran d'accueil »</li>
-</ul>
-Tu auras une icône comme une vraie app.
-</div>
-
-<!-- ============================== -->
-<h2>🆘 Quelque chose ne marche pas</h2>
-
-<table>
-<tr><th>Symptôme</th><th>Solution</th></tr>
-<tr>
-  <td>Je vois M01, M02, M03... au lieu des noms</td>
-  <td>Le mot de passe n'a pas été tapé. Va dans <strong>⚙ Config</strong> → champ « Mot de passe » → tape <code>2IFCA2526</code> → clique « Déverrouiller » → F5.</td>
-</tr>
-<tr>
-  <td>« Mot de passe incorrect »</td>
-  <td>Vérifie l'orthographe : <code>2IFCA2526</code> avec un 2 au début, IFCA en MAJUSCULES, puis 2526 (sans espaces, sans tirets).</td>
-</tr>
-<tr>
-  <td>Je veux retirer la liste de ce poste</td>
-  <td><strong>⚙ Config</strong> → bouton rouge « 🗑 Retirer du poste » (utile sur poste partagé en fin de cours).</td>
-</tr>
-<tr>
-  <td>L'app est lente / l'agenda ne charge pas</td>
-  <td>Le wifi de l'établissement est peut-être lent. F5 si besoin. Les évaluations saisies sont gardées en local et envoyées dès que la connexion revient.</td>
-</tr>
-<tr>
-  <td>Tout est cassé</td>
-  <td>Aller directement sur le Google Sheet (URL en bas du mode d'emploi) et saisir à la main.</td>
-</tr>
-</table>
-
-<!-- ============================== -->
-<h2>📚 URLs à mémoriser</h2>
-
-<table>
-<tr><th>Quoi</th><th>URL</th></tr>
-<tr><td>App principale</td><td><code>frigorx.github.io/inerweb-cap-ifca-eval/</code></td></tr>
-<tr><td>Mot de passe</td><td><code>2IFCA2526</code></td></tr>
-<tr><td>Ce mode d'emploi</td><td><code>.../MODE_EMPLOI.html</code></td></tr>
-<tr><td>TP officiels (élèves)</td><td><code>.../eleve/tp-officiels/</code></td></tr>
-<tr><td>Espace élève</td><td><code>.../eleve/</code></td></tr>
-<tr><td>Google Sheet (notes brutes)</td><td><a href="https://docs.google.com/spreadsheets/d/16T1T3yL6M49OhJUQS1SmFHwW7Bywp7m2kSXDiXdmItk/edit">Ouvrir le Sheet</a></td></tr>
-</table>
-
-<div style="margin-top:30px;padding-top:14px;border-top:2px solid var(--bleu);text-align:center;font-size:12pt;color:var(--text-soft);">
-  Établissement privé — LP Jacques Raynaud · ÉQUATIO · CAP IFCA · F. Henninot · données pseudonymisées RGPD<br/>
-  inerWeb Édu · v1.9.0 · 2026-04-26
-</div>
-
-</main>
+<p class="updated">Mise à jour : v2.0-ε · 27 avril 2026 · 4 pôles · distribution TP multi-élèves · CCF EP3 barème 24/25 · radars compétences</p>
 
 </body>
 </html>
