@@ -33,13 +33,15 @@
     {
       id: 'evaluer',
       label: '✅ Évaluer',
-      title: 'Évaluation — par tâche du TP',
+      title: 'Évaluation — progression et CCF',
       tabs: [
-        { view: 'eval',     label: '✍ Évaluer un TP' },
-        { view: 'radar',    label: '🎯 Radar' },
-        { view: 'bulletin', label: '🖨 Bulletin' }
+        { view: 'ccf',        label: '✅ CCF EP3' },
+        { view: 'ccf-radar',  label: '🎯 Radar CCF' },
+        { view: 'eval',       label: '✍ Progression libre' },
+        { view: 'radar',      label: '📈 Radar progression' },
+        { view: 'bulletin',   label: '🖨 Bulletin' }
       ],
-      defaultTab: 'eval'
+      defaultTab: 'ccf'
     },
     {
       id: 'eleves',
@@ -117,7 +119,10 @@
     document.querySelectorAll('.view').forEach(v => v.classList.remove('visible'));
     const target = document.getElementById('view-' + viewName);
     if (target) target.classList.add('visible');
-    /* Hook : permet aux modules existants de réagir (refresh de leur contenu) */
+    /* Hook v2.0 : init lazy des modules quand leur vue s'ouvre */
+    if (viewName === 'ccf'       && window.CCFUI    && CCFUI.onShown)    CCFUI.onShown();
+    if (viewName === 'ccf-radar' && window.CCFRadar && CCFRadar.onShown) CCFRadar.onShown();
+    /* Hook legacy : permet aux modules existants de réagir */
     if (window.App && typeof window.App.onViewShown === 'function') {
       try { window.App.onViewShown(viewName); } catch (e) { console.warn(e); }
     }
