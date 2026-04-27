@@ -15,10 +15,11 @@
 
   const PREFIX = 'tpeval.';
   const NIVEAUX = [
-    { code: 'NA',  label: 'Non acquis', score: 0, couleur: '#c53030' },
-    { code: 'EC',  label: 'En cours',   score: 1, couleur: '#dd6b20' },
-    { code: 'A',   label: 'Acquis',     score: 2, couleur: '#38a169' },
-    { code: 'M',   label: 'Maîtrisé',   score: 3, couleur: '#1b3a63' }
+    { code: 'NE',  label: 'Non évalué', score: null, couleur: '#888'    },
+    { code: 'NA',  label: 'Non acquis', score: 0,    couleur: '#c53030' },
+    { code: 'EC',  label: 'En cours',   score: 1,    couleur: '#dd6b20' },
+    { code: 'A',   label: 'Acquis',     score: 2,    couleur: '#38a169' },
+    { code: 'M',   label: 'Maîtrisé',   score: 3,    couleur: '#1b3a63' }
   ];
 
   function key(pseudo, tpId) { return `${PREFIX}${tpId}.${pseudo}`; }
@@ -73,17 +74,20 @@
       Object.keys(e.comp || {}).forEach(c => {
         const lvl = NIVEAUX.find(n => n.code === e.comp[c]);
         if (!lvl) return;
-        if (!acc[c]) acc[c] = { somme: 0, count: 0, dernier: null, dernierTs: 0 };
-        acc[c].somme += lvl.score;
-        acc[c].count++;
+        /* NE n'entre pas dans la moyenne (score null) mais reste comme "dernier" */
         const ts = new Date(e.updatedAt || 0).getTime();
+        if (!acc[c]) acc[c] = { somme: 0, count: 0, dernier: null, dernierTs: 0 };
+        if (lvl.score != null) {
+          acc[c].somme += lvl.score;
+          acc[c].count++;
+        }
         if (ts > acc[c].dernierTs) { acc[c].dernier = e.comp[c]; acc[c].dernierTs = ts; }
       });
     });
     const out = {};
     Object.keys(acc).forEach(c => {
       out[c] = {
-        moyenne: acc[c].somme / acc[c].count,
+        moyenne: acc[c].count > 0 ? acc[c].somme / acc[c].count : null,
         count: acc[c].count,
         dernier: acc[c].dernier
       };

@@ -1683,3 +1683,23 @@
   font-weight: 700;
   font-size: 10pt;
 }
+
+/* Bouton NE (Non évalué) — discret, gris sobre, en première position */
+.tpeval-niv-btn[data-niveau="NE"] {
+  --col: #888;
+  background: #f4f6fa;
+  color: #888;
+  border-color: #c5cbd6;
+  font-size: 11pt;
+  padding: 8px 10px;
+  min-width: 44px;
+}
+.tpeval-niv-btn[data-niveau="NE"]:hover {
+  background: #e8edf5;
+  border-color: #888;
+}
+.tpeval-niv-btn[data-niveau="NE"].selected {
+  background: #888;
+  color: #fff;
+  border-color: #888;
+}
