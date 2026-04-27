@@ -7,6 +7,7 @@
 
   let bareme = null;
   let elevesList = null;
+  let biblio = null;
 
   async function init() {
     bareme = await CCF.load('ep3');
@@ -14,6 +15,8 @@
     /* Source unique : eleves_pseudo.json (24 vrais pseudos CAP IFCA 2) */
     const j = await Catalog.load('eleves_pseudo.json');
     elevesList = (j && j.eleves) || [];
+    /* Catalogue TP pour affichage du TP en cours sur chaque carte */
+    if (window.Affectations && Affectations.biblio) biblio = await Affectations.biblio();
     render();
   }
 
@@ -57,6 +60,10 @@
       ? (allEvals.reduce((s, e) => s + CCF.compute(bareme, e.saisie).note20, 0) / evalues)
       : null;
 
+    /* Stats distribution TP */
+    const allAffect = (window.Affectations && Affectations.list()) || [];
+    const tpEnCours = allAffect.filter(a => a.statut === 'encours' || a.statut === 'todo').length;
+
     root.innerHTML = `
       <div class="overview-stats">
         <div class="stat-card">
@@ -64,26 +71,26 @@
           <div class="stat-big">${list.length}</div>
         </div>
         <div class="stat-card">
+          <div class="stat-lab">TP distribués</div>
+          <div class="stat-big">${tpEnCours}</div>
+          <div class="stat-sur">en cours</div>
+        </div>
+        <div class="stat-card">
           <div class="stat-lab">CCF EP3 saisis</div>
           <div class="stat-big">${evalues} / ${list.length}</div>
         </div>
         <div class="stat-card">
-          <div class="stat-lab">Moyenne classe</div>
+          <div class="stat-lab">Moyenne CCF</div>
           <div class="stat-big" style="color:${noteColor(moyenne)}">${moyenne != null ? moyenne.toFixed(1).replace('.', ',') : '—'}</div>
           <div class="stat-sur">/ 20</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-lab">Tâches au barème</div>
-          <div class="stat-big">${totTaches}</div>
-          <div class="stat-sur">EP3 24/25</div>
-        </div>
       </div>
 
-      ${list.some(e => e.anonyme) ? `
-      <div class="overview-rgpd-warn">
-        🔓 <strong>Mode pseudonymes actif</strong> — tu vois les codes M01..M24.
-        <button class="btn small orange" id="ov-unlock">🔓 Saisir le mot de passe pour voir les vrais noms</button>
-      </div>` : ''}
+      <div class="overview-actions">
+        <button class="btn orange big" id="btn-distribute-tp">📤 Distribuer un TP</button>
+        ${list.some(e => e.anonyme) ? `
+          <button class="btn secondary" id="ov-unlock">🔓 Voir les vrais noms</button>` : ''}
+      </div>
 
       <h3 class="overview-h3">📋 Vue d'ensemble — ${list.length} élèves de la classe</h3>
       <div class="eleves-grid">
@@ -116,6 +123,11 @@
 
     const ovUnlock = document.getElementById('ov-unlock');
     if (ovUnlock) ovUnlock.onclick = promptUnlock;
+
+    const btnDist = document.getElementById('btn-distribute-tp');
+    if (btnDist) btnDist.onclick = () => {
+      if (window.DistributeModal && DistributeModal.open) DistributeModal.open();
+    };
   }
 
   function renderCard(e) {
@@ -143,6 +155,22 @@
       ? `<span class="card-status done" style="background:${col}">${note.toFixed(1).replace('.', ',')} / 20</span>`
       : `<span class="card-status todo">à évaluer</span>`;
 
+    /* Affectations TP en cours pour cet élève */
+    const affects = (window.Affectations && Affectations.byEleve(e.pseudo)) || [];
+    const affectsActifs = affects.filter(a => a.statut !== 'valide');
+    const tpsHtml = affectsActifs.length === 0 ? '' : `
+      <div class="eleve-tps">
+        ${affectsActifs.map(a => {
+          const meta = window.Affectations.tpMeta(a.tpId);
+          const sm = window.Affectations.statutMeta(a.statut);
+          const tit = meta ? meta.titre : '';
+          return `<span class="eleve-tp-badge" style="border-color:${sm.couleur}" title="${escapeHtml(tit)}">
+            ${sm.icone} <strong>${a.tpId}</strong>
+          </span>`;
+        }).join('')}
+      </div>
+    `;
+
     return `
       <div class="eleve-card ${evalue ? 'evalue' : 'pending'}" data-id="${e.idCloud}" title="Cliquer pour saisir / modifier la CCF EP3">
         <header class="eleve-card-hdr">
@@ -151,8 +179,9 @@
         </header>
         <div class="eleve-name">${escapeHtml(e.label)}</div>
         ${e.sublabel ? `<div class="eleve-sublabel">${escapeHtml(e.sublabel)}</div>` : ''}
+        ${tpsHtml}
         <div class="eleve-progress">
-          <span class="lab">Tâches notées</span>
+          <span class="lab">Tâches CCF notées</span>
           <span class="val">${tachesFaites} / ${tachesTot}</span>
         </div>
         <div class="eleve-blocs">${blocsBars}</div>

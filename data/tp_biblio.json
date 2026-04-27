@@ -1,0 +1,65 @@
+{
+  "_doc": "Catalogue des TP officiels EP3 utilisé pour la distribution multi-élèves. Source de vérité pour : bibliothèque, distribution, mapping vers compétences, suivi.",
+  "tps": [
+    {
+      "id": "TP-1",
+      "semaine": "S1",
+      "date": "2026-04-27",
+      "titre": "Pose / dépose manomètres + pressostat BP",
+      "duree": "2 h",
+      "url": "eleve/tp-officiels/S1_27-04-2026/TP1_Pose_depose_manos_pressostat_BP.html",
+      "comp": ["C4.7", "C3.7"]
+    },
+    {
+      "id": "TP-1A",
+      "semaine": "S1",
+      "date": "2026-04-27",
+      "titre": "Pose manifold + tirage au vide",
+      "duree": "2 h",
+      "url": "eleve/tp-officiels/S1_27-04-2026/TP1A_Pose_manifold_tirage_vide.html",
+      "comp": ["C4.7", "C4.1"]
+    },
+    {
+      "id": "TP-2",
+      "semaine": "S1",
+      "date": "2026-04-27",
+      "titre": "Mesures frigorifiques",
+      "duree": "2 h",
+      "url": "eleve/tp-officiels/S1_27-04-2026/TP2_Mesures_frigorifiques.html",
+      "comp": ["C4.5", "C5.1"]
+    },
+    {
+      "id": "TP-2A",
+      "semaine": "S1",
+      "date": "2026-04-27",
+      "titre": "Mesures températures",
+      "duree": "1 h 30",
+      "url": "eleve/tp-officiels/S1_27-04-2026/TP2A_Mesures_temperatures.html",
+      "comp": ["C4.5"]
+    },
+    {
+      "id": "TP-1B",
+      "semaine": "S2",
+      "date": "2026-05-04",
+      "titre": "Remplacement + réglage pressostat",
+      "duree": "2 h",
+      "url": "eleve/tp-officiels/S2_04-05-2026/TP1B_Remplacement_reglage_pressostat.html",
+      "comp": ["C3.7", "C4.6"]
+    },
+    {
+      "id": "TP-2B",
+      "semaine": "S2",
+      "date": "2026-05-04",
+      "titre": "Mesures P/T + surchauffe + sous-refroidissement",
+      "duree": "2 h",
+      "url": "eleve/tp-officiels/S2_04-05-2026/TP2B_Mesures_PT_surchauffe_sous_refroidissement.html",
+      "comp": ["C4.5", "C5.1"]
+    }
+  ],
+  "statuts": [
+    { "code": "todo",    "label": "À faire",     "couleur": "#888",    "icone": "📋" },
+    { "code": "encours", "label": "En cours",    "couleur": "#dd6b20", "icone": "⏳" },
+    { "code": "fait",    "label": "Fait",        "couleur": "#38a169", "icone": "✅" },
+    { "code": "valide",  "label": "Validé prof", "couleur": "#1b3a63", "icone": "🏆" }
+  ]
+}
