@@ -17,30 +17,17 @@
       tabs: [
         { view: 'calendrier',  label: '📅 Calendrier' },
         { view: 'biblio-tp',   label: '📚 Bibliothèque TP' },
-        { view: 'aujourdhui',  label: '🏠 Aujourd\'hui' },
-        { view: 'agenda',      label: '📆 iCal partagé' },
         { view: 'tournant',    label: '🔁 TP-056 tournant' }
       ],
       defaultTab: 'calendrier'
     },
     {
-      id: 'carte',
-      label: '🗺 Carte',
-      title: 'Carte de progression — vue annuelle',
-      tabs: [
-        { view: 'progression', label: '🗺 Progression révisions' }
-      ],
-      defaultTab: 'progression'
-    },
-    {
       id: 'evaluer',
       label: '✅ Évaluer',
-      title: 'Évaluation — progression et CCF',
+      title: 'Évaluation CCF EP3',
       tabs: [
         { view: 'ccf',        label: '✅ CCF EP3' },
         { view: 'ccf-radar',  label: '🎯 Radar CCF' },
-        { view: 'eval',       label: '✍ Progression libre' },
-        { view: 'radar',      label: '📈 Radar progression' },
         { view: 'bulletin',   label: '🖨 Bulletin' }
       ],
       defaultTab: 'ccf'

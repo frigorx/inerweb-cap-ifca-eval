@@ -38,7 +38,31 @@
     const semaines = groupBySemaine(agenda.seances);
     const today = new Date().toISOString().slice(0, 10);
 
+    /* Mini-dashboard : stats globales en haut du calendrier */
+    const stats = computeStats(today);
+
     root.innerHTML = `
+      <div class="cal-mini-stats">
+        <div class="cal-stat">
+          <div class="cal-stat-big">${stats.distribCetteSemaine}</div>
+          <div class="cal-stat-lab">TP distribués<br>cette semaine</div>
+        </div>
+        <div class="cal-stat">
+          <div class="cal-stat-big">${stats.ccfSaisis} / ${stats.totalEleves}</div>
+          <div class="cal-stat-lab">CCF EP3<br>saisis</div>
+        </div>
+        <div class="cal-stat">
+          <div class="cal-stat-big" style="color:${stats.couleurMoy}">${stats.moyenne != null ? stats.moyenne.toFixed(1).replace('.', ',') : '—'}</div>
+          <div class="cal-stat-lab">Moyenne CCF<br>/ 20</div>
+        </div>
+        <div class="cal-stat">
+          <div class="cal-stat-big">${stats.prochainSeanceJ}</div>
+          <div class="cal-stat-lab">${stats.prochainSeanceLabel}</div>
+        </div>
+      </div>
+
+      ${renderTodayBanner(today)}
+
       <div class="cal-header">
         <h3>📅 ${agenda.session} · ${agenda.classe}</h3>
         <div class="cal-legend">
@@ -57,6 +81,101 @@
     root.querySelectorAll('.cal-seance').forEach(el => {
       el.onclick = () => openSeance(el.dataset.seanceId);
     });
+    /* Boutons "AUJOURD'HUI" en haut → ouvrent la fiche séance */
+    root.querySelectorAll('.auj-seance').forEach(el => {
+      el.onclick = () => openSeance(el.dataset.seanceId);
+    });
+  }
+
+  function renderTodayBanner(today) {
+    const seancesAuj = (agenda.seances || []).filter(s => s.date === today);
+    if (seancesAuj.length === 0) {
+      const prochaines = (agenda.seances || []).filter(s => s.date > today).sort((a,b) => a.date.localeCompare(b.date));
+      const next = prochaines[0];
+      const dateNow = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+      if (!next) {
+        return `<div class="cal-today-banner empty"><span class="big">${dateNow}</span><span class="sub">Pas de séance prévue.</span></div>`;
+      }
+      const diff = Math.round((new Date(next.date) - new Date(today)) / (24 * 3600 * 1000));
+      return `<div class="cal-today-banner empty"><span class="big">${dateNow}</span><span class="sub">Pas de séance aujourd'hui · prochaine dans ${diff} jour${diff>1?'s':''} (${next.jour} ${frDate(next.date)} — ${(next.tps || []).join(' + ') || 'CCF'})</span></div>`;
+    }
+    const dateNow = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+    const isCcf = seancesAuj.some(s => s.type && s.type.startsWith('ccf'));
+    const cls = isCcf ? 'is-ccf' : 'is-tp';
+    return `
+      <div class="cal-today-banner ${cls}">
+        <div class="big">🎯 AUJOURD'HUI · ${dateNow}</div>
+        <div class="seances-auj">
+          ${seancesAuj.map(s => `
+            <button class="auj-seance" data-seance-id="${s.id}" type="button">
+              <span class="auj-creneau">${creneauLabel(s.creneau)}</span>
+              <span class="auj-titre">${escapeHtml(s.objectif)}</span>
+              <span class="auj-tps">${(s.tps || []).map(t => `<span class="auj-tp">${t}</span>`).join('') || '<em>CCF</em>'}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function computeStats(today) {
+    const totalEleves = elevesList ? elevesList.length : 0;
+    /* Cette semaine = distribuéLe sur les 7 derniers jours */
+    const semaineMs = 7 * 24 * 3600 * 1000;
+    const since = Date.now() - semaineMs;
+    const allAffect = window.Affectations ? Affectations.list() : [];
+    const distribCetteSemaine = allAffect.filter(a => {
+      const t = a.distribueLe ? new Date(a.distribueLe).getTime() : 0;
+      return t >= since;
+    }).length;
+
+    /* CCF saisis = au moins 1 tâche cochée */
+    let ccfSaisis = 0;
+    let sumNotes = 0;
+    let countNotes = 0;
+    let bareme = null;
+    if (window.CCF && elevesList) {
+      try { bareme = window._ccfBaremeCache || null; } catch (e) {}
+      elevesList.forEach(e => {
+        const stored = CCF.get('ep3', e.pseudo);
+        if (stored && stored.saisie && Object.keys(stored.saisie).length > 0) {
+          ccfSaisis++;
+          if (bareme) {
+            const r = CCF.compute(bareme, stored.saisie);
+            sumNotes += r.note20;
+            countNotes++;
+          }
+        }
+      });
+    }
+    const moyenne = countNotes > 0 ? sumNotes / countNotes : null;
+    const couleurMoy = moyenne == null ? '#1b3a63' : (moyenne < 10 ? '#c53030' : moyenne < 14 ? '#dd6b20' : '#38a169');
+
+    /* Prochaine séance (aujourd'hui ou plus tard) */
+    const prochaines = (agenda.seances || []).filter(s => s.date >= today).sort((a,b) => a.date.localeCompare(b.date));
+    let prochainSeanceJ = '—';
+    let prochainSeanceLabel = 'Aucune séance';
+    if (prochaines.length > 0) {
+      const p = prochaines[0];
+      const diff = Math.round((new Date(p.date) - new Date(today)) / (24 * 3600 * 1000));
+      if (diff === 0) {
+        prochainSeanceJ = 'AUJ';
+        prochainSeanceLabel = `${p.jour}<br>${(p.tps || []).join(' + ') || (p.type === 'ccf-officiel' ? 'CCF officiel' : 'CCF blanc')}`;
+      } else if (diff === 1) {
+        prochainSeanceJ = 'J+1';
+        prochainSeanceLabel = `Demain<br>${(p.tps || []).join(' + ') || 'CCF'}`;
+      } else {
+        prochainSeanceJ = `J+${diff}`;
+        prochainSeanceLabel = `${p.jour} ${frDate(p.date)}<br>${(p.tps || []).join(' + ') || 'CCF'}`;
+      }
+    }
+
+    /* Pré-charge le bareme la prochaine fois — async safe ici */
+    if (!window._ccfBaremeCache && window.CCF) {
+      CCF.load('ep3').then(b => { window._ccfBaremeCache = b; });
+    }
+
+    return { totalEleves, distribCetteSemaine, ccfSaisis, moyenne, couleurMoy, prochainSeanceJ, prochainSeanceLabel };
   }
 
   function groupBySemaine(seances) {

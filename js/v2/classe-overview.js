@@ -100,7 +100,34 @@
       </div>
     `;
 
-    /* Click handlers : carte → bascule CCF avec élève pré-sélectionné */
+    /* Bouton historique 📜 — ouvre la timeline */
+    root.querySelectorAll('.eleve-history-btn').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const pseudo = btn.dataset.pseudo;
+        if (window.TimelineEleve && TimelineEleve.open) TimelineEleve.open(pseudo);
+      };
+    });
+
+    /* Click handlers : carte → bascule CCF avec élève pré-sélectionné.
+       Clic sur badge TP → cycle de statut (todo→encours→fait→validé→encours...) */
+    root.querySelectorAll('.eleve-tp-badge').forEach(badge => {
+      badge.onclick = (e) => {
+        e.stopPropagation();
+        const pseudo = badge.dataset.pseudo;
+        const tpId = badge.dataset.tpid;
+        const cur = Affectations.get(pseudo, tpId);
+        if (!cur) return;
+        const cycle = ['todo', 'encours', 'fait', 'valide'];
+        const idx = cycle.indexOf(cur.statut);
+        const next = cycle[(idx + 1) % cycle.length];
+        Affectations.set(pseudo, tpId, { statut: next });
+        const meta = Affectations.statutMeta(next);
+        window.toast && window.toast(`${meta.icone} ${tpId} : ${meta.label}`, 'success');
+        render();
+      };
+    });
+
     root.querySelectorAll('.eleve-card').forEach(card => {
       card.onclick = () => {
         const id = card.dataset.id;
@@ -165,14 +192,14 @@
 
     /* Affectations TP en cours pour cet élève */
     const affects = (window.Affectations && Affectations.byEleve(e.pseudo)) || [];
-    const affectsActifs = affects.filter(a => a.statut !== 'valide');
-    const tpsHtml = affectsActifs.length === 0 ? '' : `
+    const tpsHtml = affects.length === 0 ? '' : `
       <div class="eleve-tps">
-        ${affectsActifs.map(a => {
+        ${affects.map(a => {
           const meta = window.Affectations.tpMeta(a.tpId);
           const sm = window.Affectations.statutMeta(a.statut);
           const tit = meta ? meta.titre : '';
-          return `<span class="eleve-tp-badge" style="border-color:${sm.couleur}" title="${escapeHtml(tit)}">
+          const dateStr = a.dateExecution ? a.dateExecution.split('-').reverse().join('/') : '';
+          return `<span class="eleve-tp-badge" data-pseudo="${escapeHtml(e.pseudo)}" data-tpid="${a.tpId}" style="border-color:${sm.couleur}" title="${escapeHtml(tit)} — ${sm.label}${dateStr ? ' · '+dateStr : ''} (clic = changer statut)">
             ${sm.icone} <strong>${a.tpId}</strong>
           </span>`;
         }).join('')}
@@ -180,10 +207,11 @@
     `;
 
     return `
-      <div class="eleve-card ${evalue ? 'evalue' : 'pending'}" data-id="${e.idCloud}" title="Cliquer pour saisir / modifier la CCF EP3">
+      <div class="eleve-card ${evalue ? 'evalue' : 'pending'}" data-id="${e.idCloud}" title="Cliquer pour saisir / modifier la CCF EP3 — clic sur 📜 pour l'historique">
         <header class="eleve-card-hdr">
           <span class="eleve-id">${escapeHtml(e.pseudo)}</span>
           ${statusTag}
+          <button class="eleve-history-btn" data-pseudo="${escapeHtml(e.pseudo)}" title="Voir l'historique de cet élève">📜</button>
         </header>
         <div class="eleve-name">${escapeHtml(e.label)}</div>
         ${e.sublabel ? `<div class="eleve-sublabel">${escapeHtml(e.sublabel)}</div>` : ''}
