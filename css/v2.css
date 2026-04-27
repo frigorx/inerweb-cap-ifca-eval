@@ -1703,3 +1703,121 @@
   color: #fff;
   border-color: #888;
 }
+
+/* ========================================================================== */
+/*           RADARS EXTRA : formatif + classe                                  */
+/* ========================================================================== */
+
+.radarx-header {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  background: #f4f6fa;
+  border-radius: 6px;
+  border-left: 4px solid #1b3a63;
+}
+.radarx-header label {
+  display: block;
+  font-weight: 700;
+  color: #1b3a63;
+  font-size: 11pt;
+  margin-bottom: 2px;
+}
+.radarx-header select {
+  font-size: 14pt;
+  padding: 8px 12px;
+  border: 1px solid #c5cbd6;
+  border-radius: 4px;
+  min-width: 240px;
+}
+.radarx-info {
+  display: flex; flex-direction: column; align-items: center;
+  background: #fff; padding: 6px 16px; border-radius: 6px; border: 1px solid #e0e4ea;
+}
+.radarx-info .lab { font-size: 11pt; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+.radarx-info .big {
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 24pt; font-weight: 700; color: #1b3a63; line-height: 1;
+}
+.radarx-info .sur { font-size: 11pt; color: #888; }
+
+.radarx-toggle { display: flex; gap: 4px; align-items: center; }
+.radarx-toggle label { margin-right: 8px; }
+.radarx-toggle .toggle-btn {
+  background: #fff; color: #555;
+  border: 2px solid #c5cbd6;
+  padding: 8px 14px; border-radius: 6px;
+  font-family: 'Trebuchet MS', sans-serif; font-weight: 700; font-size: 12pt;
+  cursor: pointer; transition: all 0.12s;
+}
+.radarx-toggle .toggle-btn:hover { background: #f4f6fa; }
+.radarx-toggle .toggle-btn.active {
+  background: #1b3a63; color: #fff; border-color: #1b3a63;
+}
+
+.radarx-canvas-wrap {
+  position: relative;
+  height: 480px;
+  margin: 0 auto;
+  max-width: 720px;
+}
+
+.radarx-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 12pt;
+}
+.radarx-legend .legend-item {
+  padding: 6px 10px;
+  background: #fff;
+  border-left: 4px solid #ccc;
+  border-radius: 4px;
+}
+.radarx-legend .legend-item.lvl-na { border-left-color: #c53030; }
+.radarx-legend .legend-item.lvl-ec { border-left-color: #dd6b20; }
+.radarx-legend .legend-item.lvl-a  { border-left-color: #38a169; }
+.radarx-legend .legend-item.lvl-pa { border-left-color: #1b3a63; }
+.radarx-legend .lvl-tag {
+  float: right;
+  background: #f4f6fa;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 11pt;
+}
+
+/* Tableau de dispersion classe */
+.radarx-classe-detail {
+  margin-top: 18px;
+}
+.radarx-classe-detail h4 {
+  font-family: 'Trebuchet MS', sans-serif;
+  color: #1b3a63;
+  font-size: 14pt;
+  margin: 0 0 10px;
+}
+.radarx-disp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12pt;
+}
+.radarx-disp-table th, .radarx-disp-table td {
+  border: 1px solid #e0e4ea;
+  padding: 6px 10px;
+  text-align: left;
+}
+.radarx-disp-table th {
+  background: #f4f6fa;
+  font-family: 'Trebuchet MS', sans-serif;
+  color: #1b3a63;
+}
+.radarx-disp-table .num { text-align: center; font-family: 'Trebuchet MS', sans-serif; font-weight: 700; }
+.radarx-disp-table th.lvl-na, .radarx-disp-table td.lvl-na { background: #fff5f5; color: #c53030; }
+.radarx-disp-table th.lvl-ec, .radarx-disp-table td.lvl-ec { background: #fff8e1; color: #dd6b20; }
+.radarx-disp-table th.lvl-a,  .radarx-disp-table td.lvl-a  { background: #f0f8f0; color: #38a169; }
+.radarx-disp-table th.lvl-pa, .radarx-disp-table td.lvl-pa { background: #eef3fb; color: #1b3a63; }

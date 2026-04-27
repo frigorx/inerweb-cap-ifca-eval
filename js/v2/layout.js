@@ -24,11 +24,13 @@
     {
       id: 'evaluer',
       label: '✅ Évaluer',
-      title: 'Évaluation CCF EP3',
+      title: 'Évaluation CCF EP3 + radars',
       tabs: [
-        { view: 'ccf',        label: '✅ CCF EP3' },
-        { view: 'ccf-radar',  label: '🎯 Radar CCF' },
-        { view: 'bulletin',   label: '🖨 Bulletin' }
+        { view: 'ccf',             label: '✅ CCF EP3' },
+        { view: 'ccf-radar',       label: '🎯 Radar CCF (élève)' },
+        { view: 'radar-formatif',  label: '🌱 Radar formatif (élève)' },
+        { view: 'radar-classe',    label: '📊 Radar classe' },
+        { view: 'bulletin',        label: '🖨 Bulletin' }
       ],
       defaultTab: 'ccf'
     },
@@ -110,8 +112,10 @@
     if (target) target.classList.add('visible');
     /* Hook v2.0 : init lazy des modules quand leur vue s'ouvre */
     try {
-      if (viewName === 'ccf'        && window.CCFUI          && CCFUI.onShown)          CCFUI.onShown();
-      if (viewName === 'ccf-radar'  && window.CCFRadar       && CCFRadar.onShown)       CCFRadar.onShown();
+      if (viewName === 'ccf'             && window.CCFUI          && CCFUI.onShown)          CCFUI.onShown();
+      if (viewName === 'ccf-radar'       && window.CCFRadar       && CCFRadar.onShown)       CCFRadar.onShown();
+      if (viewName === 'radar-formatif'  && window.RadarFormatif  && RadarFormatif.onShown)  RadarFormatif.onShown();
+      if (viewName === 'radar-classe'    && window.RadarClasse    && RadarClasse.onShown)    RadarClasse.onShown();
       if (viewName === 'eleves'     && window.ClasseOverview && ClasseOverview.onShown) ClasseOverview.onShown();
       if (viewName === 'calendrier' && window.Calendrier     && Calendrier.onShown)     Calendrier.onShown();
       /* Hooks legacy v1.9 : refresh des écrans Dashboard/Agenda/Radar/Bulletin */

@@ -309,11 +309,34 @@
     <!-- ÉCRAN RADAR CCF -->
     <section id="view-ccf-radar" class="view">
       <div class="card">
-        <h2>🎯 Radar CCF EP3 — toile par compétence</h2>
+        <h2>🎯 Radar CCF EP3 — toile par compétence (1 élève)</h2>
         <p style="font-size:12pt;color:var(--text-soft);">
-          Visualisation par compétence officielle (C1.3 → C5.1) à partir de la saisie CCF.
+          Visualisation par compétence officielle (C1.3 → C5.1) à partir de la saisie CCF sommative.
         </p>
         <div id="ccf-radar-root"></div>
+      </div>
+    </section>
+
+    <!-- ÉCRAN RADAR FORMATIF (TPEval) -->
+    <section id="view-radar-formatif" class="view">
+      <div class="card">
+        <h2>🌱 Radar formatif — toile d'évaluation TP (1 élève)</h2>
+        <p style="font-size:12pt;color:var(--text-soft);">
+          Niveau moyen par compétence à partir de tes évaluations <strong>FORMATIVES pendant les TP</strong>
+          (NA / EC / A / M, NE = exclu du calcul).
+        </p>
+        <div id="radar-formatif-root"></div>
+      </div>
+    </section>
+
+    <!-- ÉCRAN RADAR DE CLASSE -->
+    <section id="view-radar-classe" class="view">
+      <div class="card">
+        <h2>📊 Radar de classe — vue d'ensemble agrégée (24 élèves)</h2>
+        <p style="font-size:12pt;color:var(--text-soft);">
+          Moyenne classe par compétence avec dispersion. Bascule entre source <strong>CCF EP3</strong> (sommatif) et <strong>Formatif TP</strong>.
+        </p>
+        <div id="radar-classe-root"></div>
       </div>
     </section>
 
@@ -485,6 +508,7 @@
 <script src="js/v2/ccf-export.js"></script>
 <script src="js/v2/ccf-ui.js"></script>
 <script src="js/v2/ccf-radar.js"></script>
+<script src="js/v2/radars-extra.js"></script>
 <script src="js/v2/affectations.js"></script>
 <script src="js/v2/distribute-modal.js"></script>
 <script src="js/v2/tp-eval.js"></script>
