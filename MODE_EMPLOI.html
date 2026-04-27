@@ -160,7 +160,7 @@
 </head>
 <body>
 
-<h1>Mode d'emploi <span class="version-tag">v2.0-ε</span></h1>
+<h1>Mode d'emploi <span class="version-tag">v2.0-J3</span></h1>
 <p class="lead">inerWeb Eval CAP IFCA — outil partagé d'évaluation, de suivi et de distribution de TP pour les 4 enseignants Froid/CVC du LP Privé Jacques Raynaud (Campus ÉQUATIO).</p>
 
 <div class="toc">
@@ -171,6 +171,7 @@
     <li><a href="#noms">Voir les vrais noms des élèves</a></li>
     <li><a href="#distribuer">Distribuer un TP à plusieurs élèves</a></li>
     <li><a href="#ccf">Évaluer un CCF EP3</a></li>
+    <li><a href="#export">Envoyer le bilan par mail / exporter pour ED</a></li>
     <li><a href="#radars">Radars et progression</a></li>
     <li><a href="#parametres">Mes paramètres prof</a></li>
     <li><a href="#rgpd">RGPD — ce qui sort, ce qui reste</a></li>
@@ -333,7 +334,34 @@
   <strong>Sauvegarde automatique</strong> : chaque modification est enregistrée 0,4 s après la dernière action. Tu peux fermer l'onglet, tout est conservé localement.
 </div>
 
-<h2 id="radars">6. Radars et progression</h2>
+<h2 id="export">6. Envoyer le bilan par mail / exporter pour École Directe</h2>
+
+<p>Trois moyens de sortir des données de l'app, tous <strong>anonymisés</strong> (les vrais noms ne quittent jamais ton navigateur).</p>
+
+<div class="pole-card">
+  <div class="pole-title">📧 Mail bilan d'UN élève</div>
+  <p>Sur l'écran <strong>CCF EP3</strong> ou <strong>Radar CCF</strong>, après avoir choisi un élève et coché au moins une tâche, clique sur <code>📧 Mail bilan</code>.<br>
+  Ton client mail s'ouvre avec un mail pré-rempli pour <em>toi</em> (le mail saisi dans Mes paramètres). Tu n'as plus qu'à envoyer.</p>
+</div>
+
+<div class="pole-card">
+  <div class="pole-title">📧 Mail bilan COMPLET de la classe</div>
+  <p>Sur la vue d'ensemble Élèves, bouton <code>📧 Envoyer bilan classe par mail</code>.<br>
+  Mail récap avec tous les élèves (pseudos), notes, totaux, moyenne classe.</p>
+</div>
+
+<div class="pole-card">
+  <div class="pole-title">📥 Export CSV pour École Directe</div>
+  <p>Sur la vue d'ensemble Élèves, bouton <code>📥 Export CSV (École Directe)</code>.<br>
+  Fichier <code>bilan_ccf_ep3_AAAA-MM-JJ.csv</code> téléchargé : 7 colonnes (Pseudo, Note20, TotalBrut, TachesNotees, TachesTotal, Date, Evaluateur).<br>
+  Tu peux l'ouvrir dans Excel ou l'importer dans École Directe via la fonction "Import notes".</p>
+</div>
+
+<div class="box green">
+  <strong>Push automatique vers Google Sheet</strong> : à chaque modification d'une saisie CCF, l'app envoie une ligne vers la Sheet partagée des 4 profs. Aucun bouton à cliquer. Anonymisé (idCloud uniquement). Si tu es hors ligne, l'envoi est mis en buffer et retenté plus tard.
+</div>
+
+<h2 id="radars">7. Radars et progression</h2>
 <p>Pour visualiser où en est un élève :</p>
 <ul>
   <li><strong>🎯 Radar CCF</strong> — toile d'araignée à 10 axes (les 10 compétences C1.3, C2.2, C3.7, C4.1, C4.2, C4.3, C4.5, C4.6, C4.7, C5.1). Niveau moyen 0..3 par compétence + note CCF /20 grand format.</li>
@@ -341,7 +369,7 @@
   <li><strong>🖨 Bulletin</strong> — fiche A4 imprimable / PDF par élève.</li>
 </ul>
 
-<h2 id="parametres">7. Mes paramètres prof</h2>
+<h2 id="parametres">8. Mes paramètres prof</h2>
 <p>Modifiables à tout moment via le bouton <code>✎ Mes paramètres</code> dans le bandeau du haut.</p>
 <table>
   <thead><tr><th>Champ</th><th>Usage</th><th>Stocké où</th></tr></thead>
@@ -354,7 +382,7 @@
 </table>
 <p style="font-size:12pt;color:var(--text-soft);"><strong>Aucun de ces champs ne quitte ton navigateur.</strong> Chaque collègue saisit les siens sur SON poste.</p>
 
-<h2 id="rgpd">8. RGPD — ce qui sort, ce qui reste</h2>
+<h2 id="rgpd">9. RGPD — ce qui sort, ce qui reste</h2>
 <table>
   <thead><tr><th>Donnée</th><th>Stockage</th><th>Sortie réseau</th></tr></thead>
   <tbody>
@@ -366,7 +394,7 @@
   </tbody>
 </table>
 
-<h2 id="depannage">9. Dépannage</h2>
+<h2 id="depannage">10. Dépannage</h2>
 
 <div class="box red">
   <strong>Je vois encore l'ancienne UI</strong><br>
@@ -388,7 +416,7 @@
   → Les saisies sont liées au navigateur. Si tu changes de PC, elles ne suivent pas (encore). Phase suivante : sync Google Sheet.
 </div>
 
-<p class="updated">Mise à jour : v2.0-ε · 27 avril 2026 · 4 pôles · distribution TP multi-élèves · CCF EP3 barème 24/25 · radars compétences</p>
+<p class="updated">Mise à jour : v2.0-J3 · 27 avril 2026 · 4 pôles · distribution TP · CCF EP3 barème 24/25 · radars compétences · mail bilan + CSV ED + push Sheet auto · bouton Distribuer accessible depuis le bandeau</p>
 
 </body>
 </html>

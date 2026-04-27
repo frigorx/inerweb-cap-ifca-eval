@@ -19,14 +19,19 @@
       weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
     });
 
-    document.getElementById('btn-refresh-progression').onclick = renderProgression;
-    document.getElementById('btn-print-progression').onclick = () => {
-      App.show('progression');
+    /* v2.0 : certains boutons ont été retirés du HTML (view-eleves remplacée par
+       classe-overview). On rend tous ces handlers optionnels pour éviter les
+       erreurs "Cannot set properties of null". */
+    const safeOn = (id, evt, fn) => { const el = document.getElementById(id); if (el) el[evt] = fn; };
+    safeOn('btn-refresh-progression', 'onclick', renderProgression);
+    safeOn('btn-print-progression',   'onclick', () => {
+      if (window.Layout && Layout.switchPole) Layout.switchPole('carte');
+      else if (window.App && App.show) App.show('progression');
       setTimeout(() => window.print(), 200);
-    };
-    document.getElementById('btn-refresh-eleves').onclick = renderEleves;
-    document.getElementById('eleves-classe').onchange = renderEleves;
-    document.getElementById('eleves-tri').onchange = renderEleves;
+    });
+    safeOn('btn-refresh-eleves', 'onclick', renderEleves);
+    safeOn('eleves-classe',      'onchange', renderEleves);
+    safeOn('eleves-tri',         'onchange', renderEleves);
 
     inerwebResults.onUpdate(() => {
       const view = document.querySelector('section.view.visible')?.id;

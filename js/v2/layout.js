@@ -121,10 +121,18 @@
     const target = document.getElementById('view-' + viewName);
     if (target) target.classList.add('visible');
     /* Hook v2.0 : init lazy des modules quand leur vue s'ouvre */
-    if (viewName === 'ccf'       && window.CCFUI         && CCFUI.onShown)         CCFUI.onShown();
-    if (viewName === 'ccf-radar' && window.CCFRadar      && CCFRadar.onShown)      CCFRadar.onShown();
-    if (viewName === 'eleves'    && window.ClasseOverview && ClasseOverview.onShown) ClasseOverview.onShown();
-    /* Hook legacy : permet aux modules existants de réagir */
+    try {
+      if (viewName === 'ccf'        && window.CCFUI          && CCFUI.onShown)          CCFUI.onShown();
+      if (viewName === 'ccf-radar'  && window.CCFRadar       && CCFRadar.onShown)       CCFRadar.onShown();
+      if (viewName === 'eleves'     && window.ClasseOverview && ClasseOverview.onShown) ClasseOverview.onShown();
+      /* Hooks legacy v1.9 : refresh des écrans Dashboard/Agenda/Radar/Bulletin */
+      if (viewName === 'aujourdhui' && window.Dashboard && Dashboard.renderAujourdhui)  Dashboard.renderAujourdhui();
+      if (viewName === 'progression'&& window.Dashboard && Dashboard.renderProgression) Dashboard.renderProgression();
+      if (viewName === 'agenda'     && window.Agenda    && Agenda.refresh)              Agenda.refresh();
+      if (viewName === 'radar'      && window.Radar     && Radar.render)                Radar.render();
+      if (viewName === 'bulletin'   && window.Bulletin  && Bulletin.render)             Bulletin.render();
+    } catch (e) { console.warn('[Layout] hook view error:', viewName, e); }
+    /* Hook général App.onViewShown si présent */
     if (window.App && typeof window.App.onViewShown === 'function') {
       try { window.App.onViewShown(viewName); } catch (e) { console.warn(e); }
     }

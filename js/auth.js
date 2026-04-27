@@ -151,6 +151,11 @@
       const cur = Store.get('prof.current');
       if (cur && window.showProfileScreen) window.showProfileScreen(cur, { canCancel: true });
     };
+    /* Distribuer un TP — accessible partout depuis le bandeau prof */
+    const btnBanDist = document.getElementById('btn-banner-distribute');
+    if (btnBanDist) btnBanDist.onclick = () => {
+      if (window.DistributeModal && DistributeModal.open) DistributeModal.open();
+    };
     document.getElementById('ical-url').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
     document.getElementById('login-password').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
     // Auto-login si déjà connecté
