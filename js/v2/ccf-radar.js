@@ -43,20 +43,26 @@
     document.getElementById('ccf-radar-eleve').onchange = (e) => updateRadar(e.target.value);
   }
 
-  function eleveOptions() {
-    const out = [];
-    for (let i = 1; i <= 24; i++) {
-      const id = 'E' + String(i).padStart(2, '0');
-      const lab = (window.Correspondance && Correspondance.available()) ? Correspondance.label(id) : id;
-      out.push({ id, label: lab !== id ? `${id} — ${lab}` : id });
+  let _elevesCache = null;
+  async function eleveOptions() {
+    if (!_elevesCache) {
+      const j = await Catalog.load('eleves_pseudo.json');
+      _elevesCache = (j && j.eleves) || [];
     }
-    return out;
+    const corrOk = window.Correspondance && Correspondance.available();
+    return _elevesCache.map(e => {
+      const realName = corrOk ? Correspondance.label(e.pseudo) : e.pseudo;
+      return {
+        id: e.pseudo,
+        label: realName === e.pseudo ? e.pseudo : `${realName} (${e.pseudo})`
+      };
+    });
   }
 
-  function populateSelector() {
+  async function populateSelector() {
     const sel = document.getElementById('ccf-radar-eleve');
     if (!sel) return;
-    const opts = eleveOptions();
+    const opts = await eleveOptions();
     sel.innerHTML = '<option value="">— Choisir un élève —</option>' +
       opts.map(o => `<option value="${o.id}">${escapeHtml(o.label)}</option>`).join('');
   }

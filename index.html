@@ -190,7 +190,7 @@
           </div>
           <div>
             <label>Date</label>
-            <input type="text" id="eval-date" />
+            <input type="datetime-local" id="eval-date" />
           </div>
         </div>
         <p style="font-size:11pt;color:var(--text-soft);margin:6px 0 0;">Astuce : EP1/EP2 utilisent des TP placeholders enrichissables — les profs peuvent ajouter leurs critères dans <code>data/tp_ep{1,2}.json</code> et <code>data/mappings_ep{1,2}.json</code>.</p>
@@ -210,6 +210,74 @@
           <button class="btn orange" id="btn-save-eval">💾 Enregistrer</button>
           <button class="btn secondary" id="btn-clear-eval">Effacer brouillon</button>
           <span id="eval-save-status" style="color:var(--text-soft);"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BIBLIOTHÈQUE TP — accès direct aux TP officiels (v2.0-δ) -->
+    <section id="view-biblio-tp" class="view">
+      <div class="card">
+        <h2>📚 Bibliothèque TP officiels — CAP IFCA EP3</h2>
+        <p style="font-size:12pt;color:var(--text-soft);margin-top:-2px;">
+          Tes TP de révision EP3 organisés par semaine de session.
+          Clic sur un TP pour l'ouvrir dans un nouvel onglet (consultation prof + élève).
+        </p>
+        <div class="biblio-grid">
+          <article class="biblio-sem">
+            <header class="biblio-sem-hdr"><span>Semaine 1</span><span class="dt">27 avril 2026</span></header>
+            <a class="biblio-tp" href="eleve/tp-officiels/S1_27-04-2026/TP1_Pose_depose_manos_pressostat_BP.html" target="_blank" rel="noopener">
+              <span class="biblio-tp-id">TP-1</span>
+              <span class="biblio-tp-tit">Pose / dépose manomètres + pressostat BP</span>
+            </a>
+            <a class="biblio-tp" href="eleve/tp-officiels/S1_27-04-2026/TP1A_Pose_manifold_tirage_vide.html" target="_blank" rel="noopener">
+              <span class="biblio-tp-id">TP-1A</span>
+              <span class="biblio-tp-tit">Pose manifold + tirage au vide</span>
+            </a>
+            <a class="biblio-tp" href="eleve/tp-officiels/S1_27-04-2026/TP2_Mesures_frigorifiques.html" target="_blank" rel="noopener">
+              <span class="biblio-tp-id">TP-2</span>
+              <span class="biblio-tp-tit">Mesures frigorifiques</span>
+            </a>
+            <a class="biblio-tp" href="eleve/tp-officiels/S1_27-04-2026/TP2A_Mesures_temperatures.html" target="_blank" rel="noopener">
+              <span class="biblio-tp-id">TP-2A</span>
+              <span class="biblio-tp-tit">Mesures températures</span>
+            </a>
+          </article>
+
+          <article class="biblio-sem">
+            <header class="biblio-sem-hdr"><span>Semaine 2</span><span class="dt">4 mai 2026</span></header>
+            <a class="biblio-tp" href="eleve/tp-officiels/S2_04-05-2026/TP1B_Remplacement_reglage_pressostat.html" target="_blank" rel="noopener">
+              <span class="biblio-tp-id">TP-1B</span>
+              <span class="biblio-tp-tit">Remplacement + réglage pressostat</span>
+            </a>
+            <a class="biblio-tp" href="eleve/tp-officiels/S2_04-05-2026/TP2B_Mesures_PT_surchauffe_sous_refroidissement.html" target="_blank" rel="noopener">
+              <span class="biblio-tp-id">TP-2B</span>
+              <span class="biblio-tp-tit">Mesures P/T + surchauffe + sous-refroidissement</span>
+            </a>
+          </article>
+
+          <article class="biblio-sem">
+            <header class="biblio-sem-hdr"><span>Semaine 3</span><span class="dt">11 mai 2026</span></header>
+            <a class="biblio-tp" href="eleve/tp-officiels/S3_11-05-2026/" target="_blank" rel="noopener">
+              <span class="biblio-tp-id">📁</span>
+              <span class="biblio-tp-tit">Voir le dossier S3</span>
+            </a>
+          </article>
+
+          <article class="biblio-sem biblio-extra">
+            <header class="biblio-sem-hdr"><span>Bonus</span><span class="dt">complet</span></header>
+            <a class="biblio-tp" href="eleve/tp-officiels/Package_EP3_CAP_IFCA_final.zip" target="_blank" rel="noopener" download>
+              <span class="biblio-tp-id">📦</span>
+              <span class="biblio-tp-tit">Télécharger le ZIP complet (287 Ko)</span>
+            </a>
+            <a class="biblio-tp" href="eleve/tp-officiels/" target="_blank" rel="noopener">
+              <span class="biblio-tp-id">🌐</span>
+              <span class="biblio-tp-tit">Page d'accueil bibliothèque (ancienne)</span>
+            </a>
+            <a class="biblio-tp" href="eleve/" target="_blank" rel="noopener">
+              <span class="biblio-tp-id">🎓</span>
+              <span class="biblio-tp-tit">Espace élève (menu)</span>
+            </a>
+          </article>
         </div>
       </div>
     </section>

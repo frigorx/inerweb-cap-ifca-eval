@@ -6,21 +6,33 @@
   'use strict';
 
   let bareme = null;
+  let elevesList = null;
 
   async function init() {
     bareme = await CCF.load('ep3');
     if (window.Correspondance && Correspondance.load) await Correspondance.load();
+    /* Source unique : eleves_pseudo.json (24 vrais pseudos CAP IFCA 2) */
+    const j = await Catalog.load('eleves_pseudo.json');
+    elevesList = (j && j.eleves) || [];
     render();
   }
 
   function eleves() {
-    const out = [];
-    for (let i = 1; i <= 24; i++) {
-      const id = 'E' + String(i).padStart(2, '0');
-      const lab = (window.Correspondance && Correspondance.available()) ? Correspondance.label(id) : id;
-      out.push({ idCloud: id, label: lab !== id ? lab : id, anonyme: lab === id });
-    }
-    return out;
+    /* Si Correspondance déverrouillée, on renvoie les vrais noms */
+    const corrOk = window.Correspondance && Correspondance.available();
+    return elevesList.map(e => {
+      const pseudo = e.pseudo;
+      const realName = corrOk ? Correspondance.label(pseudo) : pseudo;
+      const anonyme = realName === pseudo;
+      return {
+        idCloud: pseudo,           /* clé pour CCF.get/save (pseudo = idCloud côté local) */
+        pseudo: pseudo,
+        label: anonyme ? pseudo : realName,
+        sublabel: anonyme ? '' : pseudo,
+        anonyme,
+        classe: e.classe || ''
+      };
+    });
   }
 
   function noteColor(n) {
@@ -134,10 +146,11 @@
     return `
       <div class="eleve-card ${evalue ? 'evalue' : 'pending'}" data-id="${e.idCloud}" title="Cliquer pour saisir / modifier la CCF EP3">
         <header class="eleve-card-hdr">
-          <span class="eleve-id">${e.idCloud}</span>
+          <span class="eleve-id">${escapeHtml(e.pseudo)}</span>
           ${statusTag}
         </header>
         <div class="eleve-name">${escapeHtml(e.label)}</div>
+        ${e.sublabel ? `<div class="eleve-sublabel">${escapeHtml(e.sublabel)}</div>` : ''}
         <div class="eleve-progress">
           <span class="lab">Tâches notées</span>
           <span class="val">${tachesFaites} / ${tachesTot}</span>

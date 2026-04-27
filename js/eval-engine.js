@@ -50,7 +50,11 @@
 
   function setDateNow() {
     const d = new Date();
-    document.getElementById('eval-date').value = d.toISOString().slice(0, 16).replace('T', ' ');
+    /* Format compatible <input type="datetime-local"> : YYYY-MM-DDTHH:MM (heure locale) */
+    const pad = (n) => String(n).padStart(2, '0');
+    const iso = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    const el = document.getElementById('eval-date');
+    if (el) el.value = iso;
   }
 
   function renderTPList() {

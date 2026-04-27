@@ -23,22 +23,20 @@
     renderEleveSelector();
   }
 
-  function eleves() {
-    /* Si correspondance déchiffrée → vraie liste, sinon E01..E24 */
-    if (window.Correspondance && Correspondance.available()) {
-      const all = Correspondance.get && Correspondance._cached;
-      /* On n'a pas d'accesseur "liste" — on lit via un parcours interne */
+  let _elevesCache = null;
+  async function eleves() {
+    if (!_elevesCache) {
+      const j = await Catalog.load('eleves_pseudo.json');
+      _elevesCache = (j && j.eleves) || [];
     }
-    /* Fallback simple : E01..E24 */
-    const fallback = [];
-    for (let i = 1; i <= 24; i++) fallback.push({ idCloud: 'E' + String(i).padStart(2, '0'), label: 'E' + String(i).padStart(2, '0') });
-    /* Si Correspondance dispo, enrichir labels */
-    return fallback.map(e => {
-      if (window.Correspondance && Correspondance.available()) {
-        const lab = Correspondance.label(e.idCloud);
-        return { idCloud: e.idCloud, label: lab !== e.idCloud ? `${e.idCloud} — ${lab}` : e.idCloud };
-      }
-      return e;
+    const corrOk = window.Correspondance && Correspondance.available();
+    return _elevesCache.map(e => {
+      const realName = corrOk ? Correspondance.label(e.pseudo) : e.pseudo;
+      const anonyme = realName === e.pseudo;
+      return {
+        idCloud: e.pseudo,
+        label: anonyme ? e.pseudo : `${realName} (${e.pseudo})`
+      };
     });
   }
 
@@ -77,9 +75,10 @@
     document.getElementById('ccf-print').onclick = () => window.print();
   }
 
-  function renderEleveSelector() {
+  async function renderEleveSelector() {
     const sel = document.getElementById('ccf-eleve');
-    const list = eleves();
+    if (!sel) return;
+    const list = await eleves();
     sel.innerHTML = '<option value="">— Choisir un élève —</option>' +
       list.map(e => `<option value="${e.idCloud}">${escapeHtml(e.label)}</option>`).join('');
   }

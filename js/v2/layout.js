@@ -15,9 +15,10 @@
       label: '📅 Atelier',
       title: 'Atelier — séance du jour',
       tabs: [
-        { view: 'aujourdhui', label: '🏠 Aujourd\'hui' },
-        { view: 'agenda',     label: '📅 Calendrier' },
-        { view: 'tournant',   label: '🔁 TP-056 tournant' }
+        { view: 'aujourdhui',  label: '🏠 Aujourd\'hui' },
+        { view: 'biblio-tp',   label: '📚 Bibliothèque TP' },
+        { view: 'agenda',      label: '📅 Calendrier' },
+        { view: 'tournant',    label: '🔁 TP-056 tournant' }
       ],
       defaultTab: 'aujourdhui'
     },
