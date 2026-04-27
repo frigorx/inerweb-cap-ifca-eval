@@ -160,7 +160,7 @@
 </head>
 <body>
 
-<h1>Mode d'emploi <span class="version-tag">v2.0-J3</span></h1>
+<h1>Mode d'emploi <span class="version-tag">v2.0-CAL</span></h1>
 <p class="lead">inerWeb Eval CAP IFCA — outil partagé d'évaluation, de suivi et de distribution de TP pour les 4 enseignants Froid/CVC du LP Privé Jacques Raynaud (Campus ÉQUATIO).</p>
 
 <div class="toc">
@@ -169,6 +169,7 @@
     <li><a href="#login">Première connexion (3 min)</a></li>
     <li><a href="#poles">Les 4 pôles de l'app</a></li>
     <li><a href="#noms">Voir les vrais noms des élèves</a></li>
+    <li><a href="#calendrier">Le calendrier interactif (porte d'entrée)</a></li>
     <li><a href="#distribuer">Distribuer un TP à plusieurs élèves</a></li>
     <li><a href="#ccf">Évaluer un CCF EP3</a></li>
     <li><a href="#export">Envoyer le bilan par mail / exporter pour ED</a></li>
@@ -223,10 +224,15 @@
 <p>L'app est organisée en 4 pôles + 1 paramètres. Tu les vois en barre haute après login.</p>
 
 <div class="pole-card">
-  <div class="pole-title">📅 Atelier</div>
-  <p>Sous-onglets : <em>Aujourd'hui</em>, <strong>Bibliothèque TP</strong>, Calendrier, TP-056 tournant.</p>
-  <p>📚 La <strong>Bibliothèque TP</strong> regroupe tes 6 TP officiels EP3 par semaine de session (S1 27/04, S2 04/05, S3 11/05). Clic = ouvre le TP en HTML dans un nouvel onglet.</p>
-  <p style="font-size:12pt;color:var(--text-soft);"><em>Évolution prévue : le calendrier deviendra la porte d'entrée principale au login. Clic sur un jour → propose le TP prévu et permet la distribution directe avec date d'exécution tracée.</em></p>
+  <div class="pole-title">📅 Atelier <small style="color:#888;font-size:11pt">(écran d'accueil par défaut)</small></div>
+  <p>Sous-onglets : <strong>Calendrier</strong> (porte d'entrée), Bibliothèque TP, Aujourd'hui, iCal partagé, TP-056 tournant.</p>
+  <p>📅 Le <strong>Calendrier interactif</strong> affiche tes 12 séances de session révision EP3 + les 2 dates CCF. <strong>Clic sur une séance</strong> → fiche avec :
+  <ul>
+    <li>Le TP suggéré (cliquable pour ouvrir le HTML)</li>
+    <li>Les 24 élèves cochés par défaut (décoche les absents)</li>
+    <li>Bouton orange XL <code>📤 Distribuer le(s) TP de la séance</code> qui trace la date d'exécution pour chaque élève</li>
+  </ul></p>
+  <p>📚 La <strong>Bibliothèque TP</strong> regroupe les 6 TP officiels EP3 organisés par semaine. Clic = ouvre le TP en HTML.</p>
 </div>
 
 <div class="pole-card">
@@ -266,7 +272,48 @@
   <strong>RGPD :</strong> les vrais noms sont déchiffrés <em>localement</em> dans ton navigateur uniquement. Le serveur GitHub Pages, le Sheet, le mail et École Directe ne reçoivent <strong>JAMAIS</strong> les noms — toujours les pseudos.
 </div>
 
-<h2 id="distribuer">4. Distribuer un TP à plusieurs élèves</h2>
+<h2 id="calendrier">4. Le calendrier interactif (porte d'entrée)</h2>
+
+<p>Au login, tu arrives <strong>directement sur le calendrier</strong>. C'est la base de ton travail quotidien.</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <strong>Identifie la séance du jour</strong>
+    <p>Les séances <span style="background:#fff8e1;padding:2px 8px;border-radius:8px;border:2px solid #ff6b35;font-weight:700">aujourd'hui</span> sont mises en avant. Les séances passées sont grisées, les futures en bleu, les CCF en rouge.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <strong>Clic sur la séance</strong>
+    <p>Une fiche détaillée s'ouvre en bas avec : objectif pédagogique, salle, le(s) TP suggéré(s), et la liste des 24 élèves cochés par défaut.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <strong>Décoche les absents (si besoin)</strong>
+    <p>Boutons utiles : <code>☑ Tous présents</code> ou <code>☐ Tous absents</code> pour repartir. Le compteur en haut indique combien sont cochés.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <strong>Distribue le(s) TP de la séance</strong>
+    <p>Bouton orange XL <code>📤 Distribuer le(s) TP de la séance</code> en bas de la fiche.<br>
+    Chaque élève sélectionné reçoit l'affectation avec <strong>la date de la séance comme date d'exécution</strong>. Plus tard, tu pourras répondre à "quel jour Frédéric a fait TP-1A ?".</p>
+  </div>
+</div>
+
+<div class="box green">
+  <strong>Traçabilité automatique :</strong> chaque distribution stocke la date de la séance, l'identifiant séance, le prof distributeur. Le compteur "📤 N distribués" sur la séance montre que c'est fait.
+</div>
+
+<h2 id="distribuer">5. Distribuer un TP à plusieurs élèves <small style="font-size:13pt;color:#888">(hors calendrier)</small></h2>
 <p>Cas typique : tu lances une rotation, ou tu donnes le même TP à toute la classe.</p>
 
 <div class="step">
@@ -301,7 +348,7 @@
   </div>
 </div>
 
-<h2 id="ccf">5. Évaluer un CCF EP3</h2>
+<h2 id="ccf">6. Évaluer un CCF EP3</h2>
 
 <div class="step">
   <div class="step-num">1</div>
@@ -334,7 +381,7 @@
   <strong>Sauvegarde automatique</strong> : chaque modification est enregistrée 0,4 s après la dernière action. Tu peux fermer l'onglet, tout est conservé localement.
 </div>
 
-<h2 id="export">6. Envoyer le bilan par mail / exporter pour École Directe</h2>
+<h2 id="export">7. Envoyer le bilan par mail / exporter pour École Directe</h2>
 
 <p>Trois moyens de sortir des données de l'app, tous <strong>anonymisés</strong> (les vrais noms ne quittent jamais ton navigateur).</p>
 
@@ -361,7 +408,7 @@
   <strong>Push automatique vers Google Sheet</strong> : à chaque modification d'une saisie CCF, l'app envoie une ligne vers la Sheet partagée des 4 profs. Aucun bouton à cliquer. Anonymisé (idCloud uniquement). Si tu es hors ligne, l'envoi est mis en buffer et retenté plus tard.
 </div>
 
-<h2 id="radars">7. Radars et progression</h2>
+<h2 id="radars">8. Radars et progression</h2>
 <p>Pour visualiser où en est un élève :</p>
 <ul>
   <li><strong>🎯 Radar CCF</strong> — toile d'araignée à 10 axes (les 10 compétences C1.3, C2.2, C3.7, C4.1, C4.2, C4.3, C4.5, C4.6, C4.7, C5.1). Niveau moyen 0..3 par compétence + note CCF /20 grand format.</li>
@@ -369,7 +416,7 @@
   <li><strong>🖨 Bulletin</strong> — fiche A4 imprimable / PDF par élève.</li>
 </ul>
 
-<h2 id="parametres">8. Mes paramètres prof</h2>
+<h2 id="parametres">9. Mes paramètres prof</h2>
 <p>Modifiables à tout moment via le bouton <code>✎ Mes paramètres</code> dans le bandeau du haut.</p>
 <table>
   <thead><tr><th>Champ</th><th>Usage</th><th>Stocké où</th></tr></thead>
@@ -382,7 +429,7 @@
 </table>
 <p style="font-size:12pt;color:var(--text-soft);"><strong>Aucun de ces champs ne quitte ton navigateur.</strong> Chaque collègue saisit les siens sur SON poste.</p>
 
-<h2 id="rgpd">9. RGPD — ce qui sort, ce qui reste</h2>
+<h2 id="rgpd">10. RGPD — ce qui sort, ce qui reste</h2>
 <table>
   <thead><tr><th>Donnée</th><th>Stockage</th><th>Sortie réseau</th></tr></thead>
   <tbody>
@@ -394,7 +441,7 @@
   </tbody>
 </table>
 
-<h2 id="depannage">10. Dépannage</h2>
+<h2 id="depannage">11. Dépannage</h2>
 
 <div class="box red">
   <strong>Je vois encore l'ancienne UI</strong><br>
@@ -416,7 +463,7 @@
   → Les saisies sont liées au navigateur. Si tu changes de PC, elles ne suivent pas (encore). Phase suivante : sync Google Sheet.
 </div>
 
-<p class="updated">Mise à jour : v2.0-J3 · 27 avril 2026 · 4 pôles · distribution TP · CCF EP3 barème 24/25 · radars compétences · mail bilan + CSV ED + push Sheet auto · bouton Distribuer accessible depuis le bandeau</p>
+<p class="updated">Mise à jour : v2.0-CAL · 27 avril 2026 · <strong>Calendrier interactif comme porte d'entrée</strong> · 12 séances révision EP3 + 2 CCF · clic séance → fiche distribution avec dateExecution tracée · 4 pôles · CCF EP3 barème 24/25 · radars compétences · mail bilan + CSV ED + push Sheet auto · bouton Distribuer accessible depuis le bandeau</p>
 
 </body>
 </html>

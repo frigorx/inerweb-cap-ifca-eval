@@ -15,12 +15,13 @@
       label: '📅 Atelier',
       title: 'Atelier — séance du jour',
       tabs: [
-        { view: 'aujourdhui',  label: '🏠 Aujourd\'hui' },
+        { view: 'calendrier',  label: '📅 Calendrier' },
         { view: 'biblio-tp',   label: '📚 Bibliothèque TP' },
-        { view: 'agenda',      label: '📅 Calendrier' },
+        { view: 'aujourdhui',  label: '🏠 Aujourd\'hui' },
+        { view: 'agenda',      label: '📆 iCal partagé' },
         { view: 'tournant',    label: '🔁 TP-056 tournant' }
       ],
-      defaultTab: 'aujourdhui'
+      defaultTab: 'calendrier'
     },
     {
       id: 'carte',
@@ -125,6 +126,7 @@
       if (viewName === 'ccf'        && window.CCFUI          && CCFUI.onShown)          CCFUI.onShown();
       if (viewName === 'ccf-radar'  && window.CCFRadar       && CCFRadar.onShown)       CCFRadar.onShown();
       if (viewName === 'eleves'     && window.ClasseOverview && ClasseOverview.onShown) ClasseOverview.onShown();
+      if (viewName === 'calendrier' && window.Calendrier     && Calendrier.onShown)     Calendrier.onShown();
       /* Hooks legacy v1.9 : refresh des écrans Dashboard/Agenda/Radar/Bulletin */
       if (viewName === 'aujourdhui' && window.Dashboard && Dashboard.renderAujourdhui)  Dashboard.renderAujourdhui();
       if (viewName === 'progression'&& window.Dashboard && Dashboard.renderProgression) Dashboard.renderProgression();
@@ -159,8 +161,8 @@
       });
     }
 
-    /* Démarre sur la vue d'ensemble Élèves — vue de pilotage immédiate */
-    switchPole('eleves');
+    /* Démarre sur le pôle Atelier > Calendrier interactif (porte d'entrée v2.0) */
+    switchPole('atelier');
   }
 
   window.Layout = { init, switchPole, showView, POLES };

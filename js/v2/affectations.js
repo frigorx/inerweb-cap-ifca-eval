@@ -38,6 +38,8 @@
       pseudo, tpId,
       statut: 'todo',
       distribueLe: new Date().toISOString(),
+      dateExecution: null,        /* date où l'élève FAIT effectivement le TP */
+      seanceId: null,              /* lien vers la séance du calendrier (si distribué depuis là) */
       distribuePar: Store.get('prof.current') || ''
     }, cur, fields);
     Store.set(key(pseudo, tpId), merged);
@@ -63,11 +65,18 @@
   function byEleve(pseudo) { return list().filter(a => a.pseudo === pseudo); }
   function byTP(tpId) { return list().filter(a => a.tpId === tpId); }
 
-  function distribute(eleves, tpId, prof) {
+  function distribute(eleves, tpId, prof, opts) {
+    opts = opts || {};
     const now = new Date().toISOString();
     const res = [];
     eleves.forEach(p => {
-      res.push(set(p, tpId, { statut: 'encours', distribueLe: now, distribuePar: prof || (Store.get('prof.current') || '') }));
+      res.push(set(p, tpId, {
+        statut: 'encours',
+        distribueLe: now,
+        dateExecution: opts.dateExecution || now.slice(0, 10),
+        seanceId: opts.seanceId || null,
+        distribuePar: prof || (Store.get('prof.current') || '')
+      }));
     });
     return res;
   }

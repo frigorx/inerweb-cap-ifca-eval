@@ -1,0 +1,30 @@
+{
+  "_doc": "Agenda type pour la session de révision EP3 CAP IFCA 2 — 3 semaines × 4 créneaux. Source de vérité du calendrier interactif. Chaque séance suggère un ou plusieurs TP de la bibliothèque (ids = data/tp_biblio.json).",
+  "classe": "CAP IFCA 2",
+  "session": "Révision EP3 — 2024/25",
+  "creneaux_type": [
+    { "code": "M1", "libelle": "Matin 8h-10h",   "duree_h": 2 },
+    { "code": "M2", "libelle": "Matin 10h-12h",  "duree_h": 2 },
+    { "code": "A1", "libelle": "Après-midi 13h-15h",  "duree_h": 2 },
+    { "code": "A2", "libelle": "Après-midi 15h-17h",  "duree_h": 2 }
+  ],
+  "seances": [
+    { "id": "S1-L-M1", "date": "2026-04-27", "jour": "Lundi",   "creneau": "M1", "tps": ["TP-1"],          "objectif": "Pose / dépose manomètres + pressostat BP",            "salle": "D107" },
+    { "id": "S1-L-M2", "date": "2026-04-27", "jour": "Lundi",   "creneau": "M2", "tps": ["TP-1A"],         "objectif": "Pose manifold + tirage au vide",                        "salle": "D107" },
+    { "id": "S1-L-A1", "date": "2026-04-27", "jour": "Lundi",   "creneau": "A1", "tps": ["TP-2"],          "objectif": "Mesures frigorifiques",                                  "salle": "D107" },
+    { "id": "S1-L-A2", "date": "2026-04-27", "jour": "Lundi",   "creneau": "A2", "tps": ["TP-2A"],         "objectif": "Mesures températures",                                   "salle": "D107" },
+
+    { "id": "S2-L-M1", "date": "2026-05-04", "jour": "Lundi",   "creneau": "M1", "tps": ["TP-1B"],         "objectif": "Remplacement + réglage pressostat",                      "salle": "D107" },
+    { "id": "S2-L-M2", "date": "2026-05-04", "jour": "Lundi",   "creneau": "M2", "tps": ["TP-1B"],         "objectif": "Réglage pressostat — vérification cycle",               "salle": "D107" },
+    { "id": "S2-L-A1", "date": "2026-05-04", "jour": "Lundi",   "creneau": "A1", "tps": ["TP-2B"],         "objectif": "Mesures P/T + surchauffe",                              "salle": "D107" },
+    { "id": "S2-L-A2", "date": "2026-05-04", "jour": "Lundi",   "creneau": "A2", "tps": ["TP-2B"],         "objectif": "Mesures sous-refroidissement",                          "salle": "D107" },
+
+    { "id": "S3-L-M1", "date": "2026-05-11", "jour": "Lundi",   "creneau": "M1", "tps": ["TP-1", "TP-1A"], "objectif": "Synthèse Bloc A — fluidiques",                          "salle": "D107" },
+    { "id": "S3-L-M2", "date": "2026-05-11", "jour": "Lundi",   "creneau": "M2", "tps": ["TP-1B"],         "objectif": "Synthèse Bloc A — pressostat",                          "salle": "D107" },
+    { "id": "S3-L-A1", "date": "2026-05-11", "jour": "Lundi",   "creneau": "A1", "tps": ["TP-2", "TP-2A"], "objectif": "Synthèse Bloc B — mesures",                             "salle": "D107" },
+    { "id": "S3-L-A2", "date": "2026-05-11", "jour": "Lundi",   "creneau": "A2", "tps": ["TP-2B"],         "objectif": "Synthèse Bloc B — calculs SC/SR",                       "salle": "D107" },
+
+    { "id": "S4-V",    "date": "2026-05-15", "jour": "Vendredi","creneau": "M1", "tps": [],                "objectif": "🎯 CCF EP3 BLANC — passation complète 6 h (Blocs 0/A/B/C)", "salle": "D107", "type": "ccf-blanc" },
+    { "id": "S5-V",    "date": "2026-05-22", "jour": "Vendredi","creneau": "M1", "tps": [],                "objectif": "🏆 CCF EP3 OFFICIEL — épreuve session 24/25",            "salle": "D107", "type": "ccf-officiel" }
+  ]
+}

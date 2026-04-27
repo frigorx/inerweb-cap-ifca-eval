@@ -156,10 +156,23 @@
       <div id="eleves-cards" style="display:none"></div>
     </section>
 
-    <!-- ÉCRAN AGENDA -->
+    <!-- ÉCRAN CALENDRIER (porte d'entrée v2.0) -->
+    <section id="view-calendrier" class="view">
+      <div class="card">
+        <h2>📅 Calendrier interactif — porte d'entrée</h2>
+        <p style="font-size:12pt;color:var(--text-soft);margin-top:-2px;">
+          Ton planning de la session révision EP3. <strong>Clic sur une séance</strong> →
+          fiche avec TP suggérés + bouton "Distribuer aux élèves présents".
+          Trace automatiquement la date d'exécution pour chaque élève.
+        </p>
+        <div id="calendrier-root"></div>
+      </div>
+    </section>
+
+    <!-- ÉCRAN AGENDA iCal (legacy) -->
     <section id="view-agenda" class="view">
       <div class="card">
-        <h2>📅 Agenda partagé — 4 enseignants</h2>
+        <h2>📅 Agenda partagé iCal — 4 enseignants</h2>
         <p>Fusion des iCal EcoleDirecte. Filtre automatique : <strong>CAP, IFCA, FROID, CVC, MFER</strong>.</p>
         <div style="margin-bottom:12px;">
           <button class="btn small secondary" id="btn-refresh-agenda">↻ Actualiser</button>
@@ -476,6 +489,7 @@
 <script src="js/v2/ccf-radar.js"></script>
 <script src="js/v2/affectations.js"></script>
 <script src="js/v2/distribute-modal.js"></script>
+<script src="js/v2/calendrier.js"></script>
 <script src="js/v2/classe-overview.js"></script>
 <script src="js/inerweb-results.js"></script>
 <script src="js/auth.js"></script>
