@@ -161,6 +161,11 @@
     if (btnBanSync) btnBanSync.onclick = () => {
       if (window.Sync && Sync.pullNow) Sync.pullNow();
     };
+    /* Panneau diagnostic + backup/restore manuel */
+    const btnBanDbg = document.getElementById('btn-banner-debug');
+    if (btnBanDbg) btnBanDbg.onclick = () => {
+      if (window.SyncDebug && SyncDebug.open) SyncDebug.open();
+    };
     document.getElementById('ical-url').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
     document.getElementById('login-password').addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
     // Auto-login si déjà connecté
