@@ -1,28 +1,25 @@
-/* biblio-tp.js — bibliothèque TP refondue (v2.0-DIGEST)
-   Organisation pour enseignant :
-     ① zone drop import
-     ② onglets 🎯 Pour les élèves / 📋 Pour préparer / 📦 Tout
-     ③ recherche + filtre par compétence + filtre par bloc CCF
-     ④ cartes compactes triées intelligemment
+/* biblio-tp.js — bibliothèque organisée par PACK de séance (v2.0-PACKS)
+   Refonte demandée par Franck :
+   - Plus de cartes éparpillées, on regroupe par "séance complète"
+   - Chaque pack = plan prof + exercices + ressources + évaluation papier + évaluation numérique
+   - Bouton "✍ Évaluer numériquement" sur chaque pack qui le supporte → modale de saisie élève par élève
 */
 
 (function() {
   'use strict';
 
-  let bib = null;
+  let packs = null;
   let bareme = null;
   let userTPs = [];
   let currentTab = 'eleves';
   let searchTerm = '';
-  let filterComp = null;
   let filterBloc = null;
+  let openedPackId = null;
 
-  /* Mapping compétence → Bloc du CCF EP3 (selon ton barème) */
   const COMP_TO_BLOC = {
     'C2.2': '0',
-    'C4.5': 'B',
     'C4.7': 'A', 'C4.1': 'A', 'C4.2': 'A', 'C4.3': 'A', 'C4.6': 'A', 'C3.7': 'A',
-    'C5.1': 'B',
+    'C4.5': 'B', 'C5.1': 'B',
     'C1.3': 'C'
   };
   const BLOCS = [
@@ -33,7 +30,10 @@
   ];
 
   async function init() {
-    if (!bib && window.Affectations) bib = await Affectations.biblio();
+    if (!packs) {
+      const j = await Catalog.load('seances_pack.json');
+      packs = (j && j.packs) || [];
+    }
     if (!bareme && window.CCF) bareme = await CCF.load('ep3');
     refresh();
   }
@@ -43,43 +43,11 @@
     render();
   }
 
-  function getAllTPs() {
-    const officiels = (bib && bib.tps || []).map(t => ({ ...t, isOfficiel: true }));
-    return [...officiels, ...userTPs];
-  }
-
-  /** Détermine le type d'un TP pour catégorisation digeste. */
-  function getType(t) {
-    if (t.isUser) return 'user';
-    if (t.tag === 'plan-prof' || (t.semaine || '').startsWith('S-plans')) return 'plan';
-    if (t.tag === 'ressource' || (t.semaine || '').startsWith('S-ressources')) return 'ressource';
-    if (t.tag === 'filler' || (t.semaine || '') === 'S-stock') return 'filler';
-    return 'atelier';
-  }
-
-  /** Filtre 'Pour les élèves' = ce qui est distribuable aux élèves. */
-  function isForEleves(t) {
-    const ty = getType(t);
-    return ty === 'atelier' || ty === 'filler' || ty === 'ressource' || ty === 'user';
-  }
-  function isForProf(t) {
-    return getType(t) === 'plan';
-  }
-
-  function getBlocs(t) {
-    const set = new Set();
-    (t.comp || []).forEach(c => { if (COMP_TO_BLOC[c]) set.add(COMP_TO_BLOC[c]); });
-    return Array.from(set);
-  }
-
-  /** Filtre principal selon onglet, recherche, comp, bloc. */
-  function filter(tp) {
-    if (currentTab === 'eleves' && !isForEleves(tp)) return false;
-    if (currentTab === 'prof'   && !isForProf(tp))   return false;
-    if (filterComp && !(tp.comp || []).includes(filterComp)) return false;
-    if (filterBloc && !getBlocs(tp).includes(filterBloc)) return false;
+  function filterPack(p) {
+    if (filterBloc && p.bloc_ccf && p.bloc_ccf !== filterBloc && p.bloc_ccf !== '*') return false;
     if (searchTerm) {
-      const t = (tp.titre + ' ' + tp.id + ' ' + (tp.description || '')).toLowerCase();
+      const t = (p.titre + ' ' + p.description + ' ' + (p.comp_ciblees || []).join(' ') + ' ' +
+                (p.ressources || []).map(r => r.titre + ' ' + r.id).join(' ')).toLowerCase();
       if (!t.includes(searchTerm.toLowerCase())) return false;
     }
     return true;
@@ -88,41 +56,23 @@
   function render() {
     const root = document.getElementById('biblio-root');
     if (!root) return;
-    if (!bib) { root.innerHTML = '<p>Chargement…</p>'; return; }
+    if (!packs) { root.innerHTML = '<p>Chargement…</p>'; return; }
 
-    const all = getAllTPs();
-    const visible = all.filter(filter);
-    const cE = all.filter(isForEleves).length;
-    const cP = all.filter(isForProf).length;
-    const cT = all.length;
-
-    /* Compteurs filtres compétences */
-    const compsAvailable = new Set();
-    all.forEach(t => (t.comp || []).forEach(c => compsAvailable.add(c)));
+    const visiblePacks = packs.filter(filterPack);
+    const totalRes = packs.reduce((s, p) => s + (p.ressources || []).length, 0);
+    const userCount = userTPs.length;
 
     root.innerHTML = `
       <div class="biblio-drop-zone" id="biblio-drop">
         <div class="biblio-drop-icon">📥</div>
         <div class="biblio-drop-text">
           <strong>Glisse-dépose un nouveau TP ici</strong> (HTML ou PDF, max 4 Mo)
-          <span>ou clique pour parcourir</span>
+          <span>il sera ajouté à un nouveau pack "Mes TP perso"</span>
         </div>
       </div>
 
-      <nav class="biblio-tabs">
-        <button class="${currentTab === 'eleves' ? 'active' : ''}" data-tab="eleves">
-          🎯 Pour les élèves <span class="b-count">${cE}</span>
-        </button>
-        <button class="${currentTab === 'prof' ? 'active' : ''}" data-tab="prof">
-          📋 Pour préparer <span class="b-count">${cP}</span>
-        </button>
-        <button class="${currentTab === 'tout' ? 'active' : ''}" data-tab="tout">
-          📦 Tout <span class="b-count">${cT}</span>
-        </button>
-      </nav>
-
       <div class="biblio-filters">
-        <input type="search" id="biblio-search" placeholder="🔍 Rechercher (titre, mot-clé…)" value="${escapeAttr(searchTerm)}" />
+        <input type="search" id="biblio-search" placeholder="🔍 Rechercher dans les packs (CERFA, manomètres, sécurité…)" value="${escapeAttr(searchTerm)}" />
 
         <div class="biblio-chips" data-group="bloc">
           <span class="chip-lab">Bloc CCF :</span>
@@ -134,142 +84,156 @@
           ${filterBloc ? `<button class="biblio-chip-clear" data-clear="bloc">×</button>` : ''}
         </div>
 
-        <div class="biblio-chips" data-group="comp">
-          <span class="chip-lab">Compétence :</span>
-          ${Array.from(compsAvailable).sort().map(c => `
-            <button class="biblio-chip-comp ${filterComp === c ? 'active' : ''}" data-comp="${c}" title="${escapeAttr(bareme && bareme.competences[c] || c)}">
-              ${c}
-            </button>
-          `).join('')}
-          ${filterComp ? `<button class="biblio-chip-clear" data-clear="comp">×</button>` : ''}
-        </div>
-
         <div class="biblio-result-count">
-          ${visible.length} TP affiché${visible.length > 1 ? 's' : ''}
+          ${visiblePacks.length} séance${visiblePacks.length > 1 ? 's' : ''} · ${totalRes} ressources${userCount > 0 ? ' · ' + userCount + ' TP perso' : ''}
         </div>
       </div>
 
-      <div class="biblio-cards-wrap">
-        ${visible.length === 0
-          ? '<p class="biblio-empty">Aucun TP ne correspond à ces filtres.</p>'
-          : renderCards(visible)}
+      <div class="packs-wrap">
+        ${visiblePacks.length === 0
+          ? '<p class="biblio-empty">Aucun pack ne correspond à ces filtres.</p>'
+          : visiblePacks.map(p => renderPack(p)).join('')}
+
+        ${userTPs.length > 0 ? `
+          <article class="pack-card user-pack" data-pack-id="USER">
+            <header class="pack-hdr" style="background:linear-gradient(135deg,#dd6b20 0%,#ff6b35 100%);">
+              <span class="pack-ico">⭐</span>
+              <div class="pack-hdr-text">
+                <h3 class="pack-titre">Mes TP perso (drag-droppés)</h3>
+                <p class="pack-desc">${userTPs.length} fichier${userTPs.length > 1 ? 's' : ''} importé${userTPs.length > 1 ? 's' : ''}</p>
+              </div>
+              <button class="pack-toggle" data-pack-toggle="USER">${openedPackId === 'USER' ? '▲' : '▼'}</button>
+            </header>
+            ${openedPackId === 'USER' ? `
+              <div class="pack-body">
+                ${userTPs.map(t => renderUserResource(t)).join('')}
+              </div>` : ''}
+          </article>
+        ` : ''}
       </div>
     `;
 
     bindEvents();
   }
 
-  /** Tri intelligent des cartes :
-   *   1. ateliers d'abord (par semaine S1, S2, S3…)
-   *   2. fillers ensuite (par durée croissante)
-   *   3. user importés (par date)
-   *   4. ressources
-   *   5. plans en dernier (onglet prof seulement)
-   */
-  function sortTPs(list) {
-    const order = { atelier: 1, filler: 2, user: 3, ressource: 4, plan: 5 };
-    return list.slice().sort((a, b) => {
-      const oa = order[getType(a)] || 9;
-      const ob = order[getType(b)] || 9;
-      if (oa !== ob) return oa - ob;
-      if (a.semaine && b.semaine && a.semaine !== b.semaine) return a.semaine.localeCompare(b.semaine);
-      if (a.date && b.date) return a.date.localeCompare(b.date);
-      return (a.id || '').localeCompare(b.id || '');
-    });
-  }
-
-  function renderCards(list) {
-    const sorted = sortTPs(list);
-    /* Regroupement par type */
-    const groups = {};
-    sorted.forEach(t => {
-      const ty = getType(t);
-      (groups[ty] = groups[ty] || []).push(t);
-    });
-    const groupLabels = {
-      atelier:   { label: '🛠 TP atelier (officiels EP3)',          color: '#1b3a63' },
-      filler:    { label: '⏱ Exercices rapides (1 h / 1 h 30)',     color: '#ff6b35' },
-      user:      { label: '⭐ Mes TP perso (drag-droppés)',          color: '#dd6b20' },
-      ressource: { label: '📄 Ressources & PDF imprimables',         color: '#2d8659' },
-      plan:      { label: '📋 Plans de séance (réservé prof)',       color: '#6b3a8a' }
-    };
-    const order = ['atelier', 'filler', 'user', 'ressource', 'plan'];
-
-    return order
-      .filter(k => groups[k] && groups[k].length > 0)
-      .map(k => `
-        <section class="biblio-group" style="border-color:${groupLabels[k].color}">
-          <h3 class="biblio-group-title" style="color:${groupLabels[k].color}">
-            ${groupLabels[k].label}
-            <span class="biblio-group-count">${groups[k].length}</span>
-          </h3>
-          <div class="biblio-grid-compact">
-            ${groups[k].map(t => renderCard(t)).join('')}
-          </div>
-        </section>
-      `).join('');
-  }
-
-  function renderCard(t) {
-    const ty = getType(t);
-    const blocs = getBlocs(t);
-    const comps = (t.comp || []).slice(0, 4);
-    const isUser = ty === 'user';
-    const isPlan = ty === 'plan';
-    const isPDF = (t.url || '').toLowerCase().endsWith('.pdf') || (t.typeFichier || '').includes('pdf');
-    const localOnly = isUser && !t.dataUrl;
-    const icoType = ty === 'atelier' ? '🛠' : ty === 'filler' ? '⏱' : ty === 'user' ? '⭐' : ty === 'ressource' ? '📄' : '📋';
-
-    /* Stats : combien d'élèves ont déjà reçu ce TP, combien l'ont fait */
-    const affects = (window.Affectations && Affectations.byTP(t.id)) || [];
-    const distrib = affects.length;
-    const fait = affects.filter(a => a.statut === 'fait' || a.statut === 'valide').length;
-
-    const compsHTML = comps.map(c => `<span class="comp-pill">${c}</span>`).join('');
-    const blocsHTML = blocs.map(b => {
-      const meta = BLOCS.find(x => x.code === b);
-      return `<span class="bloc-pill" style="background:${meta?meta.couleur:'#888'}">Bloc ${b}</span>`;
-    }).join('');
-
-    /* Action principale du clic carte */
-    const cardClass = `biblio-card-c type-${ty} ${localOnly ? 'meta-only' : ''}`;
-    const cardData = isUser ? `data-id="${t.id}" data-user="1"` : `data-url="${escapeAttr(t.url)}"`;
+  function renderPack(p) {
+    const isOpen = openedPackId === p.id;
+    const blocsBadge = (p.bloc_ccf && p.bloc_ccf !== '*')
+      ? `<span class="pack-bloc-badge" style="background:${(BLOCS.find(b=>b.code===p.bloc_ccf)||{}).couleur||'#888'}">Bloc ${p.bloc_ccf}</span>`
+      : '<span class="pack-bloc-badge" style="background:#6b3a8a">Transversal</span>';
+    const compsBadge = (p.comp_ciblees || []).map(c => `<span class="pack-comp-pill">${c}</span>`).join('');
+    const hasEval = !!p.evaluation_numerique;
+    const nbRes = (p.ressources || []).length;
 
     return `
-      <article class="${cardClass}" ${cardData} title="${escapeAttr(t.description || t.titre)}">
-        <header class="biblio-card-hdr">
-          <span class="biblio-card-ico">${icoType}</span>
-          <span class="biblio-card-id">${escapeHtml(t.id)}</span>
-          ${isPDF ? '<span class="biblio-card-pdf">PDF</span>' : ''}
-          ${t.duree && t.duree !== '—' ? `<span class="biblio-card-duree">${escapeHtml(t.duree)}</span>` : ''}
+      <article class="pack-card" data-pack-id="${p.id}">
+        <header class="pack-hdr" style="background:linear-gradient(135deg,${p.couleur} 0%, ${p.couleur}dd 100%);">
+          <span class="pack-ico">${p.icone || '📦'}</span>
+          <div class="pack-hdr-text">
+            <h3 class="pack-titre">${escapeHtml(p.titre)}</h3>
+            <p class="pack-desc">${escapeHtml(p.description || '')}</p>
+            <div class="pack-meta">
+              ${blocsBadge}
+              ${compsBadge}
+              <span class="pack-duree">⏱ ${escapeHtml(p.duree_estimee || '?')}</span>
+              <span class="pack-nbres">📁 ${nbRes} ressource${nbRes > 1 ? 's' : ''}</span>
+              ${hasEval ? '<span class="pack-eval-tag">✍ Éval numérique</span>' : ''}
+            </div>
+          </div>
+          <button class="pack-toggle" data-pack-toggle="${p.id}">${isOpen ? '▲' : '▼'}</button>
         </header>
-        <h4 class="biblio-card-titre">${escapeHtml(t.titre)}</h4>
-        <div class="biblio-card-tags">
-          ${blocsHTML}
-          ${compsHTML}
-        </div>
-        ${distrib > 0 ? `<div class="biblio-card-stats">📤 ${distrib} distribué${distrib>1?'s':''} · ✅ ${fait} fait${fait>1?'s':''}</div>` : ''}
-        ${localOnly ? '<div class="biblio-card-warn">⚠ méta seulement (importé sur un autre poste)</div>' : ''}
-        <footer class="biblio-card-actions">
-          ${!localOnly ? `<button class="card-btn card-open">${isPDF ? '📄 Ouvrir PDF' : '👁 Ouvrir'}</button>` : ''}
-          ${!isPlan && !localOnly ? `<button class="card-btn card-distribute" data-id="${escapeAttr(t.id)}">📤 Distribuer</button>` : ''}
-          ${isUser ? `<button class="card-btn card-export" title="Télécharger le fichier pour le partager">💾</button>
-                     <button class="card-btn card-del" title="Supprimer de mon poste">🗑</button>` : ''}
-        </footer>
+        ${isOpen ? `
+          <div class="pack-body">
+            ${(p.ressources || []).map(r => renderResource(r, p)).join('')}
+            ${hasEval ? renderEvalLauncher(p) : ''}
+          </div>
+        ` : ''}
       </article>
     `;
   }
 
+  function renderResource(r, pack) {
+    const typeMeta = {
+      'plan-prof':         { ico: '📋', label: 'Plan prof',        cls: 'res-plan',   audience: 'prof' },
+      'exercice-html':     { ico: '🛠', label: 'Exercice (HTML)',  cls: 'res-html',   audience: 'eleve' },
+      'exercice-pdf':      { ico: '📄', label: 'Exercice (PDF)',   cls: 'res-pdf',    audience: 'eleve' },
+      'evaluation-html':   { ico: '✍', label: 'Évaluation papier',cls: 'res-eval',   audience: 'eleve' },
+      'formulaire-vierge': { ico: '📑', label: 'Formulaire vierge',cls: 'res-form',   audience: 'eleve' },
+      'ressource':         { ico: '📎', label: 'Ressource',        cls: 'res-misc',   audience: 'eleve' }
+    };
+    const meta = typeMeta[r.type] || typeMeta['ressource'];
+    const isPDF = (r.url || '').toLowerCase().endsWith('.pdf');
+    const isProf = meta.audience === 'prof';
+    const distribuable = !isProf;
+
+    /* Stats : combien d'élèves ont reçu / fait */
+    const affects = (window.Affectations && Affectations.byTP(r.id)) || [];
+    const stats = affects.length > 0
+      ? `<span class="res-stats">📤 ${affects.length} · ✅ ${affects.filter(a => a.statut === 'fait' || a.statut === 'valide').length}</span>`
+      : '';
+
+    return `
+      <div class="pack-resource ${meta.cls}" data-res-id="${escapeAttr(r.id)}" data-res-url="${escapeAttr(r.url)}">
+        <span class="res-ico">${meta.ico}</span>
+        <div class="res-info">
+          <div class="res-titre">${escapeHtml(r.titre)}</div>
+          <div class="res-tags">
+            <span class="res-type-tag">${meta.label}</span>
+            ${r.duree ? `<span class="res-duree">⏱ ${escapeHtml(r.duree)}</span>` : ''}
+            ${isPDF ? '<span class="res-pdf-tag">PDF</span>' : ''}
+            ${stats}
+          </div>
+        </div>
+        <div class="res-actions">
+          <button class="res-btn res-open" title="Ouvrir dans un nouvel onglet">${isPDF ? '📄' : '👁'} Ouvrir</button>
+          ${distribuable ? `<button class="res-btn res-distrib" data-id="${escapeAttr(r.id)}" title="Distribuer aux élèves">📤</button>` : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderUserResource(t) {
+    const localOnly = !t.dataUrl;
+    return `
+      <div class="pack-resource res-user" data-user="1" data-res-id="${escapeAttr(t.id)}">
+        <span class="res-ico">⭐</span>
+        <div class="res-info">
+          <div class="res-titre">${escapeHtml(t.titre)}</div>
+          <div class="res-tags">
+            <span class="res-type-tag">Importé par ${escapeHtml(t.importPar || '?')}</span>
+            ${t.tailleKo ? `<span class="res-duree">${t.tailleKo} Ko</span>` : ''}
+            ${(t.comp || []).map(c => `<span class="pack-comp-pill">${c}</span>`).join('')}
+            ${localOnly ? '<span class="res-warn">⚠ méta seulement</span>' : ''}
+          </div>
+        </div>
+        <div class="res-actions">
+          ${!localOnly ? '<button class="res-btn res-user-open">👁 Ouvrir</button>' : ''}
+          ${!localOnly ? '<button class="res-btn res-user-export" title="Télécharger pour partager">💾</button>' : ''}
+          <button class="res-btn res-user-del" title="Supprimer de mon poste">🗑</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderEvalLauncher(p) {
+    const ev = p.evaluation_numerique;
+    return `
+      <div class="pack-eval-launcher">
+        <div class="pack-eval-info">
+          <strong>✍ Évaluation numérique disponible</strong>
+          <p>${ev.items.length} questions · /${ev.total_max} pts · alimente ${ev.comp_alimente || '?'}</p>
+        </div>
+        <button class="pack-eval-btn" data-pack-eval="${p.id}">
+          ✍ Évaluer un élève maintenant
+        </button>
+      </div>
+    `;
+  }
+
   function bindEvents() {
-    /* Drop zone */
     if (window.TPImport) TPImport.bindDropZone(document.getElementById('biblio-drop'));
 
-    /* Onglets */
-    document.querySelectorAll('.biblio-tabs button').forEach(b => {
-      b.onclick = () => { currentTab = b.dataset.tab; render(); };
-    });
-
-    /* Recherche */
+    /* Search */
     const search = document.getElementById('biblio-search');
     if (search) {
       let to = null;
@@ -280,63 +244,54 @@
       };
     }
 
-    /* Filtre Bloc */
+    /* Filtres bloc */
     document.querySelectorAll('.biblio-chip').forEach(b => {
-      b.onclick = () => {
-        const v = b.dataset.bloc;
-        filterBloc = filterBloc === v ? null : v;
-        render();
-      };
-    });
-    document.querySelectorAll('.biblio-chip-comp').forEach(b => {
-      b.onclick = () => {
-        const v = b.dataset.comp;
-        filterComp = filterComp === v ? null : v;
-        render();
-      };
+      b.onclick = () => { filterBloc = filterBloc === b.dataset.bloc ? null : b.dataset.bloc; render(); };
     });
     document.querySelectorAll('.biblio-chip-clear').forEach(b => {
-      b.onclick = () => {
-        if (b.dataset.clear === 'bloc') filterBloc = null;
-        if (b.dataset.clear === 'comp') filterComp = null;
-        render();
+      b.onclick = () => { filterBloc = null; render(); };
+    });
+
+    /* Toggle pack */
+    document.querySelectorAll('.pack-toggle, .pack-hdr').forEach(el => {
+      el.onclick = (e) => {
+        if (e.target.closest('.pack-toggle') || e.target === el || e.target.closest('.pack-hdr-text')) {
+          const id = (el.dataset.packToggle) || el.closest('.pack-card').dataset.packId;
+          openedPackId = openedPackId === id ? null : id;
+          render();
+        }
       };
     });
 
-    /* Cards click → ouvrir */
-    document.querySelectorAll('.biblio-card-c').forEach(card => {
-      const open = card.querySelector('.card-open');
-      if (open) open.onclick = (e) => {
-        e.stopPropagation();
-        if (card.dataset.user === '1') {
-          if (window.TPImport) TPImport.openTP(card.dataset.id);
-        } else {
-          window.open(card.dataset.url, '_blank', 'noopener');
-        }
-      };
-      const dist = card.querySelector('.card-distribute');
+    /* Ouverture ressource */
+    document.querySelectorAll('.pack-resource').forEach(r => {
+      const open = r.querySelector('.res-open');
+      if (open) open.onclick = (e) => { e.stopPropagation(); window.open(r.dataset.resUrl, '_blank', 'noopener'); };
+      const dist = r.querySelector('.res-distrib');
       if (dist) dist.onclick = (e) => {
         e.stopPropagation();
         if (window.DistributeModal && DistributeModal.open) {
-          /* On préselectionne le TP en mémorisant son id */
           window._distributePreselectTP = dist.dataset.id;
           DistributeModal.open();
         }
       };
-      const expo = card.querySelector('.card-export');
-      if (expo) expo.onclick = (e) => {
+      const userOpen = r.querySelector('.res-user-open');
+      if (userOpen) userOpen.onclick = (e) => { e.stopPropagation(); if (window.TPImport) TPImport.openTP(r.dataset.resId); };
+      const userExp = r.querySelector('.res-user-export');
+      if (userExp) userExp.onclick = (e) => { e.stopPropagation(); if (window.TPImport) TPImport.exportTP(r.dataset.resId); };
+      const userDel = r.querySelector('.res-user-del');
+      if (userDel) userDel.onclick = (e) => { e.stopPropagation(); if (window.TPImport) TPImport.remove(r.dataset.resId); };
+    });
+
+    /* Lance modale d'évaluation numérique */
+    document.querySelectorAll('.pack-eval-btn').forEach(b => {
+      b.onclick = (e) => {
         e.stopPropagation();
-        if (window.TPImport) TPImport.exportTP(card.dataset.id);
-      };
-      const del = card.querySelector('.card-del');
-      if (del) del.onclick = (e) => {
-        e.stopPropagation();
-        if (window.TPImport) TPImport.remove(card.dataset.id);
-      };
-      /* Clic sur la carte (hors footer) → ouvrir */
-      card.onclick = (e) => {
-        if (e.target.closest('.biblio-card-actions')) return;
-        if (open) open.click();
+        const packId = b.dataset.packEval;
+        const pack = packs.find(p => p.id === packId);
+        if (pack && window.PackEvalModal && PackEvalModal.open) {
+          PackEvalModal.open(pack);
+        }
       };
     });
   }
@@ -347,7 +302,7 @@
   function escapeAttr(s) { return escapeHtml(s); }
 
   function onShown() {
-    if (!bib || !bareme) init();
+    if (!packs || !bareme) init();
     else refresh();
   }
 

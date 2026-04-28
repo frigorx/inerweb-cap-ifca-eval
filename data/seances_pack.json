@@ -1,0 +1,122 @@
+{
+  "_doc": "Packs de séance — regroupent par thème pédagogique tous les fichiers liés (plan prof, TP élève HTML/PDF, ressources, évaluation). Réorganise la bibliothèque par séance complète au lieu de fichiers éparpillés.",
+  "packs": [
+    {
+      "id": "PACK-CERFA",
+      "titre": "Documentation CERFA — Bordereau fluides",
+      "couleur": "#dd6b20",
+      "icone": "📋",
+      "duree_estimee": "1 h à 2 h selon profondeur",
+      "bloc_ccf": "C",
+      "comp_ciblees": ["C1.3"],
+      "description": "Pack complet pour préparer le Bloc C-2 du CCF EP3 (CERFA 15497*02 — 20 pts).",
+      "ressources": [
+        { "type": "plan-prof",         "id": "PLAN-CERFA",       "titre": "Plan séance prof",                   "url": "eleve/exercices-rapides/cerfa/Plan_seance_TP_CERFA_FIBSD.html" },
+        { "type": "exercice-html",     "id": "EX-CERFA",         "titre": "Exercice interactif (HTML)",         "url": "eleve/exercices-rapides/Exercice_CERFA_FIBSD_pro.html",       "duree": "1 h" },
+        { "type": "exercice-pdf",      "id": "RES-CERFA-PDF",    "titre": "Version PDF imprimable",             "url": "eleve/exercices-rapides/cerfa/Exercice_CERFA_FIBSD_pro.pdf",  "duree": "1 h" },
+        { "type": "formulaire-vierge", "id": "RES-CERFA-VIERGE", "titre": "Formulaire CERFA 15497*04 vierge",   "url": "eleve/exercices-rapides/cerfa/cerfa_15497-04_vierge.pdf" },
+        { "type": "evaluation-html",   "id": "EX-CERFA-EVAL",    "titre": "Évaluation papier (HTML)",           "url": "eleve/exercices-rapides/cerfa/Eval_TP_CERFA_CAP_IFCA.html",   "duree": "1 h" }
+      ],
+      "evaluation_numerique": {
+        "items": [
+          { "id": "Q1", "intitule": "Identification du fluide (R-449A, R-134a…)",  "max": 4, "niveaux": [0, 1, 2, 4] },
+          { "id": "Q2", "intitule": "Quantité kg / GWP / TeqCO₂ (calcul)",          "max": 5, "niveaux": [0, 1, 3, 5] },
+          { "id": "Q3", "intitule": "Identification de l'opérateur (raison sociale, n° attestation)", "max": 3, "niveaux": [0, 1, 2, 3] },
+          { "id": "Q4", "intitule": "Détenteur / lieu de prestation",               "max": 3, "niveaux": [0, 1, 2, 3] },
+          { "id": "Q5", "intitule": "Date / signature / cachet",                    "max": 2, "niveaux": [0, 0, 1, 2] },
+          { "id": "Q6", "intitule": "Lisibilité, sans ratures",                     "max": 3, "niveaux": [0, 1, 2, 3] }
+        ],
+        "total_max": 20,
+        "comp_alimente": "C1.3"
+      }
+    },
+
+    {
+      "id": "PACK-MANOMETRES",
+      "titre": "Manomètres + Schéma cycle frigo (SC/SR)",
+      "couleur": "#1b3a63",
+      "icone": "📊",
+      "duree_estimee": "1 h ou 2 h (combo)",
+      "bloc_ccf": "B",
+      "comp_ciblees": ["C4.5", "C5.1"],
+      "description": "Pack pour le Bloc B du CCF EP3 (Mesures & diagnostic). Lecture manomètres HP/BP, calcul SC/SR, schéma cycle.",
+      "ressources": [
+        { "type": "plan-prof",       "id": "PLAN-S1-MANO",    "titre": "Plan séance — Lecture manomètres",  "url": "eleve/exercices-rapides/Plan_seance_1_Lecture_manometres.html" },
+        { "type": "plan-prof",       "id": "PLAN-S2-SCHEMA",  "titre": "Plan séance — Schéma cycle",        "url": "eleve/exercices-rapides/Plan_seance_2_Schema_cycle_frigo.html" },
+        { "type": "exercice-html",   "id": "EX-MANO",         "titre": "Exo Lecture manomètres SC/SR",      "url": "eleve/exercices-rapides/Exercice_lecture_manometres_SC_SR.html",     "duree": "1 h" },
+        { "type": "exercice-html",   "id": "EX-SCHEMA",       "titre": "Exo Schéma + points de mesure",     "url": "eleve/exercices-rapides/Exercice_schema_points_mesure_SC_SR.html",   "duree": "1 h" },
+        { "type": "exercice-html",   "id": "EX-COMBO-2H",     "titre": "Combo 2 h — Lecture + Schéma",      "url": "eleve/exercices-rapides/Plan_seance_combo_2h_Lecture_et_Schema.html","duree": "2 h" },
+        { "type": "ressource",       "id": "RES-SCHEMA-SVG",  "titre": "Schéma cycle frigo (SVG)",          "url": "eleve/exercices-rapides/schema_cycle_frigo.svg" }
+      ],
+      "evaluation_numerique": {
+        "items": [
+          { "id": "Q1", "intitule": "Lecture HP / BP correcte avec unités",          "max": 4, "niveaux": [0, 1, 2, 4] },
+          { "id": "Q2", "intitule": "Détermination Tc et T₀ depuis manomètre",       "max": 4, "niveaux": [0, 1, 2, 4] },
+          { "id": "Q3", "intitule": "Calcul SC (sous-refroidissement) avec unités",  "max": 5, "niveaux": [0, 2, 3, 5] },
+          { "id": "Q4", "intitule": "Calcul SR (surchauffe) avec unités",            "max": 5, "niveaux": [0, 2, 3, 5] },
+          { "id": "Q5", "intitule": "Placement des 4 points sur le schéma",          "max": 4, "niveaux": [0, 1, 2, 4] },
+          { "id": "Q6", "intitule": "Diagnostic cohérent (charge OK / défaut)",      "max": 3, "niveaux": [0, 1, 2, 3] }
+        ],
+        "total_max": 25,
+        "comp_alimente": "C4.5"
+      }
+    },
+
+    {
+      "id": "PACK-S1-FLUIDIQUES",
+      "titre": "Atelier S1 — Manipulations fluidiques",
+      "couleur": "#1b3a63",
+      "icone": "🛠",
+      "duree_estimee": "8 h (4 créneaux)",
+      "bloc_ccf": "A",
+      "comp_ciblees": ["C4.7", "C4.1", "C3.7", "C4.5"],
+      "description": "Semaine 1 (27/04). 4 TP d'atelier en présentiel. Cible Bloc A du CCF EP3 (Manipulations fluidiques 120 pts).",
+      "ressources": [
+        { "type": "exercice-html", "id": "TP-1",  "titre": "TP-1  Pose / dépose manomètres + pressostat BP", "url": "eleve/tp-officiels/S1_27-04-2026/TP1_Pose_depose_manos_pressostat_BP.html", "duree": "2 h" },
+        { "type": "exercice-html", "id": "TP-1A", "titre": "TP-1A Pose manifold + tirage au vide",          "url": "eleve/tp-officiels/S1_27-04-2026/TP1A_Pose_manifold_tirage_vide.html",      "duree": "2 h" },
+        { "type": "exercice-html", "id": "TP-2",  "titre": "TP-2  Mesures frigorifiques",                    "url": "eleve/tp-officiels/S1_27-04-2026/TP2_Mesures_frigorifiques.html",            "duree": "2 h" },
+        { "type": "exercice-html", "id": "TP-2A", "titre": "TP-2A Mesures températures",                     "url": "eleve/tp-officiels/S1_27-04-2026/TP2A_Mesures_temperatures.html",            "duree": "1 h 30" }
+      ]
+    },
+
+    {
+      "id": "PACK-S2-PRESSOSTAT",
+      "titre": "Atelier S2 — Pressostat + Mesures avancées",
+      "couleur": "#2d8659",
+      "icone": "⚙",
+      "duree_estimee": "8 h (4 créneaux)",
+      "bloc_ccf": "A",
+      "comp_ciblees": ["C3.7", "C4.6", "C4.5", "C5.1"],
+      "description": "Semaine 2 (04/05). 2 TP atelier centrés sur remplacement/réglage pressostat et mesures fines.",
+      "ressources": [
+        { "type": "exercice-html", "id": "TP-1B", "titre": "TP-1B Remplacement + réglage pressostat", "url": "eleve/tp-officiels/S2_04-05-2026/TP1B_Remplacement_reglage_pressostat.html", "duree": "2 h" },
+        { "type": "exercice-html", "id": "TP-2B", "titre": "TP-2B Mesures P/T + surchauffe + sous-refroidissement", "url": "eleve/tp-officiels/S2_04-05-2026/TP2B_Mesures_PT_surchauffe_sous_refroidissement.html", "duree": "2 h" }
+      ]
+    },
+
+    {
+      "id": "PACK-EVAL-TRANSVERSAL",
+      "titre": "Évaluation transversale CAP IFCA (positionnement)",
+      "couleur": "#6b3a8a",
+      "icone": "🎯",
+      "duree_estimee": "1 h",
+      "bloc_ccf": "*",
+      "comp_ciblees": ["C1.3", "C2.2", "C3.7", "C4.5", "C5.1"],
+      "description": "Quiz transversal pour positionner les élèves sur l'ensemble des compétences CAP IFCA. Idéal en début ou fin de session.",
+      "ressources": [
+        { "type": "exercice-html", "id": "EX-EVAL-CAP", "titre": "Quiz compétences CAP IFCA", "url": "eleve/exercices-rapides/Eval_competences_CAP_IFCA.html", "duree": "1 h" }
+      ],
+      "evaluation_numerique": {
+        "items": [
+          { "id": "BLOC-SECU", "intitule": "Sécurité (EPI, VAT, posture)",        "max": 4, "niveaux": [0, 1, 2, 4] },
+          { "id": "BLOC-MANIP","intitule": "Manipulations (manifold, tirage vide)","max": 5, "niveaux": [0, 1, 3, 5] },
+          { "id": "BLOC-MES",  "intitule": "Mesures (P/T, SC/SR, intensité)",     "max": 5, "niveaux": [0, 1, 3, 5] },
+          { "id": "BLOC-DIAG", "intitule": "Diagnostic (cycle, défauts)",         "max": 4, "niveaux": [0, 1, 2, 4] },
+          { "id": "BLOC-DOC",  "intitule": "Documentation (CERFA, bordereau)",    "max": 2, "niveaux": [0, 0, 1, 2] }
+        ],
+        "total_max": 20,
+        "comp_alimente": "C1.3"
+      }
+    }
+  ]
+}
