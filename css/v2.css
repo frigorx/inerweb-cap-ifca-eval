@@ -2196,3 +2196,312 @@
   .eleve-card-body { grid-template-columns: 1fr; }
   .eleve-card-radar { width: 100%; max-width: 160px; height: 160px; margin: 0 auto; }
 }
+
+/* ========================================================================== */
+/*           BIBLIOTHÈQUE TP REFONDUE (v2.0-DIGEST)                           */
+/* ========================================================================== */
+
+.biblio-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 14px 0 8px;
+  border-bottom: 2px solid #e0e4ea;
+}
+.biblio-tabs button {
+  background: transparent;
+  border: 0;
+  border-bottom: 4px solid transparent;
+  padding: 10px 18px;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: 700;
+  font-size: 14pt;
+  color: #555;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: -2px;
+  transition: all 0.12s;
+}
+.biblio-tabs button:hover { color: #1b3a63; background: #f4f6fa; }
+.biblio-tabs button.active {
+  color: #1b3a63;
+  border-bottom-color: #ff6b35;
+}
+.biblio-tabs .b-count {
+  background: #f4f6fa;
+  color: #1b3a63;
+  font-size: 11pt;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+.biblio-tabs button.active .b-count { background: #ff6b35; color: #fff; }
+
+.biblio-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  background: #f4f6fa;
+  border-radius: 6px;
+}
+.biblio-filters input[type="search"] {
+  flex: 1;
+  min-width: 240px;
+  padding: 8px 14px;
+  font-size: 13pt;
+  font-family: 'Calibri', sans-serif;
+  border: 1px solid #c5cbd6;
+  border-radius: 20px;
+  background: #fff;
+}
+.biblio-filters input[type="search"]:focus {
+  outline: none;
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+}
+
+.biblio-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+.biblio-chips .chip-lab {
+  font-size: 11pt;
+  color: #666;
+  font-weight: 700;
+  margin-right: 4px;
+}
+.biblio-chip {
+  --c: #888;
+  background: transparent;
+  color: var(--c);
+  border: 1.5px solid var(--c);
+  border-radius: 12px;
+  padding: 3px 12px;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: 700;
+  font-size: 11pt;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.biblio-chip:hover { background: rgba(0,0,0,0.05); }
+.biblio-chip.active {
+  background: var(--c);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.biblio-chip-comp {
+  background: #fff;
+  color: #1b3a63;
+  border: 1px solid #c5cbd6;
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: 700;
+  font-size: 11pt;
+  cursor: pointer;
+}
+.biblio-chip-comp:hover { background: #f4f6fa; }
+.biblio-chip-comp.active {
+  background: #1b3a63;
+  color: #fff;
+  border-color: #1b3a63;
+}
+.biblio-chip-clear {
+  background: #c53030;
+  color: #fff;
+  border: 0;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-weight: 700;
+  font-size: 14pt;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.biblio-result-count {
+  margin-left: auto;
+  font-size: 11pt;
+  color: #666;
+  font-style: italic;
+}
+
+/* Groupes par type */
+.biblio-cards-wrap { display: flex; flex-direction: column; gap: 16px; }
+.biblio-group {
+  background: #fff;
+  border: 1px solid #e0e4ea;
+  border-left: 5px solid #1b3a63;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.biblio-group-title {
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 14pt;
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px dashed #e0e4ea;
+  padding-bottom: 6px;
+}
+.biblio-group-count {
+  background: #f4f6fa;
+  color: #555;
+  padding: 1px 10px;
+  border-radius: 10px;
+  font-size: 11pt;
+}
+
+.biblio-grid-compact {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+/* Card compacte */
+.biblio-card-c {
+  background: #fff;
+  border: 1px solid #e0e4ea;
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.12s;
+  position: relative;
+}
+.biblio-card-c:hover {
+  border-color: #ff6b35;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15);
+  transform: translateY(-1px);
+}
+.biblio-card-c.type-atelier  { border-left: 4px solid #1b3a63; }
+.biblio-card-c.type-filler   { border-left: 4px solid #ff6b35; }
+.biblio-card-c.type-user     { border-left: 4px solid #dd6b20; background: #fffaf0; }
+.biblio-card-c.type-ressource{ border-left: 4px solid #2d8659; background: #f0f8f0; }
+.biblio-card-c.type-plan     { border-left: 4px solid #6b3a8a; background: #fdf6ff; }
+.biblio-card-c.meta-only     { opacity: 0.65; }
+
+.biblio-card-hdr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11pt;
+}
+.biblio-card-ico { font-size: 14pt; }
+.biblio-card-id {
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: 700;
+  background: #1b3a63;
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 10pt;
+}
+.biblio-card-c.type-filler  .biblio-card-id { background: #ff6b35; }
+.biblio-card-c.type-user    .biblio-card-id { background: #dd6b20; }
+.biblio-card-c.type-ressource .biblio-card-id { background: #2d8659; }
+.biblio-card-c.type-plan    .biblio-card-id { background: #6b3a8a; }
+
+.biblio-card-pdf {
+  background: #c53030;
+  color: #fff;
+  padding: 1px 8px;
+  border-radius: 8px;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: 700;
+  font-size: 9pt;
+}
+.biblio-card-duree {
+  margin-left: auto;
+  background: #f4f6fa;
+  color: #555;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 10pt;
+  font-weight: 700;
+}
+.biblio-card-titre {
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 13pt;
+  color: #1b3a63;
+  margin: 0;
+  line-height: 1.25;
+}
+.biblio-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.biblio-card-tags .bloc-pill {
+  color: #fff;
+  padding: 1px 8px;
+  border-radius: 8px;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: 700;
+  font-size: 9pt;
+}
+.biblio-card-tags .comp-pill {
+  background: #f4f6fa;
+  color: #1b3a63;
+  padding: 1px 8px;
+  border-radius: 8px;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: 700;
+  font-size: 9pt;
+}
+.biblio-card-stats {
+  font-size: 10pt;
+  color: #666;
+  background: #fff8e1;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border-left: 3px solid #ff6b35;
+}
+.biblio-card-warn {
+  font-size: 10pt;
+  color: #c08600;
+  background: #fff8e1;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border-left: 3px solid #dd6b20;
+}
+.biblio-card-actions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 4px;
+  border-top: 1px dashed #e0e4ea;
+}
+.biblio-card-actions .card-btn {
+  background: #fff;
+  border: 1px solid #c5cbd6;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 11pt;
+  cursor: pointer;
+  font-family: 'Calibri', sans-serif;
+}
+.biblio-card-actions .card-btn:hover { background: #f4f6fa; border-color: #1b3a63; }
+.biblio-card-actions .card-open { background: #1b3a63; color: #fff; border-color: #1b3a63; }
+.biblio-card-actions .card-open:hover { background: #2c4d7a; }
+.biblio-card-actions .card-distribute { background: #ff6b35; color: #fff; border-color: #ff6b35; font-weight: 700; }
+.biblio-card-actions .card-distribute:hover { background: #e55a25; }
+.biblio-card-actions .card-del:hover { background: #fff0f0; border-color: #c53030; color: #c53030; }
+
+.biblio-empty {
+  text-align: center;
+  padding: 30px;
+  color: #888;
+  font-size: 13pt;
+  font-style: italic;
+}
