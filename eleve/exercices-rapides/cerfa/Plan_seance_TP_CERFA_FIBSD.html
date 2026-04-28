@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Plan de séance — TP CERFA FIBSD (2h)</title>
+<style>
+@page { size: A4 portrait; margin: 12mm; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Lexend', 'Verdana', Arial, sans-serif;
+  font-size: 10.5pt;
+  color: #1a1a1a;
+  background: #fff;
+  line-height: 1.45;
+}
+.page {
+  width: 186mm;
+  margin: 0 auto;
+  page-break-after: always;
+  break-after: page;
+}
+.page:last-child { page-break-after: auto; break-after: auto; }
+
+header.titre {
+  border: 2px solid #0b3d91;
+  background: #eaf1fb;
+  padding: 4mm 5mm;
+  margin-bottom: 4mm;
+  border-radius: 4px;
+}
+header.titre h1 {
+  margin: 0 0 1mm 0;
+  font-size: 15pt;
+  color: #0b3d91;
+}
+header.titre .meta {
+  font-size: 9.5pt;
+  color: #475569;
+  margin-top: 2mm;
+}
+
+.bandeau {
+  background: #0b3d91; color: white;
+  font-weight: bold;
+  font-size: 12pt;
+  padding: 2.5mm 5mm;
+  border-radius: 3px;
+  margin: 4mm 0 3mm 0;
+  letter-spacing: 0.4mm;
+  page-break-after: avoid;
+}
+.bandeau.vert { background: #047857; }
+.bandeau.orange { background: #b45309; }
+.bandeau.gris { background: #475569; }
+
+.bloc {
+  border: 1.5px solid #475569;
+  background: #f8fafc;
+  border-radius: 4px;
+  padding: 3mm 5mm;
+  margin-bottom: 4mm;
+  page-break-inside: avoid;
+}
+.bloc h2 {
+  margin: 0 0 2mm 0;
+  font-size: 11.5pt;
+  color: #0b3d91;
+}
+.bloc h3 {
+  margin: 3mm 0 1mm 0;
+  font-size: 10.5pt;
+  color: #475569;
+}
+.bloc ul { margin: 1mm 0 2mm 5mm; padding: 0; }
+.bloc li { margin-bottom: 1mm; }
+
+table.deroule {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10pt;
+  margin-bottom: 4mm;
+  page-break-inside: avoid;
+}
+table.deroule th, table.deroule td {
+  border: 1.2px solid #475569;
+  padding: 2mm 2.5mm;
+  vertical-align: top;
+}
+table.deroule th {
+  background: #0b3d91;
+  color: white;
+  font-size: 10pt;
+  text-align: left;
+}
+table.deroule .duree { text-align:center; width: 22mm; font-weight: 600; color: #0b3d91; background: #eff6ff; }
+table.deroule .phase { width: 32mm; font-weight: 600; color: #b45309; }
+table.deroule .pose { background: #fef3c7; }
+table.deroule .actif { background: #ecfdf5; }
+table.deroule .clot { background: #fef2f2; }
+
+.encart {
+  border-left: 5px solid #d97706;
+  background: #fffbeb;
+  padding: 2.5mm 4mm;
+  margin: 3mm 0;
+  font-size: 10pt;
+  border-radius: 3px;
+}
+.encart strong { color: #b45309; }
+
+table.competences {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9.5pt;
+  margin-bottom: 3mm;
+}
+table.competences th, table.competences td {
+  border: 1px solid #475569;
+  padding: 1.5mm;
+  vertical-align: top;
+}
+table.competences th { background: #475569; color: white; font-size: 9pt; }
+table.competences .code { width: 16mm; font-weight: 600; text-align: center; background: #f1f5f9; }
+table.competences .tne { background: #fed7aa; }
+table.competences .cap { background: #bfdbfe; }
+table.competences .bac { background: #ddd6fe; }
+
+footer.pied {
+  font-size: 8.5pt;
+  color: #64748b;
+  text-align: center;
+  border-top: 1px solid #cbd5e1;
+  padding-top: 2mm;
+  margin-top: 4mm;
+}
+
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<!-- =========== PAGE 1 =========== -->
+<div class="page">
+
+  <header class="titre">
+    <h1>Plan de séance — TP CERFA FIBSD n° 15497*04</h1>
+    <div style="font-size:10pt; color:#0b3d91;">« Dépannage au Bon Quartier » — Maintenance + recherche de fuite + complément de charge</div>
+    <div class="meta">
+      Filières : <strong>2nde TNE</strong> • <strong>CAP IFCA</strong> • <strong>Bac Pro MFER</strong> &nbsp;•&nbsp;
+      Bloc EP3 — Documentation &nbsp;•&nbsp;
+      Durée : <strong>2h00 (120 min)</strong> &nbsp;•&nbsp;
+      Effectif : 24 élèves &nbsp;•&nbsp;
+      Salle : atelier ou salle de cours
+    </div>
+  </header>
+
+  <div class="bandeau">OBJECTIFS PÉDAGOGIQUES</div>
+
+  <div class="bloc">
+    <h2>Objectif principal</h2>
+    <p style="margin:1mm 0;">À l'issue de la séance, l'élève est capable de <strong>compléter intégralement le formulaire CERFA n° 15497*04</strong> (Fiche d'intervention — Bordereau de Suivi de Déchet) à partir d'une mise en situation professionnelle réaliste.</p>
+
+    <h3>Objectifs intermédiaires</h3>
+    <ul>
+      <li>Lire et exploiter une <strong>plaque signalétique</strong> et un <strong>cahier des charges</strong> d'intervention.</li>
+      <li>Calculer la <strong>TeqCO₂</strong> d'une installation à partir de la charge et du GWP du fluide.</li>
+      <li>Calculer la <strong>quantité de fluide ajoutée</strong> à partir de pesées avant/après et le <strong>reste en bouteille</strong> à partir de la tare.</li>
+      <li>Identifier la <strong>nature de l'intervention</strong> (maintenance + contrôle d'étanchéité non périodique) selon le contexte.</li>
+      <li>Identifier le bon <strong>code ADR / déchet</strong> du fluide manipulé (UN 1078 / 14 06 01* pour HFC non inflammable).</li>
+      <li>Comprendre la <strong>responsabilité de signature</strong> : seul l'opérateur signe sa case ; le détenteur signe la sienne — jamais à sa place.</li>
+    </ul>
+  </div>
+
+  <div class="bandeau vert">PRÉ-REQUIS &amp; MATÉRIEL</div>
+
+  <div class="bloc">
+    <h3>Pré-requis</h3>
+    <ul>
+      <li>Vocabulaire de base : fluide frigorigène, charge, tare, GWP, étanchéité.</li>
+      <li>Maîtrise des opérations : multiplication, division, soustraction de décimaux.</li>
+      <li>Notion de classification des fluides (HFC vs HC, inflammable vs non inflammable).</li>
+    </ul>
+
+    <h3>Matériel élève</h3>
+    <ul>
+      <li>1 dossier TD (7 pages — A4, page 2 en paysage)</li>
+      <li>1 CERFA officiel n° 15497*04 (4 pages A4)</li>
+      <li>Stylo bille bleu (pour le CERFA officiel)</li>
+      <li>Calculatrice (autorisée)</li>
+      <li>Crayon de papier + gomme (pour les brouillons de calcul Q1/Q2)</li>
+    </ul>
+
+    <h3>Matériel enseignant</h3>
+    <ul>
+      <li>Vidéoprojecteur (pour projeter la BD storyboard pleine page paysage en intro)</li>
+      <li>1 corrigé enseignant (page 7 du TD)</li>
+      <li>3 grilles d'évaluation par compétences (TNE / CAP IFCA / Bac Pro MFER)</li>
+      <li>Optionnel : maquette d'installation + bouteille R-134a + balance pour montrer en vrai (5 min, intro)</li>
+    </ul>
+  </div>
+
+  <footer class="pied">Plan de séance TP CERFA FIBSD — Page 1/3 — F. HENNINOT — LP J. Raynaud — Avril 2026</footer>
+</div>
+
+<!-- =========== PAGE 2 — Déroulé minute par minute =========== -->
+<div class="page">
+
+  <div class="bandeau orange">DÉROULÉ DE LA SÉANCE — 120 MIN</div>
+
+  <table class="deroule">
+    <thead>
+      <tr>
+        <th class="duree">Durée</th>
+        <th class="phase">Phase</th>
+        <th>Activité enseignant</th>
+        <th>Activité élève</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="pose">
+        <td class="duree">5 min<br><small>0 → 5</small></td>
+        <td class="phase">Accueil &amp; consigne</td>
+        <td>Distribue le TD + le CERFA officiel. Annonce l'objectif : « À la fin de la séance vous aurez rempli un vrai CERFA réglementaire. »</td>
+        <td>Écoute, prend connaissance du dossier.</td>
+      </tr>
+      <tr class="pose">
+        <td class="duree">10 min<br><small>5 → 15</small></td>
+        <td class="phase">Mise en situation</td>
+        <td><strong>Projette la BD storyboard</strong> (page 2 paysage du TD) au tableau. Lit chaque acte avec la classe. Insiste sur le « non-périodique » et la responsabilité signature.</td>
+        <td>Suit la BD à l'écran et sur sa propre feuille. Pose des questions si besoin.</td>
+      </tr>
+      <tr class="actif">
+        <td class="duree">10 min<br><small>15 → 25</small></td>
+        <td class="phase">Lecture autonome ressources</td>
+        <td>Circule. Vérifie que chacun a bien identifié les infos clés (charge 3,2 kg, R-134a, étalonnage 15/02/2026).</td>
+        <td>Lit les pages 3 (infos compl) et 4 (ressources : formule, GWP, balance bouteille). Surligne les chiffres-clés.</td>
+      </tr>
+      <tr class="actif">
+        <td class="duree">5 min<br><small>25 → 30</small></td>
+        <td class="phase">Lecture checklist CERFA</td>
+        <td>Présente la page 5 (checklist des 10 rubriques à remplir). Rappelle l'avertissement sur la signature.</td>
+        <td>Prend connaissance de la checklist. Numérote les rubriques sur son CERFA officiel.</td>
+      </tr>
+      <tr class="actif">
+        <td class="duree">25 min<br><small>30 → 55</small></td>
+        <td class="phase">Q1 — Calcul TeqCO₂</td>
+        <td>Au tableau, refait la formule avec la classe : <strong>TeqCO₂ = Charge × GWP ÷ 1 000</strong>. Laisse ensuite chacun calculer en autonomie. Aide individualisée pour ceux en difficulté.</td>
+        <td>Identifie le fluide R-134a → trouve GWP = 1 430 dans le tableau → pose le calcul : 3,2 × 1 430 ÷ 1 000 = <strong>4,576 t.éq.CO₂</strong>.</td>
+      </tr>
+      <tr class="actif">
+        <td class="duree">20 min<br><small>55 → 75</small></td>
+        <td class="phase">Q2 — Pesée bouteille</td>
+        <td>Rappelle : Q2a = AVANT − APRÈS, Q2b = APRÈS − tare. Donne un exemple au tableau si nécessaire.</td>
+        <td>Calcule : Q2a = 17,800 − 17,400 = <strong>0,400 kg</strong>. Q2b = 17,400 − 14,500 = <strong>2,900 kg</strong>.</td>
+      </tr>
+      <tr class="actif">
+        <td class="duree">35 min<br><small>75 → 110</small></td>
+        <td class="phase">Remplissage CERFA officiel</td>
+        <td>Circule rubrique par rubrique. Repère les confusions classiques (« périodique » vs « non périodique », signature détenteur, UN 3161 vs UN 1078). Coche au crayon dans sa grille de positionnement.</td>
+        <td>Remplit au stylo bille bleu les 10 rubriques du CERFA officiel à partir des infos collectées et des résultats Q1/Q2. Signe sa case opérateur.</td>
+      </tr>
+      <tr class="clot">
+        <td class="duree">10 min<br><small>110 → 120</small></td>
+        <td class="phase">Bilan &amp; ramassage</td>
+        <td>Ramasse les 24 CERFA + le dossier TD. Fait un bilan oral des erreurs fréquentes. Annonce le retour des résultats à la séance suivante.</td>
+        <td>Range. Pose ses questions. Note les points à revoir si besoin.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="encart">
+    <strong>Différenciation pédagogique :</strong>
+    Pour les élèves DYS / TDAH, autoriser la <strong>lecture orale</strong> de la BD à voix haute par un binôme. Pour les plus rapides, ajouter un défi : recalculer la TeqCO₂ si l'installation contenait <strong>R-404A</strong> à la place du R-134a (résultat : 12,55 t → contrôle tous les 6 mois). Pour les plus lents, autoriser à ne remplir que les rubriques 1, 2, 3, 4, 11, 14 (l'essentiel).
+  </div>
+
+  <footer class="pied">Plan de séance TP CERFA FIBSD — Page 2/3 — Déroulé 2h</footer>
+</div>
+
+<!-- =========== PAGE 3 — Compétences évaluées =========== -->
+<div class="page">
+
+  <div class="bandeau gris">COMPÉTENCES ÉVALUÉES — VUE TRANSVERSE</div>
+
+  <p style="font-size:10.5pt; margin:2mm 0;">Le TP CERFA FIBSD active <strong>plusieurs compétences</strong> selon le diplôme. Ci-dessous, la matrice transverse. Les grilles détaillées (4 niveaux : NA / EC / A / M) sont fournies par diplôme dans des fiches séparées.</p>
+
+  <table class="competences">
+    <thead>
+      <tr>
+        <th style="width:55%;">Compétence évaluée</th>
+        <th class="tne" style="text-align:center;">2nde TNE</th>
+        <th class="cap" style="text-align:center;">CAP IFCA</th>
+        <th class="bac" style="text-align:center;">Bac Pro MFER</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Lire et exploiter un cahier des charges / une BD professionnelle</td>
+        <td class="code tne">CT.1</td>
+        <td class="code cap">C2.2</td>
+        <td class="code bac">C1.2</td>
+      </tr>
+      <tr>
+        <td>Identifier les caractéristiques d'une installation (plaque signalétique)</td>
+        <td class="code tne">CT.2</td>
+        <td class="code cap">C2.2</td>
+        <td class="code bac">C3.1</td>
+      </tr>
+      <tr>
+        <td>Calculer la TeqCO₂ (charge × GWP / 1 000)</td>
+        <td class="code tne">CT.3</td>
+        <td class="code cap">C3.7</td>
+        <td class="code bac">C3.5</td>
+      </tr>
+      <tr>
+        <td>Calculer une quantité de fluide à partir de pesées (manipulation chiffrée)</td>
+        <td class="code tne">CT.3</td>
+        <td class="code cap">C3.7</td>
+        <td class="code bac">C4.5b</td>
+      </tr>
+      <tr>
+        <td>Identifier la nature réglementaire d'une intervention (périodique / non périodique)</td>
+        <td class="code tne">CT.4</td>
+        <td class="code cap">C4.5</td>
+        <td class="code bac">C4.5b</td>
+      </tr>
+      <tr>
+        <td>Identifier le code ADR / déchet du fluide (UN 1078 / UN 3161)</td>
+        <td class="code tne">CT.5</td>
+        <td class="code cap">C4.6</td>
+        <td class="code bac">C4.6</td>
+      </tr>
+      <tr>
+        <td>Renseigner un document réglementaire officiel (CERFA)</td>
+        <td class="code tne">CT.6</td>
+        <td class="code cap"><strong>C5.1</strong></td>
+        <td class="code bac"><strong>C5.1</strong></td>
+      </tr>
+      <tr>
+        <td>Comprendre la responsabilité de signature (opérateur / détenteur)</td>
+        <td class="code tne">CT.6</td>
+        <td class="code cap">C1.1</td>
+        <td class="code bac">C1.2</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="encart">
+    <strong>Compétence cible (« compétence pivot ») :</strong>
+    <strong>C5.1 — Renseigner les documents techniques et réglementaires</strong> pour CAP IFCA et Bac Pro MFER. Pour la 2nde TNE, c'est la <strong>CT.6 — Communication écrite professionnelle</strong>. Cette compétence est positionnée à <strong>« Acquise »</strong> si le CERFA est rempli sans erreur de fond (peu importe la calligraphie ou les rayures).
+  </div>
+
+  <div class="bandeau vert">CRITÈRES DE RÉUSSITE — INDIVIDUELS</div>
+
+  <table class="competences">
+    <thead><tr><th style="width:25mm;">Niveau</th><th>Indicateurs observables</th></tr></thead>
+    <tbody>
+      <tr><td class="code" style="background:#fee2e2;">NA</td><td><strong>Non Acquis :</strong> CERFA partiellement rempli (moins de 5 rubriques sur 10). Calcul TeqCO₂ erroné ou manquant. Confusion majeure (ex : signe à la place du détenteur, coche UN 3161 pour R-134a).</td></tr>
+      <tr><td class="code" style="background:#fef3c7;">EC</td><td><strong>En Cours :</strong> CERFA rempli aux 2/3. Calcul Q1 ou Q2 partiellement juste. Quelques cases mal cochées mais l'élève sait expliquer son raisonnement.</td></tr>
+      <tr><td class="code" style="background:#dcfce7;">A</td><td><strong>Acquis :</strong> CERFA entièrement rempli. Calculs Q1 et Q2 corrects. Toutes les cases cochées correctement. Signature opérateur uniquement.</td></tr>
+      <tr><td class="code" style="background:#bfdbfe;">M</td><td><strong>Maîtrisé :</strong> Acquis + l'élève sait expliquer la <strong>logique réglementaire</strong> derrière chaque rubrique (pourquoi non périodique, pourquoi UN 1078, pourquoi seuil 5 t TeqCO₂ → contrôle annuel). Capable d'aider un camarade.</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:10pt; margin-top:3mm;"><strong>Note chiffrée indicative</strong> (si conversion demandée par l'établissement) : NA ≤ 7/20 &nbsp;•&nbsp; EC = 8 à 11/20 &nbsp;•&nbsp; A = 12 à 16/20 &nbsp;•&nbsp; M = 17 à 20/20.</p>
+
+  <footer class="pied">Plan de séance TP CERFA FIBSD — Page 3/3 — Compétences transverses — F. HENNINOT — LP J. Raynaud — Avril 2026</footer>
+</div>
+
+</body>
+</html>

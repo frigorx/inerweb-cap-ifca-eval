@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Évaluation par compétences — TP CERFA FIBSD — CAP IFCA</title>
+<style>
+@page { size: A4 landscape; margin: 8mm; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Lexend', 'Verdana', Arial, sans-serif;
+  font-size: 9.5pt;
+  color: #1a1a1a;
+  background: #fff;
+  line-height: 1.35;
+}
+.page { width: 281mm; margin: 0 auto; }
+
+header.titre {
+  background: #bfdbfe;
+  border: 2px solid #1e3a8a;
+  padding: 3mm 4mm;
+  margin-bottom: 3mm;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header.titre h1 { margin: 0; font-size: 13pt; color: #1e3a8a; }
+header.titre .meta { font-size: 9pt; color: #1e3a8a; text-align: right; }
+
+.cartouche {
+  display: flex;
+  border: 1.5px solid #1e293b;
+  background: #fefce8;
+  padding: 2mm 3mm;
+  margin-bottom: 3mm;
+  border-radius: 3px;
+  font-size: 10pt;
+}
+.cartouche .col { flex: 1; }
+.cartouche .col strong { color: #1e293b; }
+.cartouche .lign {
+  border-bottom: 1px solid #94a3b8;
+  display: inline-block;
+  min-width: 35mm;
+  height: 5mm;
+  vertical-align: bottom;
+  padding: 0 1mm;
+}
+
+table.grille {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+}
+table.grille th, table.grille td {
+  border: 1px solid #475569;
+  padding: 1.8mm 2mm;
+  vertical-align: middle;
+}
+table.grille th {
+  background: #1e3a8a;
+  color: white;
+  text-align: center;
+  font-size: 9pt;
+}
+table.grille .code {
+  background: #bfdbfe;
+  color: #1e3a8a;
+  font-weight: bold;
+  text-align: center;
+  width: 18mm;
+}
+table.grille .crit { width: auto; }
+table.grille .niv {
+  width: 16mm;
+  text-align: center;
+}
+table.grille .case {
+  display: inline-block;
+  width: 6mm; height: 6mm;
+  border: 1.5px solid #475569;
+  background: white;
+  border-radius: 1px;
+}
+table.grille tr:nth-child(even) td { background: #eff6ff; }
+table.grille tr:nth-child(even) td.code { background: #bfdbfe; }
+table.grille .pivot { background: #fef3c7 !important; font-weight: 600; }
+table.grille .pivot.code { background: #fbbf24 !important; color: #78350f; }
+
+.legende {
+  border: 1.5px solid #1e3a8a;
+  background: #eff6ff;
+  padding: 2mm 3mm;
+  margin-top: 3mm;
+  border-radius: 3px;
+  font-size: 9pt;
+  display: flex;
+  gap: 4mm;
+  flex-wrap: wrap;
+}
+.legende span { padding: 0.5mm 2mm; border-radius: 2px; font-weight: 600; }
+.legende .NA { background: #fee2e2; color: #b91c1c; }
+.legende .EC { background: #fef3c7; color: #b45309; }
+.legende .A { background: #dcfce7; color: #047857; }
+.legende .M { background: #bfdbfe; color: #1e3a8a; }
+
+.synthese {
+  border: 2px solid #1e3a8a;
+  background: #eff6ff;
+  border-radius: 4px;
+  padding: 3mm 4mm;
+  margin-top: 3mm;
+  display: flex;
+  gap: 5mm;
+  align-items: center;
+}
+.synthese > div { flex: 1; }
+.synthese h3 { margin: 0 0 1mm 0; color: #1e3a8a; font-size: 10.5pt; }
+.synthese .note {
+  background: #fff;
+  border: 2px solid #1e3a8a;
+  padding: 3mm;
+  text-align: center;
+  border-radius: 3px;
+  flex: 0 0 50mm;
+}
+.synthese .note span { font-size: 16pt; font-weight: bold; color: #1e3a8a; }
+
+footer.pied {
+  font-size: 8pt;
+  color: #64748b;
+  text-align: center;
+  margin-top: 3mm;
+  border-top: 1px solid #cbd5e1;
+  padding-top: 1.5mm;
+}
+
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="titre">
+    <div>
+      <h1>Évaluation par compétences — TP CERFA FIBSD n° 15497*04</h1>
+      <div style="font-size:9.5pt; color:#1e3a8a;">« Dépannage au Bon Quartier » — Maintenance + recherche de fuite</div>
+    </div>
+    <div class="meta">
+      Filière : <strong>CAP IFCA</strong><br>
+      Bloc EP3 — Documentation &amp; communication<br>
+      Durée : 2h00
+    </div>
+  </header>
+
+  <div class="cartouche">
+    <div class="col"><strong>Nom :</strong> <span class="lign"></span></div>
+    <div class="col"><strong>Prénom :</strong> <span class="lign"></span></div>
+    <div class="col"><strong>Classe :</strong> <span class="lign" style="min-width:25mm;"></span></div>
+    <div class="col"><strong>Date :</strong> <span class="lign" style="min-width:30mm;"></span></div>
+  </div>
+
+  <table class="grille">
+    <thead>
+      <tr>
+        <th style="width:18mm;">Code</th>
+        <th>Compétence évaluée — Référentiel CAP IFCA</th>
+        <th class="niv">NA</th>
+        <th class="niv">EC</th>
+        <th class="niv">A</th>
+        <th class="niv">M</th>
+        <th style="width:55mm;">Indicateur observable</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="code">C1.1</td>
+        <td class="crit"><strong>Communiquer avec le client / la hiérarchie</strong> — gérer la signature et les observations sur un document remis au client.</td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td>Signe uniquement sa case opérateur. Ne signe pas à la place du détenteur. Renseigne les observations si pertinent.</td>
+      </tr>
+      <tr>
+        <td class="code">C2.2</td>
+        <td class="crit"><strong>Identifier les caractéristiques de l'installation</strong> à partir de la plaque signalétique et des informations client.</td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td>Recopie marque, modèle, n° série, fluide, charge totale dans la rubrique 3 du CERFA.</td>
+      </tr>
+      <tr>
+        <td class="code">C3.7</td>
+        <td class="crit"><strong>Effectuer une mesure</strong> — exploiter une pesée et calculer la quantité de fluide ajoutée et restante.</td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td>Q2a = 0,400 kg (AVANT − APRÈS) ; Q2b = 2,900 kg (APRÈS − tare).</td>
+      </tr>
+      <tr>
+        <td class="code">C4.5</td>
+        <td class="crit"><strong>Effectuer un contrôle d'étanchéité</strong> — identifier la nature de l'intervention (périodique / non périodique).</td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td>Coche « Maintenance » + « Contrôle non périodique » en rubrique 4. Justifie oralement.</td>
+      </tr>
+      <tr>
+        <td class="code">C4.6</td>
+        <td class="crit"><strong>Manipuler les fluides frigorigènes</strong> — connaître la classification ADR et le code déchet du fluide manipulé.</td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td>Coche UN 1078 / 14 06 01* en rubrique 12 (R-134a = HFC non inflammable A1). Calcule la TeqCO₂ = 4,576 t.éq.CO₂.</td>
+      </tr>
+      <tr class="pivot">
+        <td class="code pivot">C5.1</td>
+        <td class="crit"><strong>★ Renseigner les documents de fin de chantier</strong> — compléter intégralement la fiche d'intervention CERFA n° 15497*04. <em>(Compétence pivot du TP)</em></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td class="niv"><span class="case"></span></td>
+        <td>CERFA officiel intégralement rempli au stylo bille bleu. 10 rubriques renseignées. Document lisible, sans rature majeure.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="legende">
+    <strong>Légende :</strong>
+    <span class="NA">NA</span> Non acquis
+    <span class="EC">EC</span> En cours d'acquisition
+    <span class="A">A</span> Acquis
+    <span class="M">M</span> Maîtrisé
+    <span style="background:#fbbf24; color:#78350f;">★</span> Compétence pivot du TP
+  </div>
+
+  <div class="synthese">
+    <div>
+      <h3>Synthèse de l'évaluation</h3>
+      <p style="margin:1mm 0; font-size:9.5pt;"><strong>Compétence pivot :</strong> C5.1 — Renseigner les documents de fin de chantier (CERFA officiel).</p>
+      <p style="margin:1mm 0; font-size:9.5pt;"><strong>Observations / commentaire enseignant :</strong></p>
+      <div style="border:1px solid #475569; height:14mm; background:#fff; padding:1mm;"></div>
+    </div>
+    <div class="note">
+      <h3 style="margin-bottom:2mm;">Note indicative</h3>
+      <span>____ / 20</span>
+      <div style="font-size:8pt; color:#1e3a8a; margin-top:1mm;">NA ≤ 7 — EC 8-11 — A 12-16 — M 17-20</div>
+    </div>
+  </div>
+
+  <footer class="pied">Évaluation TP CERFA FIBSD — CAP IFCA — F. HENNINOT — LP J. Raynaud — Avril 2026</footer>
+</div>
+</body>
+</html>

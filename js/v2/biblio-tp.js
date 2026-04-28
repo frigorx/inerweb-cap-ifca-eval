@@ -62,6 +62,7 @@
       'S2': 'Semaine 2 (04/05) — Atelier',
       'S3': 'Semaine 3 (11/05) — Atelier',
       'S-stock': '⏱ Exercices rapides — Stock 1 h / 1 h 30',
+      'S-ressources': '📄 Ressources & formulaires (PDF imprimables)',
       'S-plans': '📋 Plans de séance prof',
       'S-': 'Hors session — TP user'
     };
