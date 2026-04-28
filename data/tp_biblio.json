@@ -96,6 +96,16 @@
       "tag": "filler",
       "description": "Quiz transversal sur les compétences CAP IFCA. Bon pour positionnement."
     },
+    { "id": "EX-CERFA",
+      "semaine": "S-stock",
+      "date": "",
+      "titre": "Exercice rapide — CERFA 15497*02 (FIBSD bordereau fluides)",
+      "duree": "1 h",
+      "url": "eleve/exercices-rapides/Exercice_CERFA_FIBSD_pro.html",
+      "comp": ["C1.3"],
+      "tag": "filler",
+      "description": "Remplir le CERFA 15497*02 (bordereau de suivi des déchets fluides). Cible Bloc C du CCF EP3 (20 pts)."
+    },
     { "id": "PLAN-S1-MANO",
       "semaine": "S-plans",
       "date": "",

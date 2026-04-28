@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Exercice CERFA FIBSD — Mise en situation pro</title>
+<style>
+@page { size: A4 portrait; margin: 12mm 12mm 14mm 12mm; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Lexend', 'Verdana', Arial, sans-serif;
+  font-size: 11pt;
+  color: #1a1a1a;
+  background: #fff;
+  line-height: 1.5;
+  letter-spacing: 0.15px;
+}
+.page {
+  width: 186mm;
+  margin: 0 auto;
+  padding: 0;
+  page-break-after: always;
+  break-after: page;
+}
+.page:last-child {
+  page-break-after: auto;
+  break-after: auto;
+}
+
+p { margin: 2mm 0; }
+ul { margin: 1mm 0 2mm 5mm; padding: 0; }
+li { margin-bottom: 1.2mm; }
+
+/* ====== CARTOUCHE ÉLÈVE ====== */
+.cartouche {
+  display: flex;
+  border: 2px solid #1e293b;
+  background: #fefce8;
+  padding: 2.5mm 4mm;
+  margin-bottom: 4mm;
+  border-radius: 3px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.cartouche .col { flex: 1; font-size: 10pt; }
+.cartouche .col strong { color: #1e293b; }
+.cartouche .lign {
+  border-bottom: 1px solid #94a3b8;
+  display: inline-block;
+  min-width: 35mm;
+  height: 5mm;
+  vertical-align: bottom;
+  padding: 0 1mm;
+}
+
+/* ====== EN-TÊTE TITRE ====== */
+header.titre {
+  border: 2px solid #0b3d91;
+  background: #eaf1fb;
+  padding: 4mm 5mm;
+  margin-bottom: 4mm;
+  border-radius: 4px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+header.titre h1 {
+  margin: 0 0 1mm 0;
+  font-size: 15pt;
+  color: #0b3d91;
+}
+header.titre .sous {
+  font-size: 10pt;
+  color: #0b3d91;
+}
+header.titre .meta {
+  font-size: 9.5pt;
+  color: #475569;
+  margin-top: 1.5mm;
+  font-style: italic;
+}
+
+/* ====== BANDEAU PARTIE ====== */
+.bandeau {
+  background: #0b3d91; color: white;
+  font-weight: bold;
+  font-size: 12pt;
+  padding: 2.5mm 5mm;
+  border-radius: 4px;
+  margin-bottom: 3mm;
+  text-align: center;
+  letter-spacing: 0.5mm;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+.bandeau.vert { background: #047857; }
+.bandeau.gris { background: #475569; }
+.bandeau.rouge { background: #b91c1c; }
+
+/* ====== ÉNONCÉ NARRATIF ====== */
+.scenario {
+  border: 2px solid #0b3d91;
+  background: #f8fafc;
+  padding: 5mm 6mm;
+  margin-bottom: 4mm;
+  border-radius: 4px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.scenario h2 {
+  margin: 0 0 3mm 0;
+  font-size: 12pt;
+  color: #0b3d91;
+  background: #dbeafe;
+  padding: 2mm 3mm;
+  border-radius: 3px;
+}
+.scenario .date {
+  font-weight: 700;
+  color: #0b3d91;
+  font-size: 11.5pt;
+  margin-bottom: 2mm;
+}
+.scenario p {
+  font-size: 11pt;
+  margin: 2mm 0;
+  text-align: justify;
+}
+
+/* ====== BLOC-NOTES TECHNICIEN ====== */
+.bloc-notes {
+  border: 2px dashed #d97706;
+  background: #fffbeb;
+  padding: 4mm 5mm;
+  margin-bottom: 4mm;
+  border-radius: 4px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  font-family: 'Lexend', 'Courier New', monospace;
+}
+.bloc-notes h3 {
+  margin: 0 0 2mm 0;
+  color: #b45309;
+  font-size: 11.5pt;
+  border-bottom: 1.5px solid #d97706;
+  padding-bottom: 1mm;
+}
+.bloc-notes h4 {
+  margin: 3mm 0 1mm 0;
+  color: #b45309;
+  font-size: 10.5pt;
+}
+.bloc-notes ul { margin-left: 4mm; }
+.bloc-notes li { font-size: 10.5pt; }
+
+/* ====== DOCUMENT RESSOURCES ====== */
+.formule-box {
+  border: 3px solid #047857;
+  background: #ecfdf5;
+  padding: 4mm;
+  text-align: center;
+  margin: 3mm 0;
+  border-radius: 5px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.formule-box .label {
+  font-size: 9.5pt;
+  color: #475569;
+  margin-bottom: 1mm;
+}
+.formule-box .formule {
+  font-size: 16pt;
+  font-weight: bold;
+  color: #047857;
+  letter-spacing: 0.5px;
+  margin: 2mm 0;
+}
+.formule-box .legende {
+  font-size: 9.5pt;
+  color: #475569;
+}
+
+table.gwp {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 3mm 0;
+  font-size: 10.5pt;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+table.gwp th, table.gwp td {
+  border: 1.5px solid #047857;
+  padding: 2mm;
+  text-align: center;
+}
+table.gwp th { background: #047857; color: white; font-size: 10pt; }
+
+.balance-bloc {
+  border: 2px solid #0b3d91;
+  background: #fff;
+  padding: 4mm;
+  margin: 4mm 0;
+  border-radius: 4px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.balance-bloc h3 {
+  margin: 0 0 3mm 0;
+  font-size: 11.5pt;
+  color: #0b3d91;
+  text-align: center;
+}
+.balance-row {
+  display: flex;
+  gap: 4mm;
+  align-items: center;
+  justify-content: center;
+}
+.balance-data {
+  border: 1.5px dashed #0b3d91;
+  background: #eff6ff;
+  padding: 2.5mm 4mm;
+  margin-top: 3mm;
+  border-radius: 3px;
+}
+.balance-data .ligne-data {
+  display: flex;
+  padding: 1.2mm 0;
+  border-bottom: 1px dashed #cbd5e1;
+  font-size: 10.5pt;
+}
+.balance-data .ligne-data:last-child { border-bottom: none; }
+.balance-data .cle {
+  flex: 1;
+  font-weight: 600;
+  color: #0b3d91;
+}
+.balance-data .val {
+  background: #fff;
+  border: 1.5px solid #0b3d91;
+  padding: 0.3mm 3mm;
+  font-weight: bold;
+  font-size: 11pt;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+}
+
+.encart-info {
+  border-left: 5px solid #d97706;
+  background: #fffbeb;
+  padding: 2.5mm 4mm;
+  margin: 3mm 0;
+  font-size: 10pt;
+  border-radius: 3px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.encart-info strong { color: #b45309; }
+
+/* ====== CERFA ====== */
+.cerfa-titre {
+  background: #475569;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 11pt;
+  padding: 2.5mm;
+  border-radius: 3px 3px 0 0;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+.cerfa-soustitre {
+  background: #cbd5e1;
+  color: #1e293b;
+  text-align: center;
+  font-size: 9pt;
+  padding: 1mm;
+  border-left: 1.5px solid #475569;
+  border-right: 1.5px solid #475569;
+}
+.cerfa-bloc {
+  border: 1.5px solid #475569;
+  border-top: none;
+  margin-bottom: 2mm;
+  border-radius: 0 0 3px 3px;
+}
+.cerfa-section {
+  border-top: 1.5px solid #94a3b8;
+  padding: 2.5mm 4mm;
+  position: relative;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.cerfa-section:first-child { border-top: none; }
+.cerfa-num {
+  display: inline-block;
+  background: #475569;
+  color: white;
+  font-weight: bold;
+  padding: 0.5mm 3mm;
+  margin-right: 3mm;
+  border-radius: 3px;
+  font-size: 10.5pt;
+}
+.cerfa-section h3 {
+  display: inline-block;
+  margin: 0;
+  font-size: 10.5pt;
+  color: #1e293b;
+  vertical-align: middle;
+}
+.cerfa-row {
+  display: flex; flex-wrap: wrap; gap: 4mm; margin-top: 2mm;
+}
+.cerfa-row > div { flex: 1; min-width: 0; }
+.cerfa-field {
+  font-size: 10pt;
+  margin-bottom: 1.5mm;
+}
+.cerfa-field label {
+  display: block;
+  font-weight: 600;
+  color: #475569;
+  font-size: 9.5pt;
+  margin-bottom: 0.3mm;
+}
+.cerfa-input {
+  display: inline-block;
+  border-bottom: 1.5px solid #475569;
+  min-width: 40mm;
+  height: 6mm;
+  padding: 0 1mm;
+  background: #fff;
+}
+.cerfa-input.large { min-width: 75mm; }
+.cerfa-input.xl { min-width: 130mm; }
+.case {
+  display: inline-block;
+  width: 5mm; height: 5mm;
+  border: 1.8px solid #475569;
+  vertical-align: middle;
+  margin: 0 1.5mm;
+  background: white;
+  border-radius: 1px;
+}
+.case.coche::before {
+  content: "✓"; display: block; text-align: center; font-weight: bold;
+  color: #475569; font-size: 12pt; line-height: 4mm;
+}
+.cerfa-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5mm;
+  margin-top: 2mm;
+  font-size: 10pt;
+}
+.cerfa-options.ligne { flex-direction: row; flex-wrap: wrap; gap: 2mm 8mm; }
+
+table.cerfa {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9.5pt;
+  margin-top: 2mm;
+}
+table.cerfa th, table.cerfa td {
+  border: 1.5px solid #475569;
+  padding: 2mm;
+  vertical-align: middle;
+}
+table.cerfa th {
+  background: #e2e8f0;
+  color: #1e293b;
+  text-align: center;
+  font-size: 9pt;
+}
+
+/* ====== Q1/Q2 — calculs élève ====== */
+.calc-eleve {
+  border: 2px solid #d97706;
+  background: #fffbeb;
+  padding: 3.5mm 5mm;
+  margin: 3mm 0;
+  border-radius: 4px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.calc-eleve h4 {
+  margin: 0 0 2mm 0;
+  color: #b45309;
+  font-size: 11.5pt;
+}
+.calc-eleve p { font-size: 10pt; margin: 1mm 0; }
+.calc-eleve .zone {
+  border: 1.5px solid #d97706;
+  background: #fff;
+  min-height: 14mm;
+  padding: 2mm;
+  margin: 1.5mm 0;
+  border-radius: 3px;
+}
+.calc-eleve .resultat {
+  background: #fef3c7;
+  padding: 1.5mm 3mm;
+  border-radius: 3px;
+  font-size: 10.5pt;
+  margin-top: 1.5mm;
+  font-weight: 600;
+  color: #b45309;
+}
+.calc-eleve .input-petit {
+  background: #fff;
+  padding: 0.3mm 4mm;
+  border: 1.5px solid #b45309;
+  border-radius: 2px;
+  font-family: 'Courier New', monospace;
+}
+
+/* ====== AVERTISSEMENT ====== */
+.warn {
+  border-left: 5px solid #b91c1c;
+  background: #fef2f2;
+  padding: 2.5mm 4mm;
+  font-size: 10pt;
+  margin: 3mm 0;
+  border-radius: 3px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.warn strong { color: #b91c1c; }
+
+/* ====== CORRIGÉ ====== */
+.case.corrige { border-color: #b91c1c; background: #fee2e2; }
+.case.corrige.coche::before { color: #b91c1c; }
+.bloc-corrige {
+  border: 2px solid #b91c1c;
+  background: #fef2f2;
+  padding: 2.5mm 4mm;
+  margin-bottom: 2.5mm;
+  border-radius: 4px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.bloc-corrige h3 {
+  margin: 0 0 1.5mm 0;
+  font-size: 11pt;
+  color: #b91c1c;
+}
+.bloc-corrige p { font-size: 10pt; margin: 0.8mm 0; }
+
+/* ====== PIED ====== */
+footer.pied {
+  font-size: 8.5pt;
+  color: #64748b;
+  text-align: center;
+  border-top: 1px solid #cbd5e1;
+  padding-top: 1.5mm;
+  margin-top: 3mm;
+}
+
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { padding-bottom: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- =========================================================== -->
+<!-- PAGE 1 — Cartouche + Titre + Mise en situation + Bloc-notes -->
+<!-- =========================================================== -->
+<div class="page">
+
+  <div class="cartouche">
+    <div class="col"><strong>Nom :</strong> <span class="lign"></span></div>
+    <div class="col"><strong>Prénom :</strong> <span class="lign"></span></div>
+    <div class="col"><strong>Classe :</strong> <span class="lign" style="min-width:20mm;"></span></div>
+    <div class="col"><strong>Date :</strong> <span class="lign" style="min-width:25mm;"></span> &nbsp; <strong>Note :</strong> ____ /20</div>
+  </div>
+
+  <header class="titre">
+    <h1>CERFA FIBSD n° 15497*04 — Mise en situation</h1>
+    <div class="sous">Tu interviens chez un client. À toi de remplir la fiche d'intervention réglementaire.</div>
+    <div class="meta">CAP IFCA / Bac Pro MFER &nbsp;•&nbsp; Bloc C — Documentation EP3 &nbsp;•&nbsp; Durée : 1h à 1h30</div>
+  </header>
+
+  <div class="bandeau">PARTIE 1 — MISE EN SITUATION</div>
+
+  <div class="scenario">
+    <h2>L'intervention</h2>
+    <div class="date">Vendredi 24 avril 2026 — 9h00.</div>
+    <p>Tu es technicien frigoriste. Hier soir, M. DUPONT, gérant de la <strong>Boucherie « Le Bon Quartier »</strong> au <strong>12 rue de la Halle, 31000 TOULOUSE</strong>, a appelé : sa chambre froide ne tient plus la température (+8 °C au lieu de +2 °C).</p>
+    <p>À ton arrivée, tu prends les pressions : la basse pression est anormalement basse. Tu suspectes une fuite et tu déclenches une recherche au détecteur électronique. <strong>Cette intervention n'est pas la visite annuelle</strong> : elle a été déclenchée par la panne signalée par le client.</p>
+    <p>Le détecteur sonne sur la <strong>vanne d'aspiration</strong> : la fuite vient du presse-étoupe. Tu serres le presse-étoupe au couple. Plus aucune fuite : <strong>la réparation est faite sur place</strong>.</p>
+    <p>Tu réalises ensuite un <strong>complément de charge</strong> avec une bouteille de R-134a neuf (pas de récupération de fluide). Tu pèses la bouteille avant et après le complément.</p>
+    <p>L'intervention terminée, tu dois remplir la fiche d'intervention <strong>CERFA n° 15497*04</strong>.</p>
+  </div>
+
+  <div class="bloc-notes">
+    <h3>📋 Notes prises sur place par le technicien</h3>
+
+    <h4>Plaque signalétique de l'installation</h4>
+    <ul>
+      <li>Type : chambre froide positive (+2 °C)</li>
+      <li>Marque / modèle : PROFROID — CFP-300</li>
+      <li>N° de série : CF-2018-447</li>
+      <li>Année de mise en service : 2018</li>
+      <li>Fluide frigorigène : R-134a — charge totale : 3,2 kg</li>
+      <li>Système permanent de détection de fuite : <strong>non installé</strong></li>
+    </ul>
+
+    <h4>Détecteur de fuite utilisé</h4>
+    <ul>
+      <li>Marque / modèle : INFICON D-TEK Select</li>
+      <li>N° de série : DTS-4521</li>
+      <li>Date du dernier étalonnage : 15/02/2026</li>
+    </ul>
+  </div>
+
+  <footer class="pied">Page 1/5 — F. HENNINOT — LP J. Raynaud — CAP IFCA / Bac Pro MFER</footer>
+</div>
+
+<!-- =========================================================== -->
+<!-- PAGE 2 — Document ressources (formule + GWP + bouteille)   -->
+<!-- =========================================================== -->
+<div class="page">
+
+  <div class="bandeau vert">PARTIE 2 — DOCUMENTS RESSOURCES</div>
+
+  <h2 style="color:#047857; font-size:12pt; margin:0 0 2mm 0;">A. Calculer la TeqCO₂</h2>
+
+  <div class="formule-box">
+    <div class="label">FORMULE RÉGLEMENTAIRE — Règlement (UE) n° 517/2014</div>
+    <div class="formule">TeqCO₂ = Charge × GWP ÷ 1 000</div>
+    <div class="legende">
+      Charge en <strong>kg</strong> &nbsp;•&nbsp; Résultat en <strong>tonnes équivalent CO₂</strong> (t.éq.CO₂)
+    </div>
+  </div>
+
+  <p style="font-size:10.5pt; margin:2mm 0;">Le <strong>GWP</strong> (Potentiel de Réchauffement Planétaire) dépend du fluide. Tu dois trouver celui de ton installation dans le tableau :</p>
+
+  <table class="gwp">
+    <tr>
+      <th>Fluide</th>
+      <th>R-22</th>
+      <th>R-134a</th>
+      <th>R-404A</th>
+      <th>R-410A</th>
+      <th>R-449A</th>
+      <th>R-32</th>
+    </tr>
+    <tr>
+      <th>GWP</th>
+      <td>1 810</td>
+      <td>1 430</td>
+      <td>3 922</td>
+      <td>2 088</td>
+      <td>1 397</td>
+      <td>675</td>
+    </tr>
+    <tr>
+      <th>Classe ASHRAE</th>
+      <td>A1</td>
+      <td>A1</td>
+      <td>A1</td>
+      <td>A1</td>
+      <td>A1</td>
+      <td>A2L</td>
+    </tr>
+  </table>
+
+  <div class="encart-info">
+    <strong>Seuils réglementaires</strong> (sans système permanent) : &nbsp;
+    &lt; 5 t → contrôle annuel &nbsp;•&nbsp; 5–50 t → tous les 6 mois &nbsp;•&nbsp; ≥ 50 t → tous les 3 mois
+  </div>
+
+  <h2 style="color:#047857; font-size:12pt; margin:5mm 0 2mm 0;">B. Pesée de la bouteille de R-134a</h2>
+
+  <div class="balance-bloc">
+    <div class="balance-row">
+      <!-- AVANT -->
+      <svg width="160" height="220" viewBox="0 0 180 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#fda4af"/>
+            <stop offset="50%" stop-color="#f87171"/>
+            <stop offset="100%" stop-color="#be123c"/>
+          </linearGradient>
+        </defs>
+        <rect x="83" y="20" width="14" height="18" fill="#475569"/>
+        <circle cx="90" cy="14" r="7" fill="#dc2626"/>
+        <rect x="73" y="38" width="34" height="8" fill="#334155"/>
+        <path d="M 60 46 Q 60 56 65 56 L 115 56 Q 120 56 120 46 L 120 46 L 120 180 Q 120 188 112 188 L 68 188 Q 60 188 60 180 Z"
+              fill="url(#grad1)" stroke="#7f1d1d" stroke-width="1.5"/>
+        <text x="90" y="105" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="13">R-134a</text>
+        <text x="90" y="120" text-anchor="middle" fill="white" font-family="Arial" font-size="9">UN 1078</text>
+        <text x="90" y="145" text-anchor="middle" fill="white" font-family="Arial" font-size="9" font-weight="bold">Tare 14,5 kg</text>
+        <rect x="35" y="188" width="110" height="22" fill="#1e293b" stroke="#0f172a" stroke-width="1" rx="2"/>
+        <rect x="48" y="193" width="84" height="12" fill="#0ea5e9" rx="1"/>
+        <text x="90" y="202" text-anchor="middle" fill="white" font-family="Courier New, monospace" font-weight="bold" font-size="11">17,800 kg</text>
+        <rect x="42" y="210" width="7" height="9" fill="#334155"/>
+        <rect x="131" y="210" width="7" height="9" fill="#334155"/>
+        <text x="90" y="234" text-anchor="middle" font-family="Lexend, Arial" font-weight="bold" font-size="13" fill="#0b3d91">AVANT</text>
+      </svg>
+
+      <svg width="50" height="50" viewBox="0 0 60 60">
+        <path d="M 5 30 L 50 30" stroke="#475569" stroke-width="3" fill="none"/>
+        <polygon points="50,22 58,30 50,38" fill="#475569"/>
+      </svg>
+
+      <!-- APRES -->
+      <svg width="160" height="220" viewBox="0 0 180 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#fda4af"/>
+            <stop offset="50%" stop-color="#f87171"/>
+            <stop offset="100%" stop-color="#be123c"/>
+          </linearGradient>
+        </defs>
+        <rect x="83" y="20" width="14" height="18" fill="#475569"/>
+        <circle cx="90" cy="14" r="7" fill="#dc2626"/>
+        <rect x="73" y="38" width="34" height="8" fill="#334155"/>
+        <path d="M 60 46 Q 60 56 65 56 L 115 56 Q 120 56 120 46 L 120 46 L 120 180 Q 120 188 112 188 L 68 188 Q 60 188 60 180 Z"
+              fill="url(#grad2)" stroke="#7f1d1d" stroke-width="1.5"/>
+        <text x="90" y="105" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="13">R-134a</text>
+        <text x="90" y="120" text-anchor="middle" fill="white" font-family="Arial" font-size="9">UN 1078</text>
+        <text x="90" y="145" text-anchor="middle" fill="white" font-family="Arial" font-size="9" font-weight="bold">Tare 14,5 kg</text>
+        <rect x="35" y="188" width="110" height="22" fill="#1e293b" stroke="#0f172a" stroke-width="1" rx="2"/>
+        <rect x="48" y="193" width="84" height="12" fill="#0ea5e9" rx="1"/>
+        <text x="90" y="202" text-anchor="middle" fill="white" font-family="Courier New, monospace" font-weight="bold" font-size="11">17,400 kg</text>
+        <rect x="42" y="210" width="7" height="9" fill="#334155"/>
+        <rect x="131" y="210" width="7" height="9" fill="#334155"/>
+        <text x="90" y="234" text-anchor="middle" font-family="Lexend, Arial" font-weight="bold" font-size="13" fill="#0b3d91">APRÈS</text>
+      </svg>
+    </div>
+
+    <div class="balance-data">
+      <div class="ligne-data"><div class="cle">Tare de la bouteille (à vide)</div><div class="val">14,500 kg</div></div>
+      <div class="ligne-data"><div class="cle">Pesée AVANT le complément</div><div class="val">17,800 kg</div></div>
+      <div class="ligne-data"><div class="cle">Pesée APRÈS le complément</div><div class="val">17,400 kg</div></div>
+    </div>
+  </div>
+
+  <div class="encart-info">
+    <strong>Rappels :</strong>
+    Tare = masse de la bouteille vide.
+    Quantité ajoutée = pesée AVANT − pesée APRÈS.
+    Reste en bouteille = pesée APRÈS − tare.
+  </div>
+
+  <footer class="pied">Page 2/5 — Documents ressources — F. HENNINOT — LP J. Raynaud</footer>
+</div>
+
+<!-- =========================================================== -->
+<!-- PAGE 3 — CERFA partie 1 (rubriques 1, 2, 3, 4, 5, 6, 10)  -->
+<!-- =========================================================== -->
+<div class="page">
+
+  <div class="bandeau gris">PARTIE 3 — REMPLIS LE CERFA (page 1)</div>
+
+  <div class="cerfa-titre">FICHE D'INTERVENTION CERFA n° 15497*04</div>
+  <div class="cerfa-soustitre">Manipulation des fluides frigorigènes — Décret 2015-1790</div>
+
+  <div class="cerfa-bloc">
+
+    <!-- 1 OPERATEUR -->
+    <div class="cerfa-section">
+      <span class="cerfa-num">1</span><h3>OPÉRATEUR — c'est TOI le technicien</h3>
+      <div class="cerfa-row">
+        <div>
+          <div class="cerfa-field"><label>Nom du technicien</label><span class="cerfa-input large"></span></div>
+          <div class="cerfa-field"><label>Prénom</label><span class="cerfa-input large"></span></div>
+        </div>
+        <div>
+          <div class="cerfa-field"><label>Date de l'intervention</label><span class="cerfa-input"></span></div>
+          <div class="cerfa-field"><label>N° d'aptitude</label><span class="cerfa-input"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 DETENTEUR -->
+    <div class="cerfa-section">
+      <span class="cerfa-num">2</span><h3>DÉTENTEUR (le client)</h3>
+      <div class="cerfa-field"><label>Nom du client</label><span class="cerfa-input xl"></span></div>
+      <div class="cerfa-field"><label>Adresse complète</label><span class="cerfa-input xl"></span></div>
+    </div>
+
+    <!-- 3 EQUIPEMENT -->
+    <div class="cerfa-section">
+      <span class="cerfa-num">3</span><h3>L'ÉQUIPEMENT CONCERNÉ</h3>
+      <div class="cerfa-field"><label>Type d'équipement</label><span class="cerfa-input large"></span></div>
+      <div class="cerfa-field"><label>Marque / modèle</label><span class="cerfa-input large"></span></div>
+      <div class="cerfa-row">
+        <div>
+          <div class="cerfa-field"><label>N° de série</label><span class="cerfa-input"></span></div>
+          <div class="cerfa-field"><label>Fluide : R-</label><span class="cerfa-input" style="min-width:25mm;"></span></div>
+        </div>
+        <div>
+          <div class="cerfa-field"><label>Charge totale (kg)</label><span class="cerfa-input" style="min-width:25mm;"></span></div>
+          <div class="cerfa-field" style="background:#dcfce7; padding:1.5mm; border:1.5px dashed #047857; border-radius:3px;">
+            <label style="color:#047857;">TeqCO₂ (t.éq.CO₂)</label>
+            <span class="cerfa-input" style="min-width:30mm;"></span>
+            <div style="font-size:8.5pt;color:#047857; margin-top:0.5mm;">→ à calculer (Q1 page 4)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 NATURE -->
+    <div class="cerfa-section">
+      <span class="cerfa-num">4</span><h3>NATURE DE L'INTERVENTION (coche les cases qui correspondent)</h3>
+      <div class="cerfa-options" style="flex-direction:row; flex-wrap:wrap; gap:1.5mm 6mm;">
+        <span><span class="case"></span> Assemblage</span>
+        <span><span class="case"></span> Mise en service</span>
+        <span><span class="case"></span> Modification</span>
+        <span><span class="case"></span> Maintenance / entretien</span>
+        <span><span class="case"></span> Contrôle d'étanchéité périodique</span>
+        <span><span class="case"></span> Contrôle d'étanchéité non périodique</span>
+        <span><span class="case"></span> Démantèlement</span>
+      </div>
+    </div>
+
+    <!-- 5 DETECTEUR -->
+    <div class="cerfa-section">
+      <span class="cerfa-num">5</span><h3>DÉTECTEUR DE FUITE UTILISÉ</h3>
+      <div class="cerfa-field"><label>Marque / modèle</label><span class="cerfa-input large"></span></div>
+      <div class="cerfa-row">
+        <div class="cerfa-field"><label>N° de série</label><span class="cerfa-input"></span></div>
+        <div class="cerfa-field"><label>Date du dernier étalonnage</label><span class="cerfa-input"></span></div>
+      </div>
+    </div>
+
+    <!-- 6 SYSTEME PERMANENT -->
+    <div class="cerfa-section">
+      <span class="cerfa-num">6</span><h3>SYSTÈME PERMANENT DE DÉTECTION ?</h3>
+      <div class="cerfa-options ligne">
+        <span><span class="case"></span> OUI</span>
+        <span><span class="case"></span> NON</span>
+      </div>
+    </div>
+
+    <!-- 10 FUITES -->
+    <div class="cerfa-section">
+      <span class="cerfa-num">10</span><h3>FUITES CONSTATÉES ?</h3>
+      <div class="cerfa-options ligne" style="margin-bottom:1.5mm;">
+        <span><span class="case"></span> OUI</span>
+        <span><span class="case"></span> NON</span>
+      </div>
+      <table class="cerfa">
+        <thead>
+          <tr>
+            <th style="width:60%;">Localisation de la fuite</th>
+            <th style="width:20%;">Réparée</th>
+            <th style="width:20%;">À faire</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="height:9mm;"></td><td style="text-align:center;"><span class="case"></span></td><td style="text-align:center;"><span class="case"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <footer class="pied">Page 3/5 — CERFA (1/2) — F. HENNINOT — LP J. Raynaud</footer>
+</div>
+
+<!-- =========================================================== -->
+<!-- PAGE 4 — Calculs Q1+Q2 + suite CERFA + signatures        -->
+<!-- =========================================================== -->
+<div class="page">
+
+  <div class="bandeau gris">PARTIE 4 — CALCULS + CERFA (page 2)</div>
+
+  <!-- Q1 -->
+  <div class="calc-eleve">
+    <h4>Q1 — Calcule la TeqCO₂</h4>
+    <p>Trouve le fluide et la charge dans la mise en situation.</p>
+    <p>Trouve le GWP du fluide dans le tableau (page 2).</p>
+    <p>Pose ton calcul :</p>
+    <div class="zone"></div>
+    <div class="resultat">→ TeqCO₂ = <span class="input-petit">________</span> t.éq.CO₂</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="calc-eleve">
+    <h4>Q2 — Calcule à partir de la pesée de la bouteille</h4>
+
+    <div style="display:flex; gap:4mm;">
+      <div style="flex:1;">
+        <p><strong>a)</strong> Quantité de R-134a <strong>ajoutée dans l'installation</strong> :</p>
+        <div class="zone" style="min-height:11mm;"></div>
+        <div class="resultat">→ Quantité ajoutée = <span class="input-petit">______</span> kg</div>
+      </div>
+      <div style="flex:1;">
+        <p><strong>b)</strong> Quantité de R-134a <strong>restant dans la bouteille</strong> :</p>
+        <div class="zone" style="min-height:11mm;"></div>
+        <div class="resultat">→ Reste en bouteille = <span class="input-petit">______</span> kg</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 + 12 + 14 -->
+  <div class="cerfa-bloc" style="border-top:1.5px solid #475569; border-radius:3px;">
+
+    <div class="cerfa-section">
+      <span class="cerfa-num">11</span><h3>QUANTITÉS DE FLUIDE MANIPULÉES (kg)</h3>
+      <p style="font-size:9.5pt; margin:1mm 0;">Reporte la quantité ajoutée. Mets <strong>0</strong> dans les colonnes vides.</p>
+      <table class="cerfa">
+        <thead>
+          <tr>
+            <th>A — Neuf</th>
+            <th>B — Régénéré</th>
+            <th>C — Recyclé</th>
+            <th>D — Récupéré recyclage</th>
+            <th>E — Récupéré destruction</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="height:9mm;"><td></td><td></td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cerfa-section">
+      <span class="cerfa-num">12</span><h3>CODE ADR / DÉCHET (cocher)</h3>
+      <div class="cerfa-options">
+        <span><span class="case"></span> <strong>UN 1078</strong> — gaz frigorifique non inflammable — code déchet <strong>14 06 01*</strong></span>
+        <span><span class="case"></span> <strong>UN 3161</strong> — gaz liquéfié inflammable — code déchet <strong>16 05 04*</strong></span>
+      </div>
+    </div>
+
+    <div class="cerfa-section">
+      <span class="cerfa-num">14</span><h3>OBSERVATIONS &amp; SIGNATURES</h3>
+
+      <div class="cerfa-field"><label>Observations (si tu en as)</label></div>
+      <div style="border:1.5px solid #475569; height:10mm; background:#fff; border-radius:2px;"></div>
+
+      <div class="warn">
+        <strong>Attention !</strong> Tu signes <strong>seulement</strong> la case <strong>opérateur</strong> (toi). La case <strong>détenteur</strong> est pour le client. <strong>Tu ne signes pas à sa place.</strong>
+      </div>
+
+      <div class="cerfa-row">
+        <div>
+          <div class="cerfa-field"><label>Date</label><span class="cerfa-input"></span></div>
+          <div class="cerfa-field" style="font-weight:bold; color:#0b3d91;">Signature opérateur (toi)</div>
+          <div style="border:2px solid #0b3d91; height:16mm; background:#eff6ff; border-radius:3px;"></div>
+          <div style="font-size:8.5pt; color:#0b3d91; text-align:center; margin-top:1mm;">→ tu signes ici</div>
+        </div>
+        <div>
+          <div class="cerfa-field"><label>Date</label><span class="cerfa-input"></span></div>
+          <div class="cerfa-field" style="color:#64748b;">Signature détenteur (le client)</div>
+          <div style="border:1.5px dashed #94a3b8; height:16mm; background:#f8fafc; border-radius:3px;"></div>
+          <div style="font-size:8.5pt; color:#64748b; text-align:center; margin-top:1mm;">→ ne signe PAS</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="pied">Page 4/5 — CERFA (2/2) — F. HENNINOT — LP J. Raynaud</footer>
+</div>
+
+<!-- =========================================================== -->
+<!-- PAGE 5 — CORRIGÉ ENSEIGNANT                                -->
+<!-- =========================================================== -->
+<div class="page">
+
+  <div class="bandeau rouge">CORRIGÉ ENSEIGNANT</div>
+
+  <div class="bloc-corrige">
+    <h3>Rubrique 1 — Opérateur &nbsp;/1</h3>
+    <p>Nom + prénom de l'élève. Date du jour de l'évaluation. N° d'aptitude (si l'élève en a un, sinon laissé vide).</p>
+  </div>
+
+  <div class="bloc-corrige">
+    <h3>Rubrique 2 — Détenteur &nbsp;/1</h3>
+    <p>Boucherie « Le Bon Quartier » — 12 rue de la Halle — 31000 TOULOUSE</p>
+  </div>
+
+  <div class="bloc-corrige">
+    <h3>Rubrique 3 — Équipement &nbsp;/3</h3>
+    <p>Chambre froide positive — PROFROID CFP-300 — n° série CF-2018-447</p>
+    <p>Fluide : <strong>R-134a</strong> — Charge : <strong>3,2 kg</strong> — TeqCO₂ : <strong>4,576 t.éq.CO₂</strong></p>
+  </div>
+
+  <div class="bloc-corrige">
+    <h3>Rubrique 4 — Nature &nbsp;/2</h3>
+    <p><span class="case corrige coche"></span> <strong>Maintenance / entretien</strong>  &nbsp;&nbsp;<span class="case corrige coche"></span> <strong>Contrôle d'étanchéité non périodique</strong></p>
+    <p style="font-style:italic;">Non périodique car déclenché par une suspicion de fuite (et non par la visite annuelle).</p>
+  </div>
+
+  <div class="bloc-corrige">
+    <h3>Rubriques 5 + 6 — Détecteur &amp; système permanent &nbsp;/1</h3>
+    <p>INFICON D-TEK Select — DTS-4521 — étalonnage 15/02/2026</p>
+    <p>Système permanent : <span class="case corrige"></span> OUI &nbsp;&nbsp; <span class="case corrige coche"></span> <strong>NON</strong></p>
+  </div>
+
+  <div class="bloc-corrige">
+    <h3>Rubrique 10 — Fuites &nbsp;/2</h3>
+    <p><span class="case corrige coche"></span> <strong>OUI</strong> — Localisation : <strong>vanne d'aspiration / presse-étoupe</strong></p>
+    <p>Réparée : <span class="case corrige coche"></span> &nbsp;&nbsp; À faire : <span class="case corrige"></span></p>
+  </div>
+
+  <div class="bloc-corrige" style="border-width:3px;">
+    <h3>Q1 — Calcul TeqCO₂ &nbsp;/4</h3>
+    <p style="font-size:11.5pt;"><strong>TeqCO₂ = 3,2 × 1 430 ÷ 1 000 = 4,576 t.éq.CO₂</strong></p>
+    <p style="font-style:italic;">4,576 t &lt; 5 t → contrôle d'étanchéité annuel obligatoire (sans système permanent).</p>
+  </div>
+
+  <div class="bloc-corrige" style="border-width:3px;">
+    <h3>Q2 — Bouteille &nbsp;/4</h3>
+    <p><strong>a) Quantité ajoutée</strong> = 17,800 − 17,400 = <strong>0,400 kg</strong></p>
+    <p><strong>b) Reste en bouteille</strong> = 17,400 − 14,500 = <strong>2,900 kg</strong></p>
+  </div>
+
+  <div class="bloc-corrige">
+    <h3>Rubrique 11 — Quantités &nbsp;/1</h3>
+    <p>A = <strong>0,4</strong> kg &nbsp;•&nbsp; B = 0 &nbsp;•&nbsp; C = 0 &nbsp;•&nbsp; D = 0 &nbsp;•&nbsp; E = 0</p>
+  </div>
+
+  <div class="bloc-corrige">
+    <h3>Rubrique 12 — ADR &nbsp;/1</h3>
+    <p><span class="case corrige coche"></span> <strong>UN 1078 — code 14 06 01*</strong>  (R-134a = HFC non inflammable, classe A1)</p>
+  </div>
+
+  <div class="bloc-corrige">
+    <h3>Rubrique 14 — Signatures &nbsp;/1</h3>
+    <p>L'élève signe <strong>uniquement</strong> la case opérateur. Case détenteur = vide ou « signature client ».</p>
+  </div>
+
+  <div class="bloc-corrige" style="border-width:4px;">
+    <h3>BARÈME GLOBAL &nbsp;/20</h3>
+    <p>Op. 1 + Détenteur 1 + Équipement 3 + Nature 2 + Détect/Système 1 + Fuites 2 + <strong>Q1 TeqCO₂ 4</strong> + <strong>Q2 Bouteille 4</strong> + Quantités 1 + ADR 1 + Signatures 1 = <strong>21 → ramené à 20</strong></p>
+    <p style="font-style:italic;"><strong>Pièges classiques :</strong> oubli du ÷ 1 000 dans le calcul TeqCO₂ ; cocher « périodique » au lieu de « non périodique » ; signer à la place du client ; cocher UN 3161 par confusion (le R-134a n'est pas inflammable).</p>
+  </div>
+
+  <footer class="pied">CORRIGÉ — F. HENNINOT — LP J. Raynaud — Avril 2026</footer>
+</div>
+
+</body>
+</html>
