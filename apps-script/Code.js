@@ -1,6 +1,6 @@
 /**
  * inerWeb Collecteur Universel — Apps Script
- * Version 3.0 (2026-04-25) — ajout module eval-cap-ifca (lecture + écriture flexibles)
+ * Version 3.1 (2026-04-28) — sync 4 profs : 1 onglet par sub-Module + colonnes dynamiques + upsert
  * Sheet ID : 16T1T3yL6M49OhJUQS1SmFHwW7Bywp7m2kSXDiXdmItk
  */
 
@@ -48,30 +48,41 @@ function doGet(e) {
 
 function writeEvalCapIfca_(data) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = ss.getSheetByName(EVAL_CAPIFCA_SHEET);
   var row = data.row || {};
-
-  // Set des colonnes : on garde un en-tête fixe étendu si besoin
-  var headers = [
-    '_timestamp', 'Date', 'Module', 'Pseudo', 'Classe', 'Prof',
-    'Epreuve', 'TP', 'Code', 'Niveau',
-    'Note20', 'Score%', 'Detail', 'Temps', 'Visas', 'Commentaire'
-  ];
-
+  var rowMod = String(row.Module || 'INCONNU').replace(/[^A-Za-z0-9_-]/g, '');
+  /* v3.1 : un onglet par sub-Module pour cleanly séparer CCF-EP3 / TP-EVAL / AFFECT / TP-USER / TEST-PING */
+  var sheetName = EVAL_CAPIFCA_SHEET + '__' + rowMod;
+  var sheet = ss.getSheetByName(sheetName);
   if (!sheet) {
-    sheet = ss.insertSheet(EVAL_CAPIFCA_SHEET);
-    sheet.appendRow(headers);
-    sheet.getRange(1, 1, 1, headers.length)
+    sheet = ss.insertSheet(sheetName);
+    /* En-têtes initiaux universels */
+    var initHeaders = ['_timestamp', 'Module', 'Pseudo', 'TpId', 'UpdatedAt'];
+    sheet.appendRow(initHeaders);
+    sheet.getRange(1, 1, 1, initHeaders.length)
       .setFontWeight('bold').setBackground('#1b3a63').setFontColor('#fff')
       .setHorizontalAlignment('center');
     sheet.setFrozenRows(1);
-  } else {
-    // S'assurer que les en-têtes existent (si feuille vide)
-    if (sheet.getLastRow() === 0) sheet.appendRow(headers);
   }
 
-  // Construit la ligne dans l'ordre des en-têtes
-  var headerRow = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  /* Ajoute dynamiquement les colonnes manquantes pour les nouvelles clés du row.
+     C'est ce qui rendait la sync invisible : avant, SaisieJSON / CompJSON / Statut
+     n'étaient PAS dans les en-têtes → données perdues. */
+  var lastCol = sheet.getLastColumn();
+  var headerRow = lastCol > 0 ? sheet.getRange(1, 1, 1, lastCol).getValues()[0] : [];
+  var rowKeys = Object.keys(row);
+  if (!row._timestamp) row._timestamp = new Date().toISOString();
+  rowKeys.push('_timestamp');
+  var added = false;
+  rowKeys.forEach(function(k) {
+    if (!headerRow.indexOf || headerRow.indexOf(k) === -1) { headerRow.push(k); added = true; }
+  });
+  if (added) {
+    sheet.getRange(1, 1, 1, headerRow.length).setValues([headerRow]);
+    sheet.getRange(1, 1, 1, headerRow.length)
+      .setFontWeight('bold').setBackground('#1b3a63').setFontColor('#fff');
+  }
+
+  /* Upsert : si une ligne existe avec même (Pseudo, TpId) on la remplace */
   var values = headerRow.map(function(h) {
     if (!h) return '';
     var v = row[h];
@@ -79,44 +90,73 @@ function writeEvalCapIfca_(data) {
     return v;
   });
 
-  sheet.appendRow(values);
-  var lr = sheet.getLastRow();
-
-  // Coloriage selon Niveau si présent
-  var niveauIdx = headerRow.indexOf('Niveau');
-  if (niveauIdx >= 0) {
-    var nivCell = sheet.getRange(lr, niveauIdx + 1);
-    var col = colorForNiveau_(row.Niveau);
-    if (col) nivCell.setBackground(col).setFontWeight('bold');
+  var matchIdx = -1;
+  if (row.Pseudo) {
+    var pCol = headerRow.indexOf('Pseudo');
+    var tCol = headerRow.indexOf('TpId');
+    var lr = sheet.getLastRow();
+    if (lr > 1 && pCol >= 0) {
+      var allRows = sheet.getRange(2, 1, lr - 1, headerRow.length).getValues();
+      for (var i = 0; i < allRows.length; i++) {
+        if (allRows[i][pCol] !== row.Pseudo) continue;
+        if (tCol >= 0 && row.TpId && allRows[i][tCol] !== row.TpId) continue;
+        if (tCol >= 0 && !row.TpId && allRows[i][tCol]) continue;
+        matchIdx = i + 2;
+        break;
+      }
+    }
   }
 
-  return jsonResponse_({ status: 'ok', module: 'eval-cap-ifca', row: lr });
+  if (matchIdx > 0) {
+    sheet.getRange(matchIdx, 1, 1, values.length).setValues([values]);
+  } else {
+    sheet.appendRow(values);
+    matchIdx = sheet.getLastRow();
+  }
+
+  /* Coloriage Niveau si l'ancien schéma est utilisé */
+  var niveauIdx = headerRow.indexOf('Niveau');
+  if (niveauIdx >= 0 && row.Niveau) {
+    var col = colorForNiveau_(row.Niveau);
+    if (col) sheet.getRange(matchIdx, niveauIdx + 1).setBackground(col).setFontWeight('bold');
+  }
+
+  return jsonResponse_({ status: 'ok', module: 'eval-cap-ifca', subModule: rowMod, row: matchIdx });
 }
 
 function readEvalCapIfca_(params) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = ss.getSheetByName(EVAL_CAPIFCA_SHEET);
-  if (!sheet || sheet.getLastRow() < 2) {
-    return jsonResponse_({ status: 'ok', count: 0, data: [] });
-  }
-  var lastRow = sheet.getLastRow();
-  var lastCol = sheet.getLastColumn();
-  var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
-  var rows = sheet.getRange(2, 1, lastRow - 1, lastCol).getValues();
-
   var since = params.since ? new Date(params.since) : null;
+  var out = [];
 
-  var out = rows.map(function(r) {
-    var o = {};
-    headers.forEach(function(h, i) { if (h) o[h] = r[i]; });
-    if (o._timestamp instanceof Date) o._timestamp = o._timestamp.toISOString();
-    if (o.Date instanceof Date) o.Date = o.Date.toISOString();
-    return o;
+  /* v3.1 : on lit TOUS les onglets eval-cap-ifca__* (un par sub-Module) +
+     l'ancien onglet eval-cap-ifca pour rétro-compat. */
+  var allSheets = ss.getSheets();
+  allSheets.forEach(function(sheet) {
+    var name = sheet.getName();
+    if (name !== EVAL_CAPIFCA_SHEET && name.indexOf(EVAL_CAPIFCA_SHEET + '__') !== 0) return;
+    var lastRow = sheet.getLastRow();
+    if (lastRow < 2) return;
+    var lastCol = sheet.getLastColumn();
+    var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+    var rows = sheet.getRange(2, 1, lastRow - 1, lastCol).getValues();
+    rows.forEach(function(r) {
+      var o = {};
+      headers.forEach(function(h, i) { if (h) o[h] = r[i]; });
+      if (o._timestamp instanceof Date) o._timestamp = o._timestamp.toISOString();
+      if (o.Date instanceof Date) o.Date = o.Date.toISOString();
+      if (o.UpdatedAt instanceof Date) o.UpdatedAt = o.UpdatedAt.toISOString();
+      /* Si pas de Module (ancien onglet), on déduit du nom de l'onglet */
+      if (!o.Module && name.indexOf(EVAL_CAPIFCA_SHEET + '__') === 0) {
+        o.Module = name.substring(EVAL_CAPIFCA_SHEET.length + 2);
+      }
+      out.push(o);
+    });
   });
 
   if (since) {
     out = out.filter(function(o) {
-      var ts = o._timestamp || o.Date || '';
+      var ts = o._timestamp || o.UpdatedAt || o.Date || '';
       return ts && new Date(ts) > since;
     });
   }

@@ -21,8 +21,9 @@
           <button class="btn small ghost" id="syncdbg-refresh">↻ Rafraîchir</button>
           <button class="btn small secondary" id="syncdbg-test">🧪 Test push</button>
           <button class="btn small secondary" id="syncdbg-pull">🔄 Force pull</button>
-          <button class="btn orange" id="syncdbg-export">💾 Sauvegarder TOUT en JSON (sécurité)</button>
-          <button class="btn" id="syncdbg-import" style="background:#38a169;color:#fff;border:0;">📥 Importer un JSON</button>
+          <button class="btn small" id="syncdbg-pushall" style="background:#dd6b20;color:#fff;border:0;">⬆ Re-pousser TOUT vers Sheet</button>
+          <button class="btn orange" id="syncdbg-export">💾 Sauvegarder JSON</button>
+          <button class="btn" id="syncdbg-import" style="background:#38a169;color:#fff;border:0;">📥 Importer JSON</button>
         </footer>
       </div>
     `;
@@ -33,6 +34,7 @@
     document.getElementById('syncdbg-refresh').onclick = renderState;
     document.getElementById('syncdbg-test').onclick = testPush;
     document.getElementById('syncdbg-pull').onclick = forcePull;
+    document.getElementById('syncdbg-pushall').onclick = pushAllLocal;
     document.getElementById('syncdbg-export').onclick = exportAll;
     document.getElementById('syncdbg-import').onclick = triggerImport;
 
@@ -129,6 +131,47 @@
       await Sync.pullNow();
       setTimeout(renderState, 500);
     }
+  }
+
+  /** Re-pousse TOUTES les saisies locales vers la Sheet (utile après mise à niveau Code.gs).
+   *  Force la propagation des SaisieJSON / CompJSON / Statut qui n'avaient pas été stockés. */
+  async function pushAllLocal() {
+    if (!confirm('Re-pousser TOUTES tes saisies locales vers la Google Sheet ?\n\nUtile après mise à niveau du backend pour que les autres profs voient enfin tes données.\n\nDurée : ~10-30 secondes.')) return;
+    let ccfCount = 0, tpevalCount = 0, affectCount = 0, userTPCount = 0;
+    /* CCF EP3 */
+    const ccfPrefix = 'inerweb.cap-ifca.ccf.ep3.';
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(ccfPrefix)) {
+        const idCloud = k.substring(ccfPrefix.length);
+        if (window.CCFExport && CCFExport.pushSheet) {
+          try { await CCFExport.pushSheet(idCloud); ccfCount++; } catch (e) {}
+        }
+      }
+    }
+    /* TP-EVAL */
+    if (window.TPEval && window.Sync && Sync.pushTPEval) {
+      const evals = TPEval.list();
+      for (const e of evals) {
+        try { await Sync.pushTPEval(e.pseudo, e.tpId, e); tpevalCount++; } catch (err) {}
+      }
+    }
+    /* AFFECT */
+    if (window.Affectations && window.Sync && Sync.pushAffect) {
+      const affects = Affectations.list();
+      for (const a of affects) {
+        try { await Sync.pushAffect(a.pseudo, a.tpId, a); affectCount++; } catch (err) {}
+      }
+    }
+    /* TP-USER (méta seulement) */
+    if (window.TPImport) {
+      const tps = TPImport.listUserTPs();
+      for (const meta of tps) {
+        try { TPImport.save(meta); userTPCount++; } catch (e) {}
+      }
+    }
+    if (window.toast) toast(`✅ Re-push : ${ccfCount} CCF · ${tpevalCount} TP-eval · ${affectCount} affect · ${userTPCount} TP user`, 'success');
+    setTimeout(renderState, 1000);
   }
 
   function exportAll() {
