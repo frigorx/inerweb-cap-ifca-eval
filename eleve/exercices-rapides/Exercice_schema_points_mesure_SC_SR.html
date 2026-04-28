@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Exercice — Manomètres + Schéma cycle frigo + SC/SR — CAP IFCA</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 5mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lexend', Calibri, sans-serif; font-size: 9.5pt; line-height: 1.35; color: #000; background: white; padding: 5mm; }
+.sheet { max-width: 200mm; margin: 0 auto; }
+
+.header { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 6px; align-items: center; border: 2px solid #000; padding: 4px 8px; margin-bottom: 5px; }
+.header .logo { font-size: 8.5pt; font-weight: 700; line-height: 1.15; }
+.header .logo span { font-size: 7.5pt; font-weight: 400; display: block; color: #333; }
+.header .titre { text-align: center; font-size: 12pt; font-weight: 800; line-height: 1.1; }
+.header .titre span { font-size: 8pt; font-weight: 600; display: block; color: #333; }
+.header .ref { text-align: right; font-size: 8pt; }
+.header .ref b { display: block; font-size: 9.5pt; }
+
+.identite { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 4px; margin-bottom: 5px; font-size: 9pt; }
+.identite .champ { border: 1px solid #000; padding: 3px 6px; min-height: 22px; }
+.identite .champ .lbl { font-size: 7pt; color: #333; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; }
+.identite .champ .val { height: 11px; border-bottom: 1px dotted #666; margin-top: 1px; }
+
+.consigne { background: #fffbeb; border: 1.5px solid #000; padding: 4px 10px; margin-bottom: 8px; font-size: 9pt; }
+.consigne b { font-weight: 800; }
+
+/* MANOMETRES EN GRAND */
+.manos-grand { border: 2px solid #000; padding: 6px; margin-bottom: 8px; background: white; }
+.manos-grand .titre-m { font-weight: 800; font-size: 10pt; text-transform: uppercase; letter-spacing: .3px; padding: 4px 8px; background: #000; color: white; text-align: center; margin: -6px -6px 6px -6px; }
+.manos-grand .img-wrap { text-align: center; }
+.manos-grand img { width: 100%; max-height: 130mm; height: auto; object-fit: contain; display: block; margin: 0 auto; }
+
+.lectures-bandeau { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 8px 0 6px 0; }
+.lec-cell { border: 2px solid #000; padding: 6px 8px; text-align: center; background: white; }
+.lec-cell .l { font-size: 9pt; color: #333; font-weight: 800; text-transform: uppercase; letter-spacing: .3px; }
+.lec-cell .v { height: 26px; border-bottom: 1.5px dotted #000; margin-top: 4px; }
+.lec-cell.bp { border-color: #1d4ed8; background: #eff6ff; }
+.lec-cell.bp .l { color: #1d4ed8; }
+.lec-cell.hp { border-color: #b91c1c; background: #fef2f2; }
+.lec-cell.hp .l { color: #b91c1c; }
+
+.donnees-block { border: 1.5px solid #000; padding: 5px 8px; background: #fafafa; margin-bottom: 8px; }
+.donnees-block .titre-d { font-weight: 800; font-size: 9pt; text-transform: uppercase; letter-spacing: .3px; margin-bottom: 4px; }
+.donnees-block table { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+.donnees-block td { border: 1px solid #000; padding: 4px 6px; }
+.donnees-block td.l { background: white; font-weight: 700; font-size: 9pt; }
+.donnees-block td.v { text-align: center; font-weight: 800; }
+.donnees-block .modif { font-size: 8pt; font-style: italic; color: #666; margin-top: 3px; }
+
+.tournez { text-align: center; font-style: italic; color: #444; font-size: 9.5pt; margin-top: 10px; padding: 8px; border: 1px dashed #000; background: #f0f9ff; }
+
+/* SCHEMA EN GRAND */
+.schema-grand { border: 2px solid #000; margin-bottom: 8px; background: white; }
+.schema-grand .titre-sch { font-weight: 800; font-size: 10pt; text-transform: uppercase; letter-spacing: .3px; padding: 4px 8px; background: #000; color: white; text-align: center; }
+.schema-grand img { width: 100%; height: auto; display: block; padding: 4px; }
+
+/* LEGENDE POINTS */
+.legende-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-bottom: 8px; }
+.point-box { border: 1.5px solid #000; padding: 5px 7px; display: flex; gap: 6px; align-items: flex-start; background: white; }
+.point-box .num { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; flex-shrink: 0; font-size: 12pt; }
+.point-box .num.p1 { background: #dc2626; }
+.point-box .num.p2 { background: #f59e0b; }
+.point-box .num.p3 { background: #1d4ed8; }
+.point-box .num.p4 { background: #7c3aed; }
+.point-box .desc { font-size: 8.5pt; line-height: 1.3; }
+.point-box .desc b { font-weight: 700; }
+.point-box .desc .formule { display: block; font-family: 'Courier New', monospace; font-weight: 700; font-size: 8pt; margin-top: 1px; background: #f0f0f0; padding: 1px 4px; }
+
+/* CALCULS */
+.calculs { border: 2px solid #000; padding: 5px 8px; background: white; margin-bottom: 8px; }
+.calculs .lbl { font-weight: 800; font-size: 9pt; text-transform: uppercase; letter-spacing: .3px; margin-bottom: 4px; }
+.calculs table { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+.calculs th, .calculs td { border: 1px solid #000; padding: 4px 6px; text-align: center; }
+.calculs th { background: #eee; font-weight: 700; font-size: 9pt; }
+.calculs td.l { text-align: left; font-weight: 600; background: #fafafa; font-family: 'Courier New', monospace; font-size: 9pt; }
+.calculs td.vide { height: 24px; background: white; }
+.calculs td.num { font-weight: 900; color: white; width: 26px; }
+.calculs td.num.p1 { background: #dc2626; }
+.calculs td.num.p2 { background: #f59e0b; }
+.calculs td.num.p3 { background: #1d4ed8; }
+.calculs td.num.p4 { background: #7c3aed; }
+
+.interpret { background: #fffbeb; border: 1.5px solid #000; padding: 5px 10px; margin-bottom: 8px; font-size: 9pt; }
+.interpret .lbl { font-weight: 800; font-size: 9pt; text-transform: uppercase; letter-spacing: .3px; margin-bottom: 3px; }
+.lgn { border-bottom: 1px dotted #000; height: 16px; margin-bottom: 2px; }
+
+.note-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 9pt; }
+.zone-note { border: 1px solid #000; padding: 4px 8px; }
+.zone-note .lbl { font-weight: 700; text-transform: uppercase; font-size: 8pt; letter-spacing: .3px; }
+
+@media screen { body { background: #e5e5e5; } .sheet { background: white; padding: 12mm; box-shadow: 0 2px 10px rgba(0,0,0,0.15); margin: 20px auto; } }
+</style>
+</head>
+<body>
+
+<!-- ============== PAGE 1 — MANOMÈTRES EN GRAND ============== -->
+<div class="sheet">
+
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique · CAP IFCA</span></div>
+    <div class="titre">Exercice — Manomètres + Schéma cycle frigo + SC/SR<span>Lecture P/T sur cadran R-134a · placement points · calculs SC/SR locale &amp; totale</span></div>
+    <div class="ref"><b>Durée : 1 h</b>EP3 Bloc B · R-134a<br>Page 1 / 2</div>
+  </div>
+
+  <div class="identite">
+    <div class="champ"><div class="lbl">NOM — Prénom</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Classe</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Date</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Évaluateur</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Note / 20</div><div class="val"></div></div>
+  </div>
+
+  <div class="consigne">
+    <b>ÉTAPE 1 :</b> Lis attentivement les pressions sur les 2 manomètres (échelle externe noire <b>en bar</b>). Puis déduis les températures correspondantes en suivant <b>l'échelle R-134a</b> sur le cadran intérieur. Reporte tes 4 lectures dans les cases ci-dessous.
+  </div>
+
+  <!-- MANOMETRES EN GRAND -->
+  <div class="manos-grand">
+    <div class="titre-m">Manomètres BP (gauche) &amp; HP (droite) — fluide R-134a</div>
+    <div class="img-wrap">
+      <img src="manometres/manos_cas1_R134a_EN837.png" alt="Manomètres BP et HP">
+    </div>
+  </div>
+
+  <!-- LECTURES -->
+  <div class="lectures-bandeau">
+    <div class="lec-cell bp"><div class="l">P0 (bar)</div><div class="v"></div></div>
+    <div class="lec-cell bp"><div class="l">T0 (°C)</div><div class="v"></div></div>
+    <div class="lec-cell hp"><div class="l">PK (bar)</div><div class="v"></div></div>
+    <div class="lec-cell hp"><div class="l">TK (°C)</div><div class="v"></div></div>
+  </div>
+
+  <!-- DONNEES T° CIRCUIT -->
+  <div class="donnees-block">
+    <div class="titre-d">Données — T° relevées au thermomètre de contact (à utiliser page 2)</div>
+    <table>
+      <tr>
+        <td class="l">T asp ① (aspiration compresseur)</td><td class="v">+ ____ °C</td>
+        <td class="l">T Se ② (sortie évap. / bulbe)</td><td class="v">+ ____ °C</td>
+      </tr>
+      <tr>
+        <td class="l">T Scd ③ (sortie condenseur)</td><td class="v">+ ____ °C</td>
+        <td class="l">T det ④ (entrée détendeur)</td><td class="v">+ ____ °C</td>
+      </tr>
+    </table>
+    <div class="modif">L'enseignant écrit les valeurs au crayon avant photocopie pour générer plusieurs sujets différents.</div>
+  </div>
+
+  <div class="tournez">
+    <b>→ Tourne la page pour la suite (schéma + calculs SC/SR)</b>
+  </div>
+
+</div>
+
+
+<!-- ============== PAGE 2 — SCHEMA EN GRAND + CALCULS ============== -->
+<div class="sheet" style="page-break-before:always;margin-top:20px">
+
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique · CAP IFCA</span></div>
+    <div class="titre">Exercice — Manomètres + Schéma cycle frigo + SC/SR<span>Placement des 4 points · calculs · interprétation</span></div>
+    <div class="ref"><b>Durée : 1 h</b>EP3 Bloc B · R-134a<br>Page 2 / 2</div>
+  </div>
+
+  <div class="consigne">
+    <b>ÉTAPE 2 :</b> Sur le schéma ci-dessous, place les 4 points ①②③④ aux endroits où placer le thermomètre. <b>ÉTAPE 3 :</b> Calcule les 4 grandeurs SC/SR à partir des lectures de la page 1 et des données T°. <b>ÉTAPE 4 :</b> Interprète.
+  </div>
+
+  <!-- SCHEMA EN GRAND -->
+  <div class="schema-grand">
+    <div class="titre-sch">Cycle frigorifique simplifié — place ①②③④ au crayon</div>
+    <img src="schema_cycle_frigo.svg" alt="Schéma cycle frigorifique simplifié">
+  </div>
+
+  <!-- LEGENDE 4 POINTS -->
+  <div class="legende-row">
+    <div class="point-box">
+      <div class="num p1">①</div>
+      <div class="desc"><b>T asp</b> — aspiration comp.<span class="formule">SC LOCALE = Tasp − T0</span></div>
+    </div>
+    <div class="point-box">
+      <div class="num p2">②</div>
+      <div class="desc"><b>T Se</b> — sortie évap. (bulbe)<span class="formule">SC TOTALE = TSe − T0</span></div>
+    </div>
+    <div class="point-box">
+      <div class="num p3">③</div>
+      <div class="desc"><b>T Scd</b> — sortie condenseur<span class="formule">SR LOCAL = TK − TScd</span></div>
+    </div>
+    <div class="point-box">
+      <div class="num p4">④</div>
+      <div class="desc"><b>T det</b> — entrée détendeur<span class="formule">SR TOTAL = TK − Tdet</span></div>
+    </div>
+  </div>
+
+  <!-- CALCULS -->
+  <div class="calculs">
+    <div class="lbl">✎ Calculs SC et SR (en kelvin · attention aux signes)</div>
+    <table>
+      <thead>
+        <tr><th>№</th><th>Formule</th><th>Détail du calcul</th><th style="width:60px">Résultat (K)</th><th style="width:130px">Plage normale ?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num p1">①</td><td class="l">SC locale = Tasp − T0</td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr>
+        <tr><td class="num p2">②</td><td class="l">SC totale = TSe − T0</td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr>
+        <tr><td class="num p3">③</td><td class="l">SR local = TK − TScd</td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr>
+        <tr><td class="num p4">④</td><td class="l">SR total = TK − Tdet</td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:8pt;color:#555;margin-top:3px;font-style:italic">Repères : SC locale 2-6 K · SC totale 5-10 K · SR local 3-8 K · SR total 3-8 K</div>
+  </div>
+
+  <div class="interpret">
+    <div class="lbl">✎ Interprétation — l'installation est-elle saine ? Que constates-tu entre SC locale et SC totale ?</div>
+    <div class="lgn"></div><div class="lgn"></div>
+  </div>
+
+  <div class="note-bar">
+    <div class="zone-note"><span class="lbl">Auto-éval</span> · ☐ 4 points placés · ☐ Lectures manos · ☐ 4 calculs · ☐ Unités · ☐ Interprétation</div>
+    <div class="zone-note"><span class="lbl">Note enseignant</span> Lectures (4) ___ · Placement (6) ___ · Calculs (6) ___ · Interp. (4) ___ <b>= ___ / 20</b></div>
+  </div>
+
+</div>
+
+
+<!-- ============== PAGE 3 — CORRIGÉ ============== -->
+<div class="sheet" style="page-break-before:always;margin-top:20px">
+
+  <div class="header" style="background:#000;color:white">
+    <div class="logo" style="color:white">LPP Jacques Raynaud<span style="color:#cbd5e1">CAP IFCA · usage enseignant</span></div>
+    <div class="titre" style="color:white">CORRIGÉ — Manos + Schéma + SC/SR<span style="color:#cbd5e1">À conserver côté prof</span></div>
+    <div class="ref" style="color:white"><b style="color:white">Barème · 20 pts</b>R-134a · standard EP3<br>Page 3 / 3</div>
+  </div>
+
+  <div class="schema-grand">
+    <div class="titre-sch">Schéma corrigé — emplacement attendu des 4 points</div>
+    <img src="schema_cycle_frigo.svg" alt="Schéma corrigé">
+  </div>
+
+  <div class="legende-row">
+    <div class="point-box"><div class="num p1">①</div><div class="desc"><b>T asp</b> sur la ligne d'aspiration BP, juste avant l'entrée compresseur.</div></div>
+    <div class="point-box"><div class="num p2">②</div><div class="desc"><b>T Se</b> en sortie d'évaporateur, à l'emplacement du bulbe thermostatique.</div></div>
+    <div class="point-box"><div class="num p3">③</div><div class="desc"><b>T Scd</b> en sortie du condenseur, juste avant filtre/voyant.</div></div>
+    <div class="point-box"><div class="num p4">④</div><div class="desc"><b>T det</b> sur la ligne liquide, juste avant l'entrée du détendeur.</div></div>
+  </div>
+
+  <div class="calculs">
+    <div class="lbl">Exemple de résultats attendus — sujet de référence (à adapter aux valeurs que tu écris au crayon)</div>
+    <table>
+      <thead><tr><th>№</th><th>Formule</th><th>Application (ex.)</th><th style="width:60px">Résultat</th><th style="width:200px">Plage normale ?</th></tr></thead>
+      <tbody>
+        <tr><td class="num p1">①</td><td class="l">SC locale = Tasp − T0</td><td>+4 − (−5)</td><td><b>+9 K</b></td><td style="color:#059669;font-weight:700">✓ haute mais OK (2-6 normal)</td></tr>
+        <tr><td class="num p2">②</td><td class="l">SC totale = TSe − T0</td><td>+1 − (−5)</td><td><b>+6 K</b></td><td style="color:#059669;font-weight:700">✓ normale (5-10)</td></tr>
+        <tr><td class="num p3">③</td><td class="l">SR local = TK − TScd</td><td>+40 − (+34)</td><td><b>+6 K</b></td><td style="color:#059669;font-weight:700">✓ normal (3-8)</td></tr>
+        <tr><td class="num p4">④</td><td class="l">SR total = TK − Tdet</td><td>+40 − (+33)</td><td><b>+7 K</b></td><td style="color:#059669;font-weight:700">✓ normal (3-8)</td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:8.5pt;color:#444;margin-top:4px;font-style:italic"><b>Sujet de référence :</b> P0 = 2,5 bar (T0 = −5 °C) · PK = 10 bar (TK = +40 °C) · Tasp = +4 °C · TSe = +1 °C · TScd = +34 °C · Tdet = +33 °C → installation saine. <b>Note :</b> les manomètres de la photo réelle pointent à des valeurs différentes (P0 ≈ 4 bar, PK ≈ 5 bar, équilibre à l'arrêt) — pour faire un cas pédagogique cohérent, modifie les T° au crayon en fonction des aiguilles que tu choisis.</div>
+  </div>
+
+  <div class="interpret" style="background:#dbeafe">
+    <div class="lbl">Interprétation type (avec valeurs réalistes)</div>
+    <p style="font-size:9pt;line-height:1.45">Installation saine. Toutes les valeurs sont dans les plages normales. <b>SC totale &lt; SC locale</b> (6 K vs 9 K) : c'est normal, la ligne d'aspiration se réchauffe entre le bulbe et le compresseur (gain typique 2-5 K). Si l'écart dépasse 5-7 K, l'isolation de la ligne d'aspiration est suspecte. <b>SR total ≥ SR local</b> peut indiquer un refroidissement résiduel dans la ligne liquide. Inverse de SR total &lt; SR local + écart important = filtre déshydrateur bouché.</p>
+  </div>
+
+  <div style="font-size:8.5pt;color:#555;text-align:center;margin-top:6px">CORRIGÉ Exercice manos + schéma · F. Henninot · LPP Jacques Raynaud · Avril 2026</div>
+
+</div>
+
+</body>
+</html>

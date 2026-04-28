@@ -57,7 +57,14 @@
   }
 
   function semaineLabel(k) {
-    const m = { 'S1': 'Semaine 1 (27/04)', 'S2': 'Semaine 2 (04/05)', 'S3': 'Semaine 3 (11/05)', 'S-': 'Hors session — stock' };
+    const m = {
+      'S1': 'Semaine 1 (27/04) — Atelier',
+      'S2': 'Semaine 2 (04/05) — Atelier',
+      'S3': 'Semaine 3 (11/05) — Atelier',
+      'S-stock': '⏱ Exercices rapides — Stock 1 h / 1 h 30',
+      'S-plans': '📋 Plans de séance prof',
+      'S-': 'Hors session — TP user'
+    };
     return m[k] || k;
   }
 

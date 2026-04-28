@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Plan de séance 2 — Schéma cycle frigo + placement points + SC/SR — CAP IFCA</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 8mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lexend', Calibri, sans-serif; font-size: 9.5pt; line-height: 1.4; color: #000; background: white; padding: 8mm; }
+.sheet { max-width: 194mm; margin: 0 auto; }
+
+.header { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 6px; align-items: center; border: 2px solid #000; padding: 5px 10px; margin-bottom: 7px; background: #eff6ff; }
+.header .logo { font-size: 9pt; font-weight: 700; line-height: 1.2; }
+.header .logo span { font-size: 8pt; font-weight: 400; display: block; color: #333; }
+.header .titre { text-align: center; font-size: 13pt; font-weight: 800; line-height: 1.15; color: #1e40af; }
+.header .titre span { font-size: 9pt; font-weight: 600; display: block; color: #333; margin-top: 2px; }
+.header .ref { text-align: right; font-size: 9pt; }
+.header .ref b { display: block; font-size: 10pt; color: #1e40af; }
+
+.identite { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; margin-bottom: 7px; font-size: 9.5pt; }
+.identite .champ { border: 1px solid #000; padding: 4px 8px; }
+.identite .champ .lbl { font-size: 7.5pt; color: #333; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; }
+.identite .champ .val { font-weight: 600; margin-top: 2px; }
+
+h2 { font-size: 10pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; margin: 8px 0 4px; padding: 3px 8px; background: #000; color: white; }
+h2 .num { background: white; color: #000; padding: 0 6px; margin-right: 6px; }
+
+.bloc { border: 1px solid #000; padding: 5px 10px; margin-bottom: 6px; background: white; }
+.bloc.gris { background: #fafafa; }
+.bloc.jaune { background: #fffbeb; }
+.bloc.bleu { background: #eff6ff; }
+.bloc.violet { background: #f5f3ff; }
+.bloc ul, .bloc ol { margin-left: 18px; }
+.bloc li { margin-bottom: 2px; }
+.bloc b { font-weight: 700; }
+
+.deux-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+table.tt { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 4px 0; }
+table.tt th, table.tt td { border: 1px solid #000; padding: 4px 6px; text-align: left; vertical-align: top; }
+table.tt th { background: #000; color: white; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; text-align: center; }
+table.tt td.timing { text-align: center; font-weight: 800; background: #eff6ff; width: 60px; }
+table.tt td.phase { font-weight: 700; width: 90px; }
+table.tt td.modal { width: 90px; font-style: italic; font-size: 8.5pt; color: #444; }
+table.tt b { font-weight: 700; }
+
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+.comp-block { border: 1.5px solid #000; padding: 5px 8px; }
+.comp-block .titre-c { font-weight: 800; font-size: 9.5pt; text-transform: uppercase; letter-spacing: 0.3px; padding: 2px 6px; margin: -5px -8px 4px -8px; }
+.comp-block.tne .titre-c { background: #fed7aa; color: #9a3412; }
+.comp-block.cap .titre-c { background: #dbeafe; color: #1e40af; }
+.comp-block.bac .titre-c { background: #ede9fe; color: #5b21b6; }
+.comp-block .code { font-family: 'Courier New', monospace; font-weight: 800; }
+.comp-block ul { margin-left: 16px; font-size: 8.5pt; }
+.comp-block li { margin-bottom: 1px; }
+
+.footer-doc { margin-top: 8px; padding-top: 4px; border-top: 1px solid #000; font-size: 8pt; color: #333; display: flex; justify-content: space-between; }
+
+@media screen { body { background: #e5e5e5; } .sheet { background: white; padding: 12mm; box-shadow: 0 2px 10px rgba(0,0,0,0.15); margin: 20px auto; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique</span></div>
+    <div class="titre">PLAN DE SÉANCE 2 — Schéma cycle frigo + Placement points + SC/SR<span>Surchauffe locale &amp; totale · Sous-refroidissement local &amp; total · multi-diplômes</span></div>
+    <div class="ref"><b>Durée : 1 h</b>F. Henninot<br>Séance 2 / 2</div>
+  </div>
+
+  <div class="identite">
+    <div class="champ"><span class="lbl">Classe</span><div class="val">CAP IFCA 2 · TNE · MFER</div></div>
+    <div class="champ"><span class="lbl">Effectif</span><div class="val">12 à 24 élèves (binôme)</div></div>
+    <div class="champ"><span class="lbl">Salle</span><div class="val">Salle de techno</div></div>
+    <div class="champ"><span class="lbl">Date</span><div class="val">_______________</div></div>
+  </div>
+
+  <h2><span class="num">1</span>Objectifs de la séance 2</h2>
+  <div class="bloc bleu">
+    <b>Objectif général :</b> approfondir la maîtrise SC/SR en distinguant les points <b>locaux</b> et <b>totaux</b> sur un schéma cycle frigorifique simplifié, et savoir interpréter l'écart entre les deux.<br>
+    <b>Objectifs opérationnels — l'élève sera capable de :</b>
+    <ul>
+      <li>Identifier sur un schéma cycle frigorifique les 4 emplacements de mesure (T asp · T Se · T Scd · T det).</li>
+      <li>Calculer la <b>surchauffe locale</b> (Tasp − T0) et la <b>surchauffe totale</b> (TSe − T0).</li>
+      <li>Calculer le <b>sous-refroidissement local</b> (TK − TScd) et le <b>sous-refroidissement total</b> (TK − Tdet).</li>
+      <li>Interpréter <b>l'écart entre SC locale et SC totale</b> (gain de chaleur dans la ligne d'aspiration → isolation suspecte si trop grand).</li>
+      <li>Diagnostiquer un dysfonctionnement spécifique (filtre déshydrateur bouché → SR total ≠ SR local avec écart Tdet).</li>
+    </ul>
+  </div>
+
+  <h2><span class="num">2</span>Compétences mobilisées</h2>
+  <div class="comp-grid">
+    <div class="comp-block tne">
+      <div class="titre-c">2nde TNE</div>
+      <ul>
+        <li><span class="code">CT.4</span> · Mesures de base</li>
+        <li><span class="code">CT.5</span> · Lecture de schémas</li>
+      </ul>
+      <div style="font-size:8pt;font-style:italic;color:#666;margin-top:3px">Niveau attendu : EC à A · placement des points seul (sans calcul SC/SR)</div>
+    </div>
+    <div class="comp-block cap">
+      <div class="titre-c">CAP IFCA · EP3-A</div>
+      <ul>
+        <li><span class="code">C4.2</span> · Identifier fluide</li>
+        <li><span class="code">C4.5</span> · Mesurer + comparer</li>
+        <li><span class="code">C1.1</span> · Compléter docs</li>
+      </ul>
+      <div style="font-size:8pt;font-style:italic;color:#666;margin-top:3px">Niveau attendu : A à M</div>
+    </div>
+    <div class="comp-block bac">
+      <div class="titre-c">Bac Pro MFER · E31+E32</div>
+      <ul>
+        <li><span class="code">C4.5</span> E31 · Mesures réglages</li>
+        <li><span class="code">C4.5b</span> E32 · Mesures diag.</li>
+        <li><span class="code">C5.1</span> E32 · Diagnostiquer</li>
+      </ul>
+      <div style="font-size:8pt;font-style:italic;color:#666;margin-top:3px">Niveau attendu : M (diag argumenté)</div>
+    </div>
+  </div>
+
+  <h2><span class="num">3</span>Prérequis &amp; Matériel</h2>
+  <div class="deux-cols">
+    <div class="bloc gris">
+      <b>Prérequis élèves (séance 1 acquise) :</b>
+      <ul>
+        <li>Lecture P0 / PK sur manomètres BP/HP.</li>
+        <li>Déduction T0 / TK via cadran multi-fluides.</li>
+        <li>Formules de base : <b>Surchauffe = TSe − T0</b> · <b>SR = TK − TScd</b>.</li>
+        <li>Diagnostic basique (sain / manque fluide / surcharge).</li>
+        <li>Connaissance du cycle frigo : 4 organes + 2 lignes (HP / BP).</li>
+      </ul>
+    </div>
+    <div class="bloc gris">
+      <b>Matériel pour la séance :</b>
+      <ul>
+        <li>Fiche élève imprimée — 2 pages A4 (manos page 1 + schéma page 2).</li>
+        <li>Fiche d'évaluation par compétences (1 page paysage par diplôme).</li>
+        <li><b>Crayons / stylos couleur</b> rouge · orange · bleu · violet (placement des 4 points).</li>
+        <li>Calculatrice.</li>
+        <li>Vidéoprojecteur — projection du schéma vide pour démo placement.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="num">4</span>Déroulé chronologique de la séance</h2>
+  <table class="tt">
+    <thead>
+      <tr><th>Timing</th><th>Phase</th><th>Activité enseignant / élève</th><th>Modalité</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="timing">0 – 5 min</td>
+        <td class="phase">Rappel<br>séance 1</td>
+        <td>Quiz oral rapide : « Quelle est la formule de la surchauffe ? Du sous-refroidissement ? Plage normale ? » Annoncer l'objectif : aujourd'hui on rajoute une notion → SC/SR <b>local et total</b>, et on place les points sur un vrai schéma.</td>
+        <td class="modal">Frontal · oral</td>
+      </tr>
+      <tr>
+        <td class="timing">5 – 12 min</td>
+        <td class="phase">Démo<br>placement</td>
+        <td>Distribution de la fiche. Projection du schéma vide. Démonstration au tableau : placer les 4 points ①②③④ avec un feutre coloré. Expliquer pourquoi ① et ② sont tous les 2 sur la ligne BP mais à des positions différentes (Tasp = compresseur · TSe = bulbe).</td>
+        <td class="modal">Frontal · démo</td>
+      </tr>
+      <tr>
+        <td class="timing">12 – 22 min</td>
+        <td class="phase">Phase 1<br>Lecture manos</td>
+        <td><b>Lecture manomètres + déduction T0/TK</b> en page 1 de la fiche. Réinvestissement direct des acquis de la séance 1. L'enseignant valide rapidement (les élèves ne doivent pas être bloqués ici).</td>
+        <td class="modal">Individuel<br>ou binôme</td>
+      </tr>
+      <tr>
+        <td class="timing">22 – 35 min</td>
+        <td class="phase">Phase 2<br>Placement</td>
+        <td><b>Placement des 4 points sur le schéma</b> (page 2). L'enseignant circule, valide individuellement le placement avant les calculs (point pédagogique fort : si un point est mal placé, le calcul sera faux).</td>
+        <td class="modal">Individuel<br>ou binôme</td>
+      </tr>
+      <tr>
+        <td class="timing">35 – 48 min</td>
+        <td class="phase">Phase 3<br>4 calculs</td>
+        <td><b>Calculs SC locale + SC totale + SR local + SR total.</b> Insister sur la rigueur des signes (Tasp = +4, T0 = −5 → SC = 4 − (−5) = 9 K). L'enseignant accompagne les élèves en difficulté sur les soustractions de nombres relatifs.</td>
+        <td class="modal">Individuel<br>ou binôme</td>
+      </tr>
+      <tr>
+        <td class="timing">48 – 55 min</td>
+        <td class="phase">Correction<br>+ interp.</td>
+        <td>Correction collective. Insister sur l'<b>écart SC locale − SC totale</b> = gain de chaleur dans la ligne d'aspiration (normal 2-5 K, suspect &gt; 7 K). Discussion : que se passe-t-il si SR total &lt; SR local ? → filtre déshydrateur bouché.</td>
+        <td class="modal">Collectif<br>oral</td>
+      </tr>
+      <tr>
+        <td class="timing">55 – 60 min</td>
+        <td class="phase">Bilan<br>+ ouverture</td>
+        <td>Évaluation par compétences (NA/EC/A/M). Annonce de la suite : application sur installation réelle en atelier (TP-053 ou TP-054). Ramassage.</td>
+        <td class="modal">Frontal · oral</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">5</span>Différenciation pédagogique &amp; Évaluation</h2>
+  <div class="deux-cols">
+    <div class="bloc jaune">
+      <b>Différenciation prévue :</b>
+      <ul>
+        <li><b>À soutenir :</b> placement des points en autonomie, mais on simplifie à <b>2 calculs</b> (SC totale + SR local) au lieu de 4. Pas de calcul SC locale ni SR total exigé.</li>
+        <li><b>Standard :</b> les 4 calculs en autonomie + interprétation simple.</li>
+        <li><b>Rapide :</b> proposer un 2<sup>e</sup> jeu de valeurs (modifié au crayon par le prof) avec un dysfonctionnement à diagnostiquer.</li>
+        <li><b>DYS / TDAH :</b> code couleur ①②③④ explicite, validation prof intermédiaire avant chaque phase, table P/T agrandie.</li>
+      </ul>
+    </div>
+    <div class="bloc jaune">
+      <b>Modalités d'évaluation :</b>
+      <ul>
+        <li><b>Formative :</b> validation prof du placement des points avant calculs (cohérence pédagogique).</li>
+        <li><b>Note /20 :</b> Lectures (4) + Placement (6) + Calculs (6) + Interp. (4).</li>
+        <li><b>Par compétences :</b> feuille dédiée selon diplôme (NA / EC / A / M).</li>
+        <li><b>Auto-évaluation :</b> cases en bas de fiche cochées par l'élève.</li>
+        <li><b>Bilan séance 1 + 2 :</b> comparer la progression entre les 2 séances.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="num">6</span>Trace écrite &amp; Lien avec la suite</h2>
+  <div class="bloc violet">
+    <b>Trace écrite conservée par l'élève :</b> les 2 fiches (séance 1 + séance 2) + les 2 feuilles d'évaluation par compétences avec note + signature.<br>
+    <b>Bilan progression :</b> compétence "Mesurer + comparer" (C4.5) doit avoir progressé entre la S1 et la S2. Si l'élève reste en EC, prévoir une remédiation lors d'une séance Whart suivante.<br>
+    <b>Lien avec la suite :</b> application immédiate sur installation réelle en atelier — <b>TP-053 (Mesures de températures pures)</b> en S1 ou <b>TP-054 (Mesures + SC/SR + Fiche MES)</b> en S2 selon la progression élève. Pour les avancés, déclenchement <b>EP3 officiel</b> dès le 04/05.
+  </div>
+
+  <div class="footer-doc">
+    <span>Plan de séance 2 · Schéma + placement + SC/SR local et total · F. Henninot · LPP Jacques Raynaud</span>
+    <span>Avril 2026 · Préparation EP3 Bloc B</span>
+  </div>
+
+</div>
+</body>
+</html>

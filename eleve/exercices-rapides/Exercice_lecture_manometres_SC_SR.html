@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Exercice rapide — Lecture manomètres + SC/SR — CAP IFCA</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 10mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lexend', Calibri, sans-serif; font-size: 10.5pt; line-height: 1.5; color: #000; background: white; padding: 10mm; }
+.sheet { max-width: 190mm; margin: 0 auto; }
+.header { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 8px; align-items: center; border: 2px solid #000; padding: 6px 10px; margin-bottom: 10px; }
+.header .logo { font-size: 9.5pt; font-weight: 700; line-height: 1.2; }
+.header .logo span { font-size: 8pt; font-weight: 400; display: block; color: #333; }
+.header .titre { text-align: center; font-size: 13pt; font-weight: 800; line-height: 1.15; }
+.header .titre span { font-size: 8.5pt; font-weight: 600; display: block; color: #333; margin-top: 2px; }
+.header .ref { text-align: right; font-size: 8.5pt; }
+.header .ref b { display: block; font-size: 10pt; }
+.identite { display: grid; grid-template-columns: 2fr 2fr 1fr 1fr; gap: 6px; margin-bottom: 10px; font-size: 10pt; }
+.identite .champ { border: 1px solid #000; padding: 4px 8px; min-height: 28px; }
+.identite .champ .lbl { font-size: 7.5pt; color: #333; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; }
+.identite .champ .val { height: 14px; border-bottom: 1px dotted #666; margin-top: 2px; }
+h2.section { font-size: 11pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; margin: 10px 0 6px; padding: 4px 8px; background: #000; color: white; }
+h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 6px; }
+.rappel { border: 2px solid #000; padding: 8px 12px; margin-bottom: 10px; background: #fafafa; }
+.rappel .titre { font-weight: 800; font-size: 10pt; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+.formules { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.form { background: white; border: 1.5px solid #000; padding: 5px 10px; text-align: center; font-weight: 700; font-family: 'Courier New', monospace; font-size: 11pt; }
+.cas { border: 2px solid #000; border-radius: 4px; margin-bottom: 14px; page-break-inside: avoid; background: white; }
+.cas-head { background: #000; color: white; padding: 6px 12px; display: flex; justify-content: space-between; align-items: center; }
+.cas-head h3 { font-size: 13pt; font-weight: 800; }
+.cas-head .fluide { background: white; color: #000; padding: 2px 10px; border-radius: 4px; font-weight: 800; font-size: 10pt; font-family: 'Courier New', monospace; }
+.cas-body { padding: 10px 14px; }
+.scenar { font-style: italic; color: #444; font-size: 11pt; margin-bottom: 8px; line-height: 1.5; }
+.scenar b { color: #000; font-style: normal; }
+.mano-photo { text-align: center; margin: 8px 0; }
+.mano-photo img { max-width: 100%; height: auto; border: 1px solid #000; background: white; }
+.mano-photo .legende { font-size: 9pt; color: #444; margin-top: 4px; font-style: italic; }
+.lectures { background: #f0f0f0; border: 1px solid #000; padding: 8px 12px; margin: 8px 0; }
+.lectures .lbl-rel { font-weight: 800; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.lectures table { width: 100%; border-collapse: collapse; font-size: 10pt; }
+.lectures th, .lectures td { border: 1px solid #000; padding: 4px 8px; text-align: center; }
+.lectures th { background: #ddd; font-weight: 700; font-size: 9pt; }
+.lectures td.vide { height: 22px; background: white; }
+.lectures td.lbl-cell { background: #fafafa; font-weight: 600; text-align: left; }
+.relevés-circuit { background: white; border: 1px dashed #000; padding: 8px 12px; margin: 8px 0; }
+.relevés-circuit .lbl { font-weight: 800; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.relevés-circuit table { width: 100%; border-collapse: collapse; font-size: 10pt; }
+.relevés-circuit td { border: 1px solid #000; padding: 4px 8px; text-align: center; }
+.relevés-circuit td.l { background: #f0f0f0; font-weight: 700; font-size: 9pt; }
+.calculs { background: white; border: 1.5px solid #000; padding: 8px 12px; margin: 8px 0; }
+.calculs .lbl { font-weight: 800; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.calculs table { width: 100%; border-collapse: collapse; font-size: 10pt; }
+.calculs th, .calculs td { border: 1px solid #000; padding: 5px 8px; text-align: center; }
+.calculs th { background: #eee; font-weight: 700; font-size: 9pt; }
+.calculs td.l { text-align: left; font-weight: 600; background: #fafafa; font-family: 'Courier New', monospace; font-size: 9.5pt; }
+.calculs td.vide { height: 26px; background: white; }
+.interpret { background: #fffbeb; border: 1px solid #000; padding: 8px 12px; margin-top: 8px; font-size: 10pt; }
+.interpret .lbl { font-weight: 800; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.lgn { border-bottom: 1px dotted #000; height: 18px; margin-bottom: 2px; }
+.aide { background: #f0f9ff; border: 1px solid #000; padding: 8px 12px; margin-top: 12px; font-size: 9pt; page-break-inside: avoid; }
+.aide .lbl { font-weight: 800; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 4px; }
+.aide table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+.aide th, .aide td { border: 1px solid #000; padding: 3px 6px; text-align: center; }
+.aide th { background: #ddd; font-weight: 700; }
+.note-grading { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; font-size: 10pt; }
+.zone { border: 1px solid #000; padding: 8px 12px; min-height: 50px; }
+.zone .lbl { font-weight: 700; text-transform: uppercase; font-size: 9pt; letter-spacing: 0.3px; margin-bottom: 4px; }
+.footer-doc { margin-top: 8px; padding-top: 4px; border-top: 1px solid #000; font-size: 8pt; color: #333; display: flex; justify-content: space-between; }
+.page-break { page-break-before: always; }
+@media screen { body { background: #e5e5e5; } .sheet { background: white; padding: 12mm; box-shadow: 0 2px 10px rgba(0,0,0,0.15); margin: 20px auto; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique · CAP IFCA</span></div>
+    <div class="titre">Exercice rapide — Lecture manomètres + Surchauffe / Sous-refroidissement<span>Surchauffe = T bulbe − T0 · Sous-refroidissement = TK − T sortie condenseur</span></div>
+    <div class="ref"><b>Durée : 1 h</b>Préparation EP3 Bloc B<br>Niveau CAP IFCA 2</div>
+  </div>
+
+  <div class="identite">
+    <div class="champ"><div class="lbl">NOM — Prénom</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Binôme (ou seul)</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Classe</div><div class="val">CAP IFCA 2</div></div>
+    <div class="champ"><div class="lbl">Note / 20</div><div class="val"></div></div>
+  </div>
+
+  <!-- RAPPEL FORMULES -->
+  <div class="rappel">
+    <div class="titre">Rappel express — les 2 formules à connaître par cœur</div>
+    <div class="formules">
+      <div class="form" style="background:#fee2e2">SURCHAUFFE = T bulbe (TSe) − T0</div>
+      <div class="form" style="background:#dbeafe">SOUS-REFROIDISSEMENT = TK − T sortie condenseur (TScd)</div>
+    </div>
+    <div style="font-size:9pt;margin-top:6px;color:#444;line-height:1.5">
+      <b>T0</b> = température d'évaporation, je la lis sur le <b>manomètre BP</b> en suivant l'échelle du bon fluide ·
+      <b>TK</b> = température de condensation, je la lis sur le <b>manomètre HP</b> idem ·
+      <b>TSe</b> = température au bulbe (sortie évaporateur) — relevée au thermomètre de contact ·
+      <b>TScd</b> = température sortie condenseur — relevée au thermomètre de contact.
+    </div>
+  </div>
+
+  <!-- =================== CAS 1 =================== -->
+  <div class="cas">
+    <div class="cas-head"><h3>CAS 1 — Climatisation appartement · « Famille Martin »</h3><span class="fluide">R-134a</span></div>
+    <div class="cas-body">
+      <div class="scenar">
+        Tu es appelé pour un <b>contrôle de mise en service</b> d'une climatisation chez la famille Martin. Installation au <b>R-134a</b>. Tu poses le manifold, tu attends 10 min de stabilisation et tu prends une photo des manomètres ci-dessous (vue technicien).
+      </div>
+
+      <div class="mano-photo">
+        <img src="manometres/manos_cas1_R134a_EN837.png" alt="Manomètres BP et HP avec aiguilles">
+        <div class="legende">À gauche : manomètre <b>BP</b> · À droite : manomètre <b>HP</b> · Lecture pression sur l'échelle externe noire (bar) · Échelles intérieures bleue/rouge = T° pour R-134a / R-1234yf · La <b>zone verte</b> indique la plage de fonctionnement normal.</div>
+      </div>
+
+      <!-- LECTURE -->
+      <div class="lectures">
+        <div class="lbl-rel">✎ 1. Lecture des manomètres (relève la pression et déduis la température sur l'échelle R-134a)</div>
+        <table>
+          <thead><tr><th>P0 — Manomètre BP</th><th>T0 (°C — échelle R-134a sur cadran BP)</th><th>PK — Manomètre HP</th><th>TK (°C — échelle R-134a sur cadran HP)</th></tr></thead>
+          <tbody><tr><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+        <div style="font-size:9pt;margin-top:4px;color:#555"><b>Astuce :</b> est-ce que les aiguilles sont dans la zone verte ? Si oui = fonctionnement normal annoncé.</div>
+      </div>
+
+      <!-- RELEVES TEMP CIRCUIT -->
+      <div class="relevés-circuit">
+        <div class="lbl">Données fournies — Températures relevées au thermomètre de contact</div>
+        <table>
+          <tr><td class="l">TSe (T° au bulbe / sortie évaporateur)</td><td><b>+15 °C</b></td><td class="l">TScd (T° sortie condenseur)</td><td><b>+12 °C</b></td></tr>
+          <tr><td class="l">T air ambiant intérieur</td><td>+24 °C</td><td class="l">T air extérieur (au condenseur)</td><td>+30 °C</td></tr>
+        </table>
+      </div>
+
+      <!-- CALCULS -->
+      <div class="calculs">
+        <div class="lbl">✎ 2. Calculs Surchauffe et Sous-refroidissement (en kelvin · attention aux signes)</div>
+        <table>
+          <thead><tr><th>Formule</th><th>Détail du calcul</th><th>Résultat (K)</th></tr></thead>
+          <tbody>
+            <tr><td class="l">SURCHAUFFE = TSe − T0</td><td class="vide"></td><td class="vide"></td></tr>
+            <tr><td class="l">SOUS-REFROIDISSEMENT = TK − TScd</td><td class="vide"></td><td class="vide"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="interpret">
+        <div class="lbl">✎ 3. Interprétation — l'installation est-elle saine ?</div>
+        <div class="lgn"></div>
+        <div class="lgn"></div>
+        <div style="font-size:8.5pt;font-style:italic;color:#555;margin-top:3px">Repères : Surchauffe 5-10 K · Sous-refroidissement 3-8 K · La zone verte du manomètre confirme-t-elle ton diagnostic ?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================== CAS 2 =================== -->
+  <div class="cas page-break">
+    <div class="cas-head"><h3>CAS 2 — Vitrine à pâtisserie · « Le Sucre Doux »</h3><span class="fluide">R-134a</span></div>
+    <div class="cas-body">
+      <div class="scenar">
+        Le client se plaint que sa <b>vitrine pâtisserie ne tient plus la température</b> en fin de matinée. Installation au <b>R-134a</b>. Tu poses le manifold (style Blondelle multi-fluides) et tu lis les manomètres ci-dessous.
+      </div>
+
+      <div class="mano-photo">
+        <img src="manometres/manos_cas2_blondelle_R134a.png" alt="Manomètres Blondelle BP et HP">
+        <div class="legende">À gauche : manomètre <b>BP</b> · À droite : manomètre <b>HP</b> · Cadrans Blondelle multi-fluides · Lecture pression sur l'échelle <b>bar</b> · Choisis l'échelle de température correspondant au <b>R-134a</b> (couleur verte sur les cadrans Blondelle).</div>
+      </div>
+
+      <div class="lectures">
+        <div class="lbl-rel">✎ 1. Lecture des manomètres</div>
+        <table>
+          <thead><tr><th>P0 — Manomètre BP</th><th>T0 (°C — échelle R-134a verte)</th><th>PK — Manomètre HP</th><th>TK (°C — échelle R-134a verte)</th></tr></thead>
+          <tbody><tr><td class="vide"></td><td class="vide"></td><td class="vide"></td><td class="vide"></td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="relevés-circuit">
+        <div class="lbl">Données fournies — Températures relevées au thermomètre de contact</div>
+        <table>
+          <tr><td class="l">TSe (T° au bulbe / sortie évaporateur)</td><td><b>−2 °C</b></td><td class="l">TScd (T° sortie condenseur)</td><td><b>+45 °C</b></td></tr>
+          <tr><td class="l">T air ambiant magasin</td><td>+22 °C</td><td class="l">TSC (sortie compresseur, info)</td><td>+85 °C</td></tr>
+        </table>
+      </div>
+
+      <div class="calculs">
+        <div class="lbl">✎ 2. Calculs Surchauffe et Sous-refroidissement</div>
+        <table>
+          <thead><tr><th>Formule</th><th>Détail du calcul</th><th>Résultat (K)</th></tr></thead>
+          <tbody>
+            <tr><td class="l">SURCHAUFFE = TSe − T0</td><td class="vide"></td><td class="vide"></td></tr>
+            <tr><td class="l">SOUS-REFROIDISSEMENT = TK − TScd</td><td class="vide"></td><td class="vide"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="interpret">
+        <div class="lbl">✎ 3. Interprétation — l'installation est-elle saine ? Quelle anomalie ?</div>
+        <div class="lgn"></div>
+        <div class="lgn"></div>
+        <div style="font-size:8.5pt;font-style:italic;color:#555;margin-top:3px">Repères : Surchauffe 5-10 K · Sous-refroidissement 3-8 K · Pourquoi le client a-t-il un problème ? Que faire ?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AIDE TABLE P/T -->
+  <div class="aide">
+    <div class="lbl">📋 Aide-mémoire — Table P/T R-134a (à arrondir, pression rosée bar relatif)</div>
+    <table>
+      <thead><tr><th>T° (°C)</th><th>−40</th><th>−20</th><th>−10</th><th>0</th><th>+5</th><th>+10</th><th>+15</th><th>+20</th><th>+30</th><th>+40</th><th>+50</th></tr></thead>
+      <tbody>
+        <tr><td><b>R-134a</b></td><td>−0,5 b</td><td>0,3 b</td><td>1,0 b</td><td>1,9 b</td><td>2,5 b</td><td>3,1 b</td><td>3,9 b</td><td>4,7 b</td><td>6,7 b</td><td>9,2 b</td><td>12,3 b</td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:8.5pt;color:#555;margin-top:3px">Pour vérifier la lecture de tes manomètres si la T° n'est pas claire sur le cadran.</div>
+  </div>
+
+  <div class="note-grading">
+    <div class="zone">
+      <div class="lbl">Auto-évaluation — je coche</div>
+      <div style="font-size:9.5pt;line-height:1.7">
+        ☐ J'ai lu correctement les 4 valeurs (PK, TK, P0, T0)<br>
+        ☐ J'ai vérifié si les aiguilles sont dans la zone verte<br>
+        ☐ J'ai appliqué les 2 formules sans erreur<br>
+        ☐ J'ai noté les unités (K)<br>
+        ☐ J'ai posé un diagnostic argumenté pour chaque cas
+      </div>
+    </div>
+    <div class="zone">
+      <div class="lbl">Note enseignant</div>
+      <div style="font-size:9.5pt;margin-top:6px">
+        Lectures manomètres (4 pts) : ____ / 4<br>
+        Calculs cas 1 (3 pts) : ____ / 3<br>
+        Diagnostic cas 1 (3 pts) : ____ / 3<br>
+        Calculs cas 2 (3 pts) : ____ / 3<br>
+        Diagnostic cas 2 (3 pts) : ____ / 3<br>
+        Soin · unités · présentation (4 pts) : ____ / 4<br>
+        <b>TOTAL : ____ / 20</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-doc">
+    <span>Exercice SC/SR · CAP IFCA 2 · F. Henninot · inerWeb Édu</span>
+    <span>LPP Jacques Raynaud · Préparation EP3 Bloc B · Avril 2026</span>
+  </div>
+</div>
+
+<!-- ====== CORRIGÉ ENSEIGNANT ====== -->
+<div class="sheet page-break" style="margin-top:30px">
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>CAP IFCA · usage enseignant</span></div>
+    <div class="titre" style="background:#000;color:white;padding:4px">CORRIGÉ — Exercice lecture manos + SC/SR<span style="color:#cbd5e1;background:transparent">à conserver côté prof · à vérifier avec les vraies lectures aiguilles</span></div>
+    <div class="ref"><b>Barème · 20 pts</b>Détail ci-dessous</div>
+  </div>
+
+  <h2 class="section"><span class="num">1</span>Cas 1 — Famille Martin · Climatisation R-134a</h2>
+  <div style="border:1px solid #000;padding:10px 14px;margin-bottom:14px;font-size:10pt">
+    <p style="margin-bottom:6px"><b>Lectures manomètres (à valider par F. Henninot selon position aiguille réelle) :</b><br>
+      P0 ≈ <b>4 bar</b> → T0 ≈ <b>+10 °C</b> · PK ≈ <b>5 bar</b> → TK ≈ <b>+15 °C</b><br>
+      Aiguilles dans la zone verte → fonctionnement annoncé normal.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:6px">
+      <thead><tr><th style="border:1px solid #000;padding:4px;background:#eee">Calcul</th><th style="border:1px solid #000;padding:4px;background:#eee">Application</th><th style="border:1px solid #000;padding:4px;background:#eee">Résultat</th><th style="border:1px solid #000;padding:4px;background:#eee">État</th></tr></thead>
+      <tbody>
+        <tr><td style="border:1px solid #000;padding:4px"><b>SURCHAUFFE</b> = TSe − T0</td><td style="border:1px solid #000;padding:4px;text-align:center">+15 − (+10)</td><td style="border:1px solid #000;padding:4px;text-align:center"><b>+5 K</b></td><td style="border:1px solid #000;padding:4px;text-align:center;color:#059669">✓ limite basse mais OK</td></tr>
+        <tr><td style="border:1px solid #000;padding:4px"><b>SOUS-REF</b> = TK − TScd</td><td style="border:1px solid #000;padding:4px;text-align:center">+15 − (+12)</td><td style="border:1px solid #000;padding:4px;text-align:center"><b>+3 K</b></td><td style="border:1px solid #000;padding:4px;text-align:center;color:#059669">✓ limite basse mais OK</td></tr>
+      </tbody>
+    </table>
+    <p style="font-style:italic"><b>Diagnostic :</b> installation en limite basse de la plage normale. Aiguilles dans la zone verte des manomètres. Surchauffe et sous-refroidissement justes corrects mais à surveiller. Pas d'action immédiate.</p>
+  </div>
+
+  <h2 class="section"><span class="num">2</span>Cas 2 — Vitrine pâtisserie · R-134a (manomètre Blondelle)</h2>
+  <div style="border:1px solid #000;padding:10px 14px;margin-bottom:14px;font-size:10pt">
+    <p style="margin-bottom:6px"><b>Lectures manomètres (à valider) :</b><br>
+      P0 ≈ <b>2 bar</b> → T0 ≈ <b>−10 °C</b> (échelle verte R-134a) · PK ≈ <b>12 bar</b> → TK ≈ <b>+47 °C</b><br>
+      Pression HP très élevée.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:6px">
+      <thead><tr><th style="border:1px solid #000;padding:4px;background:#eee">Calcul</th><th style="border:1px solid #000;padding:4px;background:#eee">Application</th><th style="border:1px solid #000;padding:4px;background:#eee">Résultat</th><th style="border:1px solid #000;padding:4px;background:#eee">État</th></tr></thead>
+      <tbody>
+        <tr><td style="border:1px solid #000;padding:4px"><b>SURCHAUFFE</b> = TSe − T0</td><td style="border:1px solid #000;padding:4px;text-align:center">−2 − (−10)</td><td style="border:1px solid #000;padding:4px;text-align:center"><b>+8 K</b></td><td style="border:1px solid #000;padding:4px;text-align:center;color:#059669">✓ normal</td></tr>
+        <tr><td style="border:1px solid #000;padding:4px"><b>SOUS-REF</b> = TK − TScd</td><td style="border:1px solid #000;padding:4px;text-align:center">+47 − (+45)</td><td style="border:1px solid #000;padding:4px;text-align:center"><b>+2 K</b></td><td style="border:1px solid #000;padding:4px;text-align:center;color:#dc2626">⚠ trop faible</td></tr>
+      </tbody>
+    </table>
+    <p style="font-style:italic"><b>Diagnostic :</b> <b>condenseur encrassé / mauvaise dissipation HP</b>. La HP s'envole (47 °C de condensation pour 22 °C ambiant = ΔT &gt; 25 K, anormal). Le sous-refroidissement est presque inexistant car la condensation se fait mal. <b>Action :</b> nettoyer le condenseur, vérifier le ventilateur, contrôler les incondensables. La vitrine ne tient plus la T° parce que le compresseur monte trop en pression et coupe sur sa sécurité HP.</p>
+  </div>
+
+  <h2 class="section"><span class="num">3</span>Tableau de diagnostic général (mémo)</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:8px">
+    <thead><tr><th style="border:1px solid #000;padding:5px;background:#eee">Surchauffe</th><th style="border:1px solid #000;padding:5px;background:#eee">Sous-refroidissement</th><th style="border:1px solid #000;padding:5px;background:#eee">Diagnostic probable</th></tr></thead>
+    <tbody>
+      <tr><td style="border:1px solid #000;padding:5px;text-align:center">Normale (5-10 K)</td><td style="border:1px solid #000;padding:5px;text-align:center">Normal (3-8 K)</td><td style="border:1px solid #000;padding:5px"><b>Installation saine</b></td></tr>
+      <tr><td style="border:1px solid #000;padding:5px;text-align:center">↑ haute / forte</td><td style="border:1px solid #000;padding:5px;text-align:center">↓ faible (&lt; 3 K)</td><td style="border:1px solid #000;padding:5px"><b>Manque de fluide</b> (fuite, sous-charge)</td></tr>
+      <tr><td style="border:1px solid #000;padding:5px;text-align:center">Normale</td><td style="border:1px solid #000;padding:5px;text-align:center">↓ très faible + HP très haute</td><td style="border:1px solid #000;padding:5px"><b>Condenseur encrassé / ventilo HS / incondensables</b></td></tr>
+      <tr><td style="border:1px solid #000;padding:5px;text-align:center">↓ faible (&lt; 3 K)</td><td style="border:1px solid #000;padding:5px;text-align:center">↑ forte (&gt; 10 K)</td><td style="border:1px solid #000;padding:5px"><b>Surcharge fluide</b> (excès de charge)</td></tr>
+      <tr><td style="border:1px solid #000;padding:5px;text-align:center">↓ très faible</td><td style="border:1px solid #000;padding:5px;text-align:center">Normal</td><td style="border:1px solid #000;padding:5px"><b>Détendeur trop ouvert</b> ou bulbe défectueux</td></tr>
+      <tr><td style="border:1px solid #000;padding:5px;text-align:center">Normale</td><td style="border:1px solid #000;padding:5px;text-align:center">↑ forte (Tdet &lt; TScd)</td><td style="border:1px solid #000;padding:5px"><b>Filtre déshydrateur bouché</b> (perte de charge)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer-doc">
+    <span>CORRIGÉ Exercice SC/SR · usage enseignant uniquement · F. Henninot</span>
+    <span>LPP Jacques Raynaud · Avril 2026</span>
+  </div>
+</div>
+
+<!-- Feuilles d'évaluation par compétences = fichiers séparés (1 par diplôme, paysage A4) :
+     · Eval_competences_2nde_TNE.html
+     · Eval_competences_CAP_IFCA.html
+     · Eval_competences_BAC_PRO_MFER.html
+-->
+<!-- _ANCIEN_BLOC_EVAL_RETIRE_ --><div class="sheet page-break" style="margin-top:30px;display:none">
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique</span></div>
+    <div class="titre" style="background:#000;color:white;padding:4px">FEUILLE D'ÉVALUATION PAR COMPÉTENCES<span style="color:#cbd5e1;background:transparent">3 diplômes · 2nde TNE · CAP IFCA · Bac Pro MFER · 1 page par élève</span></div>
+    <div class="ref"><b>Activité</b>Exercice lecture manos<br>+ SC/SR · Avril 2026</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;margin-bottom:10px;font-size:10pt">
+    <div style="border:1px solid #000;padding:6px 10px"><b style="font-size:8.5pt;text-transform:uppercase;letter-spacing:.4px;color:#333">Élève</b><br><div style="height:18px;border-bottom:1px dotted #666;margin-top:2px"></div></div>
+    <div style="border:1px solid #000;padding:6px 10px"><b style="font-size:8.5pt;text-transform:uppercase;letter-spacing:.4px;color:#333">Date</b><br><div style="height:18px;border-bottom:1px dotted #666;margin-top:2px"></div></div>
+    <div style="border:1px solid #000;padding:6px 10px"><b style="font-size:8.5pt;text-transform:uppercase;letter-spacing:.4px;color:#333">Évaluateur</b><br><div style="height:18px;border-bottom:1px dotted #666;margin-top:2px"></div></div>
+  </div>
+
+  <!-- CHOIX DU DIPLOME -->
+  <div style="border:2px solid #000;padding:8px 12px;margin-bottom:12px;background:#fafafa">
+    <div style="font-weight:800;text-transform:uppercase;letter-spacing:.4px;font-size:10pt;margin-bottom:6px">Diplôme évalué (cocher)</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:10pt">
+      <label style="border:1.5px solid #000;padding:6px 10px;cursor:pointer;background:#fff7ed;display:flex;align-items:center;gap:6px">
+        <span style="display:inline-block;width:14px;height:14px;border:1.5px solid #000;background:white"></span>
+        <span><b style="color:#9a3412">2nde TNE</b><br><span style="font-size:8.5pt;color:#555">Transitions Numérique &amp; Énergétique</span></span>
+      </label>
+      <label style="border:1.5px solid #000;padding:6px 10px;cursor:pointer;background:#dbeafe;display:flex;align-items:center;gap:6px">
+        <span style="display:inline-block;width:14px;height:14px;border:1.5px solid #000;background:white"></span>
+        <span><b style="color:#1e40af">CAP IFCA</b><br><span style="font-size:8.5pt;color:#555">Installateur Froid &amp; CA · 1<sup>re</sup> ou 2<sup>e</sup> année</span></span>
+      </label>
+      <label style="border:1.5px solid #000;padding:6px 10px;cursor:pointer;background:#ede9fe;display:flex;align-items:center;gap:6px">
+        <span style="display:inline-block;width:14px;height:14px;border:1.5px solid #000;background:white"></span>
+        <span><b style="color:#5b21b6">Bac Pro MFER</b><br><span style="font-size:8.5pt;color:#555">Métiers du Froid &amp; ER · 1<sup>re</sup> ou Term.</span></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- LEGENDE NIVEAUX -->
+  <div style="background:#f0f0f0;border:1px solid #000;padding:6px 12px;margin-bottom:10px;font-size:9.5pt">
+    <b>Niveaux d'acquisition :</b> &nbsp;
+    <span style="background:#fee2e2;padding:1px 8px;font-weight:700">NA</span> Non acquis · &nbsp;
+    <span style="background:#fed7aa;padding:1px 8px;font-weight:700">EC</span> En cours d'acquisition · &nbsp;
+    <span style="background:#bbf7d0;padding:1px 8px;font-weight:700">A</span> Acquis · &nbsp;
+    <span style="background:#bfdbfe;padding:1px 8px;font-weight:700">M</span> Maîtrisé
+  </div>
+
+  <!-- ============== 2nde TNE ============== -->
+  <h2 class="section" style="background:#9a3412">2nde TNE — Compétences transversales (CT)</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:9.5pt;margin-bottom:14px">
+    <thead><tr>
+      <th style="border:1px solid #000;padding:5px;background:#fed7aa;width:60px">Code</th>
+      <th style="border:1px solid #000;padding:5px;background:#fed7aa">Intitulé / Critères mobilisés par l'exercice</th>
+      <th style="border:1px solid #000;padding:5px;background:#fee2e2;width:50px">NA</th>
+      <th style="border:1px solid #000;padding:5px;background:#fed7aa;width:50px">EC</th>
+      <th style="border:1px solid #000;padding:5px;background:#bbf7d0;width:50px">A</th>
+      <th style="border:1px solid #000;padding:5px;background:#bfdbfe;width:50px">M</th>
+      <th style="border:1px solid #000;padding:5px;background:#eee;width:60px">Note</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid #000;padding:5px;text-align:center"><b>CT.4</b></td>
+        <td style="border:1px solid #000;padding:5px"><b>Mesures de base</b> — Réaliser des mesures simples (pression, température). Lecture des manomètres et identification des grandeurs P0/PK/T0/TK.</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">/ 10</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #000;padding:5px;text-align:center"><b>CT.5</b></td>
+        <td style="border:1px solid #000;padding:5px"><b>Lecture de plans</b> — Lire un cadran de manomètre multi-fluides et identifier l'échelle correspondant au fluide R-134a.</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">/ 10</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size:9pt;font-style:italic;color:#555;margin-top:-8px;margin-bottom:14px">Niveau attendu en 2nde TNE : <b>EC à A</b> (formatif). Calculs SC/SR non exigés à ce niveau (initiation aux notions).</div>
+
+  <!-- ============== CAP IFCA ============== -->
+  <h2 class="section" style="background:#1e40af">CAP IFCA — EP3 Situation A · Mise en service</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:9.5pt;margin-bottom:14px">
+    <thead><tr>
+      <th style="border:1px solid #000;padding:5px;background:#dbeafe;width:60px">Code</th>
+      <th style="border:1px solid #000;padding:5px;background:#dbeafe">Intitulé / Critères mobilisés par l'exercice</th>
+      <th style="border:1px solid #000;padding:5px;background:#fee2e2;width:50px">NA</th>
+      <th style="border:1px solid #000;padding:5px;background:#fed7aa;width:50px">EC</th>
+      <th style="border:1px solid #000;padding:5px;background:#bbf7d0;width:50px">A</th>
+      <th style="border:1px solid #000;padding:5px;background:#bfdbfe;width:50px">M</th>
+      <th style="border:1px solid #000;padding:5px;background:#eee;width:60px">Note</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid #000;padding:5px;text-align:center"><b>C4.2</b></td>
+        <td style="border:1px solid #000;padding:5px"><b>Manipuler fluide</b> — Identifier le fluide frigorigène et lire l'échelle du cadran correspondant (R-134a sur les 2 cas).</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">/ 4</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #000;padding:5px;text-align:center"><b>C4.5</b></td>
+        <td style="border:1px solid #000;padding:5px"><b>Mesurer</b> — Mesurer et comparer des grandeurs : lecture P0/PK, déduction T0/TK, application des formules <b>Surchauffe = TSe − T0</b> et <b>Sous-refroidissement = TK − TScd</b>, comparaison aux plages de fonctionnement (5-10 K · 3-8 K).</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">/ 12</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #000;padding:5px;text-align:center"><b>C1.1</b></td>
+        <td style="border:1px solid #000;padding:5px"><b>Compléter docs</b> — Renseigner correctement les valeurs lues et calculées dans les tableaux fournis (unités, soin, traçabilité).</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">/ 4</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size:9pt;font-style:italic;color:#555;margin-top:-8px;margin-bottom:14px">Niveau attendu en fin de CAP IFCA 2 (EP3) : <b>A à M</b> (certificatif). Total / 20.</div>
+
+  <!-- ============== BAC PRO MFER ============== -->
+  <h2 class="section" style="background:#5b21b6">Bac Pro MFER — Mesures et diagnostic</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:9.5pt;margin-bottom:14px">
+    <thead><tr>
+      <th style="border:1px solid #000;padding:5px;background:#ede9fe;width:60px">Code</th>
+      <th style="border:1px solid #000;padding:5px;background:#ede9fe;width:60px">Épreuve</th>
+      <th style="border:1px solid #000;padding:5px;background:#ede9fe">Intitulé / Critères mobilisés par l'exercice</th>
+      <th style="border:1px solid #000;padding:5px;background:#fee2e2;width:50px">NA</th>
+      <th style="border:1px solid #000;padding:5px;background:#fed7aa;width:50px">EC</th>
+      <th style="border:1px solid #000;padding:5px;background:#bbf7d0;width:50px">A</th>
+      <th style="border:1px solid #000;padding:5px;background:#bfdbfe;width:50px">M</th>
+      <th style="border:1px solid #000;padding:5px;background:#eee;width:50px">Note</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid #000;padding:5px;text-align:center"><b>C4.5</b></td>
+        <td style="border:1px solid #000;padding:5px;text-align:center;font-size:9pt">E31</td>
+        <td style="border:1px solid #000;padding:5px"><b>Mesures et réglages</b> — Effectuer les mesures et réglages de fonctionnement : pression, température, calcul des grandeurs caractéristiques.</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">/ 5</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #000;padding:5px;text-align:center"><b>C4.5b</b></td>
+        <td style="border:1px solid #000;padding:5px;text-align:center;font-size:9pt">E32</td>
+        <td style="border:1px solid #000;padding:5px"><b>Mesurer maintenance</b> — Effectuer les mesures de diagnostic : lecture des manomètres en fonctionnement, comparaison avec les valeurs attendues.</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">/ 5</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #000;padding:5px;text-align:center"><b>C5.1</b></td>
+        <td style="border:1px solid #000;padding:5px;text-align:center;font-size:9pt">E32</td>
+        <td style="border:1px solid #000;padding:5px"><b>Diagnostiquer</b> — Diagnostiquer un dysfonctionnement à partir des SC/SR calculées (cas 2 = condenseur encrassé / manque de fluide à identifier).</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">/ 6</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #000;padding:5px;text-align:center"><b>C1.2</b></td>
+        <td style="border:1px solid #000;padding:5px;text-align:center;font-size:9pt">E32</td>
+        <td style="border:1px solid #000;padding:5px"><b>Communiquer</b> — Rédiger une synthèse argumentée du diagnostic (interprétation écrite des résultats).</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">☐</td>
+        <td style="border:1px solid #000;text-align:center">/ 4</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size:9pt;font-style:italic;color:#555;margin-top:-8px;margin-bottom:14px">Niveau attendu en fin de Bac Pro MFER (E32) : <b>M</b> (certificatif). Diagnostic argumenté exigé. Total / 20.</div>
+
+  <!-- SYNTHESE -->
+  <div style="border:2px solid #000;padding:10px 14px;margin-bottom:12px;background:#fafafa">
+    <div style="font-weight:800;text-transform:uppercase;letter-spacing:.4px;font-size:11pt;margin-bottom:6px">Synthèse positionnement</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:10pt">
+      <div>
+        <div style="font-size:9pt;color:#333;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px"><b>Note globale</b></div>
+        <div style="font-size:18pt;font-weight:900">______ / 20</div>
+        <div style="font-size:9pt;color:#666;margin-top:4px">Convertir selon barème du diplôme évalué</div>
+      </div>
+      <div>
+        <div style="font-size:9pt;color:#333;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px"><b>Avis enseignant</b></div>
+        <div style="border-bottom:1px dotted #000;height:18px"></div>
+        <div style="border-bottom:1px dotted #000;height:18px;margin-top:3px"></div>
+        <div style="border-bottom:1px dotted #000;height:18px;margin-top:3px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POSITIONNEMENT FUTURE -->
+  <div style="border:1px solid #000;padding:8px 12px;background:#f0f9ff;margin-bottom:14px;font-size:10pt">
+    <div style="font-weight:800;text-transform:uppercase;letter-spacing:.4px;font-size:9.5pt;margin-bottom:5px">Préconisations · prochaine séance</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:9.5pt">
+      <label style="display:flex;gap:6px;align-items:flex-start"><span style="display:inline-block;width:13px;height:13px;border:1.5px solid #000;flex-shrink:0;margin-top:2px"></span>Refaire le même type d'exercice</label>
+      <label style="display:flex;gap:6px;align-items:flex-start"><span style="display:inline-block;width:13px;height:13px;border:1.5px solid #000;flex-shrink:0;margin-top:2px"></span>Passer à exercice plus complexe</label>
+      <label style="display:flex;gap:6px;align-items:flex-start"><span style="display:inline-block;width:13px;height:13px;border:1.5px solid #000;flex-shrink:0;margin-top:2px"></span>Remédiation ciblée (lecture manos)</label>
+      <label style="display:flex;gap:6px;align-items:flex-start"><span style="display:inline-block;width:13px;height:13px;border:1.5px solid #000;flex-shrink:0;margin-top:2px"></span>Remédiation ciblée (calculs SC/SR)</label>
+      <label style="display:flex;gap:6px;align-items:flex-start"><span style="display:inline-block;width:13px;height:13px;border:1.5px solid #000;flex-shrink:0;margin-top:2px"></span>Travail diagnostic en autonomie</label>
+      <label style="display:flex;gap:6px;align-items:flex-start"><span style="display:inline-block;width:13px;height:13px;border:1.5px solid #000;flex-shrink:0;margin-top:2px"></span>Prêt pour passage EP3 / E32</label>
+    </div>
+  </div>
+
+  <!-- SIGNATURES -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px">
+    <div style="border:1px solid #000;padding:8px 12px;min-height:50px"><div style="font-weight:700;text-transform:uppercase;font-size:9pt;letter-spacing:.3px">Signature enseignant</div></div>
+    <div style="border:1px solid #000;padding:8px 12px;min-height:50px"><div style="font-weight:700;text-transform:uppercase;font-size:9pt;letter-spacing:.3px">Signature élève (prise de connaissance)</div></div>
+  </div>
+
+  <div class="footer-doc">
+    <span>Feuille d'évaluation par compétences · 3 diplômes · F. Henninot · inerWeb Édu</span>
+    <span>LPP Jacques Raynaud · Avril 2026</span>
+  </div>
+</div>
+
+</body>
+</html>

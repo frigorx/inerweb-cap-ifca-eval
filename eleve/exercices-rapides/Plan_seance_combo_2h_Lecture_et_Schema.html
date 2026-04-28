@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Plan de séance combo 2 h — Manomètres + Schéma + SC/SR — CAP IFCA</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 8mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lexend', Calibri, sans-serif; font-size: 9.5pt; line-height: 1.4; color: #000; background: white; padding: 8mm; }
+.sheet { max-width: 194mm; margin: 0 auto; }
+
+.header { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 6px; align-items: center; border: 2px solid #000; padding: 5px 10px; margin-bottom: 7px; background: linear-gradient(90deg, #fff7ed, #eff6ff); }
+.header .logo { font-size: 9pt; font-weight: 700; line-height: 1.2; }
+.header .logo span { font-size: 8pt; font-weight: 400; display: block; color: #333; }
+.header .titre { text-align: center; font-size: 13pt; font-weight: 800; line-height: 1.15; color: #000; }
+.header .titre span { font-size: 9pt; font-weight: 600; display: block; color: #333; margin-top: 2px; }
+.header .ref { text-align: right; font-size: 9pt; }
+.header .ref b { display: block; font-size: 11pt; }
+
+.option-bar { background: #fffbeb; border: 1.5px solid #000; padding: 5px 12px; margin-bottom: 7px; font-size: 9pt; text-align: center; }
+.option-bar b { font-weight: 800; }
+
+.identite { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; margin-bottom: 7px; font-size: 9.5pt; }
+.identite .champ { border: 1px solid #000; padding: 4px 8px; }
+.identite .champ .lbl { font-size: 7.5pt; color: #333; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; }
+.identite .champ .val { font-weight: 600; margin-top: 2px; }
+
+h2 { font-size: 10pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; margin: 8px 0 4px; padding: 3px 8px; background: #000; color: white; }
+h2 .num { background: white; color: #000; padding: 0 6px; margin-right: 6px; }
+
+.bloc { border: 1px solid #000; padding: 5px 10px; margin-bottom: 6px; background: white; }
+.bloc.gris { background: #fafafa; }
+.bloc.jaune { background: #fffbeb; }
+.bloc.bleu { background: #eff6ff; }
+.bloc.orange { background: #fff7ed; }
+.bloc ul, .bloc ol { margin-left: 18px; }
+.bloc li { margin-bottom: 2px; }
+.bloc b { font-weight: 700; }
+
+.deux-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+table.tt { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 4px 0; }
+table.tt th, table.tt td { border: 1px solid #000; padding: 4px 6px; text-align: left; vertical-align: top; }
+table.tt th { background: #000; color: white; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; text-align: center; }
+table.tt td.timing { text-align: center; font-weight: 800; width: 65px; }
+table.tt td.timing.s1 { background: #fff7ed; }
+table.tt td.timing.s2 { background: #eff6ff; }
+table.tt td.phase { font-weight: 700; width: 90px; }
+table.tt td.modal { width: 90px; font-style: italic; font-size: 8.5pt; color: #444; }
+table.tt b { font-weight: 700; }
+table.tt tr.sep td { background: #000; color: white; text-align: center; font-weight: 800; text-transform: uppercase; font-size: 8.5pt; padding: 3px; }
+
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+.comp-block { border: 1.5px solid #000; padding: 5px 8px; }
+.comp-block .titre-c { font-weight: 800; font-size: 9.5pt; text-transform: uppercase; letter-spacing: 0.3px; padding: 2px 6px; margin: -5px -8px 4px -8px; }
+.comp-block.tne .titre-c { background: #fed7aa; color: #9a3412; }
+.comp-block.cap .titre-c { background: #dbeafe; color: #1e40af; }
+.comp-block.bac .titre-c { background: #ede9fe; color: #5b21b6; }
+.comp-block .code { font-family: 'Courier New', monospace; font-weight: 800; }
+.comp-block ul { margin-left: 16px; font-size: 8.5pt; }
+.comp-block li { margin-bottom: 1px; }
+
+.footer-doc { margin-top: 8px; padding-top: 4px; border-top: 1px solid #000; font-size: 8pt; color: #333; display: flex; justify-content: space-between; }
+
+@media screen { body { background: #e5e5e5; } .sheet { background: white; padding: 12mm; box-shadow: 0 2px 10px rgba(0,0,0,0.15); margin: 20px auto; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique</span></div>
+    <div class="titre">PLAN DE SÉANCE COMBO — Manomètres + Schéma cycle frigo + SC/SR<span>2 exercices enchaînés en 2 h · multi-diplômes (TNE / CAP IFCA / Bac Pro MFER)</span></div>
+    <div class="ref"><b>Durée : 2 h</b>F. Henninot<br>Version combo</div>
+  </div>
+
+  <div class="option-bar">
+    <b>VERSION COMBO 2 H</b> — utilise ce plan si tu disposes d'un créneau de 2 h consécutives (atelier matin ou après-midi). Pour 2 séances de 1 h, voir <i>Plan_seance_1_Lecture_manometres.html</i> et <i>Plan_seance_2_Schema_cycle_frigo.html</i>.
+  </div>
+
+  <div class="identite">
+    <div class="champ"><span class="lbl">Classe</span><div class="val">CAP IFCA 2 · TNE · MFER</div></div>
+    <div class="champ"><span class="lbl">Effectif</span><div class="val">12 à 24 élèves (binôme)</div></div>
+    <div class="champ"><span class="lbl">Salle</span><div class="val">Salle de techno</div></div>
+    <div class="champ"><span class="lbl">Date</span><div class="val">_______________</div></div>
+  </div>
+
+  <h2><span class="num">1</span>Objectifs de la séance combo</h2>
+  <div class="bloc bleu">
+    <b>Objectif général :</b> en 2 h, couvrir intégralement le thème <b>Lecture manomètres + Surchauffe + Sous-refroidissement</b>, depuis le geste de lecture jusqu'à l'interprétation locale et totale, en lien avec le schéma du cycle frigorifique.<br>
+    <b>Objectifs opérationnels — l'élève sera capable de :</b>
+    <ul>
+      <li>Lire P0/PK sur des manomètres BP/HP multi-fluides et déduire T0/TK via cadran R-134a / R-404A.</li>
+      <li>Calculer SC = TSe − T0 et SR = TK − TScd sur 2 cas concrets (Boucherie R-404A · Vitrine R-134a).</li>
+      <li>Placer les 4 points de mesure (① T asp · ② T Se · ③ T Scd · ④ T det) sur un schéma cycle frigo.</li>
+      <li>Calculer SC <b>locale</b> et SC <b>totale</b>, SR <b>local</b> et SR <b>total</b>.</li>
+      <li>Interpréter l'écart SC locale − SC totale et identifier les anomalies typiques (manque fluide, condenseur encrassé, filtre bouché, isolation aspiration).</li>
+    </ul>
+  </div>
+
+  <h2><span class="num">2</span>Compétences mobilisées (3 diplômes)</h2>
+  <div class="comp-grid">
+    <div class="comp-block tne">
+      <div class="titre-c">2nde TNE</div>
+      <ul>
+        <li><span class="code">CT.4</span> · Mesures de base</li>
+        <li><span class="code">CT.5</span> · Lecture cadrans + schémas</li>
+      </ul>
+      <div style="font-size:8pt;font-style:italic;color:#666;margin-top:3px">EC à A</div>
+    </div>
+    <div class="comp-block cap">
+      <div class="titre-c">CAP IFCA · EP3-A</div>
+      <ul>
+        <li><span class="code">C4.2</span> · Identifier fluide</li>
+        <li><span class="code">C4.5</span> · Mesurer + comparer</li>
+        <li><span class="code">C1.1</span> · Compléter docs</li>
+      </ul>
+      <div style="font-size:8pt;font-style:italic;color:#666;margin-top:3px">A à M</div>
+    </div>
+    <div class="comp-block bac">
+      <div class="titre-c">Bac Pro MFER</div>
+      <ul>
+        <li><span class="code">C4.5</span> E31 · Mesures réglages</li>
+        <li><span class="code">C4.5b</span> E32 · Mesures diag.</li>
+        <li><span class="code">C5.1</span> E32 · Diagnostiquer</li>
+        <li><span class="code">C1.2</span> E32 · Communiquer</li>
+      </ul>
+      <div style="font-size:8pt;font-style:italic;color:#666;margin-top:3px">M (diag argumenté)</div>
+    </div>
+  </div>
+
+  <h2><span class="num">3</span>Prérequis &amp; Matériel</h2>
+  <div class="deux-cols">
+    <div class="bloc gris">
+      <b>Prérequis élèves :</b>
+      <ul>
+        <li>Cycle frigorifique (4 organes principaux).</li>
+        <li>Notion de fluides frigorigènes (R-134a, R-22, R-404A).</li>
+        <li>Notions surchauffe / sous-refroidissement (vu cours précédent).</li>
+        <li>Manipulation d'un manomètre déjà rencontrée.</li>
+      </ul>
+    </div>
+    <div class="bloc gris">
+      <b>Matériel pour la séance :</b>
+      <ul>
+        <li>2 fiches élève imprimées : Ex 1 (2 cas manomètres) + Ex 2 (schéma + placement).</li>
+        <li>Fiches d'évaluation par compétences (1 page paysage par diplôme).</li>
+        <li>Crayons couleur rouge/orange/bleu/violet.</li>
+        <li>Calculatrice + vidéoprojecteur.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="num">4</span>Déroulé chronologique 2 h — 2 exercices enchaînés</h2>
+  <table class="tt">
+    <thead>
+      <tr><th>Timing</th><th>Phase</th><th>Activité enseignant / élève</th><th>Modalité</th></tr>
+    </thead>
+    <tbody>
+      <tr class="sep"><td colspan="4">━━━━━ PARTIE 1 — Manomètres + 2 cas (60 min) ━━━━━</td></tr>
+      <tr>
+        <td class="timing s1">0 – 5 min</td>
+        <td class="phase">Accueil</td>
+        <td>Annonce de l'objectif global de la séance 2 h. Lien avec EP3 Bloc B. Rappel des 2 formules de base au tableau.</td>
+        <td class="modal">Frontal · oral</td>
+      </tr>
+      <tr>
+        <td class="timing s1">5 – 12 min</td>
+        <td class="phase">Démo manos</td>
+        <td>Distribution fiche Ex 1. Démo au tableau : projection d'un manomètre, lecture pression bar, choix échelle T° selon fluide.</td>
+        <td class="modal">Frontal · démo</td>
+      </tr>
+      <tr>
+        <td class="timing s1">12 – 30 min</td>
+        <td class="phase">Cas 1 R-404A</td>
+        <td><b>Boucherie Lecocq.</b> Lecture P0/T0/PK/TK + calcul SC + SR + diagnostic. Circulation prof.</td>
+        <td class="modal">Individuel<br>ou binôme</td>
+      </tr>
+      <tr>
+        <td class="timing s1">30 – 48 min</td>
+        <td class="phase">Cas 2 R-134a</td>
+        <td><b>Vitrine pâtisserie.</b> Même démarche. Piège : SR très faible → manque fluide.</td>
+        <td class="modal">Individuel<br>ou binôme</td>
+      </tr>
+      <tr>
+        <td class="timing s1">48 – 60 min</td>
+        <td class="phase">Correction Ex 1</td>
+        <td>Correction collective au tableau. Comparaison Cas 1 (sain) vs Cas 2 (manque fluide). Pause 5 min entre les 2 exercices.</td>
+        <td class="modal">Collectif<br>oral · pause</td>
+      </tr>
+      <tr class="sep"><td colspan="4">━━━━━ PARTIE 2 — Schéma + placement points + SC locale/totale (60 min) ━━━━━</td></tr>
+      <tr>
+        <td class="timing s2">60 – 70 min</td>
+        <td class="phase">Démo placement</td>
+        <td>Distribution fiche Ex 2. Projection schéma vide. Démo placement des 4 points ①②③④ avec feutre coloré. Explication SC locale vs totale, SR local vs total.</td>
+        <td class="modal">Frontal · démo</td>
+      </tr>
+      <tr>
+        <td class="timing s2">70 – 80 min</td>
+        <td class="phase">Phase 1<br>Lecture manos</td>
+        <td>Lecture P0/PK + déduction T0/TK en page 1 (réinvestissement direct des acquis Ex 1). L'enseignant valide rapidement.</td>
+        <td class="modal">Individuel<br>ou binôme</td>
+      </tr>
+      <tr>
+        <td class="timing s2">80 – 95 min</td>
+        <td class="phase">Phase 2<br>Placement + 4 calculs</td>
+        <td>Placement des 4 points sur le schéma. Validation prof avant calculs. 4 calculs SC/SR locale/totale + local/total avec rigueur des signes.</td>
+        <td class="modal">Individuel<br>ou binôme</td>
+      </tr>
+      <tr>
+        <td class="timing s2">95 – 110 min</td>
+        <td class="phase">Phase 3<br>Interprétation</td>
+        <td>Correction collective. Insister sur l'écart SC locale − SC totale (gain ligne d'aspiration). Discussion : SR total ≠ SR local → filtre bouché.</td>
+        <td class="modal">Collectif<br>oral</td>
+      </tr>
+      <tr>
+        <td class="timing s2">110 – 120 min</td>
+        <td class="phase">Bilan + éval</td>
+        <td>Évaluation par compétences (NA/EC/A/M) sur les 2 exercices. Bilan global. Annonce séance suivante (TP atelier ou EP3 officiel pour les avancés). Ramassage.</td>
+        <td class="modal">Individuel<br>+ frontal</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">5</span>Différenciation pédagogique &amp; Évaluation</h2>
+  <div class="deux-cols">
+    <div class="bloc jaune">
+      <b>Différenciation prévue :</b>
+      <ul>
+        <li><b>À soutenir :</b> Cas 1 seul en partie 1, schéma simplifié à 2 calculs (SC totale + SR local) en partie 2.</li>
+        <li><b>Standard :</b> les 2 cas + les 4 calculs en autonomie.</li>
+        <li><b>Rapide :</b> 2<sup>e</sup> jeu de valeurs à diagnostiquer (variante au crayon par le prof).</li>
+        <li><b>DYS / TDAH :</b> code couleur ①②③④, validation prof intermédiaire, table P/T agrandie, consigne fractionnée.</li>
+      </ul>
+    </div>
+    <div class="bloc jaune">
+      <b>Modalités d'évaluation :</b>
+      <ul>
+        <li><b>Formative :</b> validation prof à chaque phase clé.</li>
+        <li><b>Note /20 :</b> Partie 1 (Lectures 4 + Cas 1 4 + Cas 2 4) + Partie 2 (Placement 4 + Calculs+interp 4) = 20.</li>
+        <li><b>Par compétences :</b> 1 feuille par diplôme remplie par l'enseignant.</li>
+        <li><b>Auto-évaluation :</b> élève coche les cases en bas de chaque fiche.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="num">6</span>Trace écrite &amp; Lien avec la suite</h2>
+  <div class="bloc orange">
+    <b>Trace écrite conservée par l'élève :</b> les 2 fiches complétées + la feuille d'évaluation par compétences (signée).<br>
+    <b>Lien avec la suite :</b> application immédiate sur installation réelle en atelier — <b>TP-053 (Mesures T° pures)</b> ou <b>TP-054 (Mesures + SC/SR + Fiche MES)</b>. Pour les avancés validés : déclenchement de l'<b>EP3 officiel</b> Bloc B dès la séance suivante.<br>
+    <b>Avantage de cette version combo :</b> ancrage en une seule séance — pas de risque d'oubli entre la S1 et la S2. Idéal en fin de progression, juste avant le passage EP3.
+  </div>
+
+  <div class="footer-doc">
+    <span>Plan de séance combo 2 h · Manomètres + Schéma + SC/SR · F. Henninot · LPP Jacques Raynaud</span>
+    <span>Avril 2026 · Préparation EP3 Bloc B</span>
+  </div>
+
+</div>
+</body>
+</html>

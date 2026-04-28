@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Feuille d'évaluation par compétences — CAP IFCA — Lecture manos + SC/SR</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 landscape; margin: 8mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lexend', Calibri, sans-serif; font-size: 10pt; line-height: 1.4; color: #000; background: white; padding: 8mm; }
+.sheet { max-width: 280mm; margin: 0 auto; }
+
+.header { display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 8px; align-items: center; border: 2px solid #000; padding: 6px 10px; margin-bottom: 8px; background: #dbeafe; }
+.header .logo { font-size: 9pt; font-weight: 700; line-height: 1.2; }
+.header .logo span { font-size: 8pt; font-weight: 400; display: block; color: #333; }
+.header .titre { text-align: center; font-size: 14pt; font-weight: 800; color: #1e40af; line-height: 1.15; }
+.header .titre span { font-size: 9pt; font-weight: 600; display: block; color: #555; margin-top: 2px; }
+.header .ref { text-align: right; font-size: 9pt; }
+.header .ref b { display: block; font-size: 11pt; color: #1e40af; }
+
+.identite { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 5px; margin-bottom: 8px; font-size: 10pt; }
+.identite .champ { border: 1px solid #000; padding: 4px 8px; min-height: 26px; }
+.identite .champ .lbl { font-size: 7.5pt; color: #333; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; }
+.identite .champ .val { height: 13px; border-bottom: 1px dotted #666; margin-top: 1px; }
+
+.activity-bar { background: #dbeafe; border: 1px solid #1e40af; padding: 6px 12px; margin-bottom: 8px; font-size: 10pt; display: flex; justify-content: space-between; align-items: center; }
+.activity-bar b { color: #1e40af; }
+
+.legende { background: #f0f0f0; border: 1px solid #000; padding: 5px 12px; margin-bottom: 8px; font-size: 9.5pt; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.legende b { font-weight: 800; }
+.lvl { padding: 2px 9px; font-weight: 700; border: 1px solid #000; }
+.lvl.na { background: #fee2e2; }
+.lvl.ec { background: #fed7aa; }
+.lvl.a { background: #bbf7d0; }
+.lvl.m { background: #bfdbfe; }
+
+table.eval { width: 100%; border-collapse: collapse; font-size: 10pt; margin-bottom: 10px; }
+table.eval th { background: #dbeafe; color: #000; border: 1.5px solid #000; padding: 6px 8px; font-weight: 800; font-size: 10pt; text-transform: uppercase; letter-spacing: 0.3px; }
+table.eval th.na { background: #fee2e2; width: 50px; }
+table.eval th.ec { background: #fed7aa; width: 50px; }
+table.eval th.a { background: #bbf7d0; width: 50px; }
+table.eval th.m { background: #bfdbfe; width: 50px; }
+table.eval th.note { background: #eee; width: 70px; }
+table.eval td { border: 1.5px solid #000; padding: 7px 10px; }
+table.eval td.code { text-align: center; font-weight: 800; font-size: 12pt; width: 70px; background: #dbeafe; }
+table.eval td.lib b { font-weight: 700; }
+table.eval td.lib { font-size: 10pt; line-height: 1.45; }
+table.eval td.cell { text-align: center; height: 32px; font-size: 14pt; }
+
+.synthese { display: grid; grid-template-columns: 1.5fr 2fr; gap: 10px; margin-bottom: 8px; }
+.synth-box { border: 2px solid #000; padding: 8px 12px; }
+.synth-box .lbl { font-size: 9pt; color: #333; text-transform: uppercase; letter-spacing: .3px; font-weight: 800; margin-bottom: 4px; }
+.synth-box .note { font-size: 24pt; font-weight: 900; color: #1e40af; line-height: 1; }
+.synth-box .ldot { height: 16px; border-bottom: 1px dotted #000; }
+
+.preconisations { border: 1px solid #000; padding: 5px 12px; background: #dbeafe; margin-bottom: 8px; }
+.preconisations .lbl { font-size: 9pt; color: #333; text-transform: uppercase; letter-spacing: .3px; font-weight: 800; margin-bottom: 3px; }
+.preconisations .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; font-size: 9.5pt; }
+.preconisations label { display: flex; gap: 6px; align-items: center; }
+.cc { display: inline-block; width: 13px; height: 13px; border: 1.5px solid #000; flex-shrink: 0; background: white; }
+
+.signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sig { border: 1px solid #000; padding: 6px 12px; min-height: 40px; }
+.sig .lbl { font-size: 9pt; color: #333; text-transform: uppercase; letter-spacing: .3px; font-weight: 800; }
+
+@media screen { body { background: #e5e5e5; } .sheet { background: white; padding: 12mm; box-shadow: 0 2px 10px rgba(0,0,0,0.15); margin: 20px auto; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique</span></div>
+    <div class="titre">FEUILLE D'ÉVALUATION PAR COMPÉTENCES<span>CAP IFCA — Installateur Froid &amp; Conditionnement d'Air · EP3 Situation A</span></div>
+    <div class="ref"><b>1 page A4</b>F. Henninot · 2025-2026</div>
+  </div>
+
+  <div class="identite">
+    <div class="champ"><div class="lbl">NOM — Prénom de l'élève</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Classe</div><div class="val">CAP IFCA &nbsp; ☐ 1<sup>re</sup> &nbsp;☐ 2<sup>e</sup></div></div>
+    <div class="champ"><div class="lbl">Date</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Évaluateur</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Note / 20</div><div class="val"></div></div>
+  </div>
+
+  <div class="activity-bar">
+    <span><b>Activité évaluée :</b> Exercice rapide — Lecture des manomètres BP/HP + Calcul Surchauffe et Sous-refroidissement (R-134a, 2 cas)</span>
+    <span><b>Durée :</b> 1 h</span>
+  </div>
+
+  <div class="legende">
+    <b>Niveaux d'acquisition :</b>
+    <span class="lvl na">NA</span> Non acquis &nbsp;·&nbsp;
+    <span class="lvl ec">EC</span> En cours &nbsp;·&nbsp;
+    <span class="lvl a">A</span> Acquis &nbsp;·&nbsp;
+    <span class="lvl m">M</span> Maîtrisé
+    <span style="margin-left:auto;font-style:italic">Niveau attendu en fin CAP IFCA 2 (EP3) : <b>A à M</b> (certificatif)</span>
+  </div>
+
+  <table class="eval">
+    <thead>
+      <tr>
+        <th style="text-align:center">Code</th>
+        <th style="text-align:left">Compétence EP3 — critères mobilisés par l'exercice</th>
+        <th class="na">NA</th><th class="ec">EC</th><th class="a">A</th><th class="m">M</th>
+        <th class="note">Note</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="code">C4.2</td>
+        <td class="lib"><b>Manipuler le fluide</b> — Identifier le fluide frigorigène (R-134a) et lire l'échelle du cadran qui correspond. Choisir la bonne couleur sur le manomètre Blondelle multi-fluides.</td>
+        <td class="cell">☐</td><td class="cell">☐</td><td class="cell">☐</td><td class="cell">☐</td>
+        <td class="cell" style="font-size:10pt">/ 4</td>
+      </tr>
+      <tr>
+        <td class="code">C4.5</td>
+        <td class="lib"><b>Mesurer et comparer</b> — Lire P0/PK aux manomètres, déduire T0/TK via cadran, appliquer <b>SURCHAUFFE = TSe − T0</b> et <b>SOUS-REF = TK − TScd</b>, comparer aux plages de fonctionnement (5-10 K · 3-8 K), interpréter.</td>
+        <td class="cell">☐</td><td class="cell">☐</td><td class="cell">☐</td><td class="cell">☐</td>
+        <td class="cell" style="font-size:10pt">/ 12</td>
+      </tr>
+      <tr>
+        <td class="code">C1.1</td>
+        <td class="lib"><b>Compléter docs</b> — Renseigner correctement les valeurs lues et calculées dans les tableaux fournis (unités présentes : bar, °C, K · soin · traçabilité).</td>
+        <td class="cell">☐</td><td class="cell">☐</td><td class="cell">☐</td><td class="cell">☐</td>
+        <td class="cell" style="font-size:10pt">/ 4</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="synthese">
+    <div class="synth-box">
+      <div class="lbl">Note globale</div>
+      <div class="note">______ / 20</div>
+      <div style="font-size:8.5pt;color:#666;margin-top:2px">Compétences EP3 Bloc B</div>
+    </div>
+    <div class="synth-box">
+      <div class="lbl">Avis enseignant</div>
+      <div class="ldot"></div><div class="ldot"></div><div class="ldot"></div>
+    </div>
+  </div>
+
+  <div class="preconisations">
+    <div class="lbl">Préconisations · prochaine séance</div>
+    <div class="grid">
+      <label><span class="cc"></span>Refaire le même type d'exercice</label>
+      <label><span class="cc"></span>Remédiation lecture manos</label>
+      <label><span class="cc"></span>Remédiation calculs SC / SR</label>
+      <label><span class="cc"></span>Travail incondensables / TeqCO₂</label>
+      <label><span class="cc"></span>Diagnostic en autonomie</label>
+      <label><span class="cc"></span>Prêt pour passage EP3 officiel</label>
+    </div>
+  </div>
+
+  <div class="signatures">
+    <div class="sig"><div class="lbl">Signature enseignant</div></div>
+    <div class="sig"><div class="lbl">Signature élève (prise de connaissance)</div></div>
+  </div>
+
+</div>
+</body>
+</html>
