@@ -10,6 +10,10 @@
   let elevesList = null;
   let chartFormatif = null;
   let chartClasse = null;
+  /* Mémoire de la sélection courante pour ne PAS perdre l'élève au re-render
+     (event sync-merged ou polling 8s) */
+  let selectedFormatifEleve = null;
+  let selectedClasseSrc = 'ccf';
 
   async function ensureLoaded() {
     if (!bareme && window.CCF) bareme = await CCF.load('ep3');
@@ -57,7 +61,16 @@
       </div>
       <div class="radarx-legend" id="radar-formatif-legend"></div>
     `;
-    document.getElementById('radar-formatif-eleve').onchange = (e) => updateFormatif(e.target.value);
+    const sel = document.getElementById('radar-formatif-eleve');
+    sel.onchange = (e) => {
+      selectedFormatifEleve = e.target.value || null;
+      updateFormatif(selectedFormatifEleve);
+    };
+    /* Restaure la sélection si elle était active avant le re-render */
+    if (selectedFormatifEleve) {
+      sel.value = selectedFormatifEleve;
+      updateFormatif(selectedFormatifEleve);
+    }
   }
 
   function updateFormatif(pseudo) {
@@ -164,15 +177,17 @@
       </div>
       <div class="radarx-classe-detail" id="radar-classe-detail"></div>
     `;
-    /* Toggle CCF / Formatif */
+    /* Toggle CCF / Formatif — mémorise la source choisie */
     document.querySelectorAll('#radar-classe-root .toggle-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.src === selectedClasseSrc);
       b.onclick = () => {
         document.querySelectorAll('#radar-classe-root .toggle-btn').forEach(x => x.classList.remove('active'));
         b.classList.add('active');
-        updateClasse(b.dataset.src);
+        selectedClasseSrc = b.dataset.src;
+        updateClasse(selectedClasseSrc);
       };
     });
-    updateClasse('ccf');
+    updateClasse(selectedClasseSrc);
   }
 
   function updateClasse(source) {
@@ -322,6 +337,19 @@
     });
   });
 
-  window.RadarFormatif = { init: initFormatif, onShown: onShownFormatif };
+  /** Ouvre le radar formatif avec un élève pré-sélectionné — appelé par les mini-radars. */
+  function openWithEleveFormatif(pseudo) {
+    selectedFormatifEleve = pseudo;
+    if (window.Layout && Layout.switchPole) {
+      Layout.switchPole('evaluer');
+      setTimeout(() => {
+        const sub = document.getElementById('sub-tabs');
+        const btn = sub && sub.querySelector('button[data-view="radar-formatif"]');
+        if (btn) btn.click();
+      }, 100);
+    }
+  }
+
+  window.RadarFormatif = { init: initFormatif, onShown: onShownFormatif, openWithEleve: openWithEleveFormatif };
   window.RadarClasse   = { init: initClasse,   onShown: onShownClasse };
 })();

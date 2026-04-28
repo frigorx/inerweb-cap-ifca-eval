@@ -100,6 +100,19 @@
       </div>
     `;
 
+    /* Mini-radar : clic = ouvre la grande toile (Radar formatif par défaut) */
+    root.querySelectorAll('.eleve-card-radar').forEach(zone => {
+      zone.onclick = (e) => {
+        e.stopPropagation();
+        const pseudo = zone.dataset.pseudo;
+        if (window.CCFRadar && CCFRadar.openWithEleve) {
+          CCFRadar.openWithEleve(pseudo);
+        } else if (window.RadarFormatif && RadarFormatif.openWithEleve) {
+          RadarFormatif.openWithEleve(pseudo);
+        }
+      };
+    });
+
     /* Bouton historique 📜 — ouvre la timeline */
     root.querySelectorAll('.eleve-history-btn').forEach(btn => {
       btn.onclick = (e) => {
@@ -197,6 +210,9 @@
       ? `<span class="card-status done" style="background:${col}">${note.toFixed(1).replace('.', ',')} / 20</span>`
       : `<span class="card-status todo">à évaluer</span>`;
 
+    /* Mini-radar SVG : niveau moyen par compétence (formatif + CCF mergés) */
+    const miniRadar = renderMiniRadar(e.pseudo);
+
     /* Affectations TP en cours pour cet élève */
     const affects = (window.Affectations && Affectations.byEleve(e.pseudo)) || [];
     const tpsHtml = affects.length === 0 ? '' : `
@@ -217,7 +233,7 @@
     `;
 
     return `
-      <div class="eleve-card ${evalue ? 'evalue' : 'pending'}" data-id="${e.idCloud}" title="Cliquer pour saisir / modifier la CCF EP3 — clic sur 📜 pour l'historique">
+      <div class="eleve-card ${evalue ? 'evalue' : 'pending'}" data-id="${e.idCloud}" title="Cliquer pour saisir / modifier la CCF EP3 — clic sur 📜 pour l'historique · clic sur le mini-radar pour la grande toile">
         <header class="eleve-card-hdr">
           <span class="eleve-id">${escapeHtml(e.pseudo)}</span>
           ${statusTag}
@@ -225,13 +241,109 @@
         </header>
         <div class="eleve-name">${escapeHtml(e.label)}</div>
         ${e.sublabel ? `<div class="eleve-sublabel">${escapeHtml(e.sublabel)}</div>` : ''}
-        ${tpsHtml}
-        <div class="eleve-progress">
-          <span class="lab">Tâches CCF notées</span>
-          <span class="val">${tachesFaites} / ${tachesTot}</span>
+        <div class="eleve-card-body">
+          <div class="eleve-card-radar" data-pseudo="${escapeHtml(e.pseudo)}" title="Cliquer = ouvre la grande toile d'araignée">
+            ${miniRadar}
+          </div>
+          <div class="eleve-card-info">
+            ${tpsHtml}
+            <div class="eleve-progress">
+              <span class="lab">Tâches CCF notées</span>
+              <span class="val">${tachesFaites} / ${tachesTot}</span>
+            </div>
+            <div class="eleve-blocs">${blocsBars}</div>
+          </div>
         </div>
-        <div class="eleve-blocs">${blocsBars}</div>
       </div>
+    `;
+  }
+
+  /** Mini-radar SVG (~110×110) — niveau moyen par compétence.
+   *  Mélange CCF (sommatif) + TPEval (formatif) si l'un est manquant.
+   *  Utilise uniquement SVG vectoriel pour rester léger (24 cards × Chart.js serait lourd). */
+  function renderMiniRadar(pseudo) {
+    if (!bareme) return '<div class="mini-empty">…</div>';
+    const compsKeys = Object.keys(bareme.competences);
+    const N = compsKeys.length;
+    if (N < 3) return '';
+
+    /* Récupération niveau par compétence — moyenne pondérée formatif + CCF */
+    const compStored = window.CCF ? CCF.get('ep3', pseudo) : null;
+    const ccfRes = compStored && compStored.saisie ? CCF.compute(bareme, compStored.saisie) : null;
+    const tpSynth = window.TPEval ? TPEval.synthese(pseudo) : {};
+
+    let hasAny = false;
+    const niveaux = compsKeys.map(c => {
+      const ccfV = ccfRes && ccfRes.niveauMoyenParComp[c] != null ? ccfRes.niveauMoyenParComp[c] : null;
+      const fmV = tpSynth[c] && tpSynth[c].moyenne != null ? tpSynth[c].moyenne : null;
+      let v = null;
+      if (ccfV != null && fmV != null) v = (ccfV + fmV) / 2;
+      else if (ccfV != null) v = ccfV;
+      else if (fmV != null) v = fmV;
+      if (v != null) hasAny = true;
+      return v;
+    });
+
+    const size = 110;
+    const cx = size / 2;
+    const cy = size / 2;
+    const R = size * 0.42; /* rayon max = niveau 3 */
+
+    /* Polygones de fond (3 niveaux concentriques) */
+    const bgRings = [1, 2, 3].map(level => {
+      const pts = compsKeys.map((_, i) => {
+        const angle = (Math.PI * 2 * i / N) - Math.PI / 2;
+        const r = R * (level / 3);
+        return [cx + Math.cos(angle) * r, cy + Math.sin(angle) * r];
+      });
+      const d = pts.map((p, i) => (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ') + 'Z';
+      return `<path d="${d}" fill="none" stroke="#e0e4ea" stroke-width="0.8" />`;
+    }).join('');
+
+    /* Axes */
+    const axes = compsKeys.map((_, i) => {
+      const angle = (Math.PI * 2 * i / N) - Math.PI / 2;
+      const x = cx + Math.cos(angle) * R;
+      const y = cy + Math.sin(angle) * R;
+      return `<line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#e0e4ea" stroke-width="0.6" />`;
+    }).join('');
+
+    /* Polygone des niveaux de l'élève (vert dégradé) */
+    let dataPath = '';
+    let dots = '';
+    if (hasAny) {
+      const pts = niveaux.map((v, i) => {
+        const angle = (Math.PI * 2 * i / N) - Math.PI / 2;
+        const r = v != null ? R * (v / 3) : 0;
+        return [cx + Math.cos(angle) * r, cy + Math.sin(angle) * r];
+      });
+      dataPath = `<path d="${pts.map((p, i) => (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ')}Z"
+                       fill="rgba(56,161,105,0.35)" stroke="#38a169" stroke-width="1.6" />`;
+      dots = pts.map((p, i) => niveaux[i] != null
+        ? `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2" fill="#1b3a63" />`
+        : ''
+      ).join('');
+    }
+
+    /* Labels compétences (très petits) */
+    const labels = compsKeys.map((c, i) => {
+      const angle = (Math.PI * 2 * i / N) - Math.PI / 2;
+      const lr = R + 8;
+      const x = cx + Math.cos(angle) * lr;
+      const y = cy + Math.sin(angle) * lr + 2;
+      const short = c.replace('C', '');
+      return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" font-size="7" text-anchor="middle" fill="#888" font-family="Trebuchet MS">${short}</text>`;
+    }).join('');
+
+    return `
+      <svg class="mini-radar" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
+        ${bgRings}
+        ${axes}
+        ${dataPath}
+        ${dots}
+        ${labels}
+      </svg>
+      ${!hasAny ? '<div class="mini-radar-empty">vide</div>' : ''}
     `;
   }
 

@@ -7,6 +7,7 @@
 
   let chart = null;
   let bareme = null;
+  let selectedEleve = null; /* préserve la sélection à travers les re-renders */
 
   async function init() {
     bareme = await CCF.load('ep3');
@@ -43,12 +44,33 @@
       </div>
       <div class="ccf-radar-legend" id="ccf-radar-legend"></div>
     `;
-    document.getElementById('ccf-radar-eleve').onchange = (e) => updateRadar(e.target.value);
+    const selEl = document.getElementById('ccf-radar-eleve');
+    selEl.onchange = (e) => {
+      selectedEleve = e.target.value || null;
+      updateRadar(selectedEleve);
+    };
+    /* Restaure si on revenait dessus après un sync-merged */
+    if (selectedEleve) {
+      selEl.value = selectedEleve;
+      updateRadar(selectedEleve);
+    }
     const btnMail = document.getElementById('ccf-radar-mail');
     if (btnMail) btnMail.onclick = () => {
-      const sel = document.getElementById('ccf-radar-eleve');
-      if (sel && sel.value && window.CCFExport) CCFExport.mailBilanEleve(sel.value);
+      if (selectedEleve && window.CCFExport) CCFExport.mailBilanEleve(selectedEleve);
     };
+  }
+
+  /** Permet à un autre module d'ouvrir le radar avec un élève pré-sélectionné. */
+  function openWithEleve(pseudo) {
+    selectedEleve = pseudo;
+    if (window.Layout && Layout.switchPole) {
+      Layout.switchPole('evaluer');
+      setTimeout(() => {
+        const sub = document.getElementById('sub-tabs');
+        const btn = sub && sub.querySelector('button[data-view="ccf-radar"]');
+        if (btn) btn.click();
+      }, 100);
+    }
   }
 
   let _elevesCache = null;
@@ -195,7 +217,7 @@
     });
   });
 
-  window.CCFRadar = { init, onShown, refreshCCF };
+  window.CCFRadar = { init, onShown, refreshCCF, openWithEleve };
   /* Compat : alias pour le hook depuis ccf-ui.js */
   window.RadarsEleve = window.RadarsEleve || {};
   window.RadarsEleve.refreshCCF = (idCloud) => refreshCCF(idCloud);
