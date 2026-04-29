@@ -22,6 +22,7 @@
           <button class="btn small secondary" id="syncdbg-test">🧪 Test push</button>
           <button class="btn small secondary" id="syncdbg-pull">🔄 Force pull</button>
           <button class="btn small" id="syncdbg-pushall" style="background:#dd6b20;color:#fff;border:0;">⬆ Re-pousser TOUT vers Sheet</button>
+          <button class="btn small" id="syncdbg-resetcache" style="background:#805ad5;color:#fff;border:0;" title="Vide le cache des rows reçues du Sheet (pas tes saisies locales) et relance un pull complet. Utile si la sync est partielle.">♻ Purger cache &amp; re-pull</button>
           <button class="btn orange" id="syncdbg-export">💾 Sauvegarder JSON</button>
           <button class="btn" id="syncdbg-import" style="background:#38a169;color:#fff;border:0;">📥 Importer JSON</button>
         </footer>
@@ -35,6 +36,7 @@
     document.getElementById('syncdbg-test').onclick = testPush;
     document.getElementById('syncdbg-pull').onclick = forcePull;
     document.getElementById('syncdbg-pushall').onclick = pushAllLocal;
+    document.getElementById('syncdbg-resetcache').onclick = resetCacheAndPull;
     document.getElementById('syncdbg-export').onclick = exportAll;
     document.getElementById('syncdbg-import').onclick = triggerImport;
 
@@ -172,6 +174,19 @@
     }
     if (window.toast) toast(`✅ Re-push : ${ccfCount} CCF · ${tpevalCount} TP-eval · ${affectCount} affect · ${userTPCount} TP user`, 'success');
     setTimeout(renderState, 1000);
+  }
+
+  /** Vide le cache des rows reçues du Sheet (eval.remote) puis relance un pull complet.
+   *  Tes saisies locales (ccf.ep3.*, tpeval.*, affect.*, tp.user.*) ne sont PAS touchées.
+   *  Utile quand la sync a importé partiellement (ex : bug de clé de dédoublonnage). */
+  async function resetCacheAndPull() {
+    if (!confirm('Vider le cache des rows reçues du Sheet et relancer une sync complète ?\n\nTes saisies locales (CCF, évals TP, affectations, TP importés) ne sont PAS supprimées.\n\nLe cache va être reconstruit depuis la Sheet. Recommandé après mise à jour.')) return;
+    Store.set('eval.remote', []);
+    if (window.toast) toast('🗑 Cache vidé · pull en cours…', 'info');
+    if (window.Sync && Sync.pullNow) {
+      await Sync.pullNow();
+    }
+    setTimeout(renderState, 800);
   }
 
   function exportAll() {

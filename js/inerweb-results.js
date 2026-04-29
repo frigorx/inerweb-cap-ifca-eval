@@ -180,10 +180,19 @@
     const idx = new Map();
     [...local, ...remote].forEach(row => {
       if (!row) return;
-      const key = `${row.Pseudo || ''}|${row.TP || ''}|${row.Critere || row.Phase || ''}|${row.Code || ''}`;
-      const ts = row._timestamp || row.Date || '';
+      // Schéma V2 (Module + TpId + Pseudo) avec fallback vers anciens champs V1.
+      // Inclure Module évite que TP-EVAL, AFFECT, CCF-EP3, TP-USER d'un même élève
+      // s'écrasent entre eux.
+      const mod   = row.Module   || '';
+      const pse   = row.Pseudo   || '';
+      const tp    = row.TpId     || row.TP || '';
+      const sub   = row.Critere  || row.Phase || row.Code || '';
+      const key   = `${mod}|${pse}|${tp}|${sub}`;
+      const ts = row.UpdatedAt || row._timestamp || row.Date || '';
       const cur = idx.get(key);
-      if (!cur || (ts && ts > (cur._timestamp || cur.Date || ''))) idx.set(key, row);
+      if (!cur || (ts && ts > (cur.UpdatedAt || cur._timestamp || cur.Date || ''))) {
+        idx.set(key, row);
+      }
     });
     return Array.from(idx.values());
   }

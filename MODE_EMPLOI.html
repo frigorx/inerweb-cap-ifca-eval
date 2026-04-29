@@ -246,10 +246,20 @@
   <ul>
     <li><strong>CCF EP3</strong> — saisie barème officiel session 2024/25 (25 tâches, 4 niveaux NA/EC/A/PA, note auto sur 20).</li>
     <li><strong>Radar CCF</strong> — toile d'araignée par compétence (C1.3 → C5.1) pour un élève.</li>
-    <li><strong>Progression libre</strong> — évaluation formative hors examen.</li>
+    <li><strong>Progression libre</strong> — évaluation formative hors examen. Liste les 9 TP EP3 (TP-050 à TP-055 ateliers, TP-056 tournant, et <strong>TP-057 / TP-058 exercices rapides 1h SC/SR</strong>). Clic sur un TP → grille élève × compétence × niveau NA/ECA/A/M, sauvegarde alimente la toile d'araignée.</li>
     <li><strong>Radar progression</strong> — toile d'araignée formative.</li>
     <li><strong>Bulletin</strong> — fiche imprimable individuelle.</li>
   </ul>
+  <div class="box warm" style="margin-top:10px;">
+    <strong>Évaluer les 2 exercices rapides papier (1h)</strong> — Lecture manomètres SC/SR et Schéma points de mesure SC/SR :
+    <ol style="margin-top:6px;">
+      <li>Distribue l'exo papier aux élèves depuis la Bibliothèque TP (ou impression directe).</li>
+      <li>Corrige les copies à la main (barème /20 imprimé sur la feuille).</li>
+      <li>Dans <strong>Évaluer → Progression libre</strong>, sélectionne <strong>TP-057</strong> (manomètres) ou <strong>TP-058</strong> (schéma).</li>
+      <li>Pour chaque élève, clique le niveau NA/ECA/A/M sur les 2 compétences <strong>C4.5</strong> (mesures) et <strong>C5.1</strong> (calculs SC/SR + diagnostic).</li>
+      <li>Bouton <code>💾 Enregistrer</code> → la toile d'araignée EP3 est mise à jour automatiquement.</li>
+    </ol>
+  </div>
 </div>
 
 <div class="pole-card">
@@ -463,7 +473,15 @@
   → Les saisies sont liées au navigateur. Si tu changes de PC, elles ne suivent pas (encore). Phase suivante : sync Google Sheet.
 </div>
 
-<p class="updated">Mise à jour : v2.0-CAL · 27 avril 2026 · <strong>Calendrier interactif comme porte d'entrée</strong> · 12 séances révision EP3 + 2 CCF · clic séance → fiche distribution avec dateExecution tracée · 4 pôles · CCF EP3 barème 24/25 · radars compétences · mail bilan + CSV ED + push Sheet auto · bouton Distribuer accessible depuis le bandeau</p>
+<div class="box red">
+  <strong>Je change de PC : la sync ne récupère qu'une partie des données</strong><br>
+  → Symptôme typique : un seul TP ou une seule saisie remonte par élève alors que la Sheet en contient beaucoup plus.<br>
+  → Cause : cache local de rows reçues, dédoublonné avec une clé trop large (corrigé en V1.7.1).<br>
+  → Action : ouvrir le panneau diagnostic (bouton 🔍 dans le bandeau prof) → cliquer <code>♻ Purger cache &amp; re-pull</code>. Tes saisies locales ne sont pas touchées, seul le cache de lecture du Sheet est reconstruit.
+</div>
+
+<p class="updated">Mise à jour : V1.7.1 · 29 avril 2026 · <strong>fix sync multi-postes</strong> — la clé de dédoublonnage du cache local intègre maintenant <code>Module + TpId</code> (avant : les TP-EVAL, AFFECT, CCF d'un même élève s'écrasaient mutuellement à la lecture initiale du Sheet, ce qui empêchait un nouveau PC de récupérer l'historique complet). Ajout du bouton <code>♻ Purger cache &amp; re-pull</code> dans le panneau diagnostic.</p>
+<p class="updated">Précédent : v2.0-CAL · 27 avril 2026 · Calendrier interactif comme porte d'entrée · 12 séances révision EP3 + 2 CCF · clic séance → fiche distribution avec dateExecution tracée · 4 pôles · CCF EP3 barème 24/25 · radars compétences · mail bilan + CSV ED + push Sheet auto · bouton Distribuer accessible depuis le bandeau</p>
 
 </body>
 </html>

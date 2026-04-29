@@ -1,11 +1,11 @@
 {
   "_meta": {
-    "version": "1.0",
-    "description": "Ajouts aux mappings INERWEB — Révisions EP3 CAP IFCA 2e année fin d'année 2026",
-    "lastUpdate": "2026-04-24",
+    "version": "1.1",
+    "description": "Mappings INERWEB EP3 CAP IFCA — TP-050/055 ateliers + TP-057/058 exercices rapides SC/SR",
+    "lastUpdate": "2026-04-29",
     "auteur": "F. Henninot",
     "destinationFile": "data/tp-mappings/mappings.json",
-    "note": "Mappings des TP-050 à TP-055 vers CAP_IFCA EP3 Situation A (Mise en service). Niveau attendu 5 (Maîtrise) en fin de formation CAP 2e année."
+    "note": "TP-057/058 ajoutés pour rendre les exercices rapides 1h évaluables depuis la grille prof. Compétences C4.5 (mesures) + C5.1 (calculs SC/SR + diagnostic), niveau attendu 4 (vs 5 sur TP atelier complet)."
   },
   "mappings": [
     {
@@ -99,6 +99,32 @@
       "sequencesSuggerees": ["S2"],
       "dureeAdaptee": 240,
       "remarques": "TP de synthèse Bloc B + documentation F-Gaz. À réaliser S3 (semaine du 11/05/2026). Annexe : plaque FGaz identique à l'officielle EP3. Combine découverte (incondensables) et révision active (SC/SR)."
+    },
+    {
+      "tpId": "TP-057",
+      "formation": "CAP_IFCA",
+      "annee": [2],
+      "epreuve": "EP3",
+      "competences": [
+        {"code": "C4.5", "niveauAttendu": 4, "contexte": "A", "criteres": ["P0/T0/PK/TK lus avec unités (bar, °C)", "Valeurs cohérentes entre HP et BP", "Lecture table P/T correcte pour T0 et TK"]},
+        {"code": "C5.1", "niveauAttendu": 4, "contexte": "A", "criteres": ["Formule SC = TK − TScd appliquée correctement", "Formule SR = Tasp − T0 appliquée correctement", "Diagnostic cohérent (plage normale / charge / détente / condenseur)", "Soin et unités présents partout"]}
+      ],
+      "sequencesSuggerees": ["S-stock"],
+      "dureeAdaptee": 60,
+      "remarques": "Exercice rapide papier 1h. Le prof corrige hors app puis saisit les niveaux NA/ECA/A/M dans la grille EP3 — alimente la toile d'araignée C4.5 + C5.1. Idéal en filler ou positionnement avant TP-054."
+    },
+    {
+      "tpId": "TP-058",
+      "formation": "CAP_IFCA",
+      "annee": [2],
+      "epreuve": "EP3",
+      "competences": [
+        {"code": "C4.5", "niveauAttendu": 4, "contexte": "A", "criteres": ["Lectures manomètres HP/BP avec unités", "Identification des 4 points sur le cycle (1 aspiration, 2 refoulement, 3 sortie condenseur, 4 entrée détendeur)", "Placement crayonné lisible"]},
+        {"code": "C5.1", "niveauAttendu": 4, "contexte": "A", "criteres": ["Formule SC sur chaque branche correcte", "Formule SR correcte", "Détail du calcul présent (formule + valeurs + résultat + unité)", "Conformité plage notée pour chaque résultat", "Interprétation qualitative argumentée (3-4 lignes)"]}
+      ],
+      "sequencesSuggerees": ["S-stock"],
+      "dureeAdaptee": 60,
+      "remarques": "Exercice rapide papier 1h ciblé schéma + lecture cycle. Le prof corrige puis saisit les niveaux dans la grille EP3. Complément naturel de TP-057. Bon pour révision avant CCF."
     }
   ]
 }

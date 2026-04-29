@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "version": "1.1",
-    "description": "Catalogue TP révisions EP3 CAP IFCA — TP-050 à TP-055 + TP-056 tournant autonome",
-    "lastUpdate": "2026-04-25",
+    "version": "1.2",
+    "description": "Catalogue TP révisions EP3 CAP IFCA — TP-050 à TP-055 + TP-056 tournant autonome + TP-057/058 exercices rapides SC/SR",
+    "lastUpdate": "2026-04-29",
     "auteur": "F. Henninot",
     "epreuve": "EP3",
     "classe": "CAP IFCA 2",
-    "note": "TP-056 ajouté à partir du livret 14_Livret_Recuperation_charte.docx — TP tournant 4h, autonomie élève + 5 visas prof STOP."
+    "note": "TP-057 et TP-058 = exercices rapides 1h évaluables depuis l'app (lecture manomètres SC/SR, schéma points de mesure SC/SR). Le prof corrige sur papier et saisit niveaux NA/ECA/A/M dans la grille EP3 — alimente directement la toile d'araignée C4.5 + C5.1."
   },
   "tps": [
     {
@@ -157,6 +157,46 @@
       "mode": "Cycle TP tournant — 2-3 élèves en autonomie pendant que les autres sont sur TP-050 à 055 (4h atelier)",
       "noteSur": 20,
       "baremePhases": {"P0": 4, "P1": 3, "P2": 3, "P3": 4, "P4": 3, "P5": 3}
+    },
+    {
+      "id": "TP-057",
+      "titre": "Exercice rapide — Lecture manomètres + SC/SR",
+      "sousTitre": "Document papier 1h · correction prof + saisie niveaux dans l'app",
+      "theme": "exercice-rapide",
+      "duree": 60,
+      "difficulte": 2,
+      "type": "exercice",
+      "seance": "S-stock (filler 1h)",
+      "competences": ["C4.5", "C5.1"],
+      "urlEleve": "eleve/exercices-rapides/Exercice_lecture_manometres_SC_SR.html",
+      "operations": [
+        "Lectures manomètres P0/T0/PK/TK avec unités (4 pts)",
+        "Calculs cas 1 — surchauffe + sous-refroidissement (3 pts)",
+        "Diagnostic cas 1 (3 pts)",
+        "Calculs cas 2 — SC/SR (3 pts)",
+        "Diagnostic cas 2 (3 pts)",
+        "Soin / unités / présentation (4 pts)"
+      ],
+      "noteSur": 20
+    },
+    {
+      "id": "TP-058",
+      "titre": "Exercice rapide — Schéma + points de mesure SC/SR",
+      "sousTitre": "Document papier 1h · placement points + calculs · correction prof + saisie app",
+      "theme": "exercice-rapide",
+      "duree": 60,
+      "difficulte": 2,
+      "type": "exercice",
+      "seance": "S-stock (filler 1h)",
+      "competences": ["C4.5", "C5.1"],
+      "urlEleve": "eleve/exercices-rapides/Exercice_schema_points_mesure_SC_SR.html",
+      "operations": [
+        "Lectures manomètres HP/BP (4 pts)",
+        "Placement des 4 points HP/BP sur le schéma cycle (6 pts)",
+        "Calculs SC/SR — formule + détail + résultat + plage (6 pts)",
+        "Interprétation qualitative (4 pts)"
+      ],
+      "noteSur": 20
     }
   ]
 }
