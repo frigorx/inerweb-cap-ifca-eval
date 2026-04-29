@@ -144,11 +144,32 @@
         </header>
         ${isOpen ? `
           <div class="pack-body">
-            ${(p.ressources || []).map(r => renderResource(r, p)).join('')}
+            ${renderPlansProf(p)}
+            ${(p.ressources || []).filter(r => r.type !== 'plan-prof').map(r => renderResource(r, p)).join('')}
             ${hasEval ? renderEvalLauncher(p) : ''}
           </div>
         ` : ''}
       </article>
+    `;
+  }
+
+  function renderPlansProf(p) {
+    const plans = (p.ressources || []).filter(r => r.type === 'plan-prof');
+    if (plans.length === 0) return '';
+    return `
+      <div class="pack-plans-prof">
+        <div class="pack-plans-prof-hdr">
+          <span class="pack-plans-prof-ico">📋</span>
+          <span class="pack-plans-prof-label">${plans.length === 1 ? 'Plan de séance prof' : `${plans.length} plans de séance prof`} <small>(réservé enseignant — non distribuable)</small></span>
+        </div>
+        <div class="pack-plans-prof-list">
+          ${plans.map(pl => `
+            <button class="pack-plan-prof-btn" data-plan-url="${escapeAttr(pl.url)}" title="${escapeAttr(pl.titre)}">
+              👁 ${escapeHtml(pl.titre)}
+            </button>
+          `).join('')}
+        </div>
+      </div>
     `;
   }
 
@@ -281,6 +302,15 @@
       if (userExp) userExp.onclick = (e) => { e.stopPropagation(); if (window.TPImport) TPImport.exportTP(r.dataset.resId); };
       const userDel = r.querySelector('.res-user-del');
       if (userDel) userDel.onclick = (e) => { e.stopPropagation(); if (window.TPImport) TPImport.remove(r.dataset.resId); };
+    });
+
+    /* Boutons plan-prof (encadré en haut du pack body) */
+    document.querySelectorAll('.pack-plan-prof-btn').forEach(b => {
+      b.onclick = (e) => {
+        e.stopPropagation();
+        const url = b.dataset.planUrl;
+        if (url) window.open(url, '_blank', 'noopener');
+      };
     });
 
     /* Lance modale d'évaluation numérique */

@@ -76,16 +76,6 @@
       "tag": "filler",
       "description": "Schéma cycle frigo : placer les points HP/BP, mesures SC/SR. 1 h."
     },
-    { "id": "EX-COMBO-2H",
-      "semaine": "S-stock",
-      "date": "",
-      "titre": "Combo 2 h — Lecture manomètres + Schéma cycle",
-      "duree": "2 h",
-      "url": "eleve/exercices-rapides/Plan_seance_combo_2h_Lecture_et_Schema.html",
-      "comp": ["C4.5", "C5.1"],
-      "tag": "filler",
-      "description": "Plan de séance combiné 2 h : exo manomètres + schéma cycle frigo."
-    },
     { "id": "EX-EVAL-CAP",
       "semaine": "S-stock",
       "date": "",

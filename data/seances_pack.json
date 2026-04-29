@@ -36,7 +36,7 @@
       "titre": "Manomètres + Schéma cycle frigo (SC/SR)",
       "couleur": "#1b3a63",
       "icone": "📊",
-      "duree_estimee": "1 h ou 2 h (combo)",
+      "duree_estimee": "1 h chaque exo (2 exos disponibles)",
       "bloc_ccf": "B",
       "comp_ciblees": ["C4.5", "C5.1"],
       "description": "Pack pour le Bloc B du CCF EP3 (Mesures & diagnostic). Lecture manomètres HP/BP, calcul SC/SR, schéma cycle.",
@@ -45,7 +45,6 @@
         { "type": "plan-prof",       "id": "PLAN-S2-SCHEMA",  "titre": "Plan séance — Schéma cycle",        "url": "eleve/exercices-rapides/Plan_seance_2_Schema_cycle_frigo.html" },
         { "type": "exercice-html",   "id": "EX-MANO",         "titre": "Exo Lecture manomètres SC/SR",      "url": "eleve/exercices-rapides/Exercice_lecture_manometres_SC_SR.html",     "duree": "1 h" },
         { "type": "exercice-html",   "id": "EX-SCHEMA",       "titre": "Exo Schéma + points de mesure",     "url": "eleve/exercices-rapides/Exercice_schema_points_mesure_SC_SR.html",   "duree": "1 h" },
-        { "type": "exercice-html",   "id": "EX-COMBO-2H",     "titre": "Combo 2 h — Lecture + Schéma",      "url": "eleve/exercices-rapides/Plan_seance_combo_2h_Lecture_et_Schema.html","duree": "2 h" },
         { "type": "ressource",       "id": "RES-SCHEMA-SVG",  "titre": "Schéma cycle frigo (SVG)",          "url": "eleve/exercices-rapides/schema_cycle_frigo.svg" }
       ],
       "evaluation_numerique": {
