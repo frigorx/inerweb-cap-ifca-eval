@@ -5,10 +5,10 @@
       "id": "TP-1",
       "semaine": "S1",
       "date": "2026-04-27",
-      "titre": "Pose / dépose manomètres + pressostat BP",
-      "duree": "2 h",
+      "titre": "TP complet — Pose / dépose manomètres + réglage pressostat BP (CCF blanc)",
+      "duree": "2 h (extensible 4 h sur 2 créneaux)",
       "url": "eleve/tp-officiels/S1_27-04-2026/TP1_Pose_depose_manos_pressostat_BP.html",
-      "comp": ["C4.7", "C3.7"]
+      "comp": ["C2.2", "C4.5", "C4.7", "C3.7", "C4.6", "C4.3", "C1.3"]
     },
     {
       "id": "TP-1A",
