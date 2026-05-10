@@ -16,6 +16,7 @@
       title: 'Atelier — séance du jour',
       tabs: [
         { view: 'calendrier',  label: '📅 Calendrier' },
+        { view: 'notes-jour',  label: '📝 Notes du jour' },
         { view: 'biblio-tp',   label: '📚 Bibliothèque TP' },
         { view: 'tournant',    label: '🔁 TP-056 tournant' }
       ],
@@ -118,6 +119,7 @@
       if (viewName === 'radar-classe'    && window.RadarClasse    && RadarClasse.onShown)    RadarClasse.onShown();
       if (viewName === 'eleves'     && window.ClasseOverview && ClasseOverview.onShown) ClasseOverview.onShown();
       if (viewName === 'calendrier' && window.Calendrier     && Calendrier.onShown)     Calendrier.onShown();
+      if (viewName === 'notes-jour' && window.NotesJour      && NotesJour.onShown)      NotesJour.onShown();
       if (viewName === 'biblio-tp'  && window.BiblioTP       && BiblioTP.onShown)       BiblioTP.onShown();
       /* Hooks legacy v1.9 : refresh des écrans Dashboard/Agenda/Radar/Bulletin */
       if (viewName === 'aujourdhui' && window.Dashboard && Dashboard.renderAujourdhui)  Dashboard.renderAujourdhui();

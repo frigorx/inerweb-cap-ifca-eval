@@ -2598,3 +2598,173 @@
 .ev-niv { text-align: center; font-size: 11pt; min-width: 38px; }
 .ev-niv-none { color: #bbb; background: #f4f6fa; }
 .ev-prof { font-size: 10pt; color: #555; }
+
+/* ========== Notes du jour : calendrier mensuel ========== */
+.nj-cal {
+  background: #fff;
+  border: 1px solid #d6dde8;
+  border-radius: 6px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+.nj-cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 12px;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 14pt;
+  color: #1b3a63;
+  text-transform: capitalize;
+}
+.nj-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.nj-cal-day-name {
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 11pt;
+  color: #1b3a63;
+  padding: 4px 0;
+  background: #f4f6fa;
+  border-radius: 3px;
+}
+.nj-cell {
+  min-height: 80px;
+  padding: 6px;
+  border: 1px solid #e0e6ee;
+  border-radius: 4px;
+  background: #fafbfd;
+  position: relative;
+  transition: all 0.15s;
+}
+.nj-cell.empty {
+  background: transparent;
+  border: 0;
+}
+.nj-cell-num {
+  font-weight: bold;
+  font-size: 12pt;
+  color: #555;
+}
+.nj-cell.no-evals { opacity: 0.55; }
+.nj-cell.has-evals {
+  cursor: pointer;
+  background: #e6f2ff;
+  border-color: #1b3a63;
+}
+.nj-cell.has-evals:hover {
+  background: #1b3a63;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(27, 58, 99, 0.25);
+}
+.nj-cell.has-evals:hover .nj-cell-num,
+.nj-cell.has-evals:hover .nj-cell-count { color: #fff; }
+.nj-cell.has-evals:hover .nj-cell-tp {
+  background: #ff6b35;
+  color: #fff;
+  border-color: #ff6b35;
+}
+.nj-cell.is-today {
+  border: 2px solid #ff6b35;
+  background: #fff4ee;
+}
+.nj-cell.is-today .nj-cell-num { color: #ff6b35; }
+.nj-cell.is-current {
+  outline: 3px solid #ff6b35;
+  outline-offset: -1px;
+}
+.nj-cell-count {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  background: #1b3a63;
+  color: #fff;
+  font-size: 10pt;
+  font-weight: bold;
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+.nj-cell.has-evals:hover .nj-cell-count {
+  background: #fff;
+  color: #1b3a63;
+}
+.nj-cell-tps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-top: 6px;
+}
+.nj-cell-tp {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #1b3a63;
+  color: #1b3a63;
+  font-size: 9pt;
+  font-weight: bold;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.nj-cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e0e6ee;
+  font-size: 10pt;
+  color: #666;
+}
+.nj-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.nj-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+.nj-swatch.sw-eval { background: #e6f2ff; border-color: #1b3a63; }
+.nj-swatch.sw-today { background: #fff4ee; border-color: #ff6b35; }
+.nj-swatch.sw-current { background: #fff; border: 3px solid #ff6b35; }
+
+/* ========== Notes du jour : barre d'outils + résultats ========== */
+.nj-toolbar {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e6ee;
+  margin-bottom: 14px;
+}
+.nj-field { display: flex; flex-direction: column; gap: 4px; }
+.nj-field label { font-size: 11pt; font-weight: bold; color: #1b3a63; }
+.nj-field input[type="date"], .nj-field select {
+  padding: 6px 10px;
+  font-size: 13pt;
+  border: 1px solid #c5cbd6;
+  border-radius: 4px;
+  font-family: Calibri, sans-serif;
+}
+.nj-actions { margin-left: auto; display: flex; gap: 8px; }
+.nj-empty {
+  text-align: center;
+  padding: 30px 20px;
+  color: #888;
+  background: #fafbfd;
+  border: 1px dashed #c5cbd6;
+  border-radius: 6px;
+  margin-top: 14px;
+}
+.nj-empty-big { font-size: 14pt; font-weight: bold; color: #1b3a63; }
+.nj-empty-sub { font-size: 12pt; margin-top: 4px; }
+.nj-empty-help { font-size: 10pt; font-style: italic; margin-top: 12px; color: #888; }
