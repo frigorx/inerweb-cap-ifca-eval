@@ -2768,3 +2768,60 @@
 .nj-empty-big { font-size: 14pt; font-weight: bold; color: #1b3a63; }
 .nj-empty-sub { font-size: 12pt; margin-top: 4px; }
 .nj-empty-help { font-size: 10pt; font-style: italic; margin-top: 12px; color: #888; }
+
+/* ========== Notes du jour : bande diagnostic ========== */
+.nj-diag {
+  background: #f4f6fa;
+  border: 1px solid #c5cbd6;
+  border-left: 4px solid #1b3a63;
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+}
+.nj-diag-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 12pt;
+  margin-bottom: 8px;
+}
+.nj-diag-stat strong {
+  color: #1b3a63;
+  font-size: 14pt;
+}
+.nj-diag-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+.nj-diag-warn {
+  background: #fff8e1;
+  border: 1px solid #ffb74d;
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 12pt;
+  line-height: 1.5;
+  margin-top: 8px;
+}
+.nj-diag-details { margin-top: 6px; }
+.nj-diag-details summary {
+  cursor: pointer;
+  font-size: 11pt;
+  color: #1b3a63;
+  font-weight: bold;
+  padding: 4px 0;
+}
+.nj-diag-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 0;
+}
+.nj-diag-date-btn {
+  background: #fff;
+  border: 1px solid #1b3a63;
+  color: #1b3a63;
+  padding: 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11pt;
+  font-family: Calibri, sans-serif;
+}
+.nj-diag-date-btn:hover { background: #1b3a63; color: #fff; }
+.nj-diag-date-btn span { font-size: 10pt; opacity: 0.75; }

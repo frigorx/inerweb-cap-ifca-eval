@@ -90,9 +90,52 @@
     const evals = evalsForDate(currentDate, currentClasse);
     const groupes = groupByTp(evals);
 
+    /* Diagnostic : combien d'évals dans le navigateur */
+    const allEvals = window.TPEval ? TPEval.list() : [];
+    const allDates = new Set();
+    const allTps = new Set();
+    const allElevesEval = new Set();
+    allEvals.forEach(e => {
+      const d = e.date || (e.updatedAt ? e.updatedAt.slice(0, 10) : '');
+      if (d) allDates.add(d);
+      if (e.tpId) allTps.add(e.tpId);
+      if (e.pseudo) allElevesEval.add(e.pseudo);
+    });
+
     root.innerHTML = `
       <div class="card">
         <h2 style="margin-top:0;">📝 Notes du jour <span style="font-size:11pt;color:var(--text-soft);font-weight:normal;">— retrouve toutes les évaluations enregistrées par jour, prêtes à reporter dans EcoleDirecte</span></h2>
+
+        <div class="nj-diag">
+          <div class="nj-diag-stats">
+            <span class="nj-diag-stat">📊 <strong>${allEvals.length}</strong> évaluation${allEvals.length>1?'s':''} dans ce navigateur</span>
+            <span class="nj-diag-stat">📅 <strong>${allDates.size}</strong> date${allDates.size>1?'s':''} concernée${allDates.size>1?'s':''}</span>
+            <span class="nj-diag-stat">📚 <strong>${allTps.size}</strong> TP différent${allTps.size>1?'s':''}</span>
+            <span class="nj-diag-stat">👥 <strong>${allElevesEval.size}</strong> élève${allElevesEval.size>1?'s':''}</span>
+          </div>
+          <div class="nj-diag-actions">
+            <button class="btn small" id="nj-force-sync" title="Forcer la lecture du Google Sheet">🔄 Re-synchroniser depuis le Sheet</button>
+            <a class="btn small ghost" href="https://docs.google.com/spreadsheets/d/16T1T3yL6M49OhJUQS1SmFHwW7Bywp7m2kSXDiXdmItk/edit" target="_blank" rel="noopener" title="Source de vérité — toutes les évals y sont">📊 Ouvrir le Google Sheet</a>
+          </div>
+          ${allEvals.length === 0 ? `
+            <div class="nj-diag-warn">
+              <strong>⚠ Aucune éval dans ce navigateur.</strong>
+              Si tu sais que tu as déjà saisi des évals (sur ce poste ou un autre),
+              clique sur <strong>« 🔄 Re-synchroniser depuis le Sheet »</strong> ci-dessus.
+              <strong>Tes données ne sont jamais perdues</strong> : elles sont dans le Sheet.
+            </div>
+          ` : `
+            <details class="nj-diag-details">
+              <summary>Voir la liste détaillée des dates avec évals (pour diagnostic)</summary>
+              <div class="nj-diag-dates">
+                ${Array.from(allDates).sort().reverse().map(d => {
+                  const n = allEvals.filter(e => (e.date || (e.updatedAt && e.updatedAt.slice(0,10))) === d).length;
+                  return `<button class="nj-diag-date-btn" data-date="${d}">${frDate(d)} <span>(${n})</span></button>`;
+                }).join('')}
+              </div>
+            </details>
+          `}
+        </div>
 
         ${renderMonthCalendar(currentDate)}
 
@@ -117,6 +160,29 @@
         ${renderResults(currentDate, currentClasse, groupes)}
       </div>
     `;
+
+    /* Câblage diagnostic */
+    const forceSyncBtn = document.getElementById('nj-force-sync');
+    if (forceSyncBtn) forceSyncBtn.onclick = async () => {
+      forceSyncBtn.disabled = true;
+      forceSyncBtn.textContent = '🔄 Synchronisation…';
+      try {
+        if (window.Sync && Sync.pullNow) await Sync.pullNow();
+        render();
+      } catch (e) {
+        console.error('[notes-jour] sync failed', e);
+        alert('Erreur lors de la sync. Vérifie ta connexion et l\'Apps Script.');
+      }
+      forceSyncBtn.disabled = false;
+    };
+    root.querySelectorAll('.nj-diag-date-btn').forEach(b => {
+      b.onclick = () => {
+        const v = b.dataset.date;
+        window._notesJourDate = v;
+        adjustMonthOffsetToDate(v);
+        render();
+      };
+    });
 
     /* Câblage */
     document.getElementById('nj-date').onchange = (e) => {
