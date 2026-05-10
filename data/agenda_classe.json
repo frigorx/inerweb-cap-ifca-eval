@@ -19,8 +19,8 @@
     { "id": "S2-L-A1", "date": "2026-05-04", "jour": "Lundi",   "creneau": "A1", "tps": ["TP-2B"],         "objectif": "Mesures P/T + surchauffe",                              "salle": "D107" },
     { "id": "S2-L-A2", "date": "2026-05-04", "jour": "Lundi",   "creneau": "A2", "tps": ["TP-2B"],         "objectif": "Mesures sous-refroidissement",                          "salle": "D107" },
 
-    { "id": "S3-L-M1", "date": "2026-05-11", "jour": "Lundi",   "creneau": "M1", "tps": ["TP-1", "TP-1A"], "objectif": "Synthèse Bloc A — fluidiques",                          "salle": "D107" },
-    { "id": "S3-L-M2", "date": "2026-05-11", "jour": "Lundi",   "creneau": "M2", "tps": ["TP-1B"],         "objectif": "Synthèse Bloc A — pressostat",                          "salle": "D107" },
+    { "id": "S3-L-M1", "date": "2026-05-11", "jour": "Lundi",   "creneau": "M1", "tps": ["TP-1", "TP-1A"], "objectif": "TP complet pose/dépose manomètres + pressostat BP — partie 1",                          "salle": "D107" },
+    { "id": "S3-L-M2", "date": "2026-05-11", "jour": "Lundi",   "creneau": "M2", "tps": ["TP-1", "TP-1B"], "objectif": "TP complet pose/dépose manomètres + pressostat BP — partie 2",                          "salle": "D107" },
     { "id": "S3-L-A1", "date": "2026-05-11", "jour": "Lundi",   "creneau": "A1", "tps": ["TP-2", "TP-2A"], "objectif": "Synthèse Bloc B — mesures",                             "salle": "D107" },
     { "id": "S3-L-A2", "date": "2026-05-11", "jour": "Lundi",   "creneau": "A2", "tps": ["TP-2B"],         "objectif": "Synthèse Bloc B — calculs SC/SR",                       "salle": "D107" },
 
