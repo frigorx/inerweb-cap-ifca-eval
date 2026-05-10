@@ -76,14 +76,53 @@
     const pseudo = document.getElementById('bulletin-eleve').value;
     if (!pseudo) return;
     const eleve = _eleves.eleves.find(e => e.pseudo === pseudo);
-    const all = inerwebResults.getAllRows();
-    const my = all.filter(r => r.Pseudo === pseudo && r.Epreuve === 'EP3');
+
+    /* === Source de vérité : TPEval (évals formatives) + CCF (saisie EP3 finale) === */
+    const evals = window.TPEval ? TPEval.byEleve(pseudo) : [];
+    const evalsByTp = {};
+    evals.forEach(e => { evalsByTp[e.tpId] = e; });
+    /* Mapping niveau TPEval (EC) → libellé référentiel (ECA) */
+    const mapNiv = n => n === 'EC' ? 'ECA' : (n || '');
 
     const wrap = document.getElementById('bulletin-content');
     const tps = _tps.filter(t => t.id !== 'TP-056');
     const codes = _comps.axes_radar_ep3;
 
-    // Build matrix
+    /* Helpers locaux */
+    function dateTp(tpId) {
+      const ev = evalsByTp[tpId];
+      if (!ev) return '';
+      return ev.date || (ev.updatedAt ? ev.updatedAt.slice(0, 10) : '');
+    }
+    function niveauCell(tpId, code) {
+      const ev = evalsByTp[tpId];
+      if (!ev || !ev.comp) return '';
+      const lvl = mapNiv(ev.comp[code]);
+      return lvl === 'NE' ? '' : lvl;
+    }
+    function syntheseCode(code) {
+      const order = ['NA', 'ECA', 'A', 'M'];
+      let max = '';
+      tps.forEach(tp => {
+        const n = niveauCell(tp.id, code);
+        if (n && order.indexOf(n) > order.indexOf(max)) max = n;
+      });
+      return max;
+    }
+    function frDateCourt(iso) {
+      if (!iso) return '';
+      const [y, m, d] = iso.split('-');
+      return d && m && y ? `${d}/${m}` : '';
+    }
+
+    /* Stats : nb TP évalués + plage de dates */
+    const tpsEvalues = tps.filter(t => evalsByTp[t.id]).length;
+    const dates = tps.map(t => dateTp(t.id)).filter(Boolean).sort();
+    const plage = dates.length > 0
+      ? `du ${frDateCourt(dates[0])} au ${frDateCourt(dates[dates.length - 1])}`
+      : 'aucune évaluation enregistrée';
+
+    /* Build matrix */
     const html = `
       <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--bleu);padding-bottom:12px;margin-bottom:20px;">
         <div>
@@ -106,22 +145,22 @@
         </div>
       </div>
 
-      <h4 style="margin-bottom:8px;">Positionnement par compétence × TP</h4>
+      <h4 style="margin-bottom:4px;">Positionnement par compétence × TP</h4>
+      <div style="font-size:10pt;color:var(--text-soft);margin-bottom:8px;">${tpsEvalues}/${tps.length} TP évalués · ${plage}</div>
       <div class="bulletin-grid" style="grid-template-columns:90px repeat(${tps.length}, 1fr) 80px;">
         <div class="head">Compétence</div>
-        ${tps.map(t => `<div class="head">${t.id.replace('TP-','')}</div>`).join('')}
+        ${tps.map(t => {
+          const dt = dateTp(t.id);
+          return `<div class="head" title="${t.titre || ''}">${t.id.replace('TP-','')}${dt ? `<div style="font-size:8pt;font-weight:normal;color:#bcd0e6;">${frDateCourt(dt)}</div>` : ''}</div>`;
+        }).join('')}
         <div class="head">Synthèse</div>
         ${codes.map(code => {
           const c = _comps.competences.find(x => x.code === code);
           const cells = tps.map(tp => {
-            const r = my.find(x => x.TP === tp.id && x.Code === code);
-            const n = r?.Niveau || '';
+            const n = niveauCell(tp.id, code);
             return `<div class="${n ? 'niveau-' + n : ''}">${n || '—'}</div>`;
           }).join('');
-          // Synthèse = max niveau atteint
-          const niveaux = my.filter(r => r.Code === code).map(r => r.Niveau);
-          const order = ['NA','ECA','A','M'];
-          const max = niveaux.reduce((acc, n) => order.indexOf(n) > order.indexOf(acc) ? n : acc, '');
+          const max = syntheseCode(code);
           return `
             <div style="font-weight:700;text-align:left;padding-left:8px;background:var(--bg-alt);" title="${c?.libelle || ''}">${code}</div>
             ${cells}
@@ -144,7 +183,10 @@
           </div>
           <h4 style="margin-top:14px;margin-bottom:6px;">Commentaires</h4>
           <div style="font-size:11pt;border:1px solid var(--border);padding:8px;border-radius:4px;min-height:80px;background:var(--bg-alt);">
-            ${my.filter(r => r.Commentaire).map(r => `<div>· <strong>${r.TP}</strong> : ${escapeHtml(r.Commentaire)}</div>`).join('') || '<em style="color:var(--text-soft)">Aucun commentaire</em>'}
+            ${tps.map(t => {
+              const ev = evalsByTp[t.id];
+              return ev && ev.commentaire ? `<div>· <strong>${t.id}</strong> (${frDateCourt(dateTp(t.id))}) : ${escapeHtml(ev.commentaire)}</div>` : '';
+            }).join('') || '<em style="color:var(--text-soft)">Aucun commentaire</em>'}
           </div>
         </div>
       </div>
@@ -160,12 +202,18 @@
       const cv = document.getElementById('bulletin-mini');
       if (!cv || typeof Chart === 'undefined') return;
       if (_miniChart) _miniChart.destroy();
-      const map = { NA: 0, ECA: 1, A: 2, M: 3 };
+      const map = { NA: 0, EC: 1, ECA: 1, A: 2, M: 3 };
       const data = codes.map(code => {
-        const rows = my.filter(r => r.Code === code);
-        if (!rows.length) return 0;
-        const vals = rows.map(r => map[r.Niveau]).filter(v => v !== undefined);
-        return vals.reduce((a, b) => a + b, 0) / vals.length || 0;
+        const vals = [];
+        tps.forEach(tp => {
+          const ev = evalsByTp[tp.id];
+          if (!ev || !ev.comp) return;
+          const lvl = ev.comp[code];
+          if (!lvl || lvl === 'NE') return;
+          if (map[lvl] !== undefined) vals.push(map[lvl]);
+        });
+        if (!vals.length) return 0;
+        return vals.reduce((a, b) => a + b, 0) / vals.length;
       });
       _miniChart = new Chart(cv, {
         type: 'radar',
