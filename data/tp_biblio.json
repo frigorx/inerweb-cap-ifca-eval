@@ -55,6 +55,15 @@
       "url": "eleve/tp-officiels/S2_04-05-2026/TP2B_Mesures_PT_surchauffe_sous_refroidissement.html",
       "comp": ["C4.5", "C5.1"]
     },
+    {
+      "id": "TP-EP3B",
+      "semaine": "S3",
+      "date": "2026-05-11",
+      "titre": "EP3 Bloc B — Mise en service complète (plaque F-GAZ + fiche + bon d'intervention)",
+      "duree": "2 h (3 tâches enchaînées)",
+      "url": "eleve/tp-officiels/S3_11-05-2026/EP3-B-mise-en-service.html",
+      "comp": ["C1.3", "C4.2", "C4.5", "C4.6", "C5.1"]
+    },
 
     { "id": "EX-MANO",
       "semaine": "S-stock",

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>EP3 — Bloc B — Mise en service complète — CAP IFCA</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 10mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lexend', Calibri, sans-serif; font-size: 10.5pt; line-height: 1.5; color: #000; background: white; padding: 10mm; }
+.sheet { max-width: 190mm; margin: 0 auto; }
+
+/* En-tête général */
+.header { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 8px; align-items: center; border: 2px solid #000; padding: 6px 10px; margin-bottom: 10px; }
+.header .logo { font-size: 9.5pt; font-weight: 700; line-height: 1.2; }
+.header .logo span { font-size: 8pt; font-weight: 400; display: block; color: #333; }
+.header .titre { text-align: center; font-size: 13pt; font-weight: 800; line-height: 1.15; }
+.header .titre span { font-size: 8.5pt; font-weight: 600; display: block; color: #333; margin-top: 2px; }
+.header .ref { text-align: right; font-size: 8.5pt; }
+.header .ref b { display: block; font-size: 10pt; }
+
+/* Identité élève */
+.identite { display: grid; grid-template-columns: 2fr 2fr 1fr 1fr; gap: 6px; margin-bottom: 10px; font-size: 10pt; }
+.identite .champ { border: 1px solid #000; padding: 4px 8px; min-height: 28px; }
+.identite .champ .lbl { font-size: 7.5pt; color: #333; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; }
+.identite .champ .val { height: 14px; border-bottom: 1px dotted #666; margin-top: 2px; }
+
+/* Sections h2 */
+h2.section { font-size: 11pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; margin: 10px 0 6px; padding: 4px 8px; background: #000; color: white; }
+h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 6px; }
+
+/* Tâche : encart + objectif + sources + points + image */
+.tache { border: 2px solid #000; border-radius: 4px; margin-bottom: 14px; page-break-inside: avoid; background: white; }
+.tache-head { background: #000; color: white; padding: 6px 12px; display: flex; justify-content: space-between; align-items: center; }
+.tache-head h3 { font-size: 13pt; font-weight: 800; }
+.tache-head .ep3 { background: white; color: #000; padding: 2px 10px; border-radius: 4px; font-weight: 800; font-size: 9pt; letter-spacing: 0.3px; }
+.tache-body { padding: 10px 14px; }
+
+.objectif { background: #fafafa; border-left: 4px solid #000; padding: 6px 12px; margin-bottom: 10px; }
+.objectif .lbl { font-weight: 800; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.objectif p { font-size: 10.5pt; line-height: 1.5; }
+
+.sources { background: white; border: 1px solid #000; padding: 6px 12px; margin-bottom: 10px; font-size: 10pt; }
+.sources .lbl { font-weight: 800; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.sources ul { margin-left: 18px; line-height: 1.5; }
+.sources li { margin-bottom: 2px; }
+
+.points { background: #fffbeb; border: 1px solid #000; padding: 6px 12px; margin-bottom: 10px; font-size: 10pt; }
+.points .lbl { font-weight: 800; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.points ul { margin-left: 18px; line-height: 1.5; }
+.points li { margin-bottom: 3px; }
+.points .formule { background: white; border: 1.5px solid #000; padding: 4px 10px; margin-top: 6px; text-align: center; font-weight: 700; font-family: 'Courier New', monospace; font-size: 11pt; }
+
+/* Document à compléter (image intacte) */
+.document { text-align: center; margin: 12px 0 6px; }
+.document img { max-width: 100%; height: auto; border: 1px solid #000; background: white; }
+.document .legende { font-size: 9pt; color: #444; margin-top: 4px; font-style: italic; }
+
+/* Page-break entre tâches */
+.page-break { page-break-before: always; }
+
+/* Pied de page */
+.footer-doc { margin-top: 8px; padding-top: 4px; border-top: 1px solid #000; font-size: 8pt; color: #333; display: flex; justify-content: space-between; }
+
+/* Affichage écran */
+@media screen { body { background: #e5e5e5; } .sheet { background: white; padding: 12mm; box-shadow: 0 2px 10px rgba(0,0,0,0.15); margin: 20px auto; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- ============================================================ -->
+  <!-- EN-TÊTE                                                      -->
+  <!-- ============================================================ -->
+  <div class="header">
+    <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique · CAP IFCA</span></div>
+    <div class="titre">EP3 — Bloc B — Mise en service complète<span>Plaque F-GAZ · Fiche de mise en service · Bon d'intervention</span></div>
+    <div class="ref"><b>Durée : 2 h</b>3 tâches enchaînées<br>Niveau CAP IFCA 2</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- IDENTITÉ ÉLÈVE                                                -->
+  <!-- ============================================================ -->
+  <div class="identite">
+    <div class="champ"><div class="lbl">NOM — Prénom</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Binôme (ou seul)</div><div class="val"></div></div>
+    <div class="champ"><div class="lbl">Classe</div><div class="val">CAP IFCA 2</div></div>
+    <div class="champ"><div class="lbl">Note / 20</div><div class="val"></div></div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- TÂCHE C-1 — PLAQUE D'IDENTIFICATION                           -->
+  <!-- ============================================================ -->
+  <h2 class="section"><span class="num">C-1</span>Plaque d'identification de l'installation</h2>
+
+  <div class="tache">
+    <div class="tache-head">
+      <h3>Compléter la plaque d'identification F-GAZ</h3>
+      <span class="ep3">EP3 · Bloc B</span>
+    </div>
+    <div class="tache-body">
+
+      <div class="objectif">
+        <div class="lbl">Objectif</div>
+        <p>Compléter la <b>plaque réglementaire</b> de l'installation frigorifique mise en service. Renseigner toutes les informations obligatoires : fluide frigorigène, charge, températures et pressions relevées, caractéristiques générales.</p>
+      </div>
+
+      <div class="sources">
+        <div class="lbl">Sources d'information</div>
+        <ul>
+          <li>Relevés effectués en <b>Bloc B</b></li>
+          <li>Plaques signalétiques de l'installation</li>
+          <li>Résultats des calculs <b>SR / SC</b></li>
+          <li>Étiquettes présentes sur l'équipement</li>
+          <li>Quantité de gaz <b>calculée dans le Bloc B</b></li>
+        </ul>
+      </div>
+
+      <div class="points">
+        <div class="lbl">✅ Points à respecter</div>
+        <ul>
+          <li>Compléter <b>toutes les cases</b></li>
+          <li>Utiliser les unités adaptées (<b>°C, bar, kg…</b>)</li>
+          <li>Ne pas oublier de cocher le <b>type de fluide</b></li>
+          <li>Indiquer le <b>GWP</b> du fluide utilisé (ex. R134a → 1430 ; R404A → 3922)</li>
+          <li>Calculer la <b>TeqCO₂</b> avec la formule :</li>
+        </ul>
+        <div class="formule">TeqCO₂ = Charge totale (kg) × GWP / 1000</div>
+      </div>
+
+      <div class="document">
+        <img src="EP3-B-mise-en-service-img/plaque_identification_FGAZ.png" alt="Plaque d'identification F-GAZ — Installation contenant des gaz à effet de serre fluorés">
+        <div class="legende">Plaque réglementaire F-GAZ — Article 517/2014 CE &amp; R543-79 du Code de l'environnement</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- TÂCHE C-2 — FICHE DE MISE EN SERVICE                         -->
+  <!-- ============================================================ -->
+  <div class="page-break"></div>
+
+  <h2 class="section"><span class="num">C-2</span>Fiche de mise en service</h2>
+
+  <div class="tache">
+    <div class="tache-head">
+      <h3>Compléter la fiche de mise en service de l'installation</h3>
+      <span class="ep3">EP3 · Bloc B</span>
+    </div>
+    <div class="tache-body">
+
+      <div class="objectif">
+        <div class="lbl">Objectif</div>
+        <p>Finaliser la <b>remise en service</b> de l'installation frigorifique en renseignant les paramètres de fonctionnement. Compléter la fiche de mise en service en s'appuyant sur les mesures relevées dans les <b>Blocs A et B</b>.</p>
+      </div>
+
+      <div class="sources">
+        <div class="lbl">À renseigner</div>
+        <ul>
+          <li><b>Identification de l'installation</b> : nom, adresse, type, fluide, date</li>
+          <li><b>Pressions HP / BP</b> et températures de condensation / évaporation</li>
+          <li><b>Températures mesurées</b> sur les différents points du circuit</li>
+          <li><b>Intensité absorbée</b> par le compresseur et l'évaporateur</li>
+          <li><b>Sens de rotation</b> des ventilateurs</li>
+          <li><b>Réglages du pressostat BP</b> (cut-in, cut-off, différentiel)</li>
+          <li>Valeurs calculées de <b>surchauffe</b> et de <b>sous-refroidissement</b></li>
+        </ul>
+      </div>
+
+      <div class="points">
+        <div class="lbl">📂 À utiliser</div>
+        <ul>
+          <li>Les <b>tableaux de relevés</b> (Bloc B)</li>
+          <li>Les <b>réglages effectués</b> (Bloc A)</li>
+          <li>Les <b>étiquettes</b> sur les équipements</li>
+        </ul>
+      </div>
+
+      <div class="document">
+        <img src="EP3-B-mise-en-service-img/fiche_mise_en_service.png" alt="Fiche de mise en service — bordereau officiel">
+        <div class="legende">Bordereau officiel de mise en service — à compléter intégralement</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- TÂCHE C-3 — BON D'INTERVENTION                                -->
+  <!-- ============================================================ -->
+  <div class="page-break"></div>
+
+  <h2 class="section"><span class="num">C-3</span>Bon d'intervention professionnel</h2>
+
+  <div class="tache">
+    <div class="tache-head">
+      <h3>Rédiger un bon d'intervention professionnel</h3>
+      <span class="ep3">EP3 · Bloc B</span>
+    </div>
+    <div class="tache-body">
+
+      <div class="objectif">
+        <div class="lbl">Objectif</div>
+        <p>Compléter un <b>bon d'intervention</b> décrivant l'ensemble des manipulations réalisées lors de l'épreuve.</p>
+      </div>
+
+      <div class="sources">
+        <div class="lbl">En-tête à remplir</div>
+        <ul>
+          <li><b>Client</b> : LPP Jacques Raynaud</li>
+          <li><b>Adresse</b> : 59 avenue Charles Suzini — 13013 Marseille</li>
+          <li><b>Date</b>, <b>technicien</b>, <b>heure d'arrivée</b> et <b>de départ</b>, <b>temps passé</b></li>
+        </ul>
+      </div>
+
+      <div class="points">
+        <div class="lbl">📝 Descriptif de la mission</div>
+        <p style="margin-bottom:6px;">Lister de manière <b>synthétique et professionnelle</b> les opérations réalisées (pose de manomètres, tirage au vide, remplacement pressostat, mise en service, relevés…).</p>
+        <p style="font-style:italic;font-size:9.5pt;color:#444;">Style télégraphique clair :</p>
+        <div class="formule" style="font-size:10pt;text-align:left;padding:6px 10px;">Pose mano / Remplacement PZH / TEST Azote OK / Réglage 0,X bar</div>
+      </div>
+
+      <div class="points" style="background:#f0f9ff;">
+        <div class="lbl">💬 Commentaires / Observations / Valeurs de réglages</div>
+        <p style="margin-bottom:4px;">Noter les éléments techniques importants relevés :</p>
+        <ul>
+          <li>Surchauffe excessive ou sous-refroidissement faible</li>
+          <li>Installation vide à l'arrivée</li>
+          <li>Présence d'incondensables…</li>
+        </ul>
+        <p style="margin-top:6px;margin-bottom:4px;"><b>Ajouter les valeurs de réglages réalisées :</b></p>
+        <div class="formule" style="font-size:10pt;text-align:left;padding:6px 10px;">Cut-in : X bar — Cut-out : X bar — Diff : XX bar</div>
+      </div>
+
+      <div class="document">
+        <img src="EP3-B-mise-en-service-img/bon_intervention.png" alt="Bon d'intervention CAP IFCA">
+        <div class="legende">Bon d'intervention IFCA — à compléter intégralement</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- PIED DE PAGE                                                  -->
+  <!-- ============================================================ -->
+  <div class="footer-doc">
+    <span>LPP Jacques Raynaud — Campus ÉQUATIO — Établissement privé</span>
+    <span>EP3 Bloc B — Mise en service complète — CAP IFCA</span>
+  </div>
+
+</div>
+</body>
+</html>
