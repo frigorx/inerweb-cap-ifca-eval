@@ -134,7 +134,7 @@
       "evaluation_numerique": {
         "items": [
           { "id": "C-1", "intitule": "Plaque F-GAZ (identification, GWP, TeqCO₂)", "max": 4, "niveaux": [0, 1, 2, 4] },
-          { "id": "C-2", "intitule": "Pesée bouteille (avant + après + calcul)",   "max": 5, "niveaux": [0, 1, 3, 5] },
+          { "id": "C-2", "intitule": "Quantité de gaz dans la bouteille (avant + après) — pense à enlever la tare !", "max": 5, "niveaux": [0, 1, 3, 5], "criteres": ["0 = pas fait", "1 = a noté la lecture balance sans soustraire la tare (piège raté)", "3 = a soustrait la tare mais erreur sur l'une des 2 pesées", "5 = quantité gaz correcte avant + après + charge injectée correcte"] },
           { "id": "C-3", "intitule": "Fiche de mise en service (mesures, réglages, SC/SR)", "max": 7, "niveaux": [0, 2, 4, 7] },
           { "id": "C-4", "intitule": "Bon d'intervention (descriptif + observations)", "max": 4, "niveaux": [0, 1, 2, 4] }
         ],

@@ -146,83 +146,90 @@ h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 
   <!-- ============================================================ -->
   <div class="page-break"></div>
 
-  <h2 class="section" style="background:#ff6b35;"><span class="num" style="color:#ff6b35;">C-2</span>Pesée bouteille — détermination de la charge injectée <span style="background:#fff;color:#ff6b35;padding:1px 6px;margin-left:8px;font-size:8.5pt;border-radius:2px;">SPÉCIFIQUE CCF n°3</span></h2>
+  <h2 class="section" style="background:#ff6b35;"><span class="num" style="color:#ff6b35;">C-2</span>Quantité de gaz dans la bouteille — avant / après injection <span style="background:#fff;color:#ff6b35;padding:1px 6px;margin-left:8px;font-size:8.5pt;border-radius:2px;">SPÉCIFIQUE CCF n°3</span></h2>
 
   <div class="tache" style="border-color:#ff6b35;">
     <div class="tache-head" style="background:#ff6b35;">
-      <h3>Peser la bouteille AVANT et APRÈS injection — calculer la charge réelle</h3>
+      <h3>Identifier la quantité de gaz dans la bouteille — calculer la charge injectée dans l'installation</h3>
       <span class="ep3" style="color:#ff6b35;">EP3 · Bloc B</span>
     </div>
     <div class="tache-body">
 
       <div class="objectif">
         <div class="lbl">Objectif</div>
-        <p>Déterminer par <b>différence de masse</b> la quantité de fluide frigorigène <b>réellement injectée</b> dans l'installation lors de la mise en service. La pesée précise est la <b>seule méthode valable</b> pour reporter la charge sur la plaque F-GAZ (Tâche C-1).</p>
+        <p>Tu vas déterminer la <b>quantité de fluide frigorigène contenue dans la bouteille</b>, avant puis après l'injection dans l'installation. La différence te donnera la <b>charge réellement injectée</b>. <span style="color:#ff6b35;font-weight:700;">⚠ ATTENTION : la balance affiche la masse totale (bouteille + gaz). Le gaz tout seul, c'est ce qui t'est demandé.</span></p>
       </div>
 
       <div class="sources">
-        <div class="lbl">Procédure</div>
+        <div class="lbl">Méthode</div>
         <ul>
-          <li><b>Avant injection</b> : peser la bouteille pleine (raccordée mais vanne fermée), noter la masse initiale</li>
-          <li><b>Pendant</b> : injecter le fluide dans l'installation selon la procédure standard</li>
-          <li><b>Après injection</b> : refermer la vanne bouteille, peser la bouteille à vide partiel, noter la masse finale</li>
-          <li><b>Calcul</b> : <code style="font-family:'Courier New',monospace;">M_injectée = M_avant − M_après</code></li>
+          <li>Lire la <b>masse totale</b> indiquée par la balance (M<sub>balance</sub>) — bouteille + gaz</li>
+          <li>Relever la <b>tare</b> de la bouteille (masse à vide), <b>indiquée gravée ou imprimée sur la bouteille</b> elle-même</li>
+          <li>Calculer : <code style="font-family:'Courier New',monospace;">M<sub>gaz</sub> = M<sub>balance</sub> − Tare</code></li>
+          <li>Faire l'opération <b>deux fois</b> (avant injection puis après), avec la <b>même bouteille</b> (donc même tare)</li>
+          <li>Calculer la quantité injectée : <code style="font-family:'Courier New',monospace;">M<sub>injectée</sub> = M<sub>gaz avant</sub> − M<sub>gaz après</sub></code></li>
         </ul>
       </div>
 
-      <div class="points">
-        <div class="lbl">✅ Points à respecter</div>
+      <div class="points" style="background:#fff8e1;border:2px solid #ff6b35;">
+        <div class="lbl" style="color:#ff6b35;">⚠ Piège à éviter</div>
+        <p style="font-weight:700;font-size:11pt;margin-bottom:6px;">Ne JAMAIS noter la lecture de la balance comme « quantité de gaz ».</p>
         <ul>
-          <li>Balance <b>tarée</b> et stable avant chaque pesée</li>
-          <li>Bouteille <b>verticale</b>, posée à plat, flexibles relâchés</li>
-          <li>Précision attendue : <b>± 10 g</b> (résolution balance ≥ 10 g)</li>
-          <li>Reporter <b>les deux pesées</b> sur la fiche de mise en service (Tâche C-3)</li>
-          <li>Reporter la <b>charge calculée</b> sur la plaque F-GAZ (Tâche C-1, ligne « Charge initiale » ou « Complément »)</li>
+          <li>La balance pèse <b>la bouteille + le gaz</b> ensemble.</li>
+          <li>La bouteille toute seule pèse plusieurs kilos, même <b>vide de gaz</b>.</li>
+          <li>Tu dois <b>obligatoirement enlever la tare</b> pour donner la quantité de gaz seule.</li>
+          <li>La tare est <b>écrite sur la bouteille</b> (souvent en kg, ex. « TARA 6,8 kg »).</li>
         </ul>
       </div>
 
-      <!-- Tableau de saisie pesée -->
+      <!-- Tableau de saisie pesée AVANT / APRÈS -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;">
+
+        <!-- AVANT INJECTION -->
         <div style="border:2px solid #000;padding:10px 12px;">
-          <div style="font-weight:800;font-size:10pt;text-transform:uppercase;letter-spacing:0.4px;background:#000;color:#fff;padding:3px 8px;margin:-10px -12px 8px;text-align:center;">Pesée AVANT injection</div>
+          <div style="font-weight:800;font-size:10pt;text-transform:uppercase;letter-spacing:0.4px;background:#000;color:#fff;padding:3px 8px;margin:-10px -12px 8px;text-align:center;">Avant injection</div>
           <table style="width:100%;border-collapse:collapse;font-size:10pt;">
-            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Date / heure</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
-            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Type de fluide</td><td style="border:1px solid #000;padding:4px 8px;height:24px;">R&hellip;&hellip;&hellip;&hellip;&hellip;</td></tr>
-            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">N° de bouteille</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
-            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;font-weight:700;"><b>Masse M_avant (kg)</b></td><td style="border:1px solid #000;padding:4px 8px;height:30px;font-size:14pt;font-weight:700;text-align:center;"></td></tr>
-            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Visa élève</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;width:55%;">Type de fluide</td><td style="border:1px solid #000;padding:4px 8px;height:24px;">R&hellip;&hellip;&hellip;&hellip;&hellip;</td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">N° bouteille</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Tare (lue sur bouteille) — kg</td><td style="border:1px solid #000;padding:4px 8px;height:26px;font-weight:700;text-align:center;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Lecture balance — kg</td><td style="border:1px solid #000;padding:4px 8px;height:26px;font-weight:700;text-align:center;"></td></tr>
+            <tr style="background:#fff8f4;"><td style="border:2px solid #ff6b35;padding:6px 8px;font-weight:800;color:#ff6b35;">Quantité de gaz dans la bouteille (kg)<br><span style="font-size:9pt;font-weight:normal;color:#666;">= Lecture − Tare</span></td><td style="border:2px solid #ff6b35;padding:6px 8px;height:32px;font-size:14pt;font-weight:700;text-align:center;color:#ff6b35;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Visa élève</td><td style="border:1px solid #000;padding:4px 8px;height:22px;"></td></tr>
           </table>
         </div>
 
+        <!-- APRÈS INJECTION -->
         <div style="border:2px solid #000;padding:10px 12px;">
-          <div style="font-weight:800;font-size:10pt;text-transform:uppercase;letter-spacing:0.4px;background:#000;color:#fff;padding:3px 8px;margin:-10px -12px 8px;text-align:center;">Pesée APRÈS injection</div>
+          <div style="font-weight:800;font-size:10pt;text-transform:uppercase;letter-spacing:0.4px;background:#000;color:#fff;padding:3px 8px;margin:-10px -12px 8px;text-align:center;">Après injection</div>
           <table style="width:100%;border-collapse:collapse;font-size:10pt;">
-            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Date / heure</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
-            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Type de fluide</td><td style="border:1px solid #000;padding:4px 8px;height:24px;">R&hellip;&hellip;&hellip;&hellip;&hellip;</td></tr>
-            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">N° de bouteille</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
-            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;font-weight:700;"><b>Masse M_après (kg)</b></td><td style="border:1px solid #000;padding:4px 8px;height:30px;font-size:14pt;font-weight:700;text-align:center;"></td></tr>
-            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Visa élève</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;width:55%;">Type de fluide</td><td style="border:1px solid #000;padding:4px 8px;height:24px;">R&hellip;&hellip;&hellip;&hellip;&hellip;</td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">N° bouteille</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Tare (lue sur bouteille) — kg</td><td style="border:1px solid #000;padding:4px 8px;height:26px;font-weight:700;text-align:center;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Lecture balance — kg</td><td style="border:1px solid #000;padding:4px 8px;height:26px;font-weight:700;text-align:center;"></td></tr>
+            <tr style="background:#fff8f4;"><td style="border:2px solid #ff6b35;padding:6px 8px;font-weight:800;color:#ff6b35;">Quantité de gaz dans la bouteille (kg)<br><span style="font-size:9pt;font-weight:normal;color:#666;">= Lecture − Tare</span></td><td style="border:2px solid #ff6b35;padding:6px 8px;height:32px;font-size:14pt;font-weight:700;text-align:center;color:#ff6b35;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Visa élève</td><td style="border:1px solid #000;padding:4px 8px;height:22px;"></td></tr>
           </table>
         </div>
+
       </div>
 
-      <!-- Calcul -->
+      <!-- Calcul charge injectée -->
       <div style="border:2px solid #ff6b35;background:#fff8f4;padding:10px 14px;margin-top:8px;">
-        <div style="font-weight:800;font-size:10pt;text-transform:uppercase;letter-spacing:0.4px;color:#ff6b35;margin-bottom:6px;">🧮 Calcul de la charge injectée</div>
-        <div class="formule" style="font-size:13pt;border-color:#ff6b35;">M_injectée = M_avant − M_après</div>
+        <div style="font-weight:800;font-size:10pt;text-transform:uppercase;letter-spacing:0.4px;color:#ff6b35;margin-bottom:6px;">🧮 Quantité injectée dans l'installation</div>
+        <div class="formule" style="font-size:13pt;border-color:#ff6b35;">M<sub>injectée</sub> = M<sub>gaz avant</sub> − M<sub>gaz après</sub></div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px;text-align:center;font-size:11pt;">
           <div style="border:1px solid #000;padding:6px 8px;background:#fff;">
-            <div style="font-size:8.5pt;text-transform:uppercase;font-weight:700;color:#666;">M_avant</div>
+            <div style="font-size:8.5pt;text-transform:uppercase;font-weight:700;color:#666;">Gaz dans la bouteille AVANT</div>
             <div style="height:24px;border-bottom:1px dotted #000;font-size:14pt;font-weight:700;margin-top:4px;"></div>
             <div style="font-size:9pt;margin-top:2px;">kg</div>
           </div>
           <div style="border:1px solid #000;padding:6px 8px;background:#fff;">
-            <div style="font-size:8.5pt;text-transform:uppercase;font-weight:700;color:#666;">M_après</div>
+            <div style="font-size:8.5pt;text-transform:uppercase;font-weight:700;color:#666;">Gaz dans la bouteille APRÈS</div>
             <div style="height:24px;border-bottom:1px dotted #000;font-size:14pt;font-weight:700;margin-top:4px;"></div>
             <div style="font-size:9pt;margin-top:2px;">kg</div>
           </div>
           <div style="border:2px solid #ff6b35;padding:6px 8px;background:#fff8f4;">
-            <div style="font-size:8.5pt;text-transform:uppercase;font-weight:700;color:#ff6b35;">M_injectée</div>
+            <div style="font-size:8.5pt;text-transform:uppercase;font-weight:800;color:#ff6b35;">CHARGE INJECTÉE</div>
             <div style="height:24px;border-bottom:2px solid #ff6b35;font-size:14pt;font-weight:700;margin-top:4px;"></div>
             <div style="font-size:9pt;margin-top:2px;">kg</div>
           </div>
