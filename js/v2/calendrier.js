@@ -14,6 +14,7 @@
   let bib = null;
   let elevesList = null;
   let selectedSeance = null;
+  let compsDict = null; /* { "C4.7": {libelle, famille}, ... } toutes épreuves confondues */
 
   async function init() {
     if (!agenda) agenda = await Catalog.load('agenda_classe.json');
@@ -21,6 +22,15 @@
     if (!elevesList) {
       const j = await Catalog.load('eleves_pseudo.json');
       elevesList = (j && j.eleves) || [];
+    }
+    if (!compsDict) {
+      compsDict = {};
+      for (const ep of ['ep1', 'ep2', 'ep3']) {
+        try {
+          const j = await Catalog.load(`competences_${ep}.json`);
+          (j && j.competences || []).forEach(c => { compsDict[c.code] = c; });
+        } catch (e) { /* fichier absent : on ignore */ }
+      }
     }
     if (window.Correspondance && Correspondance.load) await Correspondance.load();
     render();
@@ -305,6 +315,8 @@
           <div class="seance-tps">${tpsCards}</div>
         ` : ''}
 
+        ${renderEvalsSection(s)}
+
         ${(s.tps && s.tps.length > 0) ? `
           <h4>👥 Élèves présents (cochés par défaut) <span id="seance-eleves-count">${elevesList.length} sélectionnés</span></h4>
           <div class="seance-eleves-actions">
@@ -354,8 +366,189 @@
       window.TPEvalModal && TPEvalModal.openBatch(tpId, eleves);
     };
 
+    /* Boutons export évaluations passées */
+    const csvBtn = document.getElementById('seance-evals-csv');
+    if (csvBtn) csvBtn.onclick = () => exportEvalsCsv(s);
+    const printBtn = document.getElementById('seance-evals-print');
+    if (printBtn) printBtn.onclick = () => printEvalsSeance(s);
+
     /* Scroll into view */
     setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+
+  /* ================================================== */
+  /*    ÉVALUATIONS ENREGISTRÉES (séance passée)        */
+  /* ================================================== */
+
+  /** Récupère toutes les évals TPEval rattachées à cette séance (date = s.date, tpId ∈ s.tps).
+   *  Retourne [{tpId, evals: [...]}] uniquement pour les TP qui ont au moins 1 éval. */
+  function collectEvalsSeance(s) {
+    if (!window.TPEval) return [];
+    const tps = s.tps || [];
+    const out = [];
+    tps.forEach(tpId => {
+      const list = TPEval.byTP(tpId).filter(e => {
+        const d = e.date || (e.updatedAt ? e.updatedAt.slice(0, 10) : '');
+        return d === s.date;
+      });
+      if (list.length > 0) out.push({ tpId, evals: list });
+    });
+    return out;
+  }
+
+  function renderEvalsSection(s) {
+    const groupes = collectEvalsSeance(s);
+    if (groupes.length === 0) return '';
+    const corrOk = window.Correspondance && Correspondance.available();
+    const niveaux = (window.TPEval && TPEval.NIVEAUX) || [];
+    const findNiv = code => niveaux.find(n => n.code === code) || { label: code, couleur: '#888' };
+
+    const blocs = groupes.map(g => {
+      const meta = (bib && bib.tps.find(t => t.id === g.tpId)) || null;
+      const titre = meta ? meta.titre : '';
+      /* Toutes les compétences évaluées dans ce TP (union sur tous les élèves) */
+      const codes = Array.from(new Set(g.evals.flatMap(e => Object.keys(e.comp || {})))).sort();
+      const ths = codes.map(c => {
+        const lib = (compsDict && compsDict[c]) ? compsDict[c].libelle : '';
+        return `<th title="${escapeHtml(lib)}">${c}</th>`;
+      }).join('');
+      const rows = g.evals.slice().sort((a, b) => (a.pseudo || '').localeCompare(b.pseudo || '')).map(e => {
+        const realName = corrOk ? Correspondance.label(e.pseudo) : e.pseudo;
+        const cells = codes.map(c => {
+          const lvl = e.comp && e.comp[c];
+          if (!lvl || lvl === 'NE') return '<td class="ev-niv ev-niv-none">—</td>';
+          const m = findNiv(lvl);
+          return `<td class="ev-niv" style="background:${m.couleur};color:#fff;font-weight:bold;">${lvl}</td>`;
+        }).join('');
+        const com = e.commentaire ? `<div class="ev-com">${escapeHtml(e.commentaire)}</div>` : '';
+        return `
+          <tr>
+            <td class="ev-pseudo">${escapeHtml(e.pseudo)}</td>
+            <td class="ev-name">${escapeHtml(realName !== e.pseudo ? realName : '')}${com}</td>
+            ${cells}
+            <td class="ev-prof">${escapeHtml(e.evaluateur || '')}</td>
+          </tr>`;
+      }).join('');
+
+      return `
+        <div class="ev-bloc">
+          <h5 class="ev-bloc-tit"><span class="ev-bloc-id">${g.tpId}</span> ${escapeHtml(titre)} <span class="ev-bloc-count">${g.evals.length} élève${g.evals.length>1?'s':''}</span></h5>
+          <div class="ev-table-wrap">
+            <table class="ev-table">
+              <thead><tr><th>Pseudo</th><th>Nom</th>${ths}<th>Évaluateur</th></tr></thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>
+        </div>`;
+    }).join('');
+
+    return `
+      <div class="ev-section">
+        <div class="ev-head">
+          <h4>📜 Évaluations enregistrées <span class="ev-date-pill">${frDate(s.date)}</span></h4>
+          <div class="ev-actions">
+            <button class="btn small" id="seance-evals-csv">📥 Exporter CSV</button>
+            <button class="btn small ghost" id="seance-evals-print">🖨 Imprimer</button>
+          </div>
+        </div>
+        <p class="ev-help">Niveaux : <strong style="color:#c53030">NA</strong> non acquis · <strong style="color:#dd6b20">EC</strong> en cours · <strong style="color:#38a169">A</strong> acquis · <strong style="color:#1b3a63">M</strong> maîtrisé. À reporter dans le module Compétences d'EcoleDirecte.</p>
+        ${blocs}
+      </div>
+    `;
+  }
+
+  function exportEvalsCsv(s) {
+    const groupes = collectEvalsSeance(s);
+    if (groupes.length === 0) { alert('Pas d\'évaluation enregistrée pour cette séance.'); return; }
+    const corrOk = window.Correspondance && Correspondance.available();
+    const sep = ';';
+    const head = ['Date', 'Séance', 'TP', 'Pseudo', 'Nom réel', 'Compétence', 'Libellé', 'Niveau', 'Évaluateur', 'Commentaire'];
+    const lines = [head.join(sep)];
+    groupes.forEach(g => {
+      const meta = (bib && bib.tps.find(t => t.id === g.tpId)) || null;
+      const tpTitre = meta ? meta.titre : '';
+      g.evals.forEach(e => {
+        const realName = corrOk ? Correspondance.label(e.pseudo) : '';
+        const com = (e.commentaire || '').replace(/\r?\n/g, ' ').replace(/"/g, '""');
+        Object.keys(e.comp || {}).forEach(c => {
+          const lvl = e.comp[c];
+          if (!lvl || lvl === 'NE') return;
+          const lib = (compsDict && compsDict[c]) ? compsDict[c].libelle : '';
+          const niv = (window.TPEval && TPEval.NIVEAUX || []).find(n => n.code === lvl);
+          const nivLabel = niv ? `${lvl} - ${niv.label}` : lvl;
+          const row = [s.date, s.id, `${g.tpId} ${tpTitre}`, e.pseudo, realName,
+                       c, lib, nivLabel, e.evaluateur || '', com]
+            .map(v => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`).join(sep);
+          lines.push(row);
+        });
+      });
+    });
+    /* BOM UTF-8 pour Excel */
+    const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `evals_${s.date}_${s.id}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 100);
+    window.toast && window.toast(`📥 CSV exporté pour le ${frDate(s.date)}`, 'success');
+  }
+
+  function printEvalsSeance(s) {
+    const groupes = collectEvalsSeance(s);
+    if (groupes.length === 0) { alert('Pas d\'évaluation enregistrée pour cette séance.'); return; }
+    const corrOk = window.Correspondance && Correspondance.available();
+    const niveaux = (window.TPEval && TPEval.NIVEAUX) || [];
+    const findNiv = code => niveaux.find(n => n.code === code) || { label: code, couleur: '#888' };
+
+    const blocs = groupes.map(g => {
+      const meta = (bib && bib.tps.find(t => t.id === g.tpId)) || null;
+      const titre = meta ? meta.titre : '';
+      const codes = Array.from(new Set(g.evals.flatMap(e => Object.keys(e.comp || {})))).sort();
+      const ths = codes.map(c => {
+        const lib = (compsDict && compsDict[c]) ? compsDict[c].libelle : '';
+        return `<th><div class="ph-code">${c}</div><div class="ph-lib">${escapeHtml(lib)}</div></th>`;
+      }).join('');
+      const rows = g.evals.slice().sort((a, b) => (a.pseudo || '').localeCompare(b.pseudo || '')).map(e => {
+        const realName = corrOk ? Correspondance.label(e.pseudo) : e.pseudo;
+        const cells = codes.map(c => {
+          const lvl = e.comp && e.comp[c];
+          if (!lvl || lvl === 'NE') return '<td>—</td>';
+          const m = findNiv(lvl);
+          return `<td style="background:${m.couleur};color:#fff;font-weight:bold;text-align:center;">${lvl}</td>`;
+        }).join('');
+        return `<tr><td>${escapeHtml(e.pseudo)}</td><td>${escapeHtml(realName !== e.pseudo ? realName : '')}</td>${cells}<td>${escapeHtml(e.evaluateur || '')}</td></tr>`;
+      }).join('');
+      return `
+        <h3>${g.tpId} — ${escapeHtml(titre)}</h3>
+        <table class="ph-table"><thead><tr><th>Pseudo</th><th>Nom</th>${ths}<th>Éval.</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }).join('');
+
+    const w = window.open('', '_blank', 'width=900,height=700');
+    if (!w) { alert('Le navigateur a bloqué l\'ouverture de la fenêtre d\'impression.'); return; }
+    w.document.write(`<!doctype html><html lang="fr"><head><meta charset="utf-8">
+      <title>Évaluations ${s.date} — ${s.id}</title>
+      <style>
+        body { font-family: Calibri, Arial, sans-serif; font-size: 14pt; color: #000; line-height: 1.5; padding: 20px; }
+        h1 { color: #1b3a63; font-family: 'Trebuchet MS', sans-serif; font-size: 18pt; margin: 0 0 6px; }
+        h3 { color: #1b3a63; font-family: 'Trebuchet MS', sans-serif; font-size: 14pt; margin: 18px 0 6px; }
+        .meta { color: #666; font-size: 11pt; margin-bottom: 14px; }
+        .ph-table { border-collapse: collapse; width: 100%; font-size: 11pt; page-break-inside: avoid; }
+        .ph-table th, .ph-table td { border: 1px solid #999; padding: 4px 6px; vertical-align: middle; }
+        .ph-table th { background: #1b3a63; color: #fff; font-weight: bold; }
+        .ph-code { font-weight: bold; }
+        .ph-lib { font-weight: normal; font-size: 9pt; }
+        .legend { font-size: 10pt; color: #444; margin-top: 12px; }
+        @media print { @page { size: A4 landscape; margin: 1cm; } }
+      </style></head><body>
+      <h1>Évaluations — ${frDate(s.date)} (${s.jour})</h1>
+      <div class="meta">${escapeHtml(s.objectif || '')} · ${creneauLabel(s.creneau)} · LP Privé Jacques Raynaud — Campus ÉQUATIO</div>
+      ${blocs}
+      <div class="legend">Niveaux d'acquisition : <strong>NA</strong> non acquis · <strong>EC</strong> en cours · <strong>A</strong> acquis · <strong>M</strong> maîtrisé. À reporter dans le module Compétences d'EcoleDirecte.</div>
+      <script>window.onload = () => setTimeout(() => window.print(), 200);<\/script>
+      </body></html>`);
+    w.document.close();
   }
 
   function toggleAll(val) {
