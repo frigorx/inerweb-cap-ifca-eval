@@ -125,15 +125,20 @@
               <strong>Tes données ne sont jamais perdues</strong> : elles sont dans le Sheet.
             </div>
           ` : `
-            <details class="nj-diag-details">
-              <summary>Voir la liste détaillée des dates avec évals (pour diagnostic)</summary>
+            <div class="nj-diag-allDates">
+              <strong>📋 Toutes les dates avec des évaluations enregistrées (clic pour ouvrir) :</strong>
               <div class="nj-diag-dates">
                 ${Array.from(allDates).sort().reverse().map(d => {
                   const n = allEvals.filter(e => (e.date || (e.updatedAt && e.updatedAt.slice(0,10))) === d).length;
-                  return `<button class="nj-diag-date-btn" data-date="${d}">${frDate(d)} <span>(${n})</span></button>`;
+                  const tps = new Set(allEvals.filter(e => (e.date || (e.updatedAt && e.updatedAt.slice(0,10))) === d).map(e => e.tpId));
+                  const isCurrent = d === currentDate;
+                  return `<button class="nj-diag-date-btn ${isCurrent ? 'is-current' : ''}" data-date="${d}" title="${tps.size} TP : ${Array.from(tps).join(', ')}">
+                    <span class="nj-diag-date-d">${frDate(d)}</span>
+                    <span class="nj-diag-date-n">${n} éval${n>1?'s':''} · ${tps.size} TP</span>
+                  </button>`;
                 }).join('')}
               </div>
-            </details>
+            </div>
           `}
         </div>
 

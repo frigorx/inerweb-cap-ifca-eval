@@ -2813,15 +2813,46 @@
   gap: 6px;
   padding: 8px 0;
 }
+.nj-diag-allDates {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #c5cbd6;
+}
+.nj-diag-allDates > strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #1b3a63;
+  font-size: 12pt;
+}
 .nj-diag-date-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
   background: #fff;
   border: 1px solid #1b3a63;
   color: #1b3a63;
-  padding: 4px 10px;
-  border-radius: 3px;
+  padding: 6px 12px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 11pt;
   font-family: Calibri, sans-serif;
+  text-align: left;
+  min-width: 130px;
 }
-.nj-diag-date-btn:hover { background: #1b3a63; color: #fff; }
-.nj-diag-date-btn span { font-size: 10pt; opacity: 0.75; }
+.nj-diag-date-btn:hover {
+  background: #1b3a63;
+  color: #fff;
+}
+.nj-diag-date-btn.is-current {
+  background: #ff6b35;
+  color: #fff;
+  border-color: #ff6b35;
+}
+.nj-diag-date-d {
+  font-weight: bold;
+  font-size: 12pt;
+}
+.nj-diag-date-n {
+  font-size: 10pt;
+  opacity: 0.85;
+}
