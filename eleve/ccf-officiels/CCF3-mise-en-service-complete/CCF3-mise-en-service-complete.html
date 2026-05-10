@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>EP3 — Bloc B — Mise en service complète — CAP IFCA</title>
+<title>CCF n°3 — Mise en service complète + pesée bouteille — CAP IFCA</title>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 @page { size: A4 portrait; margin: 10mm; }
@@ -74,8 +74,13 @@ h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 
   <!-- ============================================================ -->
   <div class="header">
     <div class="logo">LPP Jacques Raynaud<span>Filière Énergétique · CAP IFCA</span></div>
-    <div class="titre">EP3 — Bloc B — Mise en service complète<span>Plaque F-GAZ · Fiche de mise en service · Bon d'intervention</span></div>
-    <div class="ref"><b>Durée : 2 h</b>3 tâches enchaînées<br>Niveau CAP IFCA 2</div>
+    <div class="titre">CCF n°3 — Mise en service complète <span style="display:inline-block;background:#ff6b35;color:#fff;padding:1px 6px;border-radius:3px;font-size:8.5pt;margin-left:4px;vertical-align:middle;">+ pesée</span><span>Pesée bouteille · Plaque F-GAZ · Fiche de mise en service · Bon d'intervention</span></div>
+    <div class="ref"><b>Durée : 2 h 30</b>4 tâches enchaînées<br>Niveau CAP IFCA 2</div>
+  </div>
+
+  <div style="border:2px solid #ff6b35;background:#fff8f4;padding:8px 12px;margin-bottom:10px;font-size:10pt;line-height:1.5;">
+    <strong style="color:#ff6b35;text-transform:uppercase;letter-spacing:0.3px;">⚠ Spécificité CCF n°3</strong>
+    <p style="margin-top:3px;">Cette épreuve <b>ajoute la tâche de pesée de bouteille</b> (Tâche C-2) qui n'a pas été évaluée dans les CCF n°1 et n°2. Les élèves devront déterminer la <b>quantité de fluide réellement injectée</b> dans l'installation par différence de masse.</p>
   </div>
 
   <!-- ============================================================ -->
@@ -129,7 +134,7 @@ h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 
       </div>
 
       <div class="document">
-        <img src="EP3-B-mise-en-service-img/plaque_identification_FGAZ.png" alt="Plaque d'identification F-GAZ — Installation contenant des gaz à effet de serre fluorés">
+        <img src="img/plaque_identification_FGAZ.png" alt="Plaque d'identification F-GAZ — Installation contenant des gaz à effet de serre fluorés">
         <div class="legende">Plaque réglementaire F-GAZ — Article 517/2014 CE &amp; R543-79 du Code de l'environnement</div>
       </div>
 
@@ -137,11 +142,103 @@ h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 
   </div>
 
   <!-- ============================================================ -->
-  <!-- TÂCHE C-2 — FICHE DE MISE EN SERVICE                         -->
+  <!-- TÂCHE C-2 — PESÉE BOUTEILLE (SPÉCIFIQUE CCF n°3)              -->
   <!-- ============================================================ -->
   <div class="page-break"></div>
 
-  <h2 class="section"><span class="num">C-2</span>Fiche de mise en service</h2>
+  <h2 class="section" style="background:#ff6b35;"><span class="num" style="color:#ff6b35;">C-2</span>Pesée bouteille — détermination de la charge injectée <span style="background:#fff;color:#ff6b35;padding:1px 6px;margin-left:8px;font-size:8.5pt;border-radius:2px;">SPÉCIFIQUE CCF n°3</span></h2>
+
+  <div class="tache" style="border-color:#ff6b35;">
+    <div class="tache-head" style="background:#ff6b35;">
+      <h3>Peser la bouteille AVANT et APRÈS injection — calculer la charge réelle</h3>
+      <span class="ep3" style="color:#ff6b35;">EP3 · Bloc B</span>
+    </div>
+    <div class="tache-body">
+
+      <div class="objectif">
+        <div class="lbl">Objectif</div>
+        <p>Déterminer par <b>différence de masse</b> la quantité de fluide frigorigène <b>réellement injectée</b> dans l'installation lors de la mise en service. La pesée précise est la <b>seule méthode valable</b> pour reporter la charge sur la plaque F-GAZ (Tâche C-1).</p>
+      </div>
+
+      <div class="sources">
+        <div class="lbl">Procédure</div>
+        <ul>
+          <li><b>Avant injection</b> : peser la bouteille pleine (raccordée mais vanne fermée), noter la masse initiale</li>
+          <li><b>Pendant</b> : injecter le fluide dans l'installation selon la procédure standard</li>
+          <li><b>Après injection</b> : refermer la vanne bouteille, peser la bouteille à vide partiel, noter la masse finale</li>
+          <li><b>Calcul</b> : <code style="font-family:'Courier New',monospace;">M_injectée = M_avant − M_après</code></li>
+        </ul>
+      </div>
+
+      <div class="points">
+        <div class="lbl">✅ Points à respecter</div>
+        <ul>
+          <li>Balance <b>tarée</b> et stable avant chaque pesée</li>
+          <li>Bouteille <b>verticale</b>, posée à plat, flexibles relâchés</li>
+          <li>Précision attendue : <b>± 10 g</b> (résolution balance ≥ 10 g)</li>
+          <li>Reporter <b>les deux pesées</b> sur la fiche de mise en service (Tâche C-3)</li>
+          <li>Reporter la <b>charge calculée</b> sur la plaque F-GAZ (Tâche C-1, ligne « Charge initiale » ou « Complément »)</li>
+        </ul>
+      </div>
+
+      <!-- Tableau de saisie pesée -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;">
+        <div style="border:2px solid #000;padding:10px 12px;">
+          <div style="font-weight:800;font-size:10pt;text-transform:uppercase;letter-spacing:0.4px;background:#000;color:#fff;padding:3px 8px;margin:-10px -12px 8px;text-align:center;">Pesée AVANT injection</div>
+          <table style="width:100%;border-collapse:collapse;font-size:10pt;">
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Date / heure</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Type de fluide</td><td style="border:1px solid #000;padding:4px 8px;height:24px;">R&hellip;&hellip;&hellip;&hellip;&hellip;</td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">N° de bouteille</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;font-weight:700;"><b>Masse M_avant (kg)</b></td><td style="border:1px solid #000;padding:4px 8px;height:30px;font-size:14pt;font-weight:700;text-align:center;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Visa élève</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
+          </table>
+        </div>
+
+        <div style="border:2px solid #000;padding:10px 12px;">
+          <div style="font-weight:800;font-size:10pt;text-transform:uppercase;letter-spacing:0.4px;background:#000;color:#fff;padding:3px 8px;margin:-10px -12px 8px;text-align:center;">Pesée APRÈS injection</div>
+          <table style="width:100%;border-collapse:collapse;font-size:10pt;">
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Date / heure</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Type de fluide</td><td style="border:1px solid #000;padding:4px 8px;height:24px;">R&hellip;&hellip;&hellip;&hellip;&hellip;</td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">N° de bouteille</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;font-weight:700;"><b>Masse M_après (kg)</b></td><td style="border:1px solid #000;padding:4px 8px;height:30px;font-size:14pt;font-weight:700;text-align:center;"></td></tr>
+            <tr><td style="border:1px solid #000;padding:4px 8px;background:#fafafa;">Visa élève</td><td style="border:1px solid #000;padding:4px 8px;height:24px;"></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Calcul -->
+      <div style="border:2px solid #ff6b35;background:#fff8f4;padding:10px 14px;margin-top:8px;">
+        <div style="font-weight:800;font-size:10pt;text-transform:uppercase;letter-spacing:0.4px;color:#ff6b35;margin-bottom:6px;">🧮 Calcul de la charge injectée</div>
+        <div class="formule" style="font-size:13pt;border-color:#ff6b35;">M_injectée = M_avant − M_après</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px;text-align:center;font-size:11pt;">
+          <div style="border:1px solid #000;padding:6px 8px;background:#fff;">
+            <div style="font-size:8.5pt;text-transform:uppercase;font-weight:700;color:#666;">M_avant</div>
+            <div style="height:24px;border-bottom:1px dotted #000;font-size:14pt;font-weight:700;margin-top:4px;"></div>
+            <div style="font-size:9pt;margin-top:2px;">kg</div>
+          </div>
+          <div style="border:1px solid #000;padding:6px 8px;background:#fff;">
+            <div style="font-size:8.5pt;text-transform:uppercase;font-weight:700;color:#666;">M_après</div>
+            <div style="height:24px;border-bottom:1px dotted #000;font-size:14pt;font-weight:700;margin-top:4px;"></div>
+            <div style="font-size:9pt;margin-top:2px;">kg</div>
+          </div>
+          <div style="border:2px solid #ff6b35;padding:6px 8px;background:#fff8f4;">
+            <div style="font-size:8.5pt;text-transform:uppercase;font-weight:700;color:#ff6b35;">M_injectée</div>
+            <div style="height:24px;border-bottom:2px solid #ff6b35;font-size:14pt;font-weight:700;margin-top:4px;"></div>
+            <div style="font-size:9pt;margin-top:2px;">kg</div>
+          </div>
+        </div>
+        <p style="margin-top:8px;font-size:10pt;font-style:italic;">Cette valeur sera <b>reportée sur la plaque F-GAZ (C-1)</b> ligne « Charge initiale » ou « Complément », et sur la <b>fiche de mise en service (C-3)</b>.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- TÂCHE C-3 — FICHE DE MISE EN SERVICE                         -->
+  <!-- ============================================================ -->
+  <div class="page-break"></div>
+
+  <h2 class="section"><span class="num">C-3</span>Fiche de mise en service</h2>
 
   <div class="tache">
     <div class="tache-head">
@@ -178,7 +275,7 @@ h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 
       </div>
 
       <div class="document">
-        <img src="EP3-B-mise-en-service-img/fiche_mise_en_service.png" alt="Fiche de mise en service — bordereau officiel">
+        <img src="img/fiche_mise_en_service.png" alt="Fiche de mise en service — bordereau officiel">
         <div class="legende">Bordereau officiel de mise en service — à compléter intégralement</div>
       </div>
 
@@ -186,11 +283,11 @@ h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 
   </div>
 
   <!-- ============================================================ -->
-  <!-- TÂCHE C-3 — BON D'INTERVENTION                                -->
+  <!-- TÂCHE C-4 — BON D'INTERVENTION                                -->
   <!-- ============================================================ -->
   <div class="page-break"></div>
 
-  <h2 class="section"><span class="num">C-3</span>Bon d'intervention professionnel</h2>
+  <h2 class="section"><span class="num">C-4</span>Bon d'intervention professionnel</h2>
 
   <div class="tache">
     <div class="tache-head">
@@ -233,7 +330,7 @@ h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 
       </div>
 
       <div class="document">
-        <img src="EP3-B-mise-en-service-img/bon_intervention.png" alt="Bon d'intervention CAP IFCA">
+        <img src="img/bon_intervention.png" alt="Bon d'intervention CAP IFCA">
         <div class="legende">Bon d'intervention IFCA — à compléter intégralement</div>
       </div>
 
@@ -245,7 +342,7 @@ h2.section .num { background: white; color: #000; padding: 0 6px; margin-right: 
   <!-- ============================================================ -->
   <div class="footer-doc">
     <span>LPP Jacques Raynaud — Campus ÉQUATIO — Établissement privé</span>
-    <span>EP3 Bloc B — Mise en service complète — CAP IFCA</span>
+    <span>CCF n°3 — Mise en service complète + pesée — CAP IFCA</span>
   </div>
 
 </div>

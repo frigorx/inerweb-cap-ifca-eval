@@ -56,13 +56,15 @@
       "comp": ["C4.5", "C5.1"]
     },
     {
-      "id": "TP-EP3B",
-      "semaine": "S3",
-      "date": "2026-05-11",
-      "titre": "EP3 Bloc B — Mise en service complète (plaque F-GAZ + fiche + bon d'intervention)",
-      "duree": "2 h (3 tâches enchaînées)",
-      "url": "eleve/tp-officiels/S3_11-05-2026/EP3-B-mise-en-service.html",
-      "comp": ["C1.3", "C4.2", "C4.5", "C4.6", "C5.1"]
+      "id": "CCF-3-MES",
+      "semaine": "CCF",
+      "date": "",
+      "titre": "CCF n°3 — Mise en service complète + pesée bouteille (plaque F-GAZ + pesée + fiche + bon d'intervention)",
+      "duree": "2 h 30 (4 tâches enchaînées)",
+      "url": "eleve/ccf-officiels/CCF3-mise-en-service-complete/CCF3-mise-en-service-complete.html",
+      "comp": ["C1.3", "C2.2", "C4.2", "C4.5", "C4.6", "C5.1"],
+      "tag": "ccf",
+      "description": "CCF officiel n°3 enchaîné après les CCF n°1 et n°2. Spécificité : ajoute la tâche pesée bouteille (avant/après) pour déterminer la charge réellement injectée — non évaluée dans les 2 premiers CCF."
     },
 
     { "id": "EX-MANO",
