@@ -116,6 +116,31 @@
         "total_max": 20,
         "comp_alimente": "C1.3"
       }
+    },
+
+    {
+      "id": "PACK-CCF-3-MES",
+      "titre": "CCF n°3 — Mise en service complète + pesée bouteille",
+      "couleur": "#ff6b35",
+      "icone": "🏆",
+      "duree_estimee": "2 h 30",
+      "bloc_ccf": "*",
+      "epreuve": "EP3",
+      "comp_ciblees": ["C1.3", "C2.2", "C4.2", "C4.5", "C4.6", "C5.1"],
+      "description": "CCF officiel n°3 — épreuve enchaînée après les CCF n°1 et n°2. SPÉCIFICITÉ : ajoute la tâche pesée de bouteille (avant/après injection) pour déterminer la charge réelle, qui n'a pas été évaluée dans les 2 premiers CCF. Couvre les 3 blocs A+B+C de l'EP3.",
+      "ressources": [
+        { "type": "exercice-html", "id": "EX-CCF-3-MES", "titre": "CCF n°3 — Mise en service complète (4 tâches : plaque F-GAZ + pesée + fiche + bon)", "url": "eleve/ccf-officiels/CCF3-mise-en-service-complete/CCF3-mise-en-service-complete.html", "duree": "2 h 30" }
+      ],
+      "evaluation_numerique": {
+        "items": [
+          { "id": "C-1", "intitule": "Plaque F-GAZ (identification, GWP, TeqCO₂)", "max": 4, "niveaux": [0, 1, 2, 4] },
+          { "id": "C-2", "intitule": "Pesée bouteille (avant + après + calcul)",   "max": 5, "niveaux": [0, 1, 3, 5] },
+          { "id": "C-3", "intitule": "Fiche de mise en service (mesures, réglages, SC/SR)", "max": 7, "niveaux": [0, 2, 4, 7] },
+          { "id": "C-4", "intitule": "Bon d'intervention (descriptif + observations)", "max": 4, "niveaux": [0, 1, 2, 4] }
+        ],
+        "total_max": 20,
+        "comp_alimente": "C1.3"
+      }
     }
   ]
 }
