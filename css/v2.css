@@ -2769,6 +2769,116 @@
 .nj-empty-sub { font-size: 12pt; margin-top: 4px; }
 .nj-empty-help { font-size: 10pt; font-style: italic; margin-top: 12px; color: #888; }
 
+/* ========== Calendrier : toggle "uniquement distribués" ========== */
+.cal-toggles {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 0 6px;
+}
+.cal-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: #fff;
+  border: 2px solid #1b3a63;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 11pt;
+  color: #1b3a63;
+  font-weight: 600;
+  user-select: none;
+}
+.cal-toggle:hover { background: #f0f5fb; }
+.cal-toggle input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #1b3a63;
+}
+.cal-toggle-help {
+  color: #888;
+  font-size: 10pt;
+  cursor: help;
+}
+
+/* Badge TP distribué dans la grille calendrier */
+.cal-tp-badge.is-distrib {
+  background: #38a169 !important;
+  color: #fff !important;
+  border-color: #38a169 !important;
+}
+.cal-tp-hidden {
+  display: inline-block;
+  font-size: 9pt;
+  color: #888;
+  font-style: italic;
+  margin-left: 4px;
+}
+
+/* ========== Fiche séance : bouton "Voir évaluations" sur chaque TP ========== */
+.seance-tp-row {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.seance-tp-row .seance-tp { flex: 1; }
+.seance-tp-distrib {
+  display: inline-block;
+  margin-left: auto;
+  padding: 1px 8px;
+  background: #38a169;
+  color: #fff;
+  font-size: 9pt;
+  font-weight: bold;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.seance-tp-evals {
+  background: #fff;
+  border: 2px solid #1b3a63;
+  color: #1b3a63;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 11pt;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: Calibri, sans-serif;
+  white-space: nowrap;
+}
+.seance-tp-evals:hover {
+  background: #1b3a63;
+  color: #fff;
+}
+.seance-tp-evals.is-empty {
+  border-color: #c5cbd6;
+  color: #888;
+  cursor: not-allowed;
+  font-weight: normal;
+}
+.seance-tp-evals.is-empty:hover { background: #fff; color: #888; }
+
+.seance-tps-hidden {
+  font-size: 11pt;
+  color: #888;
+  font-style: italic;
+  margin: 6px 0;
+  padding: 6px 12px;
+  background: #f4f6fa;
+  border-left: 3px solid #c5cbd6;
+  border-radius: 3px;
+}
+
+/* ========== Modale "Évaluations d'un TP" (réutilise .tl-overlay/.tl-card) ========== */
+.ev-empty {
+  text-align: center;
+  padding: 30px;
+  color: #888;
+  font-style: italic;
+  font-size: 12pt;
+}
+
 /* ========== Notes du jour : bande diagnostic ========== */
 .nj-diag {
   background: #f4f6fa;

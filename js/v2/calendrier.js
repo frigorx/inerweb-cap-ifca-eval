@@ -51,7 +51,18 @@
     /* Mini-dashboard : stats globales en haut du calendrier */
     const stats = computeStats(today);
 
+    /* Toggle : afficher uniquement les TP distribués */
+    const showOnlyDistribued = window.Store && Store.get('cal.onlyDistribued') ? true : false;
+
     root.innerHTML = `
+      <div class="cal-toggles">
+        <label class="cal-toggle">
+          <input type="checkbox" id="cal-only-distrib" ${showOnlyDistribued ? 'checked' : ''}>
+          <span>🧹 Afficher uniquement les TP distribués</span>
+          <span class="cal-toggle-help" title="Masque les TP qui n'ont été distribués à aucun élève dans la séance. Réversible, ne modifie pas l'agenda.">ⓘ</span>
+        </label>
+      </div>
+
       <div class="cal-mini-stats">
         <div class="cal-stat">
           <div class="cal-stat-big">${stats.distribCetteSemaine}</div>
@@ -87,6 +98,13 @@
       </div>
       <div class="cal-detail" id="cal-detail" hidden></div>
     `;
+
+    /* Câblage toggle "uniquement distribués" */
+    const togBtn = document.getElementById('cal-only-distrib');
+    if (togBtn) togBtn.onchange = (e) => {
+      if (window.Store) Store.set('cal.onlyDistribued', e.target.checked ? 1 : 0);
+      render();
+    };
 
     root.querySelectorAll('.cal-seance').forEach(el => {
       el.onclick = () => openSeance(el.dataset.seanceId);
@@ -224,7 +242,14 @@
     else if (isPast) cls.push('passe');
     else cls.push('futur');
 
-    const tpsBadges = (s.tps || []).map(id => `<span class="cal-tp-badge">${id}</span>`).join('');
+    const onlyDistrib = window.Store && Store.get('cal.onlyDistribued') ? true : false;
+    const visibleTps = filterTpsForSeance(s, onlyDistrib);
+    const tpsBadges = visibleTps.map(id => {
+      const wasDistrib = window.Affectations && Affectations.list().some(a => a.seanceId === s.id && a.tpId === id);
+      return `<span class="cal-tp-badge ${wasDistrib ? 'is-distrib' : ''}" title="${wasDistrib ? 'Distribué' : 'Non distribué'}">${id}${wasDistrib ? ' ✅' : ''}</span>`;
+    }).join('');
+    const hiddenCount = (s.tps || []).length - visibleTps.length;
+    const hiddenTag = hiddenCount > 0 ? `<span class="cal-tp-hidden" title="${hiddenCount} TP masqué(s) par le filtre">+${hiddenCount} masqué${hiddenCount>1?'s':''}</span>` : '';
     const distribCount = countDistributions(s.id);
     const distribTag = distribCount > 0
       ? `<span class="cal-distrib">📤 ${distribCount} distribué${distribCount>1?'s':''}</span>` : '';
@@ -235,11 +260,20 @@
         <div class="cal-seance-titre">${escapeHtml(s.objectif)}</div>
         <div class="cal-seance-meta">
           ${tpsBadges}
+          ${hiddenTag}
           ${s.salle ? `<span class="cal-salle">📍 ${s.salle}</span>` : ''}
           ${distribTag}
         </div>
       </div>
     `;
+  }
+
+  /** Retourne la liste filtrée des TP d'une séance selon le toggle "uniquement distribués". */
+  function filterTpsForSeance(s, onlyDistrib) {
+    const all = s.tps || [];
+    if (!onlyDistrib || !window.Affectations) return all;
+    const affects = Affectations.list();
+    return all.filter(tpId => affects.some(a => a.seanceId === s.id && a.tpId === tpId));
   }
 
   function creneauLabel(code) {
@@ -268,18 +302,35 @@
     const isToday = s.date === today;
     const isCcf = s.type && s.type.startsWith('ccf');
 
-    /* Liste TP suggérés */
-    const tpsCards = (s.tps || []).map(id => {
+    /* Liste TP suggérés (filtrée selon toggle) */
+    const onlyDistrib = window.Store && Store.get('cal.onlyDistribued') ? true : false;
+    const tpsVisibles = filterTpsForSeance(s, onlyDistrib);
+    const tpsCards = tpsVisibles.map(id => {
       const meta = (bib && bib.tps.find(t => t.id === id)) || null;
-      if (!meta) return `<div class="seance-tp"><strong>${id}</strong> (introuvable)</div>`;
+      const wasDistrib = window.Affectations && Affectations.list().some(a => a.seanceId === s.id && a.tpId === id);
+      const nbEvals = window.TPEval ? TPEval.byTP(id).length : 0;
+      const evalsBtn = nbEvals > 0
+        ? `<button class="seance-tp-evals" data-tpid="${id}" title="Voir le tableau des évaluations enregistrées pour ce TP">📜 Évaluations (${nbEvals})</button>`
+        : `<button class="seance-tp-evals is-empty" data-tpid="${id}" title="Aucune évaluation enregistrée pour ce TP" disabled>📜 Aucune évaluation</button>`;
+      const distribTag = wasDistrib ? '<span class="seance-tp-distrib">✅ distribué</span>' : '';
+      if (!meta) {
+        return `<div class="seance-tp"><strong>${id}</strong> (introuvable) ${evalsBtn}</div>`;
+      }
       return `
-        <a class="seance-tp" href="${meta.url}" target="_blank" rel="noopener">
-          <span class="seance-tp-id">${meta.id}</span>
-          <span class="seance-tp-tit">${escapeHtml(meta.titre)}</span>
-          <span class="seance-tp-meta">${escapeHtml(meta.duree)}</span>
-        </a>
+        <div class="seance-tp-row">
+          <a class="seance-tp" href="${meta.url}" target="_blank" rel="noopener">
+            <span class="seance-tp-id">${meta.id}</span>
+            <span class="seance-tp-tit">${escapeHtml(meta.titre)}</span>
+            <span class="seance-tp-meta">${escapeHtml(meta.duree)}</span>
+            ${distribTag}
+          </a>
+          ${evalsBtn}
+        </div>
       `;
     }).join('');
+    const tpsHiddenInfo = (s.tps || []).length > tpsVisibles.length
+      ? `<p class="seance-tps-hidden">🧹 ${(s.tps || []).length - tpsVisibles.length} TP masqué(s) par le filtre « uniquement distribués »</p>`
+      : '';
 
     /* Liste élèves cochables */
     const elevesRows = elevesList.map(e => {
@@ -313,6 +364,7 @@
         ${(s.tps && s.tps.length > 0) ? `
           <h4>📚 TP de cette séance</h4>
           <div class="seance-tps">${tpsCards}</div>
+          ${tpsHiddenInfo}
         ` : ''}
 
         ${renderEvalsSection(s)}
@@ -371,6 +423,16 @@
     if (csvBtn) csvBtn.onclick = () => exportEvalsCsv(s);
     const printBtn = document.getElementById('seance-evals-print');
     if (printBtn) printBtn.onclick = () => printEvalsSeance(s);
+
+    /* Bouton "Voir évaluations" sur chaque TP de la séance */
+    detail.querySelectorAll('.seance-tp-evals').forEach(btn => {
+      btn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const tpId = btn.dataset.tpid;
+        if (tpId) openEvalsForTp(tpId);
+      };
+    });
 
     /* Scroll into view */
     setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
@@ -493,6 +555,181 @@
     a.click();
     setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 100);
     window.toast && window.toast(`📥 CSV exporté pour le ${frDate(s.date)}`, 'success');
+  }
+
+  /** Modale : toutes les évaluations enregistrées pour un TP donné (toutes dates).
+   *  Ouverte depuis le bouton "📜 Évaluations" à côté de chaque TP dans la fiche séance. */
+  function openEvalsForTp(tpId) {
+    if (!window.TPEval) return;
+    const evals = TPEval.byTP(tpId);
+    const meta = (bib && bib.tps.find(t => t.id === tpId)) || null;
+    const titre = meta ? meta.titre : '';
+    const corrOk = window.Correspondance && Correspondance.available();
+    const niveaux = (window.TPEval && TPEval.NIVEAUX) || [];
+    const findNiv = code => niveaux.find(n => n.code === code) || { label: code, couleur: '#888' };
+
+    /* Group par date DESC */
+    const byDate = {};
+    evals.forEach(e => {
+      const d = e.date || (e.updatedAt ? e.updatedAt.slice(0, 10) : 'inconnu');
+      (byDate[d] = byDate[d] || []).push(e);
+    });
+    const dates = Object.keys(byDate).sort().reverse();
+
+    const blocs = dates.length === 0
+      ? `<div class="ev-empty"><p>Aucune évaluation enregistrée pour ce TP.</p></div>`
+      : dates.map(d => {
+        const list = byDate[d];
+        const codes = Array.from(new Set(list.flatMap(e => Object.keys(e.comp || {})))).sort();
+        const ths = codes.map(c => {
+          const lib = (compsDict && compsDict[c]) ? compsDict[c].libelle : '';
+          return `<th title="${escapeHtml(lib)}">${c}</th>`;
+        }).join('');
+        const rows = list.slice().sort((a, b) => (a.pseudo || '').localeCompare(b.pseudo || '')).map(e => {
+          const realName = corrOk ? Correspondance.label(e.pseudo) : e.pseudo;
+          const cells = codes.map(c => {
+            const lvl = e.comp && e.comp[c];
+            if (!lvl || lvl === 'NE') return '<td class="ev-niv ev-niv-none">—</td>';
+            const m = findNiv(lvl);
+            return `<td class="ev-niv" style="background:${m.couleur};color:#fff;font-weight:bold;">${lvl}</td>`;
+          }).join('');
+          const com = e.commentaire ? `<div class="ev-com">${escapeHtml(e.commentaire)}</div>` : '';
+          return `<tr><td class="ev-pseudo">${escapeHtml(e.pseudo)}</td><td class="ev-name">${escapeHtml(realName !== e.pseudo ? realName : '')}${com}</td>${cells}<td class="ev-prof">${escapeHtml(e.evaluateur || '')}</td></tr>`;
+        }).join('');
+        return `
+          <div class="ev-bloc">
+            <h5 class="ev-bloc-tit"><span class="ev-bloc-id">${frDate(d)}</span> <span class="ev-bloc-count">${list.length} élève${list.length>1?'s':''}</span></h5>
+            <div class="ev-table-wrap">
+              <table class="ev-table">
+                <thead><tr><th>Pseudo</th><th>Nom</th>${ths}<th>Évaluateur</th></tr></thead>
+                <tbody>${rows}</tbody>
+              </table>
+            </div>
+          </div>`;
+      }).join('');
+
+    const totalEvals = evals.length;
+    const overlay = document.createElement('div');
+    overlay.id = 'tpevals-overlay';
+    overlay.className = 'tl-overlay';
+    overlay.innerHTML = `
+      <div class="tl-card" style="max-width:1100px;">
+        <header>
+          <h2>📜 Évaluations — <strong>${tpId}</strong> ${escapeHtml(titre)}</h2>
+          <button class="btn-x" id="tpevals-close" title="Fermer">×</button>
+        </header>
+        <div class="tl-body">
+          ${totalEvals > 0 ? `
+            <div class="ev-head">
+              <h4>${totalEvals} évaluation${totalEvals>1?'s':''} sur ${dates.length} date${dates.length>1?'s':''}</h4>
+              <div class="ev-actions">
+                <button class="btn small" id="tpevals-csv">📥 Exporter CSV</button>
+                <button class="btn small ghost" id="tpevals-print">🖨 Imprimer</button>
+              </div>
+            </div>
+            <p class="ev-help">Niveaux : <strong style="color:#c53030">NA</strong> · <strong style="color:#dd6b20">EC</strong> · <strong style="color:#38a169">A</strong> · <strong style="color:#1b3a63">M</strong>. À reporter dans le module Compétences d'EcoleDirecte.</p>
+          ` : ''}
+          ${blocs}
+        </div>
+        <footer class="tl-footer">
+          <button class="btn small ghost" id="tpevals-close-foot">Fermer</button>
+        </footer>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const close = () => { const o = document.getElementById('tpevals-overlay'); if (o) o.remove(); };
+    document.getElementById('tpevals-close').onclick = close;
+    document.getElementById('tpevals-close-foot').onclick = close;
+    overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+    const c = document.getElementById('tpevals-csv');
+    if (c) c.onclick = () => exportEvalsTpCsv(tpId, evals, titre);
+    const p = document.getElementById('tpevals-print');
+    if (p) p.onclick = () => printEvalsTp(tpId, evals, titre);
+  }
+
+  function exportEvalsTpCsv(tpId, evals, titre) {
+    const corrOk = window.Correspondance && Correspondance.available();
+    const sep = ';';
+    const head = ['Date', 'TP', 'TitreTP', 'Pseudo', 'Nom réel', 'Compétence', 'Libellé', 'Niveau', 'Évaluateur', 'Commentaire'];
+    const lines = [head.join(sep)];
+    evals.forEach(e => {
+      const d = e.date || (e.updatedAt ? e.updatedAt.slice(0, 10) : '');
+      const realName = corrOk ? Correspondance.label(e.pseudo) : '';
+      const com = (e.commentaire || '').replace(/\r?\n/g, ' ');
+      Object.keys(e.comp || {}).forEach(c => {
+        const lvl = e.comp[c];
+        if (!lvl || lvl === 'NE') return;
+        const lib = (compsDict && compsDict[c]) ? compsDict[c].libelle : '';
+        const niv = (window.TPEval && TPEval.NIVEAUX || []).find(n => n.code === lvl);
+        const nivLabel = niv ? `${lvl} - ${niv.label}` : lvl;
+        const row = [d, tpId, titre, e.pseudo, realName, c, lib, nivLabel, e.evaluateur || '', com]
+          .map(v => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`).join(sep);
+        lines.push(row);
+      });
+    });
+    const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `evals_${tpId}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 100);
+    window.toast && window.toast(`📥 CSV exporté pour ${tpId}`, 'success');
+  }
+
+  function printEvalsTp(tpId, evals, titre) {
+    const corrOk = window.Correspondance && Correspondance.available();
+    const niveaux = (window.TPEval && TPEval.NIVEAUX) || [];
+    const findNiv = code => niveaux.find(n => n.code === code) || { label: code, couleur: '#888' };
+    const byDate = {};
+    evals.forEach(e => {
+      const d = e.date || (e.updatedAt ? e.updatedAt.slice(0, 10) : 'inconnu');
+      (byDate[d] = byDate[d] || []).push(e);
+    });
+    const dates = Object.keys(byDate).sort().reverse();
+    const blocs = dates.map(d => {
+      const list = byDate[d];
+      const codes = Array.from(new Set(list.flatMap(e => Object.keys(e.comp || {})))).sort();
+      const ths = codes.map(c => {
+        const lib = (compsDict && compsDict[c]) ? compsDict[c].libelle : '';
+        return `<th><div class="ph-code">${c}</div><div class="ph-lib">${escapeHtml(lib)}</div></th>`;
+      }).join('');
+      const rows = list.slice().sort((a, b) => (a.pseudo || '').localeCompare(b.pseudo || '')).map(e => {
+        const realName = corrOk ? Correspondance.label(e.pseudo) : e.pseudo;
+        const cells = codes.map(c => {
+          const lvl = e.comp && e.comp[c];
+          if (!lvl || lvl === 'NE') return '<td>—</td>';
+          const m = findNiv(lvl);
+          return `<td style="background:${m.couleur};color:#fff;font-weight:bold;text-align:center;">${lvl}</td>`;
+        }).join('');
+        return `<tr><td>${escapeHtml(e.pseudo)}</td><td>${escapeHtml(realName !== e.pseudo ? realName : '')}</td>${cells}<td>${escapeHtml(e.evaluateur || '')}</td></tr>`;
+      }).join('');
+      return `<h3>${frDate(d)}</h3><table class="ph-table"><thead><tr><th>Pseudo</th><th>Nom</th>${ths}<th>Éval.</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }).join('');
+    const w = window.open('', '_blank', 'width=900,height=700');
+    if (!w) { alert('Le navigateur a bloqué l\'ouverture de la fenêtre d\'impression.'); return; }
+    w.document.write(`<!doctype html><html lang="fr"><head><meta charset="utf-8">
+      <title>Évaluations ${tpId}</title>
+      <style>
+        body { font-family: Calibri, Arial, sans-serif; font-size: 14pt; color: #000; line-height: 1.5; padding: 20px; }
+        h1 { color: #1b3a63; font-family: 'Trebuchet MS', sans-serif; font-size: 18pt; margin: 0 0 6px; }
+        h3 { color: #1b3a63; font-family: 'Trebuchet MS', sans-serif; font-size: 14pt; margin: 18px 0 6px; }
+        .meta { color: #666; font-size: 11pt; margin-bottom: 14px; }
+        .ph-table { border-collapse: collapse; width: 100%; font-size: 11pt; page-break-inside: avoid; }
+        .ph-table th, .ph-table td { border: 1px solid #999; padding: 4px 6px; vertical-align: middle; }
+        .ph-table th { background: #1b3a63; color: #fff; font-weight: bold; }
+        .ph-code { font-weight: bold; }
+        .ph-lib { font-weight: normal; font-size: 9pt; }
+        @media print { @page { size: A4 landscape; margin: 1cm; } }
+      </style></head><body>
+      <h1>${tpId} — ${escapeHtml(titre)}</h1>
+      <div class="meta">${evals.length} évaluation(s) sur ${dates.length} date(s) · LP Privé Jacques Raynaud — Campus ÉQUATIO</div>
+      ${blocs}
+      <script>window.onload = () => setTimeout(() => window.print(), 200);<\/script>
+      </body></html>`);
+    w.document.close();
   }
 
   function printEvalsSeance(s) {
