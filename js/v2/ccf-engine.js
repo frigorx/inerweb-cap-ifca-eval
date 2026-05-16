@@ -55,10 +55,10 @@
       pointsParBloc[bloc.code] = pBloc;
     });
 
-    /* Note finale : (total brut / diviseur) × ramene_sur, plafonné au ramene_sur */
+    /* Note finale brute (rétro-compat) : (total brut / diviseur) × ramene_sur, plafonné au ramene_sur */
     const div = bareme.diviseur_note_finale || bareme.total_max || 280;
     const sur = bareme.ramene_sur || 20;
-    const note20 = Math.min(sur, (totalBrut / div) * sur);
+    const note20Brute = Math.min(sur, (totalBrut / div) * sur);
 
     /* Niveau moyen par compétence (0..3) — pour radar */
     const niveauMoyenParComp = {};
@@ -67,6 +67,64 @@
       niveauMoyenParComp[c] = arr.reduce((a,b)=>a+b,0) / arr.length;
     });
 
+    /* ============ Notes par sous-épreuve (EP3a / EP3b / EP3c) ============
+       Pour chaque sous-épreuve : note /20 = (points obtenus dans ses blocs) / (max possible dans ses blocs) × 20.
+       Note finale pondérée = Σ(note_se × coef_se) / Σ(coef_se).
+       Si bareme.sous_epreuves est absent, on retombe sur le calcul brut (rétro-compat).                  */
+    const sousEpreuves = [];
+    let sommePtsCoef = 0;
+    let sommeCoefs = 0;
+    let auMoinsUneSaisie = false;
+
+    if (Array.isArray(bareme.sous_epreuves)) {
+      bareme.sous_epreuves.forEach(se => {
+        let ptsObtenus = 0, ptsMax = 0, nbTachesNotees = 0, nbTachesTot = 0;
+        bareme.blocs.filter(b => (se.blocs || []).includes(b.code)).forEach(bloc => {
+          bloc.taches.forEach(t => {
+            ptsMax += t.max;
+            nbTachesTot++;
+            const codeNiv = saisie[t.id];
+            if (codeNiv) {
+              const idx = niveauIndex(codeNiv);
+              if (idx != null) {
+                ptsObtenus += t.niveaux[idx];
+                nbTachesNotees++;
+              }
+            }
+          });
+        });
+        const note20 = ptsMax > 0 ? (ptsObtenus / ptsMax) * sur : 0;
+        const note20Rnd = Math.round(note20 * 10) / 10;
+        const sePondere = note20Rnd * (se.coef || 0);
+        if (nbTachesNotees > 0) {
+          auMoinsUneSaisie = true;
+          sommePtsCoef += sePondere;
+          sommeCoefs += (se.coef || 0);
+        }
+        sousEpreuves.push({
+          code: se.code,
+          label: se.label,
+          coef: se.coef || 0,
+          couleur: se.couleur,
+          ptsObtenus,
+          ptsMax,
+          note20: note20Rnd,
+          notePondere: Math.round(sePondere * 10) / 10,
+          nbTachesNotees,
+          nbTachesTot,
+          saisi: nbTachesNotees > 0
+        });
+      });
+    }
+
+    /* Note finale pondérée : moyenne pondérée des sous-épreuves SAISIES uniquement
+       (un élève sans aucune note en EP3b ne doit pas voir sa moyenne tirée vers 0). */
+    const coefTotal = (bareme.sous_epreuves || []).reduce((s, se) => s + (se.coef || 0), 0) || 1;
+    const note20Ponderee = auMoinsUneSaisie ? (sommePtsCoef / sommeCoefs) : 0;
+    /* Note "officielle complète" : pondérée sur TOUS les coefs (sous-épreuves non saisies = 0)
+       — c'est la vraie note de diplôme une fois l'épreuve terminée. */
+    const note20Officielle = auMoinsUneSaisie ? (sommePtsCoef / coefTotal) : 0;
+
     return {
       pointsParBloc,
       pointsParComp,
@@ -74,7 +132,12 @@
       niveauMoyenParComp,
       totalBrut,
       totalMax,
-      note20: Math.round(note20 * 10) / 10
+      note20: Math.round(note20Brute * 10) / 10,           /* rétro-compat (note brute /280) */
+      note20Brute: Math.round(note20Brute * 10) / 10,
+      note20Ponderee: Math.round(note20Ponderee * 10) / 10, /* moyenne des SE saisies */
+      note20Officielle: Math.round(note20Officielle * 10) / 10, /* note diplôme (SE manquantes = 0) */
+      sousEpreuves,
+      coefTotal
     };
   }
 

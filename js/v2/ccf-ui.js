@@ -69,6 +69,32 @@
         </div>
       </div>
 
+      <div class="ccf-recap-card" id="ccf-recap-card" hidden>
+        <h3 class="ccf-recap-titre">📊 Détail par sous-épreuve (coef total ${bareme.coef})</h3>
+        <table class="ccf-recap-table">
+          <thead>
+            <tr>
+              <th>Sous-épreuve</th>
+              <th>Points</th>
+              <th>Note /20</th>
+              <th>Coef</th>
+              <th>Note × Coef</th>
+              <th>Avancement</th>
+            </tr>
+          </thead>
+          <tbody id="ccf-recap-tbody"></tbody>
+          <tfoot>
+            <tr class="ccf-recap-total">
+              <td colspan="3" style="text-align:right;font-weight:700;">Note finale pondérée /20 (épreuve complète) :</td>
+              <td id="ccf-recap-coeftotal">—</td>
+              <td id="ccf-recap-finale" style="font-weight:700;color:var(--bleu);font-size:14pt;">—</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+        <p class="ccf-recap-help" id="ccf-recap-help">Tant que les 3 sous-épreuves ne sont pas saisies, la note finale est partielle (calculée sur les sous-épreuves remplies uniquement, affichée en orange).</p>
+      </div>
+
       <div class="ccf-blocs" id="ccf-blocs"></div>
     `;
     document.getElementById('ccf-eleve').onchange = (e) => switchEleve(e.target.value);
@@ -198,9 +224,16 @@
 
   function refreshNote() {
     const r = CCF.compute(bareme, saisie);
-    /* Note grande */
+    const aSaisie = r.totalBrut > 0;
+    const seSaisies = (r.sousEpreuves || []).filter(s => s.saisi);
+    const ep3Complet = seSaisies.length === (r.sousEpreuves || []).length && seSaisies.length > 0;
+    /* Note grande = note pondérée officielle si tout est saisi, sinon pondérée partielle (en orange) */
+    const noteAffichee = ep3Complet ? r.note20Officielle : r.note20Ponderee;
     const val = document.getElementById('ccf-note-val');
-    if (val) val.textContent = r.totalBrut > 0 ? r.note20.toFixed(1).replace('.', ',') : '—';
+    if (val) {
+      val.textContent = aSaisie ? noteAffichee.toFixed(1).replace('.', ',') : '—';
+      val.style.color = aSaisie && !ep3Complet ? 'var(--orange)' : '';
+    }
     /* Activer / désactiver le bouton "Mail bilan" selon qu'il y a une saisie */
     const btnMail = document.getElementById('ccf-mail');
     if (btnMail) btnMail.disabled = (Object.keys(saisie).length === 0) || !currentEleve;
@@ -209,12 +242,13 @@
     if (det) {
       const tachesFaites = Object.keys(saisie).length;
       const tachesTot = bareme.blocs.reduce((s, b) => s + b.taches.length, 0);
+      const labelNote = ep3Complet ? 'note finale officielle' : `note partielle (${seSaisies.length}/${r.sousEpreuves?.length || 3} sous-épreuves)`;
       det.innerHTML = `
         <span>${tachesFaites} / ${tachesTot} tâches notées</span>
         <span>·</span>
         <span>${r.totalBrut} pts bruts / ${r.totalMax}</span>
         <span>·</span>
-        <span>note finale : <strong>${r.totalBrut > 0 ? r.note20.toFixed(1).replace('.', ',') : '—'}</strong> / ${bareme.ramene_sur}</span>
+        <span>${labelNote} : <strong>${aSaisie ? noteAffichee.toFixed(1).replace('.', ',') : '—'}</strong> / ${bareme.ramene_sur}</span>
       `;
     }
     /* Compteurs par bloc */
@@ -222,9 +256,49 @@
       const el = document.querySelector(`.ccf-bloc-pts[data-bloc="${b.code}"]`);
       if (el) el.textContent = `${r.pointsParBloc[b.code] || 0} / ${b.max} pts`;
     });
+    /* Tableau récap des 3 sous-épreuves */
+    renderRecap(r, ep3Complet);
     /* Hook radar : appel à update si présent */
     if (window.RadarsEleve && typeof window.RadarsEleve.refreshCCF === 'function' && currentEleve) {
       try { window.RadarsEleve.refreshCCF(currentEleve, r); } catch (e) {}
+    }
+  }
+
+  function renderRecap(r, ep3Complet) {
+    const card = document.getElementById('ccf-recap-card');
+    const tbody = document.getElementById('ccf-recap-tbody');
+    const finaleEl = document.getElementById('ccf-recap-finale');
+    const coeftotalEl = document.getElementById('ccf-recap-coeftotal');
+    const helpEl = document.getElementById('ccf-recap-help');
+    if (!card || !tbody || !r.sousEpreuves) return;
+    card.hidden = false;
+    tbody.innerHTML = r.sousEpreuves.map(se => {
+      const pct = se.ptsMax > 0 ? Math.round((se.ptsObtenus / se.ptsMax) * 100) : 0;
+      const couleurBar = se.saisi ? (se.couleur || '#1b3a63') : '#cbd5e0';
+      const noteCell = se.saisi ? `<strong style="color:${se.couleur || '#1b3a63'};font-size:13pt;">${se.note20.toFixed(1).replace('.', ',')}</strong> / 20` : '<span style="color:#a0aec0;">—</span>';
+      const ponderee = se.saisi ? `<strong>${se.notePondere.toFixed(2).replace('.', ',')}</strong>` : '<span style="color:#a0aec0;">—</span>';
+      return `<tr>
+        <td><strong style="color:${se.couleur || '#1b3a63'};">${se.code}</strong> ${escapeHtml(se.label)}<br/><span style="font-size:10pt;color:var(--text-soft);">${se.nbTachesNotees}/${se.nbTachesTot} tâches</span></td>
+        <td style="text-align:center;">${se.ptsObtenus} / ${se.ptsMax}</td>
+        <td style="text-align:center;">${noteCell}</td>
+        <td style="text-align:center;font-weight:700;">${(se.coef || 0).toFixed(1).replace('.', ',')}</td>
+        <td style="text-align:center;">${ponderee}</td>
+        <td><div style="background:#edf2f7;border-radius:6px;height:14px;width:100%;overflow:hidden;"><div style="background:${couleurBar};height:100%;width:${pct}%;transition:width .3s;"></div></div><span style="font-size:10pt;color:var(--text-soft);">${pct}%</span></td>
+      </tr>`;
+    }).join('');
+    if (coeftotalEl) coeftotalEl.textContent = (r.coefTotal || 0).toFixed(1).replace('.', ',');
+    if (finaleEl) {
+      const noteFinale = ep3Complet ? r.note20Officielle : r.note20Ponderee;
+      const couleur = ep3Complet ? 'var(--bleu)' : 'var(--orange)';
+      finaleEl.style.color = couleur;
+      finaleEl.innerHTML = r.totalBrut > 0
+        ? `${noteFinale.toFixed(1).replace('.', ',')} / 20${ep3Complet ? ' ✓' : ' (partielle)'}`
+        : '—';
+    }
+    if (helpEl) {
+      helpEl.textContent = ep3Complet
+        ? '✓ Les 3 sous-épreuves sont saisies — note finale officielle de l\'EP3 (transmissible en CCF).'
+        : `${(r.sousEpreuves || []).length - (r.sousEpreuves || []).filter(s => s.saisi).length} sous-épreuve(s) en attente — note finale en orange = moyenne pondérée des sous-épreuves déjà saisies.`;
     }
   }
 

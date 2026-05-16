@@ -310,6 +310,53 @@
 .ccf-note-actions { display: flex; gap: 6px; }
 .ccf-note-actions .btn { background: #ff6b35; color: #fff; border: 0; }
 
+/* === Tableau récap pondération EP3 (V1 — pondération 1,8/1,4/0,8) === */
+.ccf-recap-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-left: 6px solid #1b3a63;
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.ccf-recap-titre {
+  font-family: 'Trebuchet MS', sans-serif;
+  color: #1b3a63;
+  margin: 0 0 10px 0;
+  font-size: 14pt;
+}
+.ccf-recap-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12pt;
+}
+.ccf-recap-table th {
+  background: #1b3a63;
+  color: #fff;
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 700;
+}
+.ccf-recap-table td {
+  padding: 10px;
+  border-bottom: 1px solid #edf2f7;
+  vertical-align: middle;
+}
+.ccf-recap-table tbody tr:hover { background: #f7fafc; }
+.ccf-recap-total td {
+  background: #fff5ef;
+  border-top: 2px solid #ff6b35;
+  border-bottom: 0;
+  padding: 12px 10px;
+}
+.ccf-recap-help {
+  margin: 10px 0 0 0;
+  font-size: 11pt;
+  color: #4a5568;
+  font-style: italic;
+}
+
 .ccf-blocs { display: flex; flex-direction: column; gap: 16px; }
 .ccf-bloc {
   background: #fff;

@@ -1,13 +1,19 @@
 {
-  "_doc": "Barème CCF EP3 CAP IFCA — Session 2024/25 (LP Privé Jacques Raynaud · Campus ÉQUATIO). Source : CAP_ifca_EP3_24_25_VERSION_FINALE.docx. Barèmes par tâche corrigés pour cohérence (les 4 niveaux NA/EC/A/PA suivent désormais une progression monotone vers le max).",
+  "_doc": "✅ Barème CCF EP3 CAP IFCA — V2 validée 2026-05-16 (LP Privé Jacques Raynaud · Campus ÉQUATIO). Source : CAP_ifca_EP3_24_25_VERSION_FINALE.docx. V2 : bloc 0 Sécurité fusionné dans A (EPI A-0) et C (Pesée initiale C-0) — 3 blocs alignés sur les sous-épreuves EP3a/b/c. Pondération : EP3a coef 1,8 (bloc A) · EP3b coef 1,4 (bloc B) · EP3c coef 0,8 (bloc C) — pratique 80% / écrit 20%. Total 300 pts inchangé.",
   "epreuve": "EP3",
-  "intitule": "Entretien & mise en service d'une installation frigorifique",
+  "intitule": "✅ CCF EP3 — Entretien & mise en service",
   "session": "2024/25",
+  "version_bareme": "V2-2026-05-16",
   "duree_h": 6,
   "coef": 4,
   "total_max": 300,
   "diviseur_note_finale": 280,
   "ramene_sur": 20,
+  "sous_epreuves": [
+    { "code": "EP3a", "label": "Manipulation fluides",   "coef": 1.8, "couleur": "#1b3a63", "blocs": ["A"], "competences_cles": ["C4.5", "C4.3", "C4.7", "C5.1", "C2.2"] },
+    { "code": "EP3b", "label": "Mesures & diagnostic",   "coef": 1.4, "couleur": "#2d8659", "blocs": ["B"], "competences_cles": ["C4.2", "C4.5", "C5.1"] },
+    { "code": "EP3c", "label": "Rédaction documents",    "coef": 0.8, "couleur": "#dd6b20", "blocs": ["C"], "competences_cles": ["C1.3", "C4.5"] }
+  ],
   "niveaux": [
     { "code": "NA", "label": "Non acquis",         "couleur": "#c53030", "indice": 0 },
     { "code": "EC", "label": "En cours",           "couleur": "#dd6b20", "indice": 1 },
@@ -16,23 +22,13 @@
   ],
   "blocs": [
     {
-      "code": "0",
-      "label": "Sécurité générale",
-      "max": 30,
-      "couleur": "#c53030",
-      "intro": "Vérifications obligatoires avant accès aux blocs A et B.",
-      "taches": [
-        { "id": "0.1", "intitule": "Port continu des EPI",                    "comp": "C2.2", "max": 20, "niveaux": [0, 5, 10, 20] },
-        { "id": "0.2", "intitule": "Pesée initiale de la bouteille",          "comp": "C4.5", "max": 10, "niveaux": [0, 1, 5, 10]  }
-      ]
-    },
-    {
       "code": "A",
-      "label": "Manipulations fluidiques",
-      "max": 120,
+      "label": "Manipulations fluidiques + sécurité",
+      "max": 140,
       "couleur": "#1b3a63",
-      "intro": "Frigo A sous azote. Pose/dépose manifold, tirage au vide, remplacement & réglage pressostat BP.",
+      "intro": "Frigo A sous azote. Port EPI continu, pose/dépose manifold, tirage au vide, remplacement & réglage pressostat BP.",
       "taches": [
+        { "id": "0.1", "intitule": "Port continu des EPI (toute la séance)", "comp": "C2.2", "max": 20, "niveaux": [0, 5, 10, 20] },
         { "id": "A-1",  "intitule": "Relevé initial P/T",                    "comp": "C4.5", "max": 4,  "niveaux": [0, 1, 2, 4]  },
         { "id": "A-2",  "intitule": "Pose manifold sans fuite",              "comp": "C4.7", "max": 20, "niveaux": [0, 6, 15, 20] },
         { "id": "A-3",  "intitule": "Rapport P/T – nature du gaz",           "comp": "C4.2", "max": 4,  "niveaux": [0, 2, 3, 4]  },
@@ -66,11 +62,12 @@
     },
     {
       "code": "C",
-      "label": "Documentation",
-      "max": 50,
+      "label": "Documentation + traçabilité",
+      "max": 60,
       "couleur": "#dd6b20",
-      "intro": "Pièces réglementaires à remettre en fin d'épreuve.",
+      "intro": "Pièces réglementaires + relevé bouteille fluide initial (point de référence pour la traçabilité).",
       "taches": [
+        { "id": "0.2", "intitule": "Pesée initiale de la bouteille (relevé) ", "comp": "C4.5", "max": 10, "niveaux": [0, 1, 5, 10]  },
         { "id": "C-1", "intitule": "Bordereau de fonctionnement",            "comp": "C1.3", "max": 15, "niveaux": [0, 5, 10, 15] },
         { "id": "C-2", "intitule": "CERFA 15497*02",                         "comp": "C1.3", "max": 20, "niveaux": [0, 10, 15, 20] },
         { "id": "C-3", "intitule": "Bon d'intervention",                     "comp": "C1.3", "max": 15, "niveaux": [0, 5, 10, 15] }
