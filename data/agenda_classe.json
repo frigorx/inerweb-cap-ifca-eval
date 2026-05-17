@@ -26,8 +26,10 @@
 
     { "id": "S4-V",    "date": "2026-05-15", "jour": "Vendredi","creneau": "M1", "tps": [],                "objectif": "🎯 CCF EP3 BLANC — passation complète 6 h (Blocs 0/A/B/C)", "salle": "D107", "type": "ccf-blanc" },
 
-    { "id": "S4-L-M1", "date": "2026-05-18", "jour": "Lundi",   "creneau": "M1", "tps": ["CCF-3-A"],       "objectif": "🏆 CCF EP3 — Épreuve A — Pressostat BP (partie 1/2)",   "salle": "D107", "type": "ccf-officiel" },
-    { "id": "S4-L-M2", "date": "2026-05-18", "jour": "Lundi",   "creneau": "M2", "tps": ["CCF-3-A"],       "objectif": "🏆 CCF EP3 — Épreuve A — Pressostat BP (partie 2/2)",   "salle": "D107", "type": "ccf-officiel" },
+    { "id": "S4-L-M1", "date": "2026-05-18", "jour": "Lundi",   "creneau": "M1", "tps": ["CCF-3-A", "TP-2B"],            "objectif": "🏆 CCF EP3 A (G1 part 1/2) — Pressostat BP · G2 → TP B mesures P/T", "salle": "D107", "type": "ccf-officiel" },
+    { "id": "S4-L-M2", "date": "2026-05-18", "jour": "Lundi",   "creneau": "M2", "tps": ["CCF-3-A", "EX-CERFA-EVAL"],    "objectif": "🏆 CCF EP3 A (G1 part 2/2) — Pressostat BP · G2 → TP C CERFA évalué", "salle": "D107", "type": "ccf-officiel" },
+    { "id": "S4-L-A1", "date": "2026-05-18", "jour": "Lundi",   "creneau": "A1", "tps": ["CCF-3-A", "TP-2B"],            "objectif": "🏆 CCF EP3 A (G2 part 1/2) — Pressostat BP · G1 → TP B mesures P/T", "salle": "D107", "type": "ccf-officiel" },
+    { "id": "S4-L-A2", "date": "2026-05-18", "jour": "Lundi",   "creneau": "A2", "tps": ["CCF-3-A", "EX-CERFA-EVAL"],    "objectif": "🏆 CCF EP3 A (G2 part 2/2) — Pressostat BP · G1 → TP C CERFA évalué", "salle": "D107", "type": "ccf-officiel" },
 
     { "id": "S5-V",    "date": "2026-05-22", "jour": "Vendredi","creneau": "M1", "tps": [],                "objectif": "🏆 CCF EP3 OFFICIEL — épreuve session 24/25",            "salle": "D107", "type": "ccf-officiel" }
   ]
