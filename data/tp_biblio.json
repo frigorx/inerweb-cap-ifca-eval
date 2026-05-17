@@ -68,6 +68,19 @@
       "tag": "ccf",
       "description": "CCF officiel n°3 enchaîné après les CCF n°1 et n°2. Spécificité : ajoute la tâche pesée bouteille (avant/après) pour déterminer la charge réellement injectée — non évaluée dans les 2 premiers CCF."
     },
+    {
+      "id": "CCF-3-A",
+      "semaine": "S4",
+      "date": "2026-05-18",
+      "epreuve": "EP3",
+      "categorie": "CCF officiel",
+      "titre": "CCF EP3 — Épreuve A — Remplacement & réglage pressostat BP (Bloc A complet)",
+      "duree": "4 h",
+      "url": "eleve/ccf-officiels/CCF3-A-reglage-pressostat-BP/CCF3-A-reglage-pressostat-BP.html",
+      "comp": ["C2.2", "C4.5", "C4.7", "C4.2", "C4.3", "C4.1", "C3.7", "C4.6"],
+      "tag": "ccf",
+      "description": "Bloc A complet du CCF EP3 — 13 étapes : état des lieux, VAT, relevé P/T, pose manifold, dégazage, vide, remplacement pressostat BP, mise sous azote, réglage Cut-in/Cut-out, pump-down, remise en état, étanchéité, remise en service. Grille interne alignée sur ccf_ep3_bareme.json V2 (14 tâches 0.1 + A-1→A-13, /140)."
+    },
 
     { "id": "EX-MANO",
       "semaine": "S-stock",
