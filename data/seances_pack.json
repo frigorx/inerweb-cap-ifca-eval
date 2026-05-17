@@ -141,6 +141,23 @@
         "total_max": 20,
         "comp_alimente": "C1.3"
       }
+    },
+
+    {
+      "id": "PACK-S4-CCF-A2",
+      "titre": "Lundi 18/05 — TP EP3 A2 + rotation TP B mesures / TP C CERFA",
+      "couleur": "#1b3a63",
+      "icone": "🏆",
+      "duree_estimee": "8 h (rotation 2 groupes : 4 h TP A2 + 2 h mesures + 1 h CERFA)",
+      "bloc_ccf": "A",
+      "epreuve": "EP3",
+      "comp_ciblees": ["C2.2", "C4.5", "C4.7", "C4.2", "C4.3", "C4.1", "C3.7", "C4.6"],
+      "description": "Semaine S4 — lundi 18/05/2026. TP EP3 A2 = variante 2 du Bloc A complet (4 h, 13 étapes : VAT, manifold, vide, remplacement & réglage pressostat BP, étanchéité, remise en service). Rotation 2 groupes : pendant qu'un groupe passe le TP A2 (4 h), l'autre enchaîne TP B mesures P/T (2 h) + TP C CERFA évalué (1 h). Saisie des notes via la grille officielle CCF EP3 V2 (Bloc A, 14 tâches /140) dans l'onglet « ✍ Évaluation ».",
+      "ressources": [
+        { "type": "exercice-html",  "id": "TP-EP3-A2",    "titre": "🏆 TP EP3 A2 — Remplacement & réglage pressostat BP (Bloc A complet)", "url": "eleve/ccf-officiels/CCF3-A-reglage-pressostat-BP/CCF3-A-reglage-pressostat-BP.html", "duree": "4 h" },
+        { "type": "exercice-html",  "id": "TP-2B",        "titre": "TP B — Mesures P/T + surchauffe + sous-refroidissement",              "url": "eleve/tp-officiels/S2_04-05-2026/TP2B_Mesures_PT_surchauffe_sous_refroidissement.html", "duree": "2 h" },
+        { "type": "evaluation-html","id": "EX-CERFA-EVAL","titre": "TP C — Évaluation CERFA (version CAP IFCA)",                          "url": "eleve/exercices-rapides/cerfa/Eval_TP_CERFA_CAP_IFCA.html", "duree": "1 h" }
+      ]
     }
   ]
 }
