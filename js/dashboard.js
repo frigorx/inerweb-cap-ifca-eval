@@ -126,7 +126,7 @@
       '2026-04-27': { id: 'S1', tps: ['TP-050', 'TP-053', 'TP-056'], label: 'Séance S1 — Manipulation + Mesures' },
       '2026-05-04': { id: 'S2', tps: ['TP-051', 'TP-054', 'TP-056'], label: 'Séance S2 — Pressostat + Calculs' },
       '2026-05-11': { id: 'S3', tps: ['TP-052', 'TP-055', 'TP-056'], label: 'Séance S3 — Conclusion + F-Gaz' },
-      '2026-05-18': { id: 'S4', tps: ['TP-EP3-A2', 'TP-2B', 'EX-CERFA-EVAL'], label: 'Séance S4 — 🏆 TP EP3 A2 + rotation TP B mesures / TP C CERFA (8h-17h)' }
+      '2026-05-18': { id: 'S4', tps: ['TP-EP3-A2', 'TP-2', 'CCF-3-MES'], label: 'Séance S4 — 🏆 TP A (Pressostat BP) + TP B (Mesures frigo) + TP C (Mise en service) (8h-17h)' }
     };
     if (seances[dateStr]) {
       const s = seances[dateStr];
@@ -177,7 +177,7 @@
       'S1': ['TP-050', 'TP-053'],
       'S2': ['TP-051', 'TP-054'],
       'S3': ['TP-052', 'TP-055'],
-      'S4': ['TP-EP3-A2', 'TP-2B', 'EX-CERFA-EVAL']
+      'S4': ['TP-EP3-A2', 'TP-2', 'CCF-3-MES']
     };
 
     const elevesC2 = _eleves.eleves.filter(e => e.classe === 'CAP IFCA 2');
