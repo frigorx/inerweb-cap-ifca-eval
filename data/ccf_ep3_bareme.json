@@ -1,13 +1,13 @@
 {
-  "_doc": "✅ Barème CCF EP3 CAP IFCA — V3 (2026-05-18). Source : CAP_ifca_EP3_24_25_VERSION_FINALE.docx. V2 : bloc 0 Sécurité fusionné dans A (EPI A-0) et C (Pesée initiale C-0). V3 (session 2025/26) : retrait de B-2 (Contrôle incondensables ΔP, 15 pts) et C-2 (CERFA 15497*02, 20 pts) — peu d'élèves évalués, compétences redondantes ailleurs. Total 300 → 265 pts. Bloc B 100 → 85, Bloc C 60 → 40. Pondération inchangée : EP3a coef 1,8 (A) · EP3b coef 1,4 (B) · EP3c coef 0,8 (C).",
+  "_doc": "✅ Barème CCF EP3 CAP IFCA — V2 validée 2026-05-16 (LP Privé Jacques Raynaud · Campus ÉQUATIO). Source : CAP_ifca_EP3_24_25_VERSION_FINALE.docx. V2 : bloc 0 Sécurité fusionné dans A (EPI A-0) et C (Pesée initiale C-0) — 3 blocs alignés sur les sous-épreuves EP3a/b/c. Pondération : EP3a coef 1,8 (bloc A) · EP3b coef 1,4 (bloc B) · EP3c coef 0,8 (bloc C) — pratique 80% / écrit 20%. Total 300 pts inchangé.",
   "epreuve": "EP3",
   "intitule": "✅ CCF EP3 — Entretien & mise en service",
-  "session": "2025/26",
-  "version_bareme": "V3-2026-05-18",
+  "session": "2024/25",
+  "version_bareme": "V2-2026-05-16",
   "duree_h": 6,
   "coef": 4,
-  "total_max": 265,
-  "diviseur_note_finale": 247,
+  "total_max": 300,
+  "diviseur_note_finale": 280,
   "ramene_sur": 20,
   "sous_epreuves": [
     { "code": "EP3a", "label": "Manipulation fluides",   "coef": 1.8, "couleur": "#1b3a63", "blocs": ["A"], "competences_cles": ["C4.5", "C4.3", "C4.7", "C5.1", "C2.2"] },
@@ -47,11 +47,12 @@
     {
       "code": "B",
       "label": "Mesures & diagnostic",
-      "max": 85,
+      "max": 100,
       "couleur": "#2d8659",
       "intro": "Frigo B sous fluide. Relevé complet, calculs SC/SR, identification, intensité, TeqCO₂.",
       "taches": [
         { "id": "B-1", "intitule": "Identification fluide & plaque",         "comp": "C4.2", "max": 10, "niveaux": [0, 3, 7, 10] },
+        { "id": "B-2", "intitule": "Contrôle incondensables (ΔP)",           "comp": "C5.1", "max": 15, "niveaux": [0, 5, 10, 15] },
         { "id": "B-3", "intitule": "Relevés pressions / températures",       "comp": "C4.5", "max": 30, "niveaux": [0, 8, 18, 30] },
         { "id": "B-4", "intitule": "Calculs SC / SR",                        "comp": "C5.1", "max": 20, "niveaux": [0, 5, 15, 20] },
         { "id": "B-5", "intitule": "Mesure intensité",                       "comp": "C4.5", "max": 10, "niveaux": [0, 3, 7, 10] },
@@ -62,12 +63,13 @@
     {
       "code": "C",
       "label": "Documentation + traçabilité",
-      "max": 40,
+      "max": 60,
       "couleur": "#dd6b20",
       "intro": "Pièces réglementaires + relevé bouteille fluide initial (point de référence pour la traçabilité).",
       "taches": [
         { "id": "0.2", "intitule": "Pesée initiale de la bouteille (relevé) ", "comp": "C4.5", "max": 10, "niveaux": [0, 1, 5, 10]  },
         { "id": "C-1", "intitule": "Bordereau de fonctionnement",            "comp": "C1.3", "max": 15, "niveaux": [0, 5, 10, 15] },
+        { "id": "C-2", "intitule": "CERFA 15497*02",                         "comp": "C1.3", "max": 20, "niveaux": [0, 10, 15, 20] },
         { "id": "C-3", "intitule": "Bon d'intervention",                     "comp": "C1.3", "max": 15, "niveaux": [0, 5, 10, 15] }
       ]
     }
